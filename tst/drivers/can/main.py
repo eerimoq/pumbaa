@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # 
 # @file main.py
 # @version 0.2.0

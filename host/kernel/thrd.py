@@ -1,4 +1,5 @@
 import threading
+import python.pytime as time
 
 def spawn(func, args=(), prio=0):
     thread = threading.Thread(target=func, args=args)
@@ -7,3 +8,6 @@ def spawn(func, args=(), prio=0):
 
 def suspend():
     pass
+
+def sleep(microseconds):
+    time.sleep(microseconds / 1000)
