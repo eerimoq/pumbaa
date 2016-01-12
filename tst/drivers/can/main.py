@@ -60,6 +60,7 @@ def start(speed):
 
     """
 
+    global CAN0, CAN1
     CAN0 = can.Can(board.CAN0, speed=speed)
     CAN0.start()
 
@@ -84,7 +85,6 @@ def rx_thrd():
     
     """
 
-    cdef int frame_id
     frame_id = 0
     frame_count = 0
 
@@ -115,7 +115,7 @@ def test_ping_pong(speed, extended_id):
 
     """
 
-    start(speed);
+    start(speed)
 
     #
     # Ping is transmitted from CAN0 to CAN1.
@@ -123,7 +123,7 @@ def test_ping_pong(speed, extended_id):
 
     # Write ping.
     frame_id = PING_ID << (10 * int(extended_id))
-    frame = can.Frame(frame_id, extended_id, [0xfe])
+    frame = can.Frame(frame_id, [0xfe], extended_id)
     CAN0.write(frame)
 
     # Read ping.
@@ -139,7 +139,7 @@ def test_ping_pong(speed, extended_id):
 
     # Write pong.
     frame_id = PONG_ID << (10 * int(extended_id))
-    frame = can.Frame(frame_id, extended_id)
+    frame = can.Frame(frame_id, extended_id=extended_id)
     CAN1.write(frame)
 
     # Read pong.
@@ -149,7 +149,7 @@ def test_ping_pong(speed, extended_id):
     assert frame.extended_id == extended_id
     assert frame.data == []
 
-    stop();
+    stop()
 
 
 def test_ping_pong_250k(_):
@@ -184,13 +184,13 @@ def test_max_throughput(_):
         print("Writing 10000 frames of data size", data_size, ".")
 
         start_time = time.get()
-        frame_id = 0;
+        frame_id = 0
 
         # Prepare the array of frames.
-        frames = frames_per_write * [can.Frame(data_size * [0xaa])]
+        frames = frames_per_write * [can.Frame(-1, data_size * [0xaa])]
 
         # Write the array of frames to the hardware.
-        for j in range(10000 / frames_per_write):
+        for _ in range(10000 / frames_per_write):
             for k in range(frames_per_write):
                 frames[k].id = frame_id
                 frame_id += 1
@@ -199,8 +199,8 @@ def test_max_throughput(_):
         stop_time = time.get()
 
         # Statistics.
-        elapsed_time = (stop_time.seconds - start_time.seconds)
-        frames_per_second = (10000 / elapsed_time);
+        elapsed_time = (stop_time - start_time)
+        frames_per_second = (10000 / elapsed_time)
         bits_per_frame = (1 + 11 + 1 + 1 + 1 + 4 + 15 + 1 + 1 + 1 + 7
                           + 8 * data_size)
         bits_per_second = (frames_per_second * bits_per_frame)
@@ -211,7 +211,7 @@ def test_max_throughput(_):
               bits_per_second, "bits/s,",
               data_bits_per_second, "data bits/s")
 
-    stop();
+    stop()
 
 
 if __name__ == "__main__":

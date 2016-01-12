@@ -1,2 +1,2 @@
 def get():
-    pass
+    return 0.0

@@ -1,6 +1,7 @@
 TESTS = \
 	tst/kernel/queue \
-	tst/kernel/sem
+	tst/kernel/sem \
+	tst/drivers/can
 
 test:
 	for test in $(TESTS); do \

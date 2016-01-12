@@ -11,3 +11,6 @@ def suspend():
 
 def sleep(microseconds):
     time.sleep(microseconds / 1000)
+
+def set_name(_):
+    pass

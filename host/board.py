@@ -1,3 +1,6 @@
 LED = 13
 
 UART0 = 0
+
+CAN0 = 0
+CAN1 = 1
