@@ -84,9 +84,11 @@
 #define MICROPY_PY_UTIME            (1)
 
 extern const struct _mp_obj_module_t mp_module_time;
+extern const struct _mp_obj_module_t module_pumbaa;
 
 #define MICROPY_PORT_BUILTIN_MODULES            \
-    { MP_ROM_QSTR(MP_QSTR_utime), MP_ROM_PTR(&mp_module_time) },
+    { MP_ROM_QSTR(MP_QSTR_utime), MP_ROM_PTR(&mp_module_time) }, \
+    { MP_ROM_QSTR(MP_QSTR_pumbaa), MP_ROM_PTR(&module_pumbaa) },
 
 #define MICROPY_PORT_ROOT_POINTERS \
     mp_obj_t keyboard_interrupt_obj;

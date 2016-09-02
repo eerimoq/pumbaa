@@ -6,6 +6,14 @@ About
 The implementation is based on Micro Python, designed for embedded
 devices with limited amount of RAM and code memory.
 
+Setup
+=====
+
+.. code-block:: text
+
+   git submodule update --init
+   source setup.sh
+
 Hardware requirements
 =====================
 

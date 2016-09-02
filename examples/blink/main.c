@@ -27,6 +27,7 @@
 static const char script[] =
     "import sys\n"
     "import utime as time\n"
+    /* "import pumbaa\n" */
     "\n"
     /* "import pumbaa.pin as pin\n" */
     /* "import pumbaa.board as board\n" */

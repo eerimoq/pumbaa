@@ -1,5 +1,5 @@
 /**
- * @file libpumbaa.c
+ * @file pumbaa.h
  *
  * @section License
  * Copyright (C) 2014-2016, Erik Moqvist
@@ -14,12 +14,16 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
- * This file is part of the Pumbaa project.
+ * This file is part of the Simba project.
  */
 
 #ifndef __PUMBAA_H__
 #define __PUMBAA_H__
 
+#include "simba.h"
 
+#include "py/runtime.h"
+#include "py/obj.h"
+#include "py/smallint.h"
 
 #endif
