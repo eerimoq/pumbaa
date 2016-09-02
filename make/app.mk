@@ -19,5 +19,7 @@
 
 SIMBA_ROOT ?= $(PUMBAA_ROOT)/simba
 
+LDFLAGS_AFTER += -lm
+
 include $(PUMBAA_ROOT)/src/pumbaa.mk
 include $(SIMBA_ROOT)/make/app.mk

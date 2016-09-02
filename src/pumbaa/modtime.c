@@ -67,7 +67,7 @@ static mp_obj_t mod_time_clock(void)
 static mp_obj_t mod_time_sleep(mp_obj_t arg_p)
 {
 #if MICROPY_PY_BUILTINS_FLOAT
-#    error "mod_time_sleep with float not implemented"
+    thrd_sleep(mp_obj_get_float(arg_p));
 #else
     thrd_sleep(mp_obj_get_int(arg_p));
 #endif
@@ -76,11 +76,15 @@ static mp_obj_t mod_time_sleep(mp_obj_t arg_p)
 
 static mp_obj_t mod_time_sleep_ms(mp_obj_t arg)
 {
+    thrd_sleep_ms(mp_obj_get_int(arg));
+    
     return mp_const_none;
 }
 
 static mp_obj_t mod_time_sleep_us(mp_obj_t arg)
 {
+    thrd_sleep_us(mp_obj_get_int(arg));
+
     return mp_const_none;
 }
 

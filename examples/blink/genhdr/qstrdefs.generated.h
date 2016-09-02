@@ -229,3 +229,5 @@ QDEF(MP_QSTR_values, (const byte*)"\x7d\xbe\x06" "values")
 QDEF(MP_QSTR_version, (const byte*)"\xbf\xd3\x07" "version")
 QDEF(MP_QSTR_version_info, (const byte*)"\x6e\x0a\x0c" "version_info")
 QDEF(MP_QSTR_zip, (const byte*)"\xe6\xac\x03" "zip")
+
+QDEF(MP_QSTR_float, (const byte*)"\x35\x44\x05" "float")

@@ -44,7 +44,7 @@ static const char script[] =
     "\n"
     "    # Toggle the LED state periodically.\n"
     "    while True:\n"
-    "        time.sleep(1)\n"
+    "        time.sleep(0.5)\n"
     "        print('toggle')\n"
     /* "        led.toggle()\n" */
     "\n"
