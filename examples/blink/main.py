@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 #
 # @file main.py
-# @version 0.2.0
 #
 # @section License
-# Copyright (C) 2014-2016, Erik Moqvist
+# Copyright (C) 2016, Erik Moqvist
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -19,14 +18,28 @@
 # This file is part of the Pumba project.
 #
 
-from kernel import thrd, sys
-from drivers import pin
-import board
+import sys
+import time
 
-sys.start()
+import pumbaa.pin as pin
+import pumbaa.board as board
 
-LED = pin.Pin(board.LED, pin.OUTPUT)
+def main():
+    """Main function of the Python blink application.
 
-while True:
-    thrd.sleep(1000)
-    LED.toggle()
+    """
+
+    print("Python version:", sys.version)
+
+    # Initialize the LED pin and set it high.
+    led = pin.Pin(board.PIN_LED, pin.OUTPUT)
+    led.write(1)
+
+    # Toggle the LED state periodically.
+    while True:
+        time.sleep(0.5)
+        led.toggle()
+
+
+if __name__ == "__main__":
+    main()

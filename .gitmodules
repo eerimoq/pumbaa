@@ -1,0 +1,3 @@
+[submodule "simba"]
+	path = simba
+	url = https://github.com/eerimoq/simba

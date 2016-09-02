@@ -1,2 +1,1 @@
-export PYTHONPATH=$(readlink -f host)
-
+export PUMBAA_ROOT=$(readlink -f .)
