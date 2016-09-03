@@ -49,3 +49,5 @@ try:
     assert False
 except NameError as e:
     print(e)
+
+print("PASSED")

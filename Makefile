@@ -21,15 +21,20 @@
 
 all:
 	$(MAKE) -C examples all
+	$(MAKE) -C tst/smoke all
+	$(MAKE) -C tst/drivers/pin all
 
 clean:
 	$(MAKE) -C examples clean
 	$(MAKE) -C tst/smoke clean
+	$(MAKE) -C tst/drivers/pin clean
 
 test:
 	$(MAKE) -C tst/smoke run
 
-travis: all test
+travis:
+	$(MAKE) all
+	$(MAKE) test
 
 docs:
 	$(MAKE) -C docs sphinx
