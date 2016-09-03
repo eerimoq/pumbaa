@@ -1,5 +1,5 @@
 /**
- * @file pumbaa.h
+ * @file pin.c
  *
  * @section License
  * Copyright (C) 2014-2016, Erik Moqvist
@@ -14,18 +14,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
- * This file is part of the Simba project.
+ * This file is part of the Pumbaa project.
  */
 
-#ifndef __PUMBAA_H__
-#define __PUMBAA_H__
+#ifndef __PUMBAA_PIN_H__
+#define __PUMBAA_PIN_H__
 
-#include "simba.h"
+#include "pumbaa.h"
 
-#include "py/runtime.h"
-#include "py/obj.h"
-#include "py/smallint.h"
-
-#include "pumbaa/pin.h"
+extern const mp_obj_type_t pin_class;
 
 #endif

@@ -1,5 +1,5 @@
 /**
- * @file pumbaa.h
+ * @file board.c
  *
  * @section License
  * Copyright (C) 2014-2016, Erik Moqvist
@@ -14,18 +14,25 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
- * This file is part of the Simba project.
+ * This file is part of the Pumbaa project.
  */
 
-#ifndef __PUMBAA_H__
-#define __PUMBAA_H__
+#include "pumbaa.h"
 
-#include "simba.h"
+/**
+ * class Board(object):
+ *
+ *     PIN_LED
+ */
+static const mp_map_elem_t board_locals_dict_table[] = {
+    /* Class constants. */
+    { MP_OBJ_NEW_QSTR(MP_QSTR_PIN_LED), MP_OBJ_NEW_SMALL_INT(13) },
+};
 
-#include "py/runtime.h"
-#include "py/obj.h"
-#include "py/smallint.h"
+static MP_DEFINE_CONST_DICT(board_locals_dict, board_locals_dict_table);
 
-#include "pumbaa/pin.h"
-
-#endif
+const mp_obj_type_t board_class = {
+    { &mp_type_type },
+    .name = MP_QSTR_Board,
+    .locals_dict = (mp_obj_t)&board_locals_dict,
+};

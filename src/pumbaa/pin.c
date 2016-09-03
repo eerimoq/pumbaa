@@ -73,12 +73,9 @@ static mp_obj_t pin_obj_init_helper(const struct pin_obj_t *self_p,
                      allowed_args,
                      args);
 
-    /* Get the pin. */
     pin = args[0].u_int;
-
-    /* Get IO mode. */
     mode = args[1].u_int;
-
+    
     pin_init((struct pin_driver_t *)&self_p->drv,
              &pin_device[pin],
              mode);
@@ -108,16 +105,21 @@ static mp_obj_t pin_make_new(const mp_obj_type_t *type_p,
                              mp_uint_t n_kw,
                              const mp_obj_t *args_p)
 {
-    /* mp_map_t kw_args; */
-
-    /* mp_arg_check_num(n_args, n_kw, 1, MP_OBJ_FUN_ARGS_MAX, true); */
-
-    /* /\* Initialize the pin if pin and mode are given. *\/ */
-    /* if (n_args > 2 || n_kw > 0) { */
-    /*     pin_obj_init_helper(pin, n_args - 1, args_p + 1, &kw_args); */
-    /* } */
-
-    return (mp_obj_t)mp_const_none;
+    struct pin_obj_t *self_p;
+    mp_map_t kw_args;
+    
+    mp_arg_check_num(n_args, n_kw, 1, MP_OBJ_FUN_ARGS_MAX, true);
+    
+    /* Create a new Pin object. */
+    self_p = m_new0(struct pin_obj_t, 1);
+    self_p->base.type = &pin_class;
+    
+    /* Initialize the pin if pin and mode are given. */
+    if (n_args == 2) {
+        pin_obj_init_helper(self_p, n_args, args_p, &kw_args);
+    }
+    
+    return (self_p);
 }
 
 /**
@@ -133,7 +135,11 @@ static mp_obj_t pin_obj_set_mode(mp_obj_t self_in, mp_obj_t mode_in)
  */
 static mp_obj_t pin_obj_read(mp_obj_t self_in)
 {
-    return (mp_const_none);
+    struct pin_obj_t *self_p;
+
+    self_p = self_in;
+
+    return (MP_OBJ_NEW_SMALL_INT(pin_read(&self_p->drv)));
 }
 
 /**
@@ -141,6 +147,11 @@ static mp_obj_t pin_obj_read(mp_obj_t self_in)
  */
 static mp_obj_t pin_obj_write(mp_obj_t self_in, mp_obj_t value_in)
 {
+    struct pin_obj_t *self_p;
+
+    self_p = self_in;
+    pin_write(&self_p->drv, mp_obj_get_int(value_in));
+        
     return (mp_const_none);
 }
 
@@ -149,6 +160,11 @@ static mp_obj_t pin_obj_write(mp_obj_t self_in, mp_obj_t value_in)
  */
 static mp_obj_t pin_obj_toggle(mp_obj_t self_in)
 {
+    struct pin_obj_t *self_p;
+
+    self_p = self_in;
+    pin_toggle(&self_p->drv);
+
     return (mp_const_none);
 }
 
@@ -160,11 +176,11 @@ static MP_DEFINE_CONST_FUN_OBJ_1(pin_obj_toggle_fun_obj, pin_obj_toggle);
 
 static const mp_map_elem_t pin_locals_dict_table[] = {
     /* Instance methods. */
-    { MP_OBJ_NEW_QSTR(MP_QSTR_init), (mp_obj_t)&pin_obj_init },
-    { MP_OBJ_NEW_QSTR(MP_QSTR_read), (mp_obj_t)&pin_obj_read },
-    { MP_OBJ_NEW_QSTR(MP_QSTR_write), (mp_obj_t)&pin_obj_write },
-    { MP_OBJ_NEW_QSTR(MP_QSTR_toggle), (mp_obj_t)&pin_obj_toggle },
-    { MP_OBJ_NEW_QSTR(MP_QSTR_set_mode), (mp_obj_t)&pin_obj_set_mode },
+    { MP_OBJ_NEW_QSTR(MP_QSTR_init), (mp_obj_t)&pin_obj_init_fun_obj },
+    { MP_OBJ_NEW_QSTR(MP_QSTR_read), (mp_obj_t)&pin_obj_read_fun_obj },
+    { MP_OBJ_NEW_QSTR(MP_QSTR_write), (mp_obj_t)&pin_obj_write_fun_obj },
+    { MP_OBJ_NEW_QSTR(MP_QSTR_toggle), (mp_obj_t)&pin_obj_toggle_fun_obj },
+    { MP_OBJ_NEW_QSTR(MP_QSTR_set_mode), (mp_obj_t)&pin_obj_set_mode_fun_obj },
 
     /* Class constants. */
     { MP_OBJ_NEW_QSTR(MP_QSTR_INPUT), MP_OBJ_NEW_SMALL_INT(PIN_INPUT) },

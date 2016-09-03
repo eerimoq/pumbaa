@@ -24,13 +24,14 @@
 #include "py/gc.h"
 #include "py/stackctrl.h"
 
+/**
+ * The Python script.
+ */
 static const char script[] =
     "import sys\n"
     "import utime as time\n"
-    /* "import pumbaa\n" */
     "\n"
-    /* "import pumbaa.pin as pin\n" */
-    /* "import pumbaa.board as board\n" */
+    "import pumbaa\n"
     "\n"
     "def main():\n"
     "    '''Main function of the Python blink application.\n"
@@ -40,14 +41,14 @@ static const char script[] =
     "    print('Python version:', sys.version)\n"
     "\n"
     "    # Initialize the LED pin and set it high.\n"
-    /* "    led = pin.Pin(board.PIN_LED, pin.OUTPUT)\n" */
-    /* "    led.write(1)\n" */
+    "    led = pumbaa.Pin(pumbaa.Board.PIN_LED, pumbaa.Pin.OUTPUT)\n"
+    "    led.write(1)\n"
     "\n"
     "    # Toggle the LED state periodically.\n"
     "    while True:\n"
     "        time.sleep(0.5)\n"
     "        print('toggle')\n"
-    /* "        led.toggle()\n" */
+    "        led.toggle()\n" 
     "\n"
     "\n"
     "if __name__ == '__main__':\n"

@@ -19,10 +19,13 @@
 
 #include "pumbaa.h"
 
-extern const mp_obj_type_t pin_class;
+extern const mp_obj_type_t board_class;
 
 static const mp_map_elem_t module_pumbaa_globals_table[] = {
     { MP_OBJ_NEW_QSTR(MP_QSTR___name__), MP_OBJ_NEW_QSTR(MP_QSTR_pumbaa) },
+
+    /* Board class. */
+    { MP_OBJ_NEW_QSTR(MP_QSTR_Board), (mp_obj_t)&board_class },
 
     /* Pin class. */
     { MP_OBJ_NEW_QSTR(MP_QSTR_Pin), (mp_obj_t)&pin_class },

@@ -20,10 +20,11 @@
 INC += $(PUMBAA_ROOT)/src
 
 PUMBAA_SRC += \
-	modtime.c \
+	board.c \
 	modpumbaa.c \
+	modtime.c \
 	pin.c
 
-SRC += $(PUMBAA_SRC:%=$(PUMBAA_ROOT)/src/pumbaa/%)
+SRC = $(PUMBAA_SRC:%=$(PUMBAA_ROOT)/src/pumbaa/%)
 
 include $(PUMBAA_ROOT)/src/micropython/micropython.mk
