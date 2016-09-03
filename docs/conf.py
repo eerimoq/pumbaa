@@ -17,7 +17,6 @@ import os
 import shlex
 import sphinx_rtd_theme
 import alabaster
-import subprocess
 
 read_the_docs_build = os.environ.get('READTHEDOCS', None) == 'True'
 

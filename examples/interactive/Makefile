@@ -23,5 +23,7 @@ BOARD ?= linux
 MAIN_C = main.c
 MAIN_PY =
 
+CDEFS += CONFIG_START_SHELL=0
+
 PUMBAA_ROOT ?= ../..
 include $(PUMBAA_ROOT)/make/app.mk
