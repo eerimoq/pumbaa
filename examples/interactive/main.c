@@ -22,25 +22,8 @@
 extern char *stack_top_p;
 static char heap[16384];
 
-static void stderr_print_strn(void *env_p, const char *str_p, size_t len)
-{
-    mp_hal_stdout_tx_strn_cooked(str_p, len);
-}
-
-static const mp_print_t mp_stderr_print = {
-    NULL, stderr_print_strn
-};
-
-static int handle_uncaught_exception(mp_obj_base_t *exc_p)
-{
-    mp_obj_print_exception(&mp_stderr_print, MP_OBJ_FROM_PTR(exc_p));
-    
-    return (0);
-}
-
 static int execute_from_lexer(mp_lexer_t *lex_p,
-                              mp_parse_input_kind_t input_kind,
-                              bool is_repl)
+                              mp_parse_input_kind_t input_kind)
 {
     nlr_buf_t nlr;
     qstr source_name;
@@ -58,7 +41,7 @@ static int execute_from_lexer(mp_lexer_t *lex_p,
 
         /* Parse, compile and execute. */
         parse_tree = mp_parse(lex_p, input_kind);
-        module_fun = mp_compile(&parse_tree, source_name, MP_EMIT_OPT_NONE, is_repl);
+        module_fun = mp_compile(&parse_tree, source_name, MP_EMIT_OPT_NONE, 1);
         mp_call_function_0(module_fun);
 
         /* Check for pending exception. */
@@ -72,7 +55,7 @@ static int execute_from_lexer(mp_lexer_t *lex_p,
         
         return (0);
     } else {
-        handle_uncaught_exception(nlr.ret_val);
+        mp_obj_print_exception(&mp_plat_print, MP_OBJ_FROM_PTR(nlr.ret_val));
         
         return (-1);
     }
@@ -109,7 +92,7 @@ static void interactive(void)
                                           line,
                                           length,
                                           false);
-        execute_from_lexer(lex_p, MP_PARSE_SINGLE_INPUT, true);
+        execute_from_lexer(lex_p, MP_PARSE_SINGLE_INPUT);
     }
 }
 

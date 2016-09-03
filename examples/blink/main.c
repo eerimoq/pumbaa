@@ -56,22 +56,6 @@ static const char script[] =
 
 static char heap[16384];
 
-static void stderr_print_strn(void *env_p, const char *str_p, size_t len)
-{
-    mp_hal_stdout_tx_strn_cooked(str_p, len);
-}
-
-static const mp_print_t mp_stderr_print = {
-    NULL, stderr_print_strn
-};
-
-static int handle_uncaught_exception(mp_obj_base_t *exc_p)
-{
-    mp_obj_print_exception(&mp_stderr_print, MP_OBJ_FROM_PTR(exc_p));
-    
-    return (0);
-}
-
 static int execute_from_lexer(mp_lexer_t *lex)
 {
     nlr_buf_t nlr;
@@ -85,7 +69,7 @@ static int execute_from_lexer(mp_lexer_t *lex)
         nlr_pop();
         return (0);
     } else {
-        handle_uncaught_exception(nlr.ret_val);
+        mp_obj_print_exception(&mp_plat_print, MP_OBJ_FROM_PTR(nlr.ret_val));
 
         return (-1);
     }
