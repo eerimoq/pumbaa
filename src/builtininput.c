@@ -1,8 +1,8 @@
 /**
- * @file builtinhelp.c
+ * @file builtininput.c
  *
  * @section License
- * Copyright (C) 2014-2016, Erik Moqvist
+ * Copyright (C) 2016, Erik Moqvist
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,23 +18,29 @@
  */
 
 #include "pumbaa.h"
-#include "lib/utils/pyhelp.h"
-
-static const FAR char help_text[] =
-    "http://pumbaa.readthedocs.io/en/latest/\r\n";
 
 /**
- * help()
+ * The builtin input() function.
  */
-static mp_obj_t builtin_help(size_t n_args, const mp_obj_t *args_p)
+static mp_obj_t builtin_input(size_t n_args, const mp_obj_t *args)
 {
-    if (n_args == 0) {
-        std_printf(help_text);
-    } else {
-        pyhelp_print_obj(args_p[0]);
-    }
+    /* vstr_t line; */
+    /* int res; */
     
-    return mp_const_none;
+    /* Print the prompt. */
+    if (n_args == 1) {
+        mp_obj_print(args[0], PRINT_STR);
+    }
+
+    /* TODO: Read a line. */
+    
+    /* if (ine.len == 0 && ret == CHAR_CTRL_D) { */
+    nlr_raise(mp_obj_new_exception(&mp_type_EOFError));
+    /* } */
+    
+    /* return (mp_obj_new_str_from_vstr(&mp_type_str, &line)); */
+    
+    return (mp_const_none);
 }
 
-MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_builtin_help_obj, 0, 1, builtin_help);
+MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_builtin_input_obj, 0, 1, builtin_input);

@@ -2,7 +2,7 @@
  * @file modfs.c
  *
  * @section License
- * Copyright (C) 2014-2016, Erik Moqvist
+ * Copyright (C) 2016, Erik Moqvist
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public

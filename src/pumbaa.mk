@@ -2,7 +2,7 @@
 # @file pumbaa.mk
 #
 # @section License
-# Copyright (C) 2014-2016, Erik Moqvist
+# Copyright (C) 2016, Erik Moqvist
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -20,14 +20,14 @@
 INC += $(PUMBAA_ROOT)/src
 
 PUMBAA_SRC += \
+	boards/$(BOARD)/modboard.c \
 	builtinhelp.c \
 	builtininput.c \
 	junk.c \
-	modboard.c \
 	modfs.c \
 	modpin.c \
-	modtime.c \
+	modtime.c
 
-SRC += $(PUMBAA_SRC:%=$(PUMBAA_ROOT)/src/pumbaa/%)
+SRC += $(PUMBAA_SRC:%=$(PUMBAA_ROOT)/src/%)
 
 include $(PUMBAA_ROOT)/src/micropython/micropython.mk
