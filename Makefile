@@ -17,12 +17,15 @@
 # This file is part of the Pumbaa project.
 #
 
-.PHONY: tags
+.PHONY: tags docs all help
 
 all:
 	$(MAKE) -C examples all
 
 travis: all
+
+docs:
+	$(MAKE) -C docs sphinx
 
 tags:
 	echo "Creating tags file .TAGS"

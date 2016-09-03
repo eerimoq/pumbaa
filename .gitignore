@@ -3,3 +3,4 @@ build/
 TAGS
 .TAGS
 settings.bin
+docs/_build
