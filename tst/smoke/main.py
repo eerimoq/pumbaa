@@ -1,8 +1,8 @@
 #
-# @file pumbaa.mk
+# @file main.py
 #
 # @section License
-# Copyright (C) 2014-2016, Erik Moqvist
+# Copyright (C) 2016, Erik Moqvist
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -17,17 +17,34 @@
 # This file is part of the Pumbaa project.
 #
 
-INC += $(PUMBAA_ROOT)/src
+import other
+import board
+import pin
 
-PUMBAA_SRC += \
-	builtinhelp.c \
-	builtininput.c \
-	junk.c \
-	modboard.c \
-	modfs.c \
-	modpin.c \
-	modtime.c \
+print('Hello world!')
 
-SRC += $(PUMBAA_SRC:%=$(PUMBAA_ROOT)/src/pumbaa/%)
+assert other.foo() == True
 
-include $(PUMBAA_ROOT)/src/micropython/micropython.mk
+try:
+    1 / 0
+    assert False
+except ZeroDivisionError as e:
+    print(e)
+
+led = pin.Pin(board.PIN_LED, pin.OUTPUT)
+led.write(1)
+
+help(led)
+help(board)
+
+# open() is not yet defined
+try:
+    with open("smoke.txt", "w") as fout:
+        fout.write("test")
+
+    with open("smoke.txt", "r") as fin:
+        assert fin.read("test") == "test"
+
+    assert False
+except NameError as e:
+    print(e)

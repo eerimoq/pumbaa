@@ -37,7 +37,9 @@ void gc_collect(void)
     // WARNING: This gc_collect implementation doesn't try to get root
     // pointers from CPU registers, and thus may function incorrectly.
     void *dummy_p;
-    
+
+    std_printf(FSTR("collect\r\n"));
+
     gc_collect_start();
     gc_collect_root(&dummy_p,
                     ((mp_uint_t)stack_top_p - (mp_uint_t)&dummy_p)

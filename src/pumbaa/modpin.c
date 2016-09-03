@@ -57,7 +57,7 @@ static void pin_print(const mp_print_t *print_p,
 static mp_obj_t pin_obj_init_helper(const struct pin_obj_t *self_p,
                                     mp_uint_t n_args,
                                     const mp_obj_t *pos_args_p,
-                                    mp_map_t *kw_args_p)
+                                    mp_map_t *kwargs_p)
 {
     static const mp_arg_t allowed_args[] = {
         { MP_QSTR_pin, MP_ARG_REQUIRED | MP_ARG_INT },
@@ -70,7 +70,7 @@ static mp_obj_t pin_obj_init_helper(const struct pin_obj_t *self_p,
     /* Parse args. */
     mp_arg_parse_all(n_args,
                      pos_args_p,
-                     kw_args_p,
+                     kwargs_p,
                      MP_ARRAY_SIZE(allowed_args),
                      allowed_args,
                      args);
@@ -92,9 +92,9 @@ static mp_obj_t pin_obj_init_helper(const struct pin_obj_t *self_p,
  */
 static mp_obj_t pin_obj_init(mp_uint_t n_args,
                              const mp_obj_t *args_p,
-                             mp_map_t *kw_args_p)
+                             mp_map_t *kwargs_p)
 {
-    return (pin_obj_init_helper(args_p[0], n_args - 1, args_p + 1, kw_args_p));
+    return (pin_obj_init_helper(args_p[0], n_args - 1, args_p + 1, kwargs_p));
 }
 
 /**
@@ -108,7 +108,7 @@ static mp_obj_t pin_make_new(const mp_obj_type_t *type_p,
                              const mp_obj_t *args_p)
 {
     struct pin_obj_t *self_p;
-    mp_map_t kw_args;
+    mp_map_t kwargs;
 
     mp_arg_check_num(n_args, n_kw, 1, MP_OBJ_FUN_ARGS_MAX, true);
 
@@ -118,8 +118,8 @@ static mp_obj_t pin_make_new(const mp_obj_type_t *type_p,
 
     /* Initialize the pin if pin and mode are given. */
     if (n_args == 2) {
-        mp_map_init(&kw_args, 0);
-        pin_obj_init_helper(self_p, n_args, args_p, &kw_args);
+        mp_map_init(&kwargs, 0);
+        pin_obj_init_helper(self_p, n_args, args_p, &kwargs);
     }
 
     return (self_p);

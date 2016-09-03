@@ -45,18 +45,18 @@
 #define MICROPY_CPYTHON_COMPAT      (0)
 #define MICROPY_PY_BUILTINS_FLOAT (1)
 #define MICROPY_PY_BUILTINS_COMPLEX (0)
-#define MICROPY_PY_BUILTINS_BYTEARRAY (0)
+#define MICROPY_PY_BUILTINS_BYTEARRAY (1)
 #define MICROPY_PY_BUILTINS_MEMORYVIEW (0)
 #define MICROPY_PY_BUILTINS_COMPILE (0)
-#define MICROPY_PY_BUILTINS_ENUMERATE (0)
+#define MICROPY_PY_BUILTINS_ENUMERATE (1)
 #define MICROPY_PY_BUILTINS_FILTER  (0)
-#define MICROPY_PY_BUILTINS_FROZENSET (0)
+#define MICROPY_PY_BUILTINS_FROZENSET (1)
 #define MICROPY_PY_BUILTINS_REVERSED (0)
-#define MICROPY_PY_BUILTINS_SET     (0)
-#define MICROPY_PY_BUILTINS_SLICE   (0)
+#define MICROPY_PY_BUILTINS_SET     (1)
+#define MICROPY_PY_BUILTINS_SLICE   (1)
 #define MICROPY_PY_BUILTINS_STR_UNICODE (0)
 #define MICROPY_PY_BUILTINS_PROPERTY (0)
-#define MICROPY_PY_BUILTINS_MIN_MAX (0)
+#define MICROPY_PY_BUILTINS_MIN_MAX (1)
 #define MICROPY_PY___FILE__         (0)
 #define MICROPY_PY_MICROPYTHON_MEM_INFO (0)
 #define MICROPY_PY_GC               (0)
@@ -96,6 +96,14 @@ extern const struct _mp_obj_module_t module_fs;
     { MP_ROM_QSTR(MP_QSTR_board), MP_ROM_PTR(&module_board) }, \
     { MP_ROM_QSTR(MP_QSTR_pin), MP_ROM_PTR(&module_pin) }, \
     { MP_ROM_QSTR(MP_QSTR_fs), MP_ROM_PTR(&module_fs) },
+
+/* Extra built in names to add to the global namespace. */
+#define MICROPY_PORT_BUILTINS \
+    { MP_ROM_QSTR(MP_QSTR_help), MP_ROM_PTR(&mp_builtin_help_obj) },  \
+    { MP_ROM_QSTR(MP_QSTR_input), MP_ROM_PTR(&mp_builtin_input_obj) },
+
+/*                                                                     \ */
+    /* { MP_ROM_QSTR(MP_QSTR_open), MP_ROM_PTR(&mp_builtin_open_obj) }, */
 
 #define MICROPY_PORT_ROOT_POINTERS \
     mp_obj_t keyboard_interrupt_obj;
