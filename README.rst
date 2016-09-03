@@ -1,3 +1,5 @@
+|buildstatus|_
+
 About
 =====
 
@@ -19,3 +21,6 @@ Hardware requirements
 
 - ? kB of RAM
 - ? kB of Flash
+
+.. |buildstatus| image:: https://travis-ci.org/eerimoq/pumbaa.svg
+.. _buildstatus: https://travis-ci.org/eerimoq/pumbaa
