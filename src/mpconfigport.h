@@ -70,7 +70,7 @@
 #define MICROPY_PY_STRUCT           (0)
 #define MICROPY_PY_SYS              (1)
 #define MICROPY_PY_SYS_EXIT         (0)
-#define MICROPY_PY_SYS_PLATFORM     "linux"
+#define MICROPY_PY_SYS_PLATFORM     "Pumbaa"
 #define MICROPY_PY_SYS_MAXSIZE      (0)
 #define MICROPY_PY_SYS_STDFILES     (0)
 #define MICROPY_PY_CMATH            (0)
