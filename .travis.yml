@@ -1,0 +1,5 @@
+before_install:
+  - sudo apt-get update -qq
+  - source setup.sh
+
+script: make -s travis -j $(cat /proc/cpuinfo | grep processor | wc -l)

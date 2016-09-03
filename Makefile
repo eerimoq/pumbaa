@@ -22,6 +22,8 @@
 all:
 	$(MAKE) -C examples all
 
+travis: all
+
 tags:
 	echo "Creating tags file .TAGS"
 	etags -o .TAGS --declarations $$(git ls-files *.[hci] | xargs)
