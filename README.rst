@@ -6,7 +6,7 @@ About
 `Pumbaa` is `Python` on top of `Simba`. See
 http://pumbaa.readthedocs.org for further details.
 
-The implementation is based on Micro Python, designed for embedded
+The implementation is a port of `Micro Python`, designed for embedded
 devices with limited amount of RAM and code memory.
 
 Setup
