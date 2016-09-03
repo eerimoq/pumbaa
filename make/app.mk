@@ -18,6 +18,12 @@
 #
 
 SIMBA_ROOT ?= $(PUMBAA_ROOT)/simba
+
+PYSRC ?=
+FROZEN_C = $(BUILDDIR)/frozen.c
+
+SRC += $(FROZEN_C)
+
 include $(PUMBAA_ROOT)/src/pumbaa.mk
 include $(SIMBA_ROOT)/make/app.mk
 
@@ -36,6 +42,7 @@ QSTR_DEFS_PY_CORE_H = $(PUMBAA_ROOT)/src/micropython/py/qstrdefs.h
 
 MAKEQSTRDATA_PY = $(MICROPYTHON_ROOT)/py/makeqstrdata.py
 MAKEQSTRDEFS_PY = $(MICROPYTHON_ROOT)/py/makeqstrdefs.py
+MAKE_FROZEN_PY = $(MICROPYTHON_ROOT)/tools/make-frozen.py
 
 LDFLAGS_AFTER += -lm
 
@@ -56,4 +63,9 @@ $(QSTR_DEFS_GENERATED_H): $(QSTR_DEFS_PY_CORE_H) $(QSTR_DEFS_COLLECTED_H)
 	cat $^ | $(SED) 's/^Q(.*)/"&"/' | $(CC) $(INC:%=-I%) $(CDEFS:%=-D%) $(CFLAGS) -E - | sed 's/^"\(Q(.*)\)"/\1/' > $(QSTR_DEFS_PREPROCESSED_H)
 	$(PYTHON) $(MAKEQSTRDATA_PY) $(QSTR_DEFS_PREPROCESSED_H) > $@
 
-generate: $(QSTR_DEFS_GENERATED_H)
+$(FROZEN_C): $(FROZEN_PY)
+	echo "Generating $@"
+	mkdir -p $(BUILDDIR)
+	$(PYTHON) $(MAKE_FROZEN_PY) $^ > $@
+
+generate: $(QSTR_DEFS_GENERATED_H) $(FROZEN_C)

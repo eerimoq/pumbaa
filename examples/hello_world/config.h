@@ -1,5 +1,5 @@
 /**
- * @file pumbaa.h
+ * @file config.h
  *
  * @section License
  * Copyright (C) 2014-2016, Erik Moqvist
@@ -17,20 +17,9 @@
  * This file is part of the Pumbaa project.
  */
 
-#ifndef __PUMBAA_H__
-#define __PUMBAA_H__
+#ifndef __CONFIG_H__
+#define __CONFIG_H__
 
-#include "simba.h"
-
-#include "genhdr/mpversion.h"
-
-#include "py/runtime.h"
-#include "py/obj.h"
-#include "py/smallint.h"
-#include "py/compile.h"
-#include "py/gc.h"
-#include "py/stackctrl.h"
-#include "py/mphal.h"
-#include "py/frozenmod.h"
+#define CONFIG_START_FILESYSTEM_ADDRESS        0x000e0000
 
 #endif

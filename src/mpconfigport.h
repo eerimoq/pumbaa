@@ -83,6 +83,8 @@
 #define MICROPY_PY_UBINASCII        (0)
 #define MICROPY_PY_UTIME            (1)
 
+#define MICROPY_MODULE_FROZEN_STR   (1)
+
 extern const struct _mp_obj_module_t mp_module_time;
 extern const struct _mp_obj_module_t module_board;
 extern const struct _mp_obj_module_t module_pin;

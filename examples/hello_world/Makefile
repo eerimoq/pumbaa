@@ -1,5 +1,5 @@
 #
-# @file pumbaa.mk
+# @file Makefile
 #
 # @section License
 # Copyright (C) 2014-2016, Erik Moqvist
@@ -17,15 +17,10 @@
 # This file is part of the Pumbaa project.
 #
 
-INC += $(PUMBAA_ROOT)/src
+NAME = hello_world
+BOARD ?= linux
 
-PUMBAA_SRC += \
-	junk.c \
-	modboard.c \
-	modfs.c \
-	modpin.c \
-	modtime.c \
+FROZEN_PY += main.py
 
-SRC += $(PUMBAA_SRC:%=$(PUMBAA_ROOT)/src/pumbaa/%)
-
-include $(PUMBAA_ROOT)/src/micropython/micropython.mk
+PUMBAA_ROOT ?= ../..
+include $(PUMBAA_ROOT)/make/app.mk

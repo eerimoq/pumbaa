@@ -31,6 +31,7 @@ static const char script[] =
     "import board\n"
     "import pin\n"
     "\n"
+    "\n"
     "def main():\n"
     "    '''Main function of the Python blink application.\n"
     "\n"
