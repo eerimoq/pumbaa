@@ -23,9 +23,6 @@ read_the_docs_build = os.environ.get('READTHEDOCS', None) == 'True'
 
 print os.getcwd()
 
-if read_the_docs_build:
-    subprocess.call('doxygen doxygen.cfg', shell=True)
-
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
@@ -44,7 +41,6 @@ breathe_projects = {
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    "breathe",
     "alabaster",
     "sphinx.ext.extlinks"
 ]
