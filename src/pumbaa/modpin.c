@@ -196,8 +196,24 @@ const mp_obj_type_t pin_class = {
     .locals_dict = (mp_obj_t)&pin_locals_dict,
 };
 
+/**
+ * Function called when the module is imported.
+ */
+static mp_obj_t mod_init(void)
+{
+    pin_module_init();
+
+    return (mp_const_none);
+}
+
+static MP_DEFINE_CONST_FUN_OBJ_0(mod_init_obj, mod_init);
+
+/**
+ * A table of all the modules' global objects.
+ */
 static const mp_map_elem_t module_pin_globals_table[] = {
     { MP_OBJ_NEW_QSTR(MP_QSTR___name__), MP_OBJ_NEW_QSTR(MP_QSTR_pin) },
+    { MP_OBJ_NEW_QSTR(MP_QSTR___init__), (mp_obj_t)&mod_init_obj },
 
     /* Pin class. */
     { MP_OBJ_NEW_QSTR(MP_QSTR_Pin), (mp_obj_t)&pin_class },
