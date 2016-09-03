@@ -24,6 +24,8 @@
  * THE SOFTWARE.
  */
 
+#include "pumbaa.h"
+
 #include <stdlib.h>
 #include <assert.h>
 

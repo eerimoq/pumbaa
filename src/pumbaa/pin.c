@@ -75,7 +75,7 @@ static mp_obj_t pin_obj_init_helper(const struct pin_obj_t *self_p,
 
     pin = args[0].u_int;
     mode = args[1].u_int;
-    
+
     pin_init((struct pin_driver_t *)&self_p->drv,
              &pin_device[pin],
              mode);
@@ -107,18 +107,19 @@ static mp_obj_t pin_make_new(const mp_obj_type_t *type_p,
 {
     struct pin_obj_t *self_p;
     mp_map_t kw_args;
-    
+
     mp_arg_check_num(n_args, n_kw, 1, MP_OBJ_FUN_ARGS_MAX, true);
-    
+
     /* Create a new Pin object. */
     self_p = m_new0(struct pin_obj_t, 1);
     self_p->base.type = &pin_class;
-    
+
     /* Initialize the pin if pin and mode are given. */
     if (n_args == 2) {
+        mp_map_init(&kw_args, 0);
         pin_obj_init_helper(self_p, n_args, args_p, &kw_args);
     }
-    
+
     return (self_p);
 }
 
@@ -151,7 +152,7 @@ static mp_obj_t pin_obj_write(mp_obj_t self_in, mp_obj_t value_in)
 
     self_p = self_in;
     pin_write(&self_p->drv, mp_obj_get_int(value_in));
-        
+
     return (mp_const_none);
 }
 

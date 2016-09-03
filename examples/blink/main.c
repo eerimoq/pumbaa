@@ -45,7 +45,7 @@ static const char script[] =
     "    while True:\n"
     "        time.sleep(0.5)\n"
     "        print('toggle')\n"
-    "        led.toggle()\n" 
+    "        led.toggle()\n"
     "\n"
     "\n"
     "if __name__ == '__main__':\n"
@@ -59,7 +59,7 @@ static mp_obj_t execute_from_lexer(mp_lexer_t *lex)
     nlr_buf_t nlr;
     mp_parse_tree_t pt;
     mp_obj_t module_fun;
-    
+
     if (nlr_push(&nlr) == 0) {
         pt = mp_parse(lex, MP_PARSE_FILE_INPUT);
         module_fun = mp_compile(&pt, lex->source_name, MP_EMIT_OPT_NONE, false);
@@ -78,7 +78,9 @@ int main()
     int stack_dummy;
 
     sys_start();
-    
+
+    pin_module_init();
+
     stack_top_p = (char*)&stack_dummy;
     mp_stack_set_limit(40000 * (BYTES_PER_WORD / 4));
     gc_init(heap, heap + sizeof(heap));

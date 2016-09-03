@@ -26,7 +26,7 @@
  */
 static const mp_map_elem_t board_locals_dict_table[] = {
     /* Class constants. */
-    { MP_OBJ_NEW_QSTR(MP_QSTR_PIN_LED), MP_OBJ_NEW_SMALL_INT(13) },
+    { MP_OBJ_NEW_QSTR(MP_QSTR_PIN_LED), MP_OBJ_NEW_SMALL_INT(SAM_PB + 27) },
 };
 
 static MP_DEFINE_CONST_DICT(board_locals_dict, board_locals_dict_table);
