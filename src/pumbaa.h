@@ -14,7 +14,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
- * This file is part of the Simba project.
+ * This file is part of the Pumbaa project.
  */
 
 #ifndef __PUMBAA_H__
@@ -25,6 +25,9 @@
 #include "py/runtime.h"
 #include "py/obj.h"
 #include "py/smallint.h"
+#include "py/compile.h"
+#include "py/gc.h"
+#include "py/stackctrl.h"
 
 #include "pumbaa/pin.h"
 

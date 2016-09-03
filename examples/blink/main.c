@@ -2,7 +2,7 @@
  * @file main.c
  *
  * @section License
- * Copyright (C) 2015-2016, Erik Moqvist
+ * Copyright (C) 2016, Erik Moqvist
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -14,15 +14,10 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
- * This file is part of the Simba project.
+ * This file is part of the Pumbaa project.
  */
 
-#include "simba.h"
-
-#include "py/compile.h"
-#include "py/runtime.h"
-#include "py/gc.h"
-#include "py/stackctrl.h"
+#include "pumbaa.h"
 
 /**
  * The Python script.
@@ -80,28 +75,22 @@ int main()
 {
     mp_lexer_t *lex_p;
     int stack_dummy;
-    
-    stack_top = (char*)&stack_dummy;
 
     sys_start();
     
-    /* Initialized stack limit. */
+    stack_top = (char*)&stack_dummy;
     mp_stack_set_limit(40000 * (BYTES_PER_WORD / 4));
-    
-    /* Initialize heap. */
     gc_init(heap, heap + sizeof(heap));
-    
-    /* Initialize interpreter. */
     mp_init();
 
-    /* Hello world. */
+    /* Script. */
     lex_p = mp_lexer_new_from_str_len(0, script, strlen(script), false);
 
     if (execute_from_lexer(lex_p) != 0) {
         std_printf(FSTR("Error\r\n"));
+    } else {
+        std_printf(FSTR("Ok\r\n"));
     }
-
-    std_printf(FSTR("Done\r\n"));
 
     return (0);
 }
