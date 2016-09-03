@@ -24,6 +24,10 @@ FROZEN_C = $(BUILDDIR)/frozen.c
 
 SRC += $(FROZEN_C)
 
+CDEFS += \
+	MICROPY_EMIT_X86=0 \
+	MICROPY_NLR_SETJMP
+
 include $(PUMBAA_ROOT)/src/pumbaa.mk
 include $(SIMBA_ROOT)/make/app.mk
 

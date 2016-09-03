@@ -20,9 +20,5 @@
 NAME = interactive
 BOARD ?= linux
 
-CDEFS += \
-	MICROPY_EMIT_X86=0 \
-	MICROPY_NLR_SETJMP
-
 PUMBAA_ROOT ?= ../..
 include $(PUMBAA_ROOT)/make/app.mk
