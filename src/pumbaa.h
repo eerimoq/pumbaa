@@ -22,6 +22,8 @@
 
 #include "simba.h"
 
+#include "genhdr/mpversion.h"
+
 #include "py/runtime.h"
 #include "py/obj.h"
 #include "py/smallint.h"

@@ -19,6 +19,8 @@
 
 #include "pumbaa.h"
 
+extern char *stack_top_p;
+
 /**
  * The Python script.
  */
@@ -50,7 +52,6 @@ static const char script[] =
     "    main()\n"
     "";
 
-static char *stack_top;
 static char heap[16384];
 
 static mp_obj_t execute_from_lexer(mp_lexer_t *lex)
@@ -78,7 +79,7 @@ int main()
 
     sys_start();
     
-    stack_top = (char*)&stack_dummy;
+    stack_top_p = (char*)&stack_dummy;
     mp_stack_set_limit(40000 * (BYTES_PER_WORD / 4));
     gc_init(heap, heap + sizeof(heap));
     mp_init();
@@ -93,44 +94,4 @@ int main()
     }
 
     return (0);
-}
-
-mp_import_stat_t mp_import_stat(const char *path_p)
-{
-    return (MP_IMPORT_STAT_NO_EXIST);
-}
-
-void nlr_jump_fail(void *val_p)
-{
-    std_printf(FSTR("FATAL: uncaught NLR 0x%x\r\n"), (long)val_p);
-    sys_stop(1);
-}
-
-void gc_collect(void)
-{
-    // WARNING: This gc_collect implementation doesn't try to get root
-    // pointers from CPU registers, and thus may function incorrectly.
-    void *dummy_p;
-    
-    gc_collect_start();
-    gc_collect_root(&dummy_p,
-                    ((mp_uint_t)stack_top - (mp_uint_t)&dummy_p)
-                    / sizeof(mp_uint_t));
-    gc_collect_end();
-    gc_dump_info();
-}
-
-void mp_hal_stdout_tx_strn_cooked(const char *str_p, size_t len)
-{
-    char c;
-
-    while (len--) {
-        if (*str_p == '\n') {
-            c = '\r';
-            chan_write(sys_get_stdout(), &c, 1);
-        }
-
-        c = *str_p++;
-        chan_write(sys_get_stdout(), &c, 1);
-    }
 }

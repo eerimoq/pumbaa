@@ -1,5 +1,5 @@
 #
-# @file pumbaa.mk
+# @file Makefile
 #
 # @section License
 # Copyright (C) 2014-2016, Erik Moqvist
@@ -17,15 +17,12 @@
 # This file is part of the Pumbaa project.
 #
 
-INC += $(PUMBAA_ROOT)/src
+NAME = interactive
+BOARD ?= linux
 
-PUMBAA_SRC += \
-	board.c \
-	junk.c \
-	modpumbaa.c \
-	modtime.c \
-	pin.c
+CDEFS += \
+	MICROPY_EMIT_X86=0 \
+	MICROPY_NLR_SETJMP
 
-SRC = $(PUMBAA_SRC:%=$(PUMBAA_ROOT)/src/pumbaa/%)
-
-include $(PUMBAA_ROOT)/src/micropython/micropython.mk
+PUMBAA_ROOT ?= ../..
+include $(PUMBAA_ROOT)/make/app.mk
