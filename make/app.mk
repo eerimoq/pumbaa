@@ -19,7 +19,9 @@
 
 SIMBA_ROOT ?= $(PUMBAA_ROOT)/simba
 
-PYSRC ?=
+PYSRC ?= main.py
+
+MAIN_C ?= $(PUMBAA_ROOT)/src/pumbaa/main.c
 FROZEN_C = $(BUILDDIR)/frozen.c
 
 SRC += $(FROZEN_C)
@@ -67,7 +69,7 @@ $(QSTR_DEFS_GENERATED_H): $(QSTR_DEFS_PY_CORE_H) $(QSTR_DEFS_COLLECTED_H)
 	cat $^ | $(SED) 's/^Q(.*)/"&"/' | $(CC) $(INC:%=-I%) $(CDEFS:%=-D%) $(CFLAGS) -E - | sed 's/^"\(Q(.*)\)"/\1/' > $(QSTR_DEFS_PREPROCESSED_H)
 	$(PYTHON) $(MAKEQSTRDATA_PY) $(QSTR_DEFS_PREPROCESSED_H) > $@
 
-$(FROZEN_C): $(FROZEN_PY)
+$(FROZEN_C): $(PYSRC)
 	echo "Generating $@"
 	mkdir -p $(BUILDDIR)
 	$(PYTHON) $(MAKE_FROZEN_PY) $^ > $@

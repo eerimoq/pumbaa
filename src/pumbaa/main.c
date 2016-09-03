@@ -39,6 +39,7 @@ static int parse_compile_execute(void *source_p,
 
         /* Execute code. */
         mp_call_function_0(module_fun);
+
         nlr_pop();
     } else {
             mp_obj_print_exception(&mp_plat_print, (mp_obj_t)nlr.ret_val);

@@ -1,8 +1,8 @@
 #
-# @file Makefile
+# @file main.py
 #
 # @section License
-# Copyright (C) 2014-2016, Erik Moqvist
+# Copyright (C) 2016, Erik Moqvist
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -17,8 +17,16 @@
 # This file is part of the Pumbaa project.
 #
 
-NAME = hello_world
-BOARD ?= linux
+import utime as time
 
-PUMBAA_ROOT ?= ../..
-include $(PUMBAA_ROOT)/make/app.mk
+import board
+import pin
+
+# Initialize the LED pin and set it high.
+LED = pin.Pin(board.PIN_LED, pin.OUTPUT)
+LED.write(1)
+
+# Toggle the LED state periodically.
+while True:
+    time.sleep(0.5)
+    LED.toggle()
