@@ -28,7 +28,8 @@ static const char script[] =
     "import sys\n"
     "import utime as time\n"
     "\n"
-    "import pumbaa\n"
+    "import board\n"
+    "import pin\n"
     "\n"
     "def main():\n"
     "    '''Main function of the Python blink application.\n"
@@ -38,7 +39,7 @@ static const char script[] =
     "    print('Python version:', sys.version)\n"
     "\n"
     "    # Initialize the LED pin and set it high.\n"
-    "    led = pumbaa.Pin(pumbaa.Board.PIN_LED, pumbaa.Pin.OUTPUT)\n"
+    "    led = pin.Pin(board.PIN_LED, pin.OUTPUT)\n"
     "    led.write(1)\n"
     "\n"
     "    # Toggle the LED state periodically.\n"
@@ -54,7 +55,23 @@ static const char script[] =
 
 static char heap[16384];
 
-static mp_obj_t execute_from_lexer(mp_lexer_t *lex)
+static void stderr_print_strn(void *env_p, const char *str_p, size_t len)
+{
+    mp_hal_stdout_tx_strn_cooked(str_p, len);
+}
+
+static const mp_print_t mp_stderr_print = {
+    NULL, stderr_print_strn
+};
+
+static int handle_uncaught_exception(mp_obj_base_t *exc_p)
+{
+    mp_obj_print_exception(&mp_stderr_print, MP_OBJ_FROM_PTR(exc_p));
+    
+    return (0);
+}
+
+static int execute_from_lexer(mp_lexer_t *lex)
 {
     nlr_buf_t nlr;
     mp_parse_tree_t pt;
@@ -65,10 +82,11 @@ static mp_obj_t execute_from_lexer(mp_lexer_t *lex)
         module_fun = mp_compile(&pt, lex->source_name, MP_EMIT_OPT_NONE, false);
         mp_call_function_0(module_fun);
         nlr_pop();
-        return 0;
+        return (0);
     } else {
-        /* uncaught exception */
-        return (mp_obj_t)nlr.ret_val;
+        handle_uncaught_exception(nlr.ret_val);
+
+        return (-1);
     }
 }
 
@@ -78,6 +96,9 @@ int main()
     int stack_dummy;
 
     sys_start();
+
+    std_printf(sys_get_info());
+    std_printf(FSTR("\r\n"));
 
     pin_module_init();
 

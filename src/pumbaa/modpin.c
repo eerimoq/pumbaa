@@ -19,6 +19,8 @@
 
 #include "pumbaa.h"
 
+extern const mp_obj_type_t pin_class;
+
 /**
  * class Pin(object):
  *
@@ -182,10 +184,6 @@ static const mp_map_elem_t pin_locals_dict_table[] = {
     { MP_OBJ_NEW_QSTR(MP_QSTR_write), (mp_obj_t)&pin_obj_write_fun_obj },
     { MP_OBJ_NEW_QSTR(MP_QSTR_toggle), (mp_obj_t)&pin_obj_toggle_fun_obj },
     { MP_OBJ_NEW_QSTR(MP_QSTR_set_mode), (mp_obj_t)&pin_obj_set_mode_fun_obj },
-
-    /* Class constants. */
-    { MP_OBJ_NEW_QSTR(MP_QSTR_INPUT), MP_OBJ_NEW_SMALL_INT(PIN_INPUT) },
-    { MP_OBJ_NEW_QSTR(MP_QSTR_OUTPUT), MP_OBJ_NEW_SMALL_INT(PIN_OUTPUT) },
 };
 
 static MP_DEFINE_CONST_DICT(pin_locals_dict, pin_locals_dict_table);
@@ -196,4 +194,23 @@ const mp_obj_type_t pin_class = {
     .print = pin_print,
     .make_new = pin_make_new,
     .locals_dict = (mp_obj_t)&pin_locals_dict,
+};
+
+static const mp_map_elem_t module_pin_globals_table[] = {
+    { MP_OBJ_NEW_QSTR(MP_QSTR___name__), MP_OBJ_NEW_QSTR(MP_QSTR_pin) },
+
+    /* Pin class. */
+    { MP_OBJ_NEW_QSTR(MP_QSTR_Pin), (mp_obj_t)&pin_class },
+
+    /* Module constants. */
+    { MP_OBJ_NEW_QSTR(MP_QSTR_INPUT), MP_OBJ_NEW_SMALL_INT(PIN_INPUT) },
+    { MP_OBJ_NEW_QSTR(MP_QSTR_OUTPUT), MP_OBJ_NEW_SMALL_INT(PIN_OUTPUT) },
+};
+
+static MP_DEFINE_CONST_DICT(module_pin_globals, module_pin_globals_table);
+
+const mp_obj_module_t module_pin = {
+    { &mp_type_module },
+    .name = MP_QSTR_pin,
+    .globals = (mp_obj_t)&module_pin_globals,
 };

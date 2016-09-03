@@ -20,11 +20,11 @@
 INC += $(PUMBAA_ROOT)/src
 
 PUMBAA_SRC += \
-	board.c \
 	junk.c \
-	modpumbaa.c \
+	modboard.c \
+	modfs.c \
+	modpin.c \
 	modtime.c \
-	pin.c
 
 SRC = $(PUMBAA_SRC:%=$(PUMBAA_ROOT)/src/pumbaa/%)
 

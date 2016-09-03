@@ -32,6 +32,4 @@
 #include "py/stackctrl.h"
 #include "py/mphal.h"
 
-#include "pumbaa/pin.h"
-
 #endif

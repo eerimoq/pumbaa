@@ -1,5 +1,5 @@
 /**
- * @file libpumbaa.c
+ * @file board.c
  *
  * @section License
  * Copyright (C) 2014-2016, Erik Moqvist
@@ -19,22 +19,17 @@
 
 #include "pumbaa.h"
 
-extern const mp_obj_type_t board_class;
-
-static const mp_map_elem_t module_pumbaa_globals_table[] = {
-    { MP_OBJ_NEW_QSTR(MP_QSTR___name__), MP_OBJ_NEW_QSTR(MP_QSTR_pumbaa) },
-
-    /* Board class. */
-    { MP_OBJ_NEW_QSTR(MP_QSTR_Board), (mp_obj_t)&board_class },
-
-    /* Pin class. */
-    { MP_OBJ_NEW_QSTR(MP_QSTR_Pin), (mp_obj_t)&pin_class },
+/**
+ * PIN_LED
+ */
+static const mp_map_elem_t module_board_globals_table[] = {
+    { MP_OBJ_NEW_QSTR(MP_QSTR_PIN_LED), MP_OBJ_NEW_SMALL_INT(SAM_PB + 27) },
 };
 
-static MP_DEFINE_CONST_DICT(module_pumbaa_globals, module_pumbaa_globals_table);
+static MP_DEFINE_CONST_DICT(module_board_globals, module_board_globals_table);
 
-const mp_obj_module_t module_pumbaa = {
-    .base = { &mp_type_module },
-    .name = MP_QSTR_pumbaa,
-    .globals = (mp_obj_dict_t*)&module_pumbaa_globals,
+const mp_obj_module_t module_board = {
+    { &mp_type_module },
+    .name = MP_QSTR_board,
+    .globals = (mp_obj_t)&module_board_globals,
 };
