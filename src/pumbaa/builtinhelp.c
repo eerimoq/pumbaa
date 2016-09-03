@@ -18,13 +18,21 @@
  */
 
 #include "pumbaa.h"
+#include "lib/utils/pyhelp.h"
+
+static const FAR char help_text[] =
+    "http://pumbaa.readthedocs.io/en/latest/\r\n";
 
 /**
  * help()
  */
 static mp_obj_t builtin_help(size_t n_args, const mp_obj_t *args_p)
 {
-    std_printf(FSTR("No help available!\r\n"));
+    if (n_args == 0) {
+        std_printf(help_text);
+    } else {
+        pyhelp_print_obj(args_p[0]);
+    }
     
     return mp_const_none;
 }

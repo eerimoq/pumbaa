@@ -17,12 +17,19 @@
 # This file is part of the Pumbaa project.
 #
 
-.PHONY: tags docs all help
+.PHONY: tags docs all help travis clean
 
 all:
 	$(MAKE) -C examples all
 
-travis: all
+clean:
+	$(MAKE) -C examples clean
+	$(MAKE) -C tst/smoke clean
+
+test:
+	$(MAKE) -C tst/smoke run
+
+travis: all test
 
 docs:
 	$(MAKE) -C docs sphinx

@@ -33,11 +33,12 @@ except ZeroDivisionError as e:
 
 led = pin.Pin(board.PIN_LED, pin.OUTPUT)
 led.write(1)
+led.toggle()
+print("LED value:", led.read())
 
 help(led)
-help(board)
 
-# open() is not yet defined
+# open() is not yet implemented.
 try:
     with open("smoke.txt", "w") as fout:
         fout.write("test")
