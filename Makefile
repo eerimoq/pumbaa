@@ -19,6 +19,9 @@
 
 .PHONY: tags
 
+all:
+	$(MAKE) -C examples all
+
 tags:
 	echo "Creating tags file .TAGS"
 	etags -o .TAGS --declarations $$(git ls-files *.[hci] | xargs)

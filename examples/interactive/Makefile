@@ -21,7 +21,7 @@ NAME = interactive
 BOARD ?= linux
 
 MAIN_C = main.c
-PYSRC =
+MAIN_PY =
 
 PUMBAA_ROOT ?= ../..
 include $(PUMBAA_ROOT)/make/app.mk
