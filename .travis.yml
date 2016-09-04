@@ -3,3 +3,7 @@ before_install:
   - source setup.sh
 
 script: make -s travis -j $(cat /proc/cpuinfo | grep processor | wc -l)
+
+after_success:
+  - make codecov-coverage
+  - bash <(curl -s https://codecov.io/bash) -X gcov -X coveragepy
