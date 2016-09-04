@@ -11,7 +11,7 @@
    Initialize given event object.
 
 
-   .. method:: read(mask)
+   .. method:: read(mask=0xffffffff)
 
       Wait for an event to occur and return a mask of all events.
 

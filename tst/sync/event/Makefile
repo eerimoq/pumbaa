@@ -1,34 +1,24 @@
-# 
-# @file main.py
-# 
+#
+# @file Makefile
+#
 # @section License
 # Copyright (C) 2016, Erik Moqvist
-# 
+#
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
 # License as published by the Free Software Foundation; either
 # version 2.1 of the License, or (at your option) any later version.
-# 
+#
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # Lesser General Public License for more details.
-# 
+#
 # This file is part of the Pumbaa project.
-# 
+#
 
-import event
-import timer
+NAME = timer
+BOARD ?= linux
 
-TIMEOUT_EVENT = 0x1
-
-EVENT = event.Event()
-
-TIMER = timer.Timer(1, EVENT, flags=timer.PERIODIC)
-TIMER.start()
-
-for i in range(10):
-    EVENT.read()
-    print("timeout", i)
-
-TIMER.stop()
+PUMBAA_ROOT ?= ../..
+include $(PUMBAA_ROOT)/make/app.mk

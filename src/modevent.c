@@ -76,20 +76,35 @@ static mp_obj_t class_event_init(mp_uint_t n_args,
 }
 
 /**
- * def read(self)
+ * def read(self, mask=0xffffffff)
  */
 static mp_obj_t class_event_read(size_t n_args, const mp_obj_t *args_p)
 {
     struct class_event_t *self_p;
     uint32_t mask;
+    static const mp_arg_t allowed_args[] = {
+        { MP_QSTR_mask, MP_ARG_INT, { .u_int = 0xffffffff } },
+    };
+    mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];
+    mp_map_t kwargs;
 
-    mask = 0x1;
+    mp_arg_check_num(n_args, 1, 1, 2, true);
+
+    /* Parse args. */
+    mp_map_init(&kwargs, 0);
+    mp_arg_parse_all(n_args - 1,
+                     args_p + 1,
+                     &kwargs,
+                     MP_ARRAY_SIZE(allowed_args),
+                     allowed_args,
+                     args);
     self_p = MP_OBJ_TO_PTR(args_p[0]);
+    mask = args[0].u_int;
 
     if (event_read(&self_p->event, &mask, sizeof(mask)) != sizeof(mask)) {
         mp_not_implemented("failed to read an event");
     }
-    
+
     return (MP_OBJ_NEW_SMALL_INT(mask));
 }
 
@@ -100,7 +115,7 @@ static mp_obj_t class_event_write(mp_obj_t self_in, mp_obj_t value_in)
 {
     struct class_event_t *self_p;
     uint32_t mask;
-    
+
     self_p = MP_OBJ_TO_PTR(self_in);
     mask = mp_obj_get_int(value_in);
     event_write(&self_p->event, &mask, sizeof(mask));
