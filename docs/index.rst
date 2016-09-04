@@ -8,7 +8,10 @@
 Welcome to Pumbaa's documentation!
 =================================
 
-`Pumbaa` is an Embedded Programming Platform in `Python`.
+`Pumbaa` is `Python`_ on top of `Simba`_.
+
+The implementation is a port of `MicroPython`_, designed for embedded
+devices with limited amount of RAM and code memory.
 
 Project homepage: https://github.com/eerimoq/pumbaa
 
@@ -24,7 +27,7 @@ Project homepage: https://github.com/eerimoq/pumbaa
 Features
 --------
 
-* Python 3 language.
+* `Python 3 language`_.
 
 * Device drivers.
 
@@ -39,3 +42,8 @@ Indices and tables
 
 .. |buildstatus| image:: https://travis-ci.org/eerimoq/pumbaa.svg
 .. _buildstatus: https://travis-ci.org/eerimoq/pumbaa
+
+.. _Python: https://www.python.org/
+.. _Simba: http://simba-os.readthedocs.io/en/latest/
+.. _MicroPython: http://www.micropython.org/
+.. _Python 3 language: http://docs.micropython.org/en/latest/pyboard/reference/index.html
