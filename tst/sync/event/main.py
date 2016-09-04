@@ -20,7 +20,11 @@
 import event
 
 EVENT = event.Event()
+help(event)
+help(event.Event)
+help(EVENT)
 
+        
 try:
     EVENT.write()
 except TypeError:
@@ -40,5 +44,5 @@ except TypeError:
     pass
 else:
     raise
-
+        
 print("PASSED")

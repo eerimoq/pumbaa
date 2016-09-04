@@ -20,6 +20,8 @@
 #ifndef __PUMBAA_MODEVENT_H__
 #define __PUMBAA_MODEVENT_H__
 
+extern const mp_obj_type_t module_event_class_event;
+
 /**
  * class Event(object):
  *

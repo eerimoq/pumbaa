@@ -115,18 +115,6 @@ static mp_obj_t class_pin_make_new(const mp_obj_type_t *type_p,
 }
 
 /**
- * Object initialization function.
- *
- * def __init__(self, pin, mode)
- */
-static mp_obj_t class_pin_init(mp_uint_t n_args,
-                             const mp_obj_t *args_p,
-                             mp_map_t *kwargs_p)
-{
-    return (class_pin_init_helper(args_p[0], n_args - 1, args_p + 1, kwargs_p));
-}
-
-/**
  * def read(self)
  */
 static mp_obj_t class_pin_read(mp_obj_t self_in)
@@ -177,7 +165,6 @@ static mp_obj_t class_pin_set_mode(mp_obj_t self_in, mp_obj_t mode_in)
     return (mp_const_none);
 }
 
-static MP_DEFINE_CONST_FUN_OBJ_KW(class_pin_init_obj, 1, class_pin_init);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_pin_read_obj, class_pin_read);
 static MP_DEFINE_CONST_FUN_OBJ_2(class_pin_write_obj, class_pin_write);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_pin_toggle_obj, class_pin_toggle);
@@ -185,7 +172,6 @@ static MP_DEFINE_CONST_FUN_OBJ_2(class_pin_set_mode_obj, class_pin_set_mode);
 
 static const mp_map_elem_t class_pin_locals_dict_table[] = {
     /* Instance methods. */
-    { MP_OBJ_NEW_QSTR(MP_QSTR_init), (mp_obj_t)&class_pin_init_obj },
     { MP_OBJ_NEW_QSTR(MP_QSTR_read), (mp_obj_t)&class_pin_read_obj },
     { MP_OBJ_NEW_QSTR(MP_QSTR_write), (mp_obj_t)&class_pin_write_obj },
     { MP_OBJ_NEW_QSTR(MP_QSTR_toggle), (mp_obj_t)&class_pin_toggle_obj },

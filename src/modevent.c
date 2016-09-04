@@ -19,8 +19,6 @@
 
 #include "pumbaa.h"
 
-extern const mp_obj_type_t module_event_class_event;
-
 /**
  * Print the event object.
  */
@@ -56,23 +54,6 @@ static mp_obj_t class_event_make_new(const mp_obj_type_t *type_p,
     event_init(&self_p->event);
 
     return (self_p);
-}
-
-/**
- * Object initialization function.
- *
- * def __init__(self, event, mode)
- */
-static mp_obj_t class_event_init(mp_uint_t n_args,
-                                 const mp_obj_t *args_p,
-                                 mp_map_t *kwargs_p)
-{
-    struct class_event_t *self_p;
-
-    self_p = MP_OBJ_TO_PTR(args_p[0]);
-    event_init(&self_p->event);
-
-    return (mp_const_none);
 }
 
 /**
@@ -135,14 +116,12 @@ static mp_obj_t class_event_size(mp_obj_t self_in)
     return (MP_OBJ_NEW_SMALL_INT(event_size(&self_p->event)));
 }
 
-static MP_DEFINE_CONST_FUN_OBJ_KW(class_event_init_obj, 1, class_event_init);
 static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_event_read_obj, 1, 2, class_event_read);
 static MP_DEFINE_CONST_FUN_OBJ_2(class_event_write_obj, class_event_write);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_event_size_obj, class_event_size);
 
 static const mp_map_elem_t class_event_locals_dict_table[] = {
     /* Instance methods. */
-    { MP_OBJ_NEW_QSTR(MP_QSTR_init), (mp_obj_t)&class_event_init_obj },
     { MP_OBJ_NEW_QSTR(MP_QSTR_read), (mp_obj_t)&class_event_read_obj },
     { MP_OBJ_NEW_QSTR(MP_QSTR_write), (mp_obj_t)&class_event_write_obj },
     { MP_OBJ_NEW_QSTR(MP_QSTR_size), (mp_obj_t)&class_event_size_obj },

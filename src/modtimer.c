@@ -85,6 +85,11 @@ static mp_obj_t class_timer_init_helper(struct class_timer_t *self_p,
                      MP_ARRAY_SIZE(allowed_args),
                      allowed_args,
                      args);
+
+    /* Second argument must be an event object. */
+    if (mp_obj_get_type(args[1].u_obj) != &module_event_class_event) {
+        mp_raise_TypeError("expected <class 'Event'>");
+    }
     
     timeout.seconds = args[0].u_int;
     timeout.nanoseconds = 0;
@@ -110,32 +115,17 @@ static mp_obj_t class_timer_make_new(const mp_obj_type_t *type_p,
     struct class_timer_t *self_p;
     mp_map_t kwargs;
     
-    mp_arg_check_num(n_args, n_kw, 2, 4, true);
+    mp_arg_check_num(n_args, n_kw, 0, 4, true);
 
     /* Create a new Timer object. */
     self_p = m_new0(struct class_timer_t, 1);
     self_p->base.type = &module_timer_class_timer;
 
     /* Initialize the object. */
-    mp_map_init_fixed_table(&kwargs, n_kw, args_p + 2);
+    mp_map_init_fixed_table(&kwargs, n_kw, args_p + n_args);
     class_timer_init_helper(self_p, n_args, args_p, &kwargs);
 
     return (self_p);
-}
-
-/**
- * Object initialization function.
- *
- * def __init__(self, event, mask, flags)
- */
-static mp_obj_t class_timer_init(mp_uint_t n_args,
-                                 const mp_obj_t *args_p,
-                                 mp_map_t *kwargs_p)
-{
-    return (class_timer_init_helper(args_p[0],
-                                    n_args - 1,
-                                    args_p + 1,
-                                    kwargs_p));
 }
 
 /**
@@ -164,13 +154,11 @@ static mp_obj_t class_timer_stop(mp_obj_t self_in)
     return (mp_const_none);
 }
 
-static MP_DEFINE_CONST_FUN_OBJ_KW(class_timer_init_obj, 1, class_timer_init);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_timer_start_obj, class_timer_start);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_timer_stop_obj, class_timer_stop);
 
 static const mp_map_elem_t class_timer_locals_dict_table[] = {
     /* Instance methods. */
-    { MP_OBJ_NEW_QSTR(MP_QSTR_init), (mp_obj_t)&class_timer_init_obj },
     { MP_OBJ_NEW_QSTR(MP_QSTR_start), (mp_obj_t)&class_timer_start_obj },
     { MP_OBJ_NEW_QSTR(MP_QSTR_stop), (mp_obj_t)&class_timer_stop_obj },
 };
