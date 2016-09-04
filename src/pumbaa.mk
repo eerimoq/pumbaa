@@ -21,6 +21,7 @@ INC += $(PUMBAA_ROOT)/src
 
 PUMBAA_SRC += \
 	boards/$(BOARD)/modboard.c \
+	boards/$(BOARD)/gccollect.c \
 	builtinhelp.c \
 	builtininput.c \
 	junk.c \
@@ -29,6 +30,11 @@ PUMBAA_SRC += \
 	modpin.c \
 	modtime.c \
 	modtimer.c
+
+ifeq ($(BOARD),arduino_due)
+PUMBAA_SRC += \
+	boards/$(BOARD)/gchelper.S
+endif
 
 SRC += $(PUMBAA_SRC:%=$(PUMBAA_ROOT)/src/%)
 

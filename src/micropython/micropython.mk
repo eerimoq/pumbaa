@@ -68,9 +68,6 @@ MICROPYTHON_SRC += \
 	py/nativeglue.c \
 	py/nlrsetjmp.c \
 	py/nlrthumb.c \
-	py/nlrx64.S \
-	py/nlrx86.S \
-	py/nlrxtensa.S \
 	py/objarray.c \
 	py/objattrtuple.c \
 	py/objbool.c \

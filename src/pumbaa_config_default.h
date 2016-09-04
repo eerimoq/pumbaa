@@ -49,7 +49,7 @@
 #endif
 
 #ifndef MICROPY_MEM_STATS
-#    define MICROPY_MEM_STATS           (0)
+#    define MICROPY_MEM_STATS           (1)
 #endif
 
 #ifndef MICROPY_DEBUG_PRINTERS
@@ -173,11 +173,15 @@
 #endif
 
 #ifndef MICROPY_PY_MICROPYTHON_MEM_INFO 
-#    define MICROPY_PY_MICROPYTHON_MEM_INFO (0)
+#    define MICROPY_PY_MICROPYTHON_MEM_INFO (1)
+#endif
+
+#ifndef MICROPY_MALLOC_USES_ALLOCATED_SIZE
+#    define MICROPY_MALLOC_USES_ALLOCATED_SIZE (1)
 #endif
 
 #ifndef MICROPY_PY_GC               
-#    define MICROPY_PY_GC               (0)
+#    define MICROPY_PY_GC               (1)
 #endif
 
 #ifndef MICROPY_PY_GC_COLLECT_RETVAL 

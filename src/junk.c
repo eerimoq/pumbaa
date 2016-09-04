@@ -32,20 +32,6 @@ void nlr_jump_fail(void *val_p)
     sys_stop(1);
 }
 
-void gc_collect(void)
-{
-    // WARNING: This gc_collect implementation doesn't try to get root
-    // pointers from CPU registers, and thus may function incorrectly.
-    void *dummy_p;
-
-    gc_collect_start();
-    gc_collect_root(&dummy_p,
-                    ((mp_uint_t)stack_top_p - (mp_uint_t)&dummy_p)
-                    / sizeof(mp_uint_t));
-    gc_collect_end();
-    gc_dump_info();
-}
-
 void mp_hal_stdout_tx_strn_cooked(const char *str_p, size_t len)
 {
     char c;
