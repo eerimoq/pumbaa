@@ -6,4 +6,6 @@ Library Reference
    :numbered:
    :titlesonly:
 
+   library-reference/kernel
    library-reference/drivers
+   library-reference/sync

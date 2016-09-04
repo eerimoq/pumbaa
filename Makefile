@@ -19,20 +19,25 @@
 
 .PHONY: tags docs all help travis clean
 
-TESTS = tst/smoke
+TESTS = \
+	tst/smoke \
+	tst/kernel/timer
 
 all:
 	$(MAKE) -C examples all
 	$(MAKE) -C tst/smoke all
 	$(MAKE) -C tst/drivers/pin all
+	$(MAKE) -C tst/kernel/timer all
 
 clean:
 	$(MAKE) -C examples clean
 	$(MAKE) -C tst/smoke clean
 	$(MAKE) -C tst/drivers/pin clean
+	$(MAKE) -C tst/kernel/timer clean
 
 test:
 	$(MAKE) -C tst/smoke run
+	$(MAKE) -C tst/kernel/timer run
 
 travis:
 	$(MAKE) all
