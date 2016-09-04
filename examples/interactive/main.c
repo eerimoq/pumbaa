@@ -18,7 +18,6 @@
  */
 
 #include "pumbaa.h"
-#include "lib/utils/pyexec.h"
 
 extern char *stack_top_p;
 static char heap[16384];

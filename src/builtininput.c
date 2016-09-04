@@ -22,25 +22,23 @@
 /**
  * The builtin input() function.
  */
-static mp_obj_t builtin_input(size_t n_args, const mp_obj_t *args)
+static mp_obj_t builtin_input(size_t n_args, const mp_obj_t *args_p)
 {
-    /* vstr_t line; */
-    /* int res; */
+    vstr_t line;
+    int res;
     
-    /* Print the prompt. */
     if (n_args == 1) {
-        mp_obj_print(args[0], PRINT_STR);
+        mp_obj_print(args_p[0], PRINT_STR);
     }
 
-    /* TODO: Read a line. */
+    vstr_init(&line, 16);
+    res = readline(&line, "");
     
-    /* if (ine.len == 0 && ret == CHAR_CTRL_D) { */
-    nlr_raise(mp_obj_new_exception(&mp_type_EOFError));
-    /* } */
+    if ((line.len == 0) && (res == CHAR_CTRL_D)) {
+        nlr_raise(mp_obj_new_exception(&mp_type_EOFError));
+    }
     
-    /* return (mp_obj_new_str_from_vstr(&mp_type_str, &line)); */
-    
-    return (mp_const_none);
+    return mp_obj_new_str_from_vstr(&mp_type_str, &line);
 }
 
 MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_builtin_input_obj, 0, 1, builtin_input);
