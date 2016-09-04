@@ -22,32 +22,6 @@
 extern char *stack_top_p;
 static char heap[16384];
 
-static int parse_compile_execute(void *source_p,
-                                 mp_parse_input_kind_t input_kind,
-                                 int exec_flags)
-{
-    int ret = 0;
-    mp_obj_t module_fun;
-    nlr_buf_t nlr;
-
-    if (nlr_push(&nlr) == 0) {
-        /* Source is a lexer, parse and compile the script. */
-        mp_lexer_t *lex = source_p;
-        qstr source_name = lex->source_name;
-        mp_parse_tree_t parse_tree = mp_parse(lex, input_kind);
-        module_fun = mp_compile(&parse_tree, source_name, MP_EMIT_OPT_NONE, 0);
-
-        /* Execute code. */
-        mp_call_function_0(module_fun);
-
-        nlr_pop();
-    } else {
-            mp_obj_print_exception(&mp_plat_print, (mp_obj_t)nlr.ret_val);
-    }
-
-    return ret;
-}
-
 int main()
 {
     int frozen_type;
@@ -69,8 +43,8 @@ int main()
     /* 2. Execute the frozen main module. */
     frozen_type = mp_find_frozen_module("main.py", 7, &frozen_data_p);
 
-    if (frozen_type == MP_FROZEN_STR) {
-        return (parse_compile_execute(frozen_data_p, MP_PARSE_FILE_INPUT, 0));
+    if (frozen_type != MP_FROZEN_NONE) {
+        return (pyexec_frozen_module("main.py") != 1);
     }
 
     /* 3. Start the interactive interpreter. */
