@@ -8,7 +8,7 @@
 Welcome to Pumbaa's documentation!
 =================================
 
-`Pumbaa` is an Embedded Programming Platform in Python.
+`Pumbaa` is an Embedded Programming Platform in `Python`.
 
 Project homepage: https://github.com/eerimoq/pumbaa
 
@@ -17,10 +17,16 @@ Project homepage: https://github.com/eerimoq/pumbaa
    :titlesonly:
    :hidden:
 
+   user-guide
+   examples
    library-reference
 
 Features
 --------
+
+* Python 3 language.
+
+* Device drivers.
 
 See the :doc:`library-reference` for a full list of features.
 

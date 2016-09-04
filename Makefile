@@ -37,6 +37,7 @@ travis:
 	$(MAKE) test
 
 docs:
+	+bin/docgen.py
 	$(MAKE) -C docs sphinx
 
 tags:
