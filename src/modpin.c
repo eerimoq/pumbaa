@@ -111,8 +111,8 @@ static mp_obj_t class_pin_init_helper(const struct class_pin_t *self_p,
         { MP_QSTR_mode, MP_ARG_REQUIRED | MP_ARG_INT }
     };
     mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];
-    uint mode;
-    uint pin;
+    int mode;
+    int pin;
 
     /* Parse args. */
     mp_arg_parse_all(n_args,
@@ -215,6 +215,11 @@ static mp_obj_t class_pin_toggle(mp_obj_t self_in)
  */
 static mp_obj_t class_pin_set_mode(mp_obj_t self_in, mp_obj_t mode_in)
 {
+    struct class_pin_t *self_p;
+
+    self_p = MP_OBJ_TO_PTR(self_in);
+    pin_set_mode(&self_p->drv, mp_obj_get_int(mode_in));
+
     return (mp_const_none);
 }
 

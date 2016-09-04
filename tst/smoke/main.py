@@ -17,9 +17,11 @@
 # This file is part of the Pumbaa project.
 #
 
-import other
+import utime as time
 import board
 import pin
+import fs
+import other
 
 print('Hello world!')
 
@@ -32,11 +34,17 @@ except ZeroDivisionError as e:
     print(e)
 
 led = pin.Pin(board.PIN_LED, pin.OUTPUT)
+time.sleep(0.1)
 led.write(1)
+time.sleep_ms(1)
 led.toggle()
+time.sleep_us(1)
 print("LED value:", led.read())
 
+help()
 help(led)
+
+fs.call("kernel/thrd/list")
 
 # open() is not yet implemented.
 try:
