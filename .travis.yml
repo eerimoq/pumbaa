@@ -1,5 +1,6 @@
 before_install:
   - sudo apt-get update -qq
+  - sudo apt-get install -qq lcov -y
   - source setup.sh
 
 script: make -s travis -j $(cat /proc/cpuinfo | grep processor | wc -l)
