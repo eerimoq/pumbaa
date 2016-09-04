@@ -60,3 +60,23 @@ void mp_hal_stdout_tx_strn_cooked(const char *str_p, size_t len)
         chan_write(sys_get_stdout(), &c, 1);
     }
 }
+
+void mp_hal_stdout_tx_strn(const char *str_p, mp_uint_t len)
+{
+    mp_hal_stdout_tx_strn_cooked(str_p, len);
+}
+
+void mp_hal_stdout_tx_str(const char *str_p)
+{
+    mp_hal_stdout_tx_strn_cooked(str_p, strlen(str_p));
+}
+
+/* Receive single character. */
+int mp_hal_stdin_rx_chr(void)
+{
+    unsigned char c = 0;
+
+    chan_read(sys_get_stdin(), &c, 1);
+
+    return c;
+}

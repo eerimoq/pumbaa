@@ -23,6 +23,8 @@ INC += $(MICROPYTHON_ROOT)
 
 MICROPYTHON_SRC += \
 	lib/utils/pyhelp.c \
+	lib/utils/pyexec.c \
+	lib/mp-readline/readline.c \
 	py/argcheck.c \
 	py/asmarm.c \
 	py/asmthumb.c \

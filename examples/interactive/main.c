@@ -18,83 +18,10 @@
  */
 
 #include "pumbaa.h"
+#include "lib/utils/pyexec.h"
 
 extern char *stack_top_p;
 static char heap[16384];
-
-static int execute_from_lexer(mp_lexer_t *lex_p,
-                              mp_parse_input_kind_t input_kind)
-{
-    nlr_buf_t nlr;
-    qstr source_name;
-    mp_parse_tree_t parse_tree;
-    mp_obj_t module_fun;
-    mp_obj_t obj;
-        
-    if (lex_p == NULL) {
-        std_printf(FSTR("MemoryError: lexer could not allocate memory\n"));
-        return (-1);
-    }
-    
-    if (nlr_push(&nlr) == 0) {
-        source_name = lex_p->source_name;
-
-        /* Parse, compile and execute. */
-        parse_tree = mp_parse(lex_p, input_kind);
-        module_fun = mp_compile(&parse_tree, source_name, MP_EMIT_OPT_NONE, 1);
-        mp_call_function_0(module_fun);
-
-        /* Check for pending exception. */
-        if (MP_STATE_VM(mp_pending_exception) != MP_OBJ_NULL) {
-            obj = MP_STATE_VM(mp_pending_exception);
-            MP_STATE_VM(mp_pending_exception) = MP_OBJ_NULL;
-            nlr_raise(obj);
-        }
-        
-        nlr_pop();
-        
-        return (0);
-    } else {
-        mp_obj_print_exception(&mp_plat_print, MP_OBJ_FROM_PTR(nlr.ret_val));
-        
-        return (-1);
-    }
-}
-
-static void interactive(void)
-{
-    char c;
-    char line[128];
-    int length;
-    mp_lexer_t *lex_p;
-    
-    std_printf(FSTR("MicroPython " MICROPY_GIT_TAG " on " MICROPY_BUILD_DATE "; "
-                    MICROPY_PY_SYS_PLATFORM " version\r\n"));
-
-    for (;;) {
-        std_printf(FSTR(">>> "));
-
-        /* Read a line. */
-        c = '\0';
-        length = 0;
-        
-        while ((c != '\n') && (length < membersof(line) - 1)) {
-            chan_read(sys_get_stdin(), &c, 1);
-            chan_write(sys_get_stdout(), &c, 1);
-            line[length] = c;
-            length++;
-        }
-
-        line[length] = '\0';
-
-        /* Parse and execute the line. */
-        lex_p = mp_lexer_new_from_str_len(MP_QSTR__lt_stdin_gt_,
-                                          line,
-                                          length,
-                                          false);
-        execute_from_lexer(lex_p, MP_PARSE_SINGLE_INPUT);
-    }
-}
 
 int main()
 {
@@ -110,7 +37,9 @@ int main()
     gc_init(heap, heap + sizeof(heap));
     mp_init();
 
-    interactive();
+    while (1) {
+        pyexec_friendly_repl();
+    }
     
     return (0);
 }

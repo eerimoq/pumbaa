@@ -301,7 +301,8 @@ extern const struct _mp_obj_module_t module_timer;
     /* { MP_ROM_QSTR(MP_QSTR_open), MP_ROM_PTR(&mp_builtin_open_obj) }, */
 
 #define MICROPY_PORT_ROOT_POINTERS \
-    mp_obj_t keyboard_interrupt_obj;
+    mp_obj_t keyboard_interrupt_obj; \
+    const char *readline_hist[8];
 
 //////////////////////////////////////////
 // Do not change anything beyond this line
