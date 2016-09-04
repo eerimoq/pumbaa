@@ -61,7 +61,11 @@
 #endif
 
 #ifndef MICROPY_HELPER_LEXER_UNIX
-#    define MICROPY_HELPER_LEXER_UNIX   (1)
+#    if defined(ARCH_LINUX)
+#        define MICROPY_HELPER_LEXER_UNIX   (1)
+#    else
+#        define MICROPY_HELPER_LEXER_UNIX   (0)
+#    endif
 #endif
 
 #ifndef MICROPY_ENABLE_SOURCE_LINE
@@ -279,6 +283,10 @@
 
 #ifndef MICROPY_MODULE_BUILTIN_INIT 
 #    define MICROPY_MODULE_BUILTIN_INIT (1)
+#endif
+
+#ifndef CONFIG_MAIN_FRIENDLY_REPL
+#    define CONFIG_MAIN_FRIENDLY_REPL    (1)
 #endif
 
 extern const struct _mp_obj_module_t mp_module_time;

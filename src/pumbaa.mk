@@ -33,7 +33,8 @@ PUMBAA_SRC += \
 
 ifeq ($(BOARD),arduino_due)
 PUMBAA_SRC += \
-	boards/$(BOARD)/gchelper.S
+	boards/$(BOARD)/gchelper.S \
+	lexer.c
 endif
 
 SRC += $(PUMBAA_SRC:%=$(PUMBAA_ROOT)/src/%)

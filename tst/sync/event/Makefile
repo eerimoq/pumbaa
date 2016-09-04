@@ -20,5 +20,7 @@
 NAME = event
 BOARD ?= linux
 
+CDEFS += CONFIG_MAIN_FRIENDLY_REPL=0
+
 PUMBAA_ROOT ?= ../..
 include $(PUMBAA_ROOT)/make/app.mk

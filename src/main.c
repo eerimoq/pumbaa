@@ -24,9 +24,7 @@ static char heap[16384];
 
 int main()
 {
-    int frozen_type;
     int stack_dummy;
-    void *frozen_data_p;
 
     sys_start();
 
@@ -37,20 +35,17 @@ int main()
     mp_stack_set_limit(40000 * (BYTES_PER_WORD / 4));
     gc_init(heap, heap + sizeof(heap));
     mp_init();
+    
+    /* 1. Execute the file main.py. */
+    pyexec_file("main.py");
+    
+    /* 2. Execute the frozen main.py module. */
+    pyexec_frozen_module("main.py");
 
-    /* 1. Open the file main.py and execute it. */
-
-    /* 2. Execute the frozen main module. */
-    frozen_type = mp_find_frozen_module("main.py", 7, &frozen_data_p);
-
-    if (frozen_type != MP_FROZEN_NONE) {
-        return (pyexec_frozen_module("main.py") != 1);
-    }
-
-    /* 3. Start the interactive interpreter. */
-    while (1) {
-        pyexec_friendly_repl();
-    }
-
+#if CONFIG_MAIN_FRIENDLY_REPL == 1
+    /* 3. Execute the interactive interpreter. */
+    pyexec_friendly_repl();
+#endif
+    
     return (0);
 }
