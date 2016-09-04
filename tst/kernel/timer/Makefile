@@ -1,5 +1,5 @@
 #
-# @file pumbaa.mk
+# @file Makefile
 #
 # @section License
 # Copyright (C) 2016, Erik Moqvist
@@ -17,19 +17,8 @@
 # This file is part of the Pumbaa project.
 #
 
-INC += $(PUMBAA_ROOT)/src
+NAME = timer
+BOARD ?= linux
 
-PUMBAA_SRC += \
-	boards/$(BOARD)/modboard.c \
-	builtinhelp.c \
-	builtininput.c \
-	junk.c \
-	modevent.c \
-	modfs.c \
-	modpin.c \
-	modtime.c \
-	modtimer.c
-
-SRC += $(PUMBAA_SRC:%=$(PUMBAA_ROOT)/src/%)
-
-include $(PUMBAA_ROOT)/src/micropython/micropython.mk
+PUMBAA_ROOT ?= ../..
+include $(PUMBAA_ROOT)/make/app.mk

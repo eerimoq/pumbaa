@@ -1,5 +1,5 @@
 /**
- * @file pumbaa.h
+ * @file modevent.h
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -17,25 +17,23 @@
  * This file is part of the Pumbaa project.
  */
 
-#ifndef __PUMBAA_H__
-#define __PUMBAA_H__
+#ifndef __PUMBAA_MODEVENT_H__
+#define __PUMBAA_MODEVENT_H__
 
-#include "simba.h"
-
-#include <pumbaa_config.h>
-#include "pumbaa_config_default.h"
-
-#include "genhdr/mpversion.h"
-
-#include "py/runtime.h"
-#include "py/obj.h"
-#include "py/smallint.h"
-#include "py/compile.h"
-#include "py/gc.h"
-#include "py/stackctrl.h"
-#include "py/mphal.h"
-#include "py/frozenmod.h"
-
-#include "modevent.h"
+/**
+ * class Event(object):
+ *
+ *     def __init__(self)
+ *
+ *     def read(self, mask=None)
+ *
+ *     def write(self, mask)
+ *
+ *     def size(self)
+ */
+struct class_event_t {
+    mp_obj_base_t base;
+    struct event_t event;
+};
 
 #endif

@@ -1,5 +1,5 @@
 #
-# @file pumbaa.mk
+# @file main.py
 #
 # @section License
 # Copyright (C) 2016, Erik Moqvist
@@ -17,19 +17,33 @@
 # This file is part of the Pumbaa project.
 #
 
-INC += $(PUMBAA_ROOT)/src
+import timer
+import event
 
-PUMBAA_SRC += \
-	boards/$(BOARD)/modboard.c \
-	builtinhelp.c \
-	builtininput.c \
-	junk.c \
-	modevent.c \
-	modfs.c \
-	modpin.c \
-	modtime.c \
-	modtimer.c
+EVENT = event.Event()
 
-SRC += $(PUMBAA_SRC:%=$(PUMBAA_ROOT)/src/%)
+# Single shot timer.
+TIMER = timer.Timer(1, EVENT)
 
-include $(PUMBAA_ROOT)/src/micropython/micropython.mk
+print("starting single shot timer")
+
+TIMER.start()
+EVENT.read()
+
+print("timeout")
+
+# Periodic timer.
+TIMER = timer.Timer(1, EVENT, flags=timer.PERIODIC)
+
+print("starting periodic timer")
+
+TIMER.start()
+
+for i in range(3):
+    EVENT.read()
+
+    print("timeout", i)
+
+TIMER.stop()
+
+print("PASSED")

@@ -1,35 +1,34 @@
-#
-# @file pumbaa.mk
-#
+# 
+# @file main.py
+# 
 # @section License
 # Copyright (C) 2016, Erik Moqvist
-#
+# 
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
 # License as published by the Free Software Foundation; either
 # version 2.1 of the License, or (at your option) any later version.
-#
+# 
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # Lesser General Public License for more details.
-#
+# 
 # This file is part of the Pumbaa project.
-#
+# 
 
-INC += $(PUMBAA_ROOT)/src
+import event
+import timer
 
-PUMBAA_SRC += \
-	boards/$(BOARD)/modboard.c \
-	builtinhelp.c \
-	builtininput.c \
-	junk.c \
-	modevent.c \
-	modfs.c \
-	modpin.c \
-	modtime.c \
-	modtimer.c
+TIMEOUT_EVENT = 0x1
 
-SRC += $(PUMBAA_SRC:%=$(PUMBAA_ROOT)/src/%)
+EVENT = event.Event()
 
-include $(PUMBAA_ROOT)/src/micropython/micropython.mk
+TIMER = timer.Timer(0.5, EVENT, TIMEOUT_EVENT, timer.PERIODIC)
+TIMER.start()
+
+for i in range(10):
+    EVENT.read(TIMEOUT_EVENT)
+    print("timeout", i)
+
+TIMER.stop()

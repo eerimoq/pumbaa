@@ -19,11 +19,35 @@
 
 import utime as time
 import board
-import pin
+import event
 import fs
+import pin
+import timer
 import other
 
 print('Hello world!')
+
+print()
+help()
+print()
+help(board)
+print()
+help(event)
+print()
+help(event.Event)
+print()
+help(fs)
+print()
+help(pin)
+print()
+help(pin.Pin)
+print()
+help(timer)
+print()
+help(timer.Timer)
+print()
+help(other)
+print()
 
 assert other.foo() == True
 
@@ -41,9 +65,6 @@ led.toggle()
 time.sleep_us(1)
 print("LED value:", led.read())
 led.set_mode(pin.INPUT)
-
-help()
-help(led)
 
 fs.call("kernel/thrd/list")
 
