@@ -19,6 +19,8 @@
 
 .PHONY: tags docs all help travis clean
 
+TESTS = tst/smoke
+
 all:
 	$(MAKE) -C examples all
 	$(MAKE) -C tst/smoke all
@@ -35,6 +37,11 @@ test:
 travis:
 	$(MAKE) all
 	$(MAKE) test
+
+codecov-coverage: $(TESTS:%=%.ccc)
+
+$(TESTS:%=%.ccc):
+	$(MAKE) -C $(basename $@) codecov-coverage
 
 docs:
 	+bin/docgen.py

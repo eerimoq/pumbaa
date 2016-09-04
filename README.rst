@@ -1,4 +1,5 @@
 |buildstatus|_
+|codecov|_
 
 About
 =====
@@ -19,3 +20,6 @@ Setup
 
 .. |buildstatus| image:: https://travis-ci.org/eerimoq/pumbaa.svg
 .. _buildstatus: https://travis-ci.org/eerimoq/pumbaa
+
+.. |codecov| image:: https://codecov.io/gh/eerimoq/pumbaa/branch/master/graph/badge.svg
+.. _codecov: https://codecov.io/gh/eerimoq/pumbaa
