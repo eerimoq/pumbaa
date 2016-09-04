@@ -1,6 +1,6 @@
 coverage:
   ignore:
     - "simba/*"
-    - "src/micorpython/*"
+    - "src/micropython/*"
     - "src/boards/*"
     - "tst/*"
