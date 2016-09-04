@@ -40,6 +40,7 @@ time.sleep_ms(1)
 led.toggle()
 time.sleep_us(1)
 print("LED value:", led.read())
+led.set_mode(pin.INPUT)
 
 help()
 help(led)
