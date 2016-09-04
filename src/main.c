@@ -50,6 +50,7 @@ static int parse_compile_execute(void *source_p,
 
 int main()
 {
+    int frozen_type;
     int stack_dummy;
     void *frozen_data_p;
 
@@ -63,9 +64,19 @@ int main()
     gc_init(heap, heap + sizeof(heap));
     mp_init();
 
-    /* Execute the frozen main module. */
-    mp_find_frozen_module("main.py", 7, &frozen_data_p);
-    parse_compile_execute(frozen_data_p, MP_PARSE_FILE_INPUT, 0);
+    /* 1. Open the file main.py and execute it. */
+
+    /* 2. Execute the frozen main module. */
+    frozen_type = mp_find_frozen_module("main.py", 7, &frozen_data_p);
+
+    if (frozen_type == MP_FROZEN_STR) {
+        return (parse_compile_execute(frozen_data_p, MP_PARSE_FILE_INPUT, 0));
+    }
+
+    /* 3. Start the interactive interpreter. */
+    while (1) {
+        pyexec_friendly_repl();
+    }
 
     return (0);
 }

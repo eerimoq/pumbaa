@@ -20,7 +20,6 @@
 NAME = interactive
 BOARD ?= linux
 
-MAIN_C = main.c
 MAIN_PY =
 
 CDEFS += CONFIG_START_SHELL=0
