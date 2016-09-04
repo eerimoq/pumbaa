@@ -20,8 +20,16 @@
 #include "pumbaa.h"
 #include "lib/utils/pyhelp.h"
 
-static const FAR char help_text[] =
-    "http://pumbaa.readthedocs.io/en/latest/\r\n";
+static const FAR char *help_text_p =
+    "Welcome to Pumbaa!\r\n"
+    "\r\n"
+    "For online docs please visit http://pumbaa.readthedocs.io/en/latest/ .\r\n"
+    "\r\n"
+    "Control commands:\r\n"
+    "  CTRL-E        -- on a blank line, enter paste mode\r\n"
+    "\r\n"
+    "For further help on a specific object, type help(obj)\r\n"
+    ;
 
 /**
  * help()
@@ -29,7 +37,7 @@ static const FAR char help_text[] =
 static mp_obj_t builtin_help(size_t n_args, const mp_obj_t *args_p)
 {
     if (n_args == 0) {
-        std_printf(help_text);
+        std_printf(help_text_p);
     } else {
         pyhelp_print_obj(args_p[0]);
     }
