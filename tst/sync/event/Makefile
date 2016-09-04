@@ -17,7 +17,7 @@
 # This file is part of the Pumbaa project.
 #
 
-NAME = timer
+NAME = event
 BOARD ?= linux
 
 PUMBAA_ROOT ?= ../..

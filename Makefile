@@ -21,29 +21,34 @@
 
 TESTS = \
 	tst/smoke \
-	tst/kernel/timer
+	tst/kernel/timer \
+	tst/sync/event
 
-all:
+all: $(TESTS:%=%.all)
 	$(MAKE) -C examples all
-	$(MAKE) -C tst/smoke all
-	$(MAKE) -C tst/drivers/pin all
-	$(MAKE) -C tst/kernel/timer all
 
-clean:
+clean: $(TESTS:%=%.clean)
 	$(MAKE) -C examples clean
-	$(MAKE) -C tst/smoke clean
-	$(MAKE) -C tst/drivers/pin clean
-	$(MAKE) -C tst/kernel/timer clean
+
+run: $(TESTS:%=%.run)
 
 test:
-	$(MAKE) -C tst/smoke run
-	$(MAKE) -C tst/kernel/timer run
+	$(MAKE) all
+	$(MAKE) run
 
 travis:
-	$(MAKE) all
 	$(MAKE) test
 
 codecov-coverage: $(TESTS:%=%.ccc)
+
+$(TESTS:%=%.all):
+	$(MAKE) -C $(basename $@) all
+
+$(TESTS:%=%.clean):
+	$(MAKE) -C $(basename $@) clean
+
+$(TESTS:%=%.run):
+	$(MAKE) -C $(basename $@) run
 
 $(TESTS:%=%.ccc):
 	$(MAKE) -C $(basename $@) codecov-coverage
