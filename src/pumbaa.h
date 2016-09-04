@@ -22,6 +22,9 @@
 
 #include "simba.h"
 
+#include <pumbaa_config.h>
+#include "pumbaa_config_default.h"
+
 #include "genhdr/mpversion.h"
 
 #include "py/runtime.h"

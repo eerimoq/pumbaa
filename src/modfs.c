@@ -45,7 +45,7 @@ struct fs_file_obj_t {
 /**
  * def call()
  */
-static mp_obj_t fun_call(mp_obj_t command_in)
+static mp_obj_t module_call(mp_obj_t command_in)
 {
     char command[128];
 
@@ -56,12 +56,12 @@ static mp_obj_t fun_call(mp_obj_t command_in)
     return (mp_const_none);
 }
 
-static MP_DEFINE_CONST_FUN_OBJ_1(fun_call_obj, fun_call);
+static MP_DEFINE_CONST_FUN_OBJ_1(module_call_obj, module_call);
 
 static const mp_map_elem_t module_fs_globals_table[] = {
     { MP_OBJ_NEW_QSTR(MP_QSTR___name__), MP_OBJ_NEW_QSTR(MP_QSTR_fs) },
 
-    { MP_OBJ_NEW_QSTR(MP_QSTR_call), (mp_obj_t)&fun_call_obj },
+    { MP_OBJ_NEW_QSTR(MP_QSTR_call), (mp_obj_t)&module_call_obj },
 };
 
 static MP_DEFINE_CONST_DICT(module_fs_globals, module_fs_globals_table);

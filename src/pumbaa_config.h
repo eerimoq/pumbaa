@@ -1,5 +1,5 @@
 /**
- * @file mpconfigport.h
+ * @file pumbaa_config.h
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -17,12 +17,7 @@
  * This file is part of the Pumbaa project.
  */
 
-/* Options to control how Micro Python is built. */
-
-#ifndef __MPCONFIGPORT_H__
-#define __MPCONFIGPORT_H__
-
-#include <pumbaa_config.h>
-#include "pumbaa_config_default.h"
+#ifndef __PUMBAA_CONFIG_H__
+#define __PUMBAA_CONFIG_H__
 
 #endif
