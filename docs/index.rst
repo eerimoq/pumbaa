@@ -4,6 +4,7 @@
    contain the root `toctree` directive.
 
 |buildstatus|_
+|codecov|_
 
 Welcome to Pumbaa's documentation!
 =================================
@@ -42,6 +43,9 @@ Indices and tables
 
 .. |buildstatus| image:: https://travis-ci.org/eerimoq/pumbaa.svg
 .. _buildstatus: https://travis-ci.org/eerimoq/pumbaa
+
+.. |codecov| image:: https://codecov.io/gh/eerimoq/pumbaa/branch/master/graph/badge.svg
+.. _codecov: https://codecov.io/gh/eerimoq/pumbaa
 
 .. _Python: https://www.python.org/
 .. _Simba: http://simba-os.readthedocs.io/en/latest/
