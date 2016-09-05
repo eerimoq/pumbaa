@@ -18,12 +18,14 @@
  */
 
 #include "pumbaa.h"
-#include "py/stream.h"
 
-struct fs_file_obj_t {
+struct file_obj_t {
     mp_obj_base_t base;
     struct fs_file_t file;
 };
+
+static mp_obj_t file_open(const mp_obj_type_t *type_p,
+                          mp_arg_val_t *args_p);
 
 static const mp_arg_t file_open_allowed_args[] = {
     {
@@ -43,9 +45,6 @@ static const mp_arg_t file_open_allowed_args[] = {
     },
 };
 
-static mp_obj_t file_open(const mp_obj_type_t *type_p,
-                          mp_arg_val_t *args_p);
-
 static void file_obj_print(const mp_print_t *print_p,
                            mp_obj_t self_in,
                            mp_print_kind_t kind)
@@ -61,19 +60,14 @@ static mp_uint_t file_obj_read(mp_obj_t self_in,
                                mp_uint_t size,
                                int *errcode_p)
 {
-    struct fs_file_obj_t *self_p;
+    struct file_obj_t *self_p;
     ssize_t res;
 
     self_p = MP_OBJ_TO_PTR(self_in);
     res = fs_read(&self_p->file, buf_p, size);
 
-    /* End of file reached. */
-    if (res == SPIFFS_ERR_END_OF_OBJECT) {
-        return (0);
-    }
-
     if (res < 0) {
-        *errcode_p = EIO;
+        *errcode_p = res;
 
         return (MP_STREAM_ERROR);
     }
@@ -86,14 +80,14 @@ static mp_uint_t file_obj_write(mp_obj_t self_in,
                                 mp_uint_t size,
                                 int *errcode_p)
 {
-    struct fs_file_obj_t *self_p;
+    struct file_obj_t *self_p;
     ssize_t res;
     
     self_p = MP_OBJ_TO_PTR(self_in);
     res = fs_write(&self_p->file, buf_p, size);
 
     if (res < 0) {
-        *errcode_p = EIO;
+        *errcode_p = res;
 
         return (MP_STREAM_ERROR);
     }
@@ -112,7 +106,7 @@ static MP_DEFINE_CONST_FUN_OBJ_1(file_obj_flush_obj, file_obj_flush);
 
 static mp_obj_t file_obj_close(mp_obj_t self_in)
 {
-    struct fs_file_obj_t *self_p;
+    struct file_obj_t *self_p;
 
     self_p = MP_OBJ_TO_PTR(self_in);
     fs_close(&self_p->file);
@@ -134,7 +128,7 @@ static mp_uint_t file_obj_ioctl(mp_obj_t o_in,
                                 uintptr_t arg,
                                 int *errcode_p)
 {
-    struct fs_file_obj_t *self_p;
+    struct file_obj_t *self_p;
     struct mp_stream_seek_t *s_p;
 
     self_p = MP_OBJ_TO_PTR(o_in);
@@ -190,21 +184,21 @@ static const mp_rom_map_elem_t rawfile_locals_dict_table[] = {
 
 static MP_DEFINE_CONST_DICT(rawfile_locals_dict, rawfile_locals_dict_table);
 
-static const mp_stream_p_t textio_stream_p = {
+static const mp_stream_p_t textio_stream = {
     .read = file_obj_read,
     .write = file_obj_write,
     .ioctl = file_obj_ioctl,
     .is_text = true,
 };
 
-static const mp_obj_type_t mp_type_textio = {
+static const mp_obj_type_t class_textio = {
     { &mp_type_type },
     .name = MP_QSTR_TextIOWrapper,
     .print = file_obj_print,
     .make_new = file_obj_make_new,
     .getiter = mp_identity,
     .iternext = mp_stream_unbuffered_iter,
-    .protocol = &textio_stream_p,
+    .protocol = &textio_stream,
     .locals_dict = (mp_obj_dict_t*)&rawfile_locals_dict,
 };
 
@@ -213,7 +207,7 @@ static mp_obj_t file_open(const mp_obj_type_t *type_p,
 {
     int mode;
     const char *mode_p;
-    struct fs_file_obj_t *obj_p;
+    struct file_obj_t *obj_p;
     const char *fname_p;
     int res;
 
@@ -238,19 +232,19 @@ static mp_obj_t file_open(const mp_obj_type_t *type_p,
                 mode |= (FS_READ | FS_WRITE);
                 break;
             case 't':
-                type_p = &mp_type_textio;
+                type_p = &class_textio;
                 break;
         }
     }
 
-    obj_p = m_new_obj_with_finaliser(struct fs_file_obj_t);
+    obj_p = m_new_obj_with_finaliser(struct file_obj_t);
     obj_p->base.type = type_p;
 
     fname_p = mp_obj_str_get_str(args_p[0].u_obj);
     res = fs_open(&obj_p->file, fname_p, mode);
 
     if (res != 0) {
-        m_del_obj(struct fs_file_obj_t, obj_p);
+        m_del_obj(struct file_obj_t, obj_p);
         nlr_raise(mp_obj_new_exception_arg1(&mp_type_OSError,
                                             MP_OBJ_NEW_SMALL_INT(res)));
     }
@@ -271,7 +265,7 @@ static mp_obj_t builtin_open(mp_uint_t n_args,
                      file_open_allowed_args,
                      args);
 
-    return (file_open(&mp_type_textio, args));
+    return (file_open(&class_textio, args));
 }
 
 MP_DEFINE_CONST_FUN_OBJ_KW(mp_builtin_open_obj, 1, builtin_open);

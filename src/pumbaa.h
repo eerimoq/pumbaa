@@ -35,6 +35,7 @@
 #include "py/stackctrl.h"
 #include "py/mphal.h"
 #include "py/frozenmod.h"
+#include "py/stream.h"
 #include "lib/utils/pyexec.h"
 #include "lib/mp-readline/readline.h"
 
