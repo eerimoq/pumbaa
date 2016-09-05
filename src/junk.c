@@ -23,7 +23,25 @@ char *stack_top_p;
 
 mp_import_stat_t mp_import_stat(const char *path_p)
 {
-    return (MP_IMPORT_STAT_NO_EXIST);
+    struct fs_stat_t stat;
+    
+    if (fs_stat(path_p, &stat) != 0) {
+        return (MP_IMPORT_STAT_NO_EXIST);
+    }
+    
+    switch (stat.type) {
+        
+    case FS_TYPE_FILE:
+    case FS_TYPE_SOFT_LINK:
+    case FS_TYPE_HARD_LINK:
+        return (MP_IMPORT_STAT_FILE);
+        
+    case FS_TYPE_DIR:
+        return (MP_IMPORT_STAT_DIR);
+        
+    default:
+        return (MP_IMPORT_STAT_NO_EXIST);
+    }
 }
 
 void nlr_jump_fail(void *val_p)
