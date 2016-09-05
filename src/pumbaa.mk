@@ -28,6 +28,7 @@ PUMBAA_SRC += \
 	modevent.c \
 	modfs.c \
 	modio.c \
+	modos.c \
 	modpin.c \
 	modtime.c \
 	modtimer.c

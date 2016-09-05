@@ -29,6 +29,7 @@
 
 #include "py/runtime.h"
 #include "py/obj.h"
+#include "py/objstr.h"
 #include "py/smallint.h"
 #include "py/compile.h"
 #include "py/gc.h"

@@ -18,6 +18,7 @@
 #
 
 import utime as time
+import uos as os
 import board
 import event
 import fs
@@ -29,6 +30,10 @@ print('Hello world!')
 
 print()
 help()
+print()
+help(time)
+print()
+help(os)
 print()
 help(board)
 print()
@@ -48,6 +53,9 @@ help(timer.Timer)
 print()
 help(other)
 print()
+
+print(os.uname())
+print(os.listdir())
 
 assert other.foo() == True
 
