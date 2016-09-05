@@ -70,14 +70,16 @@ fs.call("kernel/thrd/list")
 
 # open() is not yet implemented.
 try:
+    print('file system write')
     with open("smoke.txt", "w") as fout:
         fout.write("test")
 
+    print('file system read')
     with open("smoke.txt", "r") as fin:
-        assert fin.read("test") == "test"
+        assert fin.read() == "test"
 
-    assert False
-except NameError as e:
+    print('file system ok')
+except Exception as e:
     print(e)
 
 print("PASSED")
