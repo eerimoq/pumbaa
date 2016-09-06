@@ -17,8 +17,9 @@
 # This file is part of the Pumbaa project.
 #
 
-import utime as time
-import uos as os
+import sys
+import time
+import os
 import harness
 import board
 import event
@@ -33,6 +34,8 @@ def test_smoke():
 
     print()
     help()
+    print()
+    help(sys)
     print()
     help(time)
     print()

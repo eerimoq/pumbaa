@@ -67,7 +67,7 @@ static MP_DEFINE_CONST_DICT(module_time_globals, module_time_globals_table);
 
 const mp_obj_module_t mp_module_time = {
     .base = { &mp_type_module },
-    .name = MP_QSTR_utime,
+    .name = MP_QSTR_time,
     .globals = (mp_obj_dict_t*)&module_time_globals,
 };
 

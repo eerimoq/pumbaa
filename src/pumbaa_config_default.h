@@ -298,13 +298,13 @@ extern const struct _mp_obj_module_t module_fs;
 extern const struct _mp_obj_module_t module_pin;
 extern const struct _mp_obj_module_t module_timer;
 
-#define MICROPY_PORT_BUILTIN_MODULES                                    \
-    { MP_ROM_QSTR(MP_QSTR_uos), MP_ROM_PTR(&mp_module_os) },            \
-    { MP_ROM_QSTR(MP_QSTR_utime), MP_ROM_PTR(&mp_module_time) },        \
-    { MP_ROM_QSTR(MP_QSTR_board), MP_ROM_PTR(&module_board) },          \
-    { MP_ROM_QSTR(MP_QSTR_event), MP_ROM_PTR(&module_event) },          \
-    { MP_ROM_QSTR(MP_QSTR_fs), MP_ROM_PTR(&module_fs) },                \
-    { MP_ROM_QSTR(MP_QSTR_pin), MP_ROM_PTR(&module_pin) },              \
+#define MICROPY_PORT_BUILTIN_MODULES                            \
+    { MP_ROM_QSTR(MP_QSTR_os), MP_ROM_PTR(&mp_module_os) },     \
+    { MP_ROM_QSTR(MP_QSTR_time), MP_ROM_PTR(&mp_module_time) }, \
+    { MP_ROM_QSTR(MP_QSTR_board), MP_ROM_PTR(&module_board) },  \
+    { MP_ROM_QSTR(MP_QSTR_event), MP_ROM_PTR(&module_event) },  \
+    { MP_ROM_QSTR(MP_QSTR_fs), MP_ROM_PTR(&module_fs) },        \
+    { MP_ROM_QSTR(MP_QSTR_pin), MP_ROM_PTR(&module_pin) },      \
     { MP_ROM_QSTR(MP_QSTR_timer), MP_ROM_PTR(&module_timer) },
 
 /* Extra built in names to add to the global namespace. */
