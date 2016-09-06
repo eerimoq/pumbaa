@@ -19,7 +19,7 @@
    # This file is part of the Pumbaa project.
    #
    
-   import utime as time
+   import time
    
    import board
    import pin

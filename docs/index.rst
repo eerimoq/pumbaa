@@ -21,6 +21,7 @@ Project homepage: https://github.com/eerimoq/pumbaa
    :titlesonly:
    :hidden:
 
+   installation
    user-guide
    examples
    library-reference
@@ -28,9 +29,20 @@ Project homepage: https://github.com/eerimoq/pumbaa
 Features
 --------
 
-* `Python 3 language`_.
+* `MicroPython 3`_ language.
 
-* Device drivers.
+* Builtin modules:
+
+   - board
+   - :doc:`library-reference/sync/event`
+   - fs
+   - gc
+   - micropython
+   - os
+   - :doc:`library-reference/drivers/pin`
+   - sys
+   - time
+   - :doc:`library-reference/kernel/timer`
 
 See the :doc:`library-reference` for a full list of features.
 
@@ -50,4 +62,4 @@ Indices and tables
 .. _Python: https://www.python.org/
 .. _Simba: http://simba-os.readthedocs.io/en/latest/
 .. _MicroPython: http://www.micropython.org/
-.. _Python 3 language: http://docs.micropython.org/en/latest/pyboard/reference/index.html
+.. _MicroPython 3: http://docs.micropython.org/en/latest/pyboard/reference/index.html
