@@ -1,5 +1,16 @@
-class Skipped(Exception):
+class TestCaseSkippedError(Exception):
     pass
+
+
+class SuiteError(Exception):
+
+    def __init__(self, total, passed, skipped, failed):
+        super().__init__(self)
+        self.total = total
+        self.passed = passed
+        self.skipped = skipped
+        self.failed = failed
+
 
 def run(testcases):
     """Run all test cases in the list.
@@ -23,7 +34,7 @@ def run(testcases):
             callback()
             passed += 1
             print("exit: {}: PASSED\n".format(name))
-        except Skipped:
+        except TestCaseSkippedError:
             skipped += 1
             print("exit: {}: SKIPPED\n".format(name))
         except Exception as e:
@@ -40,4 +51,4 @@ def run(testcases):
         "PASSED" if ok else "FAILED"))
 
     if not ok:
-        raise Exception("FAILED")
+        raise SuiteError(total, passed, skipped, failed)

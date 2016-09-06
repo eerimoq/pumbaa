@@ -1,5 +1,5 @@
 #
-# @file Makefile
+# @file main.py
 #
 # @section License
 # Copyright (C) 2016, Erik Moqvist
@@ -17,14 +17,35 @@
 # This file is part of the Pumbaa project.
 #
 
-NAME = timer
-BOARD ?= linux
+import harness
+from harness import TestCaseSkippedError, SuiteError
 
-TIMEOUT ?= 20
+def test_passed():
+    pass
 
-PYSRC += $(PUMBAA_ROOT)/src/py/harness.py
 
-CDEFS += CONFIG_MAIN_FRIENDLY_REPL=0
+def test_skipped():
+    raise TestCaseSkippedError()
 
-PUMBAA_ROOT ?= ../..
-include $(PUMBAA_ROOT)/make/app.mk
+
+def test_failed():
+    raise Exception()
+
+
+def main():
+    testcases = [
+        (test_passed, "test_passed"),
+        (test_skipped, "test_skipped"),
+        (test_failed, "test_failed")
+    ]
+
+    try:
+        harness.run(testcases)
+        raise RuntimeError()
+    except harness.SuiteError as e:
+        print((e.total, e.passed, e.skipped, e.failed))
+        pass
+
+
+if __name__ == '__main__':
+    main()

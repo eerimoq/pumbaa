@@ -17,12 +17,11 @@
 # This file is part of the Pumbaa project.
 #
 
-NAME = timer
+NAME = harness
 BOARD ?= linux
 
-TIMEOUT ?= 20
-
-PYSRC += $(PUMBAA_ROOT)/src/py/harness.py
+PYSRC += \
+	$(PUMBAA_ROOT)/src/py/harness.py
 
 CDEFS += CONFIG_MAIN_FRIENDLY_REPL=0
 
