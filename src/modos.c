@@ -70,6 +70,8 @@ static mp_obj_t os_chdir(mp_obj_t path_in)
     path_p = mp_obj_str_get_str(path_in);
     res = -1;
 
+    mp_not_implemented("os_chdir()");
+
     if (res != 0) {
         nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_OSError,
                                                 "No such file or directory: '%s'",
@@ -114,6 +116,8 @@ static mp_obj_t os_getcwd(void)
  */
 static mp_obj_t os_listdir(mp_uint_t n_args, const mp_obj_t *args_p)
 {
+    mp_not_implemented("os_listdir()");
+
     return (mp_const_none);
 }
 
@@ -152,6 +156,7 @@ static mp_obj_t os_remove(mp_obj_t path_in)
 
     path_p = mp_obj_str_get_str(path_in);
     res = -1;
+    mp_not_implemented("os_remove()");
 
     if (res != 0) {
         nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_OSError,
@@ -176,6 +181,7 @@ static mp_obj_t os_rename(mp_obj_t path_src_in, mp_obj_t path_dst_in)
     src_path_p = mp_obj_str_get_str(path_src_in);
     dst_path_p = mp_obj_str_get_str(path_dst_in);
     res = -1;
+    mp_not_implemented("os_rename()");
 
     if (res != 0) {
         nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_OSError,
@@ -199,6 +205,7 @@ static mp_obj_t os_rmdir(mp_obj_t path_in)
 
     path_p = mp_obj_str_get_str(path_in);
     res = -1;
+    mp_not_implemented("os_rmdir()");
 
     if (res != 0) {
         nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_OSError,

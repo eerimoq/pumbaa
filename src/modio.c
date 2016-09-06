@@ -256,19 +256,19 @@ static mp_obj_t file_open(const mp_obj_type_t *type_p,
             break;
 
         case 'w':
-            mode |= (FS_WRITE | FS_CREAT | FS_SYNC);
+            mode |= (FS_WRITE | FS_CREAT);
             break;
 
         case 'x':
-            mode |= (FS_WRITE | FS_CREAT | FS_SYNC);
+            mode |= (FS_WRITE | FS_CREAT);
             break;
 
         case 'a':
-            mode |= (FS_WRITE | FS_APPEND | FS_SYNC);
+            mode |= (FS_WRITE | FS_APPEND);
             break;
 
         case '+':
-            mode |= (FS_READ | FS_WRITE | FS_SYNC);
+            mode |= (FS_READ | FS_WRITE);
             break;
 
 #if MICROPY_PY_IO_FILEIO == 1
