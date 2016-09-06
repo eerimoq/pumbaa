@@ -37,6 +37,10 @@ int main()
     gc_init(heap, heap + sizeof(heap));
     mp_init();
 
+    /* Initialize sys.path and sys.argv. */
+    mp_obj_list_init(MP_OBJ_TO_PTR(mp_sys_path), 0);
+    mp_obj_list_init(MP_OBJ_TO_PTR(mp_sys_argv), 0);
+
     /* 1. Execute the file main.py. */
     res = (pyexec_file("main.py") != 1);
 
