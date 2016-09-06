@@ -18,31 +18,52 @@
 #
 
 import event
+import harness
 
-EVENT = event.Event()
-help(event)
-help(event.Event)
-help(EVENT)
 
-        
-try:
-    EVENT.write()
-except TypeError:
-    pass
-else:
-    raise
+def test_help():
+    EVENT = event.Event()
+    help(event)
+    help(event.Event)
+    help(EVENT)
 
-EVENT.write(0x2)
-assert EVENT.size() == 1
-EVENT.read(0x2)
-EVENT.write(0x2)
-EVENT.read()
 
-try:
-    EVENT.read(None)
-except TypeError:
-    pass
-else:
-    raise
-        
-print("PASSED")
+def test_read_write():
+    EVENT = event.Event()
+
+    try:
+        EVENT.write()
+    except TypeError:
+        pass
+    else:
+        raise
+
+    EVENT.write(0x2)
+    assert EVENT.size() == 1
+    EVENT.read(0x2)
+    EVENT.write(0x2)
+    EVENT.read()
+
+
+def test_bad_arguments():
+    EVENT = event.Event()
+
+    try:
+        EVENT.read(None)
+    except TypeError:
+        pass
+    else:
+        raise
+
+
+def main():
+    testcases = [
+        (test_help, "test_help"),
+        (test_read_write, "test_read_write"),
+        (test_bad_arguments, "test_bad_arguments")
+    ]
+    harness.run(testcases)
+
+
+if __name__ == '__main__':
+    main()

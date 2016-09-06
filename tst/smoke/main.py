@@ -19,6 +19,7 @@
 
 import utime as time
 import uos as os
+import harness
 import board
 import event
 import fs
@@ -26,125 +27,136 @@ import pin
 import timer
 import other
 
-print('Hello world!')
 
-print()
-help()
-print()
-help(time)
-print()
-help(os)
-print()
-help(board)
-print()
-help(event)
-print()
-help(event.Event)
-print()
-help(fs)
-print()
-help(pin)
-print()
-help(pin.Pin)
-print()
-help(timer)
-print()
-help(timer.Timer)
-print()
-help(other)
-print()
+def test_smoke():
+    print('Hello world!')
 
-print(os.uname())
+    print()
+    help()
+    print()
+    help(time)
+    print()
+    help(os)
+    print()
+    help(board)
+    print()
+    help(event)
+    print()
+    help(event.Event)
+    print()
+    help(fs)
+    print()
+    help(pin)
+    print()
+    help(pin.Pin)
+    print()
+    help(timer)
+    print()
+    help(timer.Timer)
+    print()
+    help(other)
+    print()
 
-try:
-    print('CWD:', os.getcwd())
-except OSError as e:
-    print(e)
+    print(os.uname())
 
-os.mkdir('foo')
+    try:
+        print('CWD:', os.getcwd())
+    except OSError as e:
+        print(e)
 
-print(os.listdir())
+    os.mkdir('foo')
 
-try:
-    os.chdir('foo')
-except OSError as e:
-    print(e)
+    print(os.listdir())
 
-try:
-    os.chdir('..')
-except OSError as e:
-    print(e)
+    try:
+        os.chdir('foo')
+    except OSError as e:
+        print(e)
 
-try:
-    print(os.stat('foo'))
-except OSError as e:
-    print(e)
+    try:
+        os.chdir('..')
+    except OSError as e:
+        print(e)
 
-try:
-    os.rename('foo', 'bar')
-except OSError as e:
-    print(e)
+    try:
+        print(os.stat('foo'))
+    except OSError as e:
+        print(e)
 
-try:
-    os.remove('bar')
-except OSError as e:
-    print(e)
+    try:
+        os.rename('foo', 'bar')
+    except OSError as e:
+        print(e)
 
-try:
-    os.rmdir('bar')
-except OSError as e:
-    print(e)
+    try:
+        os.remove('bar')
+    except OSError as e:
+        print(e)
 
-assert other.foo() == True
+    try:
+        os.rmdir('bar')
+    except OSError as e:
+        print(e)
 
-led = pin.Pin(board.PIN_LED, pin.OUTPUT)
-time.sleep(0.1)
-led.write(1)
-led.write(False)
-led.write(True)
-time.sleep_ms(1)
-led.toggle()
-time.sleep_us(1)
-print("LED value:", led.read())
+    assert other.foo() == True
 
-try:
-    led.write(2)
-except ValueError as e:
-    print(e)
+    led = pin.Pin(board.PIN_LED, pin.OUTPUT)
+    time.sleep(0.1)
+    led.write(1)
+    led.write(False)
+    led.write(True)
+    time.sleep_ms(1)
+    led.toggle()
+    time.sleep_us(1)
+    print("LED value:", led.read())
 
-try:
-    led.write(None)
-except Exception as e:
-    print(e)
+    try:
+        led.write(2)
+    except ValueError as e:
+        print(e)
 
-led.set_mode(pin.INPUT)
+    try:
+        led.write(None)
+    except Exception as e:
+        print(e)
 
-try:
-    led.set_mode(3)
-except ValueError as e:
-    print(e)
+    led.set_mode(pin.INPUT)
 
-try:
-    pin.Pin(-1, pin.OUTPUT)
-except ValueError as e:
-    print(e)
+    try:
+        led.set_mode(3)
+    except ValueError as e:
+        print(e)
 
-try:
-    pin.Pin(300, pin.OUTPUT)
-except ValueError as e:
-    print(e)
+    try:
+        pin.Pin(-1, pin.OUTPUT)
+    except ValueError as e:
+        print(e)
 
-try:
-    pin.Pin(board.PIN_LED, 10)
-except ValueError as e:
-    print(e)
+    try:
+        pin.Pin(300, pin.OUTPUT)
+    except ValueError as e:
+        print(e)
+
+    try:
+        pin.Pin(board.PIN_LED, 10)
+    except ValueError as e:
+        print(e)
+
+    fs.call("kernel/thrd/list")
+
+    with open("smoke.txt", "w") as fout:
+        fout.write("test")
+
+    with open("smoke.txt", "r") as fin:
+        print(fin.read())
+
+        
+def main():
+    testcases = [
+        (test_smoke, "test_smoke")
+    ]
+    harness.run(testcases)
+
     
-fs.call("kernel/thrd/list")
-
-with open("smoke.txt", "w") as fout:
-    fout.write("test")
-
-with open("smoke.txt", "r") as fin:
-    print(fin.read())
-
-print("PASSED")
+if __name__ == '__main__':
+    main()

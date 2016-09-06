@@ -31,9 +31,6 @@ CDEFS += \
 	MICROPY_EMIT_X86=0 \
 	MICROPY_NLR_SETJMP
 
-RUN_END_PATTERN ?= "PASSED\r\n"
-RUN_END_PATTERN_SUCCESS ?= "PASSED\r\n"
-
 include $(PUMBAA_ROOT)/src/pumbaa.mk
 include $(SIMBA_ROOT)/make/app.mk
 

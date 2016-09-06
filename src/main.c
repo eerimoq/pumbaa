@@ -25,7 +25,8 @@ static char heap[16384];
 int main()
 {
     int stack_dummy;
-
+    int res;
+    
     sys_start();
 
     std_printf(sys_get_info());
@@ -37,15 +38,15 @@ int main()
     mp_init();
 
     /* 1. Execute the file main.py. */
-    pyexec_file("main.py");
+    res = (pyexec_file("main.py") != 1);
 
     /* 2. Execute the frozen main.py module. */
-    pyexec_frozen_module("main.py");
-
+    res = (pyexec_frozen_module("main.py") != 1);
+    
 #if CONFIG_MAIN_FRIENDLY_REPL == 1
     /* 3. Execute the interactive interpreter. */
-    pyexec_friendly_repl();
+    res = (pyexec_friendly_repl() != 1);
 #endif
 
-    return (0);
+    return (res);
 }

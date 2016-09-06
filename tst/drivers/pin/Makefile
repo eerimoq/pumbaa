@@ -20,6 +20,9 @@
 NAME = pin
 BOARD ?= linux
 
+PYSRC += \
+	$(PUMBAA_ROOT)/src/py/harness.py
+
 CDEFS += CONFIG_MAIN_FRIENDLY_REPL=0
 
 PUMBAA_ROOT ?= ../..

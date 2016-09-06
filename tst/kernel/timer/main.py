@@ -17,39 +17,52 @@
 # This file is part of the Pumbaa project.
 #
 
+import harness
 import timer
 import event
 
-EVENT = event.Event()
+def test_help():
+    EVENT = event.Event()
+    TIMER = timer.Timer(1, EVENT)
+    help(timer)
+    help(timer.Timer)
+    help(TIMER)
 
-TIMER = timer.Timer(1, EVENT)
-help(timer)
-help(timer.Timer)
-help(TIMER)
-
-# Single shot timer.
-TIMER = timer.Timer(1, event=EVENT, mask=1, flags=1)
-TIMER = timer.Timer(1, EVENT, -1)
-print("starting single shot timer")
-TIMER.start()
-EVENT.read()
-print("timeout")
-
-# Periodic timer.
-TIMER = timer.Timer(1, EVENT, flags=timer.PERIODIC)
-print("starting periodic timer")
-TIMER.start()
-for i in range(3):
+def test_single_shot_timer():
+    EVENT = event.Event()
+    TIMER = timer.Timer(1, event=EVENT, mask=1, flags=1)
+    TIMER = timer.Timer(1, EVENT, -1)
+    print("starting single shot timer")
+    TIMER.start()
     EVENT.read()
-    print("timeout", i)
-TIMER.stop()
+    print("timeout")
 
-# Bad arguments.
-try:
-    timer.Timer(1, None)
-except TypeError:
-    pass
-else:
-    raise
+def test_periodic_timer():
+    EVENT = event.Event()
+    TIMER = timer.Timer(1, EVENT, flags=timer.PERIODIC)
+    print("starting periodic timer")
+    TIMER.start()
+    for i in range(3):
+        EVENT.read()
+        print("timeout", i)
+    TIMER.stop()
 
-print("PASSED")
+def test_bad_arguments():
+    try:
+        timer.Timer(1, None)
+    except TypeError:
+        pass
+    else:
+        raise
+
+def main():
+    testcases = [
+        (test_help, "test_help"),
+        (test_single_shot_timer, "test_single_shot_timer"),
+        (test_periodic_timer, "test_periodic_timer"),
+        (test_bad_arguments, "test_bad_arguments")
+    ]
+    harness.run(testcases)
+    
+if __name__ == '__main__':
+    main()

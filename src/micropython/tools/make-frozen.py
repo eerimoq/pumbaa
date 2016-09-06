@@ -18,8 +18,8 @@ from __future__ import print_function
 import os
 import argparse
 
-def module_name(f):
-    return f
+def module_name(module):
+    return os.path.basename(module)
 
 def main():
     parser = argparse.ArgumentParser()
@@ -30,7 +30,7 @@ def main():
     print("const char mp_frozen_str_names[] = {")
 
     for module in args.modules:
-        print('"%s\\0"' % module)
+        print('"%s\\0"' % module_name(module))
 
     print('"\\0"};')
 

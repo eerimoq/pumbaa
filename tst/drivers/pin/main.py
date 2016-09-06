@@ -19,15 +19,27 @@
 
 import board
 import pin
+import harness
 
-led = pin.Pin(board.PIN_LED, pin.OUTPUT)
 
-led.write(1)
-value = led.read()
-assert value == 1
+def test_read_write():
+    led = pin.Pin(board.PIN_LED, pin.OUTPUT)
 
-led.toggle()
-value = led.read()
-assert value == 0
+    led.write(1)
+    value = led.read()
+    assert value == 1
 
-print("PASSED")
+    led.toggle()
+    value = led.read()
+    assert value == 0
+
+
+def main():
+    testcases = [
+        (test_read_write, "test_read_write")
+    ]
+    harness.run(testcases)
+
+
+if __name__ == '__main__':
+    main()

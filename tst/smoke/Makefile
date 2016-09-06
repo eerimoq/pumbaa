@@ -20,7 +20,8 @@
 NAME = smoke
 BOARD ?= linux
 
-PYSRC += other.py
+PYSRC += other.py \
+	$(PUMBAA_ROOT)/src/py/harness.py
 
 CDEFS += CONFIG_MAIN_FRIENDLY_REPL=0
 
