@@ -41,7 +41,7 @@ static void timer_cb_isr(void *self_in)
 {
     struct class_timer_t *self_p;
 
-    self_p = MP_OBJ_TO_PTR(self_in);    
+    self_p = MP_OBJ_TO_PTR(self_in);
     event_write_isr(&self_p->event_obj_p->event,
                     &self_p->mask,
                     sizeof(self_p->mask));
@@ -77,7 +77,7 @@ static mp_obj_t class_timer_init_helper(struct class_timer_t *self_p,
     mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];
     struct time_t timeout;
     int flags;
-    
+
     /* Parse args. */
     mp_arg_parse_all(n_args,
                      pos_args_p,
@@ -90,13 +90,13 @@ static mp_obj_t class_timer_init_helper(struct class_timer_t *self_p,
     if (mp_obj_get_type(args[1].u_obj) != &module_event_class_event) {
         mp_raise_TypeError("expected <class 'Event'>");
     }
-    
+
     timeout.seconds = args[0].u_int;
     timeout.nanoseconds = 0;
     self_p->event_obj_p = args[1].u_obj;
     self_p->mask = args[2].u_int;
     flags = args[3].u_int;
-    
+
     timer_init(&self_p->timer, &timeout, timer_cb_isr, self_p, flags);
 
     return (mp_const_none);
@@ -114,7 +114,7 @@ static mp_obj_t class_timer_make_new(const mp_obj_type_t *type_p,
 {
     struct class_timer_t *self_p;
     mp_map_t kwargs;
-    
+
     mp_arg_check_num(n_args, n_kw, 0, 4, true);
 
     /* Create a new Timer object. */

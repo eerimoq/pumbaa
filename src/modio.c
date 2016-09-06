@@ -82,7 +82,7 @@ static mp_uint_t file_obj_write(mp_obj_t self_in,
 {
     struct file_obj_t *self_p;
     ssize_t res;
-    
+
     self_p = MP_OBJ_TO_PTR(self_in);
     res = fs_write(&self_p->file, buf_p, size);
 
@@ -98,11 +98,9 @@ static mp_uint_t file_obj_write(mp_obj_t self_in,
 static mp_obj_t file_obj_flush(mp_obj_t self_in)
 {
     mp_not_implemented("file_obj_flush");
-    
+
     return (mp_const_none);
 }
-
-static MP_DEFINE_CONST_FUN_OBJ_1(file_obj_flush_obj, file_obj_flush);
 
 static mp_obj_t file_obj_close(mp_obj_t self_in)
 {
@@ -114,14 +112,10 @@ static mp_obj_t file_obj_close(mp_obj_t self_in)
     return (mp_const_none);
 }
 
-static MP_DEFINE_CONST_FUN_OBJ_1(file_obj_close_obj, file_obj_close);
-
 static mp_obj_t file_obj___exit__(size_t n_args, const mp_obj_t *args_p)
 {
     return (file_obj_close(args_p[0]));
 }
-
-static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(file_obj___exit___obj, 4, 4, file_obj___exit__);
 
 static mp_uint_t file_obj_ioctl(mp_obj_t o_in,
                                 mp_uint_t request,
@@ -166,6 +160,10 @@ static mp_obj_t file_obj_make_new(const mp_obj_type_t *type_p,
     return (file_open(type_p, args));
 }
 
+static MP_DEFINE_CONST_FUN_OBJ_1(file_obj_flush_obj, file_obj_flush);
+static MP_DEFINE_CONST_FUN_OBJ_1(file_obj_close_obj, file_obj_close);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(file_obj___exit___obj, 4, 4, file_obj___exit__);
+
 static const mp_rom_map_elem_t rawfile_locals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_read), MP_ROM_PTR(&mp_stream_read_obj) },
     { MP_ROM_QSTR(MP_QSTR_readall), MP_ROM_PTR(&mp_stream_readall_obj) },
@@ -184,6 +182,36 @@ static const mp_rom_map_elem_t rawfile_locals_dict_table[] = {
 
 static MP_DEFINE_CONST_DICT(rawfile_locals_dict, rawfile_locals_dict_table);
 
+#if MICROPY_PY_IO_FILEIO == 1
+
+/**
+ * The FileIO stream.
+ */
+static const mp_stream_p_t fileio_stream = {
+    .read = file_obj_read,
+    .write = file_obj_write,
+    .ioctl = file_obj_ioctl,
+};
+
+/**
+ * The FileIO class.
+ */
+const mp_obj_type_t class_fileio = {
+    { &mp_type_type },
+    .name = MP_QSTR_FileIO,
+    .print = file_obj_print,
+    .make_new = file_obj_make_new,
+    .getiter = mp_identity,
+    .iternext = mp_stream_unbuffered_iter,
+    .protocol = &fileio_stream,
+    .locals_dict = (mp_obj_dict_t*)&rawfile_locals_dict,
+};
+
+#endif
+
+/**
+ * The TextIOWrapper stream.
+ */
 static const mp_stream_p_t textio_stream = {
     .read = file_obj_read,
     .write = file_obj_write,
@@ -191,6 +219,9 @@ static const mp_stream_p_t textio_stream = {
     .is_text = true,
 };
 
+/**
+ * The TextIOWrapper class.
+ */
 static const mp_obj_type_t class_textio = {
     { &mp_type_type },
     .name = MP_QSTR_TextIOWrapper,
@@ -202,6 +233,9 @@ static const mp_obj_type_t class_textio = {
     .locals_dict = (mp_obj_dict_t*)&rawfile_locals_dict,
 };
 
+/**
+ * Helper function to open a file.
+ */
 static mp_obj_t file_open(const mp_obj_type_t *type_p,
                           mp_arg_val_t *args_p)
 {
@@ -216,30 +250,44 @@ static mp_obj_t file_open(const mp_obj_type_t *type_p,
 
     while (*mode_p) {
         switch (*mode_p++) {
-            case 'r':
-                mode |= (FS_READ);
-                break;
-            case 'w':
-                mode |= (FS_WRITE | FS_CREAT);
-                break;
-            case 'x':
-                mode |= (FS_WRITE | FS_CREAT);
-                break;
-            case 'a':
-                mode |= (FS_WRITE | FS_APPEND);
-                break;
-            case '+':
-                mode |= (FS_READ | FS_WRITE);
-                break;
-            case 't':
-                type_p = &class_textio;
-                break;
+
+        case 'r':
+            mode |= (FS_READ);
+            break;
+
+        case 'w':
+            mode |= (FS_WRITE | FS_CREAT | FS_SYNC);
+            break;
+
+        case 'x':
+            mode |= (FS_WRITE | FS_CREAT | FS_SYNC);
+            break;
+
+        case 'a':
+            mode |= (FS_WRITE | FS_APPEND | FS_SYNC);
+            break;
+
+        case '+':
+            mode |= (FS_READ | FS_WRITE | FS_SYNC);
+            break;
+
+#if MICROPY_PY_IO_FILEIO == 1
+
+        case 'b':
+            type_p = &class_fileio;
+            break;
+
+#endif
+
+        case 't':
+            type_p = &class_textio;
+            break;
         }
     }
 
     obj_p = m_new_obj_with_finaliser(struct file_obj_t);
     obj_p->base.type = type_p;
-
+    
     fname_p = mp_obj_str_get_str(args_p[0].u_obj);
     res = fs_open(&obj_p->file, fname_p, mode);
 
@@ -252,6 +300,11 @@ static mp_obj_t file_open(const mp_obj_type_t *type_p,
     return (MP_OBJ_FROM_PTR(obj_p));
 }
 
+/**
+ * The builtin open() function.
+ *
+ * open(path, mode="r")
+ */
 static mp_obj_t builtin_open(mp_uint_t n_args,
                              const mp_obj_t *args_p,
                              mp_map_t *kwargs_p)

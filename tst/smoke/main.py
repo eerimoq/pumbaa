@@ -55,39 +55,96 @@ help(other)
 print()
 
 print(os.uname())
-print(os.listdir())
-
-assert other.foo() == True
 
 try:
-    1 / 0
-    assert False
-except ZeroDivisionError as e:
+    print('CWD:', os.getcwd())
+except OSError as e:
     print(e)
+
+os.mkdir('foo')
+
+print(os.listdir())
+
+try:
+    os.chdir('foo')
+except OSError as e:
+    print(e)
+
+try:
+    os.chdir('..')
+except OSError as e:
+    print(e)
+
+try:
+    print(os.stat('foo'))
+except OSError as e:
+    print(e)
+
+try:
+    os.rename('foo', 'bar')
+except OSError as e:
+    print(e)
+
+try:
+    os.remove('bar')
+except OSError as e:
+    print(e)
+
+try:
+    os.rmdir('bar')
+except OSError as e:
+    print(e)
+
+assert other.foo() == True
 
 led = pin.Pin(board.PIN_LED, pin.OUTPUT)
 time.sleep(0.1)
 led.write(1)
+led.write(False)
+led.write(True)
 time.sleep_ms(1)
 led.toggle()
 time.sleep_us(1)
 print("LED value:", led.read())
-led.set_mode(pin.INPUT)
 
-fs.call("kernel/thrd/list")
-
-# open() is not yet implemented.
 try:
-    print('file system write')
-    with open("smoke.txt", "w") as fout:
-        fout.write("test")
+    led.write(2)
+except ValueError as e:
+    print(e)
 
-    print('file system read')
-    with open("smoke.txt", "r") as fin:
-        assert fin.read() == "test"
-
-    print('file system ok')
+try:
+    led.write(None)
 except Exception as e:
     print(e)
+
+led.set_mode(pin.INPUT)
+
+try:
+    led.set_mode(3)
+except ValueError as e:
+    print(e)
+
+try:
+    pin.Pin(-1, pin.OUTPUT)
+except ValueError as e:
+    print(e)
+
+try:
+    pin.Pin(300, pin.OUTPUT)
+except ValueError as e:
+    print(e)
+
+try:
+    pin.Pin(board.PIN_LED, 10)
+except ValueError as e:
+    print(e)
+    
+fs.call("kernel/thrd/list")
+
+with open("smoke.txt", "w") as fout:
+    fout.write("test")
+
+with open("smoke.txt", "r") as fin:
+    print(fin.read())
 
 print("PASSED")

@@ -35,10 +35,10 @@ int main()
     mp_stack_set_limit(40000 * (BYTES_PER_WORD / 4));
     gc_init(heap, heap + sizeof(heap));
     mp_init();
-    
+
     /* 1. Execute the file main.py. */
     pyexec_file("main.py");
-    
+
     /* 2. Execute the frozen main.py module. */
     pyexec_frozen_module("main.py");
 
@@ -46,6 +46,6 @@ int main()
     /* 3. Execute the interactive interpreter. */
     pyexec_friendly_repl();
 #endif
-    
+
     return (0);
 }

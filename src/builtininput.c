@@ -21,23 +21,25 @@
 
 /**
  * The builtin input() function.
+ *
+ * input([prompt])
  */
 static mp_obj_t builtin_input(size_t n_args, const mp_obj_t *args_p)
 {
     vstr_t line;
     int res;
-    
+
     if (n_args == 1) {
         mp_obj_print(args_p[0], PRINT_STR);
     }
 
     vstr_init(&line, 16);
     res = readline(&line, "");
-    
+
     if ((line.len == 0) && (res == CHAR_CTRL_D)) {
         nlr_raise(mp_obj_new_exception(&mp_type_EOFError));
     }
-    
+
     return mp_obj_new_str_from_vstr(&mp_type_str, &line);
 }
 

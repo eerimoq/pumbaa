@@ -32,7 +32,9 @@ static const FAR char *help_text_p =
     ;
 
 /**
- * help()
+ * The builtin help() function.
+ *
+ * help([object])
  */
 static mp_obj_t builtin_help(size_t n_args, const mp_obj_t *args_p)
 {
@@ -41,7 +43,7 @@ static mp_obj_t builtin_help(size_t n_args, const mp_obj_t *args_p)
     } else {
         pyhelp_print_obj(args_p[0]);
     }
-    
+
     return mp_const_none;
 }
 

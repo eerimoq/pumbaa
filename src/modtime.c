@@ -39,7 +39,7 @@ static mp_obj_t module_time_sleep(mp_obj_t arg_p)
 static mp_obj_t module_time_sleep_ms(mp_obj_t arg)
 {
     thrd_sleep_ms(mp_obj_get_int(arg));
-    
+
     return (mp_const_none);
 }
 

@@ -20,7 +20,7 @@
 #include "pumbaa.h"
 
 /**
- * def call()
+ * def call(command)
  */
 static mp_obj_t module_call(mp_obj_t command_in)
 {

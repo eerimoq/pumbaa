@@ -55,7 +55,7 @@ struct mp_lexer_file_buf_t {
 static mp_uint_t file_buf_next_byte(struct mp_lexer_file_buf_t *fb_p)
 {
     int n;
-    
+
     if (fb_p->pos >= fb_p->len) {
         if (fb_p->len == 0) {
             return (MP_LEXER_EOF);
@@ -66,7 +66,7 @@ static mp_uint_t file_buf_next_byte(struct mp_lexer_file_buf_t *fb_p)
                 fb_p->len = 0;
                 return (MP_LEXER_EOF);
             }
-            
+
             fb_p->len = n;
             fb_p->pos = 0;
         }
@@ -86,16 +86,16 @@ mp_lexer_t *mp_lexer_new_from_file(const char *filename_p)
     struct fs_file_t file;
     struct mp_lexer_file_buf_t *fb_p;
     int n;
-    
+
     if (fs_open(&file, filename_p, FS_READ) != 0) {
         return (NULL);
     }
-    
+
     fb_p = m_new_obj_maybe(struct mp_lexer_file_buf_t);
-    
+
     if (fb_p == NULL) {
         fs_close(&file);
-        
+
         return (NULL);
     }
 
@@ -103,7 +103,7 @@ mp_lexer_t *mp_lexer_new_from_file(const char *filename_p)
     n = fs_read(fb_p->file_p, fb_p->buf, sizeof(fb_p->buf));
     fb_p->len = n;
     fb_p->pos = 0;
-    
+
     return (mp_lexer_new(0,
                          fb_p,
                          (mp_lexer_stream_next_byte_t)file_buf_next_byte,

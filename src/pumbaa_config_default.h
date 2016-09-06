@@ -148,35 +148,35 @@
 #    define MICROPY_PY_BUILTINS_FROZENSET (1)
 #endif
 
-#ifndef MICROPY_PY_BUILTINS_REVERSED 
+#ifndef MICROPY_PY_BUILTINS_REVERSED
 #    define MICROPY_PY_BUILTINS_REVERSED (0)
 #endif
 
-#ifndef MICROPY_PY_BUILTINS_SET     
+#ifndef MICROPY_PY_BUILTINS_SET
 #    define MICROPY_PY_BUILTINS_SET     (1)
 #endif
 
-#ifndef MICROPY_PY_BUILTINS_SLICE   
+#ifndef MICROPY_PY_BUILTINS_SLICE
 #    define MICROPY_PY_BUILTINS_SLICE   (1)
 #endif
 
-#ifndef MICROPY_PY_BUILTINS_STR_UNICODE 
+#ifndef MICROPY_PY_BUILTINS_STR_UNICODE
 #    define MICROPY_PY_BUILTINS_STR_UNICODE (0)
 #endif
 
-#ifndef MICROPY_PY_BUILTINS_PROPERTY 
+#ifndef MICROPY_PY_BUILTINS_PROPERTY
 #    define MICROPY_PY_BUILTINS_PROPERTY (0)
 #endif
 
-#ifndef MICROPY_PY_BUILTINS_MIN_MAX 
+#ifndef MICROPY_PY_BUILTINS_MIN_MAX
 #    define MICROPY_PY_BUILTINS_MIN_MAX (1)
 #endif
 
-#ifndef MICROPY_PY___FILE__         
+#ifndef MICROPY_PY___FILE__
 #    define MICROPY_PY___FILE__         (0)
 #endif
 
-#ifndef MICROPY_PY_MICROPYTHON_MEM_INFO 
+#ifndef MICROPY_PY_MICROPYTHON_MEM_INFO
 #    define MICROPY_PY_MICROPYTHON_MEM_INFO (1)
 #endif
 
@@ -184,47 +184,47 @@
 #    define MICROPY_MALLOC_USES_ALLOCATED_SIZE (1)
 #endif
 
-#ifndef MICROPY_PY_GC               
+#ifndef MICROPY_PY_GC
 #    define MICROPY_PY_GC               (1)
 #endif
 
-#ifndef MICROPY_PY_GC_COLLECT_RETVAL 
+#ifndef MICROPY_PY_GC_COLLECT_RETVAL
 #    define MICROPY_PY_GC_COLLECT_RETVAL (0)
 #endif
 
-#ifndef MICROPY_PY_ARRAY            
+#ifndef MICROPY_PY_ARRAY
 #    define MICROPY_PY_ARRAY            (0)
 #endif
 
-#ifndef MICROPY_PY_COLLECTIONS      
+#ifndef MICROPY_PY_COLLECTIONS
 #    define MICROPY_PY_COLLECTIONS      (0)
 #endif
 
-#ifndef MICROPY_PY_MATH             
+#ifndef MICROPY_PY_MATH
 #    define MICROPY_PY_MATH             (0)
 #endif
 
-#ifndef MICROPY_PY_CMATH            
+#ifndef MICROPY_PY_CMATH
 #    define MICROPY_PY_CMATH            (0)
 #endif
 
-#ifndef MICROPY_PY_IO               
+#ifndef MICROPY_PY_IO
 #    define MICROPY_PY_IO               (0)
 #endif
 
-#ifndef MICROPY_PY_IO_FILEIO        
-#    define MICROPY_PY_IO_FILEIO        (0)
+#ifndef MICROPY_PY_IO_FILEIO
+#    define MICROPY_PY_IO_FILEIO        (1)
 #endif
 
-#ifndef MICROPY_PY_STRUCT           
+#ifndef MICROPY_PY_STRUCT
 #    define MICROPY_PY_STRUCT           (0)
 #endif
 
-#ifndef MICROPY_PY_SYS              
+#ifndef MICROPY_PY_SYS
 #    define MICROPY_PY_SYS              (1)
 #endif
 
-#ifndef MICROPY_PY_SYS_EXIT         
+#ifndef MICROPY_PY_SYS_EXIT
 #    define MICROPY_PY_SYS_EXIT         (0)
 #endif
 
@@ -232,56 +232,56 @@
 #    define MICROPY_PY_SYS_PLATFORM     "Pumbaa"
 #endif
 
-#ifndef MICROPY_PY_SYS_MAXSIZE      
+#ifndef MICROPY_PY_SYS_MAXSIZE
 #    define MICROPY_PY_SYS_MAXSIZE      (0)
 #endif
 
-#ifndef MICROPY_PY_SYS_STDFILES     
+#ifndef MICROPY_PY_SYS_STDFILES
 #    define MICROPY_PY_SYS_STDFILES     (0)
 #endif
 
-#ifndef MICROPY_PY_CMATH            
+#ifndef MICROPY_PY_CMATH
 #    define MICROPY_PY_CMATH            (0)
 #endif
 
-#ifndef MICROPY_PY_UCTYPES          
+#ifndef MICROPY_PY_UCTYPES
 #    define MICROPY_PY_UCTYPES          (0)
 #endif
 
-#ifndef MICROPY_PY_UZLIB            
+#ifndef MICROPY_PY_UZLIB
 #    define MICROPY_PY_UZLIB            (0)
 #endif
 
-#ifndef MICROPY_PY_UJSON            
+#ifndef MICROPY_PY_UJSON
 #    define MICROPY_PY_UJSON            (0)
 #endif
 
-#ifndef MICROPY_PY_URE              
+#ifndef MICROPY_PY_URE
 #    define MICROPY_PY_URE              (0)
 #endif
 
-#ifndef MICROPY_PY_UHEAPQ           
+#ifndef MICROPY_PY_UHEAPQ
 #    define MICROPY_PY_UHEAPQ           (0)
 #endif
 
-#ifndef MICROPY_PY_UHASHLIB         
+#ifndef MICROPY_PY_UHASHLIB
 #    define MICROPY_PY_UHASHLIB         (0)
 #endif
 
-#ifndef MICROPY_PY_UBINASCII        
+#ifndef MICROPY_PY_UBINASCII
 #    define MICROPY_PY_UBINASCII        (0)
 #endif
 
-#ifndef MICROPY_PY_UTIME            
+#ifndef MICROPY_PY_UTIME
 #    define MICROPY_PY_UTIME            (1)
 #endif
 
 
-#ifndef MICROPY_MODULE_FROZEN_STR   
+#ifndef MICROPY_MODULE_FROZEN_STR
 #    define MICROPY_MODULE_FROZEN_STR   (1)
 #endif
 
-#ifndef MICROPY_MODULE_BUILTIN_INIT 
+#ifndef MICROPY_MODULE_BUILTIN_INIT
 #    define MICROPY_MODULE_BUILTIN_INIT (1)
 #endif
 
@@ -355,5 +355,9 @@ typedef long mp_off_t;
 
 // We need to provide a declaration/definition of alloca()
 #include <alloca.h>
+
+#define MP_PLAT_PRINT_STRN(str, len) mp_hal_stdout_tx_strn_cooked(str, len)
+
+#define MP_STATE_PORT MP_STATE_VM
 
 #endif

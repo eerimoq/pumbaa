@@ -20,17 +20,7 @@
 #include "pumbaa.h"
 
 /**
- * class Pin(object):
- *
- *     def __init__(self, pin, mode)
- *
- *     def read(self)
- *
- *     def write(self, value)
- *
- *     def toggle(self)
- *
- *     def set_mode(self, mode)
+ * The Pin class.
  */
 struct class_pin_t {
     mp_obj_base_t base;
@@ -56,17 +46,17 @@ static void class_pin_print(const mp_print_t *print_p,
  * Init helper function.
  */
 static mp_obj_t class_pin_init_helper(const struct class_pin_t *self_p,
-                                    mp_uint_t n_args,
-                                    const mp_obj_t *pos_args_p,
-                                    mp_map_t *kwargs_p)
+                                      mp_uint_t n_args,
+                                      const mp_obj_t *pos_args_p,
+                                      mp_map_t *kwargs_p)
 {
     static const mp_arg_t allowed_args[] = {
-        { MP_QSTR_pin, MP_ARG_REQUIRED | MP_ARG_INT },
+        { MP_QSTR_device, MP_ARG_REQUIRED | MP_ARG_INT },
         { MP_QSTR_mode, MP_ARG_REQUIRED | MP_ARG_INT }
     };
     mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];
+    int device;
     int mode;
-    int pin;
 
     /* Parse args. */
     mp_arg_parse_all(n_args,
@@ -76,11 +66,23 @@ static mp_obj_t class_pin_init_helper(const struct class_pin_t *self_p,
                      allowed_args,
                      args);
 
-    pin = args[0].u_int;
+    device = args[0].u_int;
     mode = args[1].u_int;
 
+    if ((device < 0) || (device >= PIN_DEVICE_MAX)) {
+        nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_ValueError,
+                                                "Bad pin device %d",
+                                                device));
+    }
+
+    if ((mode != 0) && (mode != 1)) {
+        nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_ValueError,
+                                                "Bad pin mode %d",
+                                                mode));
+    }
+
     pin_init((struct pin_driver_t *)&self_p->drv,
-             &pin_device[pin],
+             &pin_device[device],
              mode);
 
     return (mp_const_none);
@@ -132,9 +134,18 @@ static mp_obj_t class_pin_read(mp_obj_t self_in)
 static mp_obj_t class_pin_write(mp_obj_t self_in, mp_obj_t value_in)
 {
     struct class_pin_t *self_p;
+    int value;
+
+    value = mp_obj_get_int(value_in);
+
+    if ((value != 0) && (value != 1)) {
+        nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_ValueError,
+                                                "Bad pin value %d",
+                                                value));
+    }
 
     self_p = MP_OBJ_TO_PTR(self_in);
-    pin_write(&self_p->drv, mp_obj_get_int(value_in));
+    pin_write(&self_p->drv, value);
 
     return (mp_const_none);
 }
@@ -158,9 +169,19 @@ static mp_obj_t class_pin_toggle(mp_obj_t self_in)
 static mp_obj_t class_pin_set_mode(mp_obj_t self_in, mp_obj_t mode_in)
 {
     struct class_pin_t *self_p;
+    int mode;
+
+    mode = mp_obj_get_int(mode_in);
+
+    if ((mode != 0) && (mode != 1)) {
+        nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_ValueError,
+                                                "Bad pin mode %d",
+                                                mode));
+
+    }
 
     self_p = MP_OBJ_TO_PTR(self_in);
-    pin_set_mode(&self_p->drv, mp_obj_get_int(mode_in));
+    pin_set_mode(&self_p->drv, mode);
 
     return (mp_const_none);
 }

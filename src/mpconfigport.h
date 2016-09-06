@@ -25,8 +25,4 @@
 #include <pumbaa_config.h>
 #include "pumbaa_config_default.h"
 
-#define MP_PLAT_PRINT_STRN(str, len) mp_hal_stdout_tx_strn_cooked(str, len)
-
-#define MP_STATE_PORT MP_STATE_VM
-
 #endif

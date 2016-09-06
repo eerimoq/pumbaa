@@ -36,6 +36,8 @@ static void class_event_print(const mp_print_t *print_p,
  * Create a new Event object associated with the id. If additional
  * arguments are given, they are used to initialise the event. See
  * `init`.
+ *
+ * class Event()
  */
 static mp_obj_t class_event_make_new(const mp_obj_type_t *type_p,
                                      mp_uint_t n_args,

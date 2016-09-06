@@ -6,7 +6,7 @@
 
 ----------------------------------------------
 
-.. class:: pin.Pin(pin, mode)
+.. class:: pin.Pin(device, mode)
 
    Initialize given pin object with given `device` and `mode`.
 
@@ -18,7 +18,8 @@
 
    .. method:: write(value)
 
-      Write the value `value` to the pin.
+      Write given value `value` to the pin. `value` is either 0 or 1,
+      where 0 is low and 1 is high.
 
 
    .. method:: toggle()
@@ -28,4 +29,5 @@
 
    .. method:: pin_set_mode(mode)
 
-      Set the pin mode to `mode`.
+      Set the pin mode to given mode `mode`. The mode is one of
+      `INPUT` and `OUTPUT`.
