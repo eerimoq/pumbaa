@@ -67,18 +67,24 @@ def test_smoke():
     except OSError as e:
         print(e)
 
-    os.mkdir('foo')
+    try:
+        os.mkdir('foo')
+    except Exception as e:
+        print(e)
 
-    print(os.listdir())
+    try:
+        os.listdir()
+    except Exception as e:
+        print(e)
 
     try:
         os.chdir('foo')
-    except OSError as e:
+    except NotImplementedError as e:
         print(e)
 
     try:
         os.chdir('..')
-    except OSError as e:
+    except NotImplementedError as e:
         print(e)
 
     try:
@@ -88,17 +94,17 @@ def test_smoke():
 
     try:
         os.rename('foo', 'bar')
-    except OSError as e:
+    except NotImplementedError as e:
         print(e)
 
     try:
         os.remove('bar')
-    except OSError as e:
+    except NotImplementedError as e:
         print(e)
 
     try:
         os.rmdir('bar')
-    except OSError as e:
+    except NotImplementedError as e:
         print(e)
 
     assert other.foo() == True
@@ -151,7 +157,7 @@ def test_smoke():
         fout.write("test")
 
     with open("smoke.txt", "r") as fin:
-        print(fin.read())
+        assert fin.read() == "test"
 
         
 def main():
