@@ -31,7 +31,7 @@ Start `Cygwin` and execute the one-liner below to install `Simba`.
      easy_install-2.7 pip && \
      pip install pyserial xpect readchar sphinx breathe && \
      git clone https://github.com/eerimoq/arm-toolchain-windows && \
-     git clone https://github.com/eerimoq/pumbaa
+     git clone https://github.com/eerimoq/pumbaa --recursive
 
 Linux (Ubuntu 14)
 ^^^^^^^^^^^^^^^^^
@@ -48,6 +48,6 @@ Execute the one-liner below to install `Simba`.
                           flex bison texinfo gawk ncurses-dev libexpat-dev \
                           python-serial sed libtool-bin && \
      sudo pip install pyserial xpect sphinx breathe sphinx_rtd_theme && \
-     git clone https://github.com/eerimoq/pumbaa
+     git clone https://github.com/eerimoq/pumbaa --recursive
 
 .. _Cygwin: https://cygwin.com/setup-x86.exe
