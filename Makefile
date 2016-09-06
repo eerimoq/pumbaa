@@ -19,6 +19,8 @@
 
 .PHONY: tags docs all help travis clean
 
+BOARD ?= linux
+
 TESTS = \
 	tst/smoke \
 	tst/kernel/timer \
@@ -30,11 +32,33 @@ all: $(TESTS:%=%.all)
 clean: $(TESTS:%=%.clean)
 	$(MAKE) -C examples clean
 
-run: $(TESTS:%=%.run)
+rerun:
+	for test in $(TESTS) ; do \
+	    $(MAKE) -C $$test run || exit 1 ; \
+	done
 
-test:
-	$(MAKE) all
-	$(MAKE) run
+# Depend on 'all' to build all applications (optinally with -j) before
+# uploading and running them one at a time.
+run: all
+	for test in $(TESTS) ; do \
+	    if [ ! -e $$test/.$(BOARD).passed ] ; then \
+	        $(MAKE) -C $$test run || exit 1 ; \
+	        touch $$test/.$(BOARD).passed ; \
+	    else \
+	        echo ; \
+	        echo "$$test already passed." ; \
+	        echo ; \
+	    fi \
+	done
+
+report:
+	for test in $(TESTS) ; do \
+	    $(MAKE) -C $(basename $$test) report ; \
+	    echo ; \
+	done
+
+test: run
+	$(MAKE) report
 
 travis:
 	$(MAKE) test
@@ -46,9 +70,6 @@ $(TESTS:%=%.all):
 
 $(TESTS:%=%.clean):
 	$(MAKE) -C $(basename $@) clean
-
-$(TESTS:%=%.run):
-	$(MAKE) -C $(basename $@) run
 
 $(TESTS:%=%.ccc):
 	$(MAKE) -C $(basename $@) codecov-coverage

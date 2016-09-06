@@ -40,3 +40,5 @@ examples/*/*/index-sort-l.html
 examples/*/*/ruby.png
 examples/*/*/snow.png
 examples/*/*/updown.png
+
+*.passed
