@@ -23,7 +23,11 @@
 
 static mp_obj_t module_time_time(void)
 {
-    return (mp_obj_new_int((mp_int_t)0));
+    struct time_t now;
+
+    time_get(&now);
+    
+    return (mp_obj_new_int(now.seconds));
 }
 
 static mp_obj_t module_time_sleep(mp_obj_t arg_p)
