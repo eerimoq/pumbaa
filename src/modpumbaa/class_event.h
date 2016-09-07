@@ -1,5 +1,5 @@
 /**
- * @file pumbaa.h
+ * @file modpumbaa/class_event.h
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -17,32 +17,16 @@
  * This file is part of the Pumbaa project.
  */
 
-#ifndef __PUMBAA_H__
-#define __PUMBAA_H__
+#ifndef __MODPUMBAA_CLASS_EVENT_H__
+#define __MODPUMBAA_CLASS_EVENT_H__
 
-#include "simba.h"
+#include "pumbaa.h"
 
-#include <pumbaa_config.h>
-#include "pumbaa_config_default.h"
+struct class_event_t {
+    mp_obj_base_t base;
+    struct event_t event;
+};
 
-#include "genhdr/mpversion.h"
-
-#include "py/runtime.h"
-#include "py/obj.h"
-#include "py/objstr.h"
-#include "py/smallint.h"
-#include "py/compile.h"
-#include "py/gc.h"
-#include "py/stackctrl.h"
-#include "py/mphal.h"
-#include "py/frozenmod.h"
-#include "py/stream.h"
-#include "lib/utils/pyexec.h"
-#include "lib/mp-readline/readline.h"
-
-#include "class_board.h"
-#include "modpumbaa/class_event.h"
-#include "modpumbaa/class_pin.h"
-#include "modpumbaa/class_timer.h"
+extern const mp_obj_type_t module_pumbaa_class_event;
 
 #endif

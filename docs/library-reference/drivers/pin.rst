@@ -1,12 +1,7 @@
-:mod:`pin` --- Digital pins
-===========================
+`Pin` --- Digital pin
+=====================
 
-.. module:: pin
-   :synopsis: Digital pins.
-
-----------------------------------------------
-
-.. class:: pin.Pin(device, mode)
+.. class:: pumbaa.Pin(device, mode)
 
    Initialize given pin object with given `device` and `mode`.
 

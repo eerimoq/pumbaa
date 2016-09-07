@@ -1,5 +1,5 @@
 /**
- * @file modboard.c
+ * @file modpumbaa/class_pin.h
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -17,19 +17,16 @@
  * This file is part of the Pumbaa project.
  */
 
+#ifndef __MODPUMBAA_CLASS_PIN_H__
+#define __MODPUMBAA_CLASS_PIN_H__
+
 #include "pumbaa.h"
 
-/**
- * PIN_LED
- */
-static const mp_map_elem_t module_board_globals_table[] = {
-    { MP_OBJ_NEW_QSTR(MP_QSTR_PIN_LED), MP_OBJ_NEW_SMALL_INT(0) },
+struct class_pin_t {
+    mp_obj_base_t base;
+    struct pin_driver_t drv;
 };
 
-static MP_DEFINE_CONST_DICT(module_board_globals, module_board_globals_table);
+extern const mp_obj_type_t module_pumbaa_class_pin;
 
-const mp_obj_module_t module_board = {
-    { &mp_type_module },
-    .name = MP_QSTR_board,
-    .globals = (mp_obj_t)&module_board_globals,
-};
+#endif

@@ -31,7 +31,7 @@ Features
 
 * `MicroPython 3`_ language.
 
-* Builtin modules:
+* Builtin modules and classes:
 
    - board
    - :doc:`library-reference/sync/event`

@@ -1,8 +1,6 @@
 drivers
 =======
 
-Modules:
-
 .. toctree::
    :glob:   
    :titlesonly:

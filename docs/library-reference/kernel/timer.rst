@@ -1,12 +1,7 @@
-:mod:`timer` --- Timers
-=======================
+`Timer` --- Timer
+=================
 
-.. module:: timer
-   :synopsis: Timers.
-
-----------------------------------------------
-
-.. class:: timer.Timer(timeout, event, mask=-1, flags=0)
+.. class:: pumbaa.Timer(timeout, event, mask=-1, flags=0)
 
    Initialize given timer object. On timeout given `mask` is written
    to given `event` channel.

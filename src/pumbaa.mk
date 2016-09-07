@@ -17,21 +17,23 @@
 # This file is part of the Pumbaa project.
 #
 
-INC += $(PUMBAA_ROOT)/src
+INC += \
+	$(PUMBAA_ROOT)/src \
+	$(PUMBAA_ROOT)/src/boards/$(BOARD)
 
 PUMBAA_SRC += \
-	boards/$(BOARD)/modboard.c \
+	boards/$(BOARD)/class_board.c \
 	boards/$(BOARD)/gccollect.c \
 	builtinhelp.c \
 	builtininput.c \
 	junk.c \
-	modevent.c \
-	modfs.c \
 	modio.c \
 	modos.c \
-	modpin.c \
-	modtime.c \
-	modtimer.c
+	modpumbaa.c \
+	modpumbaa/class_event.c \
+	modpumbaa/class_pin.c \
+	modpumbaa/class_timer.c \
+	modtime.c
 
 ifeq ($(BOARD),arduino_due)
 PUMBAA_SRC += \

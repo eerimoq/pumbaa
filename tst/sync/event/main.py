@@ -17,19 +17,18 @@
 # This file is part of the Pumbaa project.
 #
 
-import event
+from pumbaa import Event
 import harness
 
 
 def test_help():
-    EVENT = event.Event()
-    help(event)
-    help(event.Event)
+    EVENT = Event()
+    help(Event)
     help(EVENT)
 
 
 def test_read_write():
-    EVENT = event.Event()
+    EVENT = Event()
 
     try:
         EVENT.write()
@@ -46,7 +45,7 @@ def test_read_write():
 
 
 def test_bad_arguments():
-    EVENT = event.Event()
+    EVENT = Event()
 
     try:
         EVENT.read(None)

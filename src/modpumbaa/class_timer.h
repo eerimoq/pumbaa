@@ -1,5 +1,5 @@
 /**
- * @file pumbaa.h
+ * @file modpumbaa/class_timer.h
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -17,32 +17,18 @@
  * This file is part of the Pumbaa project.
  */
 
-#ifndef __PUMBAA_H__
-#define __PUMBAA_H__
+#ifndef __PUMBAA_CLASS_TIMER_H__
+#define __PUMBAA_CLASS_TIMER_H__
 
-#include "simba.h"
+#include "pumbaa.h"
 
-#include <pumbaa_config.h>
-#include "pumbaa_config_default.h"
+struct class_timer_t {
+    mp_obj_base_t base;
+    struct timer_t timer;
+    struct class_event_t *event_obj_p;
+    uint32_t mask;
+};
 
-#include "genhdr/mpversion.h"
-
-#include "py/runtime.h"
-#include "py/obj.h"
-#include "py/objstr.h"
-#include "py/smallint.h"
-#include "py/compile.h"
-#include "py/gc.h"
-#include "py/stackctrl.h"
-#include "py/mphal.h"
-#include "py/frozenmod.h"
-#include "py/stream.h"
-#include "lib/utils/pyexec.h"
-#include "lib/mp-readline/readline.h"
-
-#include "class_board.h"
-#include "modpumbaa/class_event.h"
-#include "modpumbaa/class_pin.h"
-#include "modpumbaa/class_timer.h"
+extern const mp_obj_type_t module_pumbaa_class_timer;
 
 #endif

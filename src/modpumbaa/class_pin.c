@@ -1,5 +1,5 @@
 /**
- * @file modpin.c
+ * @file modpumbaa/class_pin.c
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -18,16 +18,6 @@
  */
 
 #include "pumbaa.h"
-
-/**
- * The Pin class.
- */
-struct class_pin_t {
-    mp_obj_base_t base;
-    struct pin_driver_t drv;
-};
-
-extern const mp_obj_type_t module_pin_class_pin;
 
 /**
  * Print the pin object.
@@ -105,7 +95,7 @@ static mp_obj_t class_pin_make_new(const mp_obj_type_t *type_p,
 
     /* Create a new Pin object. */
     self_p = m_new0(struct class_pin_t, 1);
-    self_p->base.type = &module_pin_class_pin;
+    self_p->base.type = &module_pumbaa_class_pin;
 
     /* Initialize the pin if pin and mode are given. */
     if (n_args == 2) {
@@ -197,6 +187,10 @@ static const mp_map_elem_t class_pin_locals_dict_table[] = {
     { MP_OBJ_NEW_QSTR(MP_QSTR_write), (mp_obj_t)&class_pin_write_obj },
     { MP_OBJ_NEW_QSTR(MP_QSTR_toggle), (mp_obj_t)&class_pin_toggle_obj },
     { MP_OBJ_NEW_QSTR(MP_QSTR_set_mode), (mp_obj_t)&class_pin_set_mode_obj },
+
+    /* Class constants. */
+    { MP_OBJ_NEW_QSTR(MP_QSTR_INPUT), MP_OBJ_NEW_SMALL_INT(PIN_INPUT) },
+    { MP_OBJ_NEW_QSTR(MP_QSTR_OUTPUT), MP_OBJ_NEW_SMALL_INT(PIN_OUTPUT) },
 };
 
 static MP_DEFINE_CONST_DICT(class_pin_locals_dict, class_pin_locals_dict_table);
@@ -204,45 +198,10 @@ static MP_DEFINE_CONST_DICT(class_pin_locals_dict, class_pin_locals_dict_table);
 /**
  * Pin class type.
  */
-const mp_obj_type_t module_pin_class_pin = {
+const mp_obj_type_t module_pumbaa_class_pin = {
     { &mp_type_type },
     .name = MP_QSTR_Pin,
     .print = class_pin_print,
     .make_new = class_pin_make_new,
     .locals_dict = (mp_obj_t)&class_pin_locals_dict,
-};
-
-/**
- * Function called when this module is imported.
- */
-static mp_obj_t module_init(void)
-{
-    pin_module_init();
-
-    return (mp_const_none);
-}
-
-static MP_DEFINE_CONST_FUN_OBJ_0(module_init_obj, module_init);
-
-/**
- * A table of all the modules' global objects.
- */
-static const mp_map_elem_t module_pin_globals_table[] = {
-    { MP_OBJ_NEW_QSTR(MP_QSTR___name__), MP_OBJ_NEW_QSTR(MP_QSTR_pin) },
-    { MP_OBJ_NEW_QSTR(MP_QSTR___init__), (mp_obj_t)&module_init_obj },
-
-    /* Module constants. */
-    { MP_OBJ_NEW_QSTR(MP_QSTR_INPUT), MP_OBJ_NEW_SMALL_INT(PIN_INPUT) },
-    { MP_OBJ_NEW_QSTR(MP_QSTR_OUTPUT), MP_OBJ_NEW_SMALL_INT(PIN_OUTPUT) },
-
-    /* Pin class. */
-    { MP_OBJ_NEW_QSTR(MP_QSTR_Pin), (mp_obj_t)&module_pin_class_pin },
-};
-
-static MP_DEFINE_CONST_DICT(module_pin_globals, module_pin_globals_table);
-
-const mp_obj_module_t module_pin = {
-    { &mp_type_module },
-    .name = MP_QSTR_pin,
-    .globals = (mp_obj_t)&module_pin_globals,
 };

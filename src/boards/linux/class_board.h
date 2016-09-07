@@ -1,5 +1,5 @@
 /**
- * @file modevent.h
+ * @file class_board.h
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -17,25 +17,11 @@
  * This file is part of the Pumbaa project.
  */
 
-#ifndef __PUMBAA_MODEVENT_H__
-#define __PUMBAA_MODEVENT_H__
+#ifndef __MODPUMBAA_CLASS_BOARD_H__
+#define __MODPUMBAA_CLASS_BOARD_H__
 
-extern const mp_obj_type_t module_event_class_event;
+#include "pumbaa.h"
 
-/**
- * class Event(object):
- *
- *     def __init__(self)
- *
- *     def read(self, mask=None)
- *
- *     def write(self, mask)
- *
- *     def size(self)
- */
-struct class_event_t {
-    mp_obj_base_t base;
-    struct event_t event;
-};
+extern const mp_obj_type_t module_pumbaa_class_board;
 
 #endif

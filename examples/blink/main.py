@@ -19,11 +19,10 @@
 
 import time
 
-import board
-import pin
+from pumbaa import Board, Pin
 
 # Initialize the LED pin and set it high.
-LED = pin.Pin(board.PIN_LED, pin.OUTPUT)
+LED = Pin(Board.PIN_LED, Pin.OUTPUT)
 LED.write(1)
 
 # Toggle the LED state periodically.

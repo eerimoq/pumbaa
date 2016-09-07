@@ -1,5 +1,5 @@
 /**
- * @file modtimer.c
+ * @file modpumbaa/class_timer.c
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -18,24 +18,6 @@
  */
 
 #include "pumbaa.h"
-
-/**
- * class Timer(object):
- *
- *     def __init__(self, timeout, event, mask=-1, flags=0)
- *
- *     def start(self)
- *
- *     def stop(self)
- */
-struct class_timer_t {
-    mp_obj_base_t base;
-    struct timer_t timer;
-    struct class_event_t *event_obj_p;
-    uint32_t mask;
-};
-
-extern const mp_obj_type_t module_timer_class_timer;
 
 static void timer_cb_isr(void *self_in)
 {
@@ -87,7 +69,7 @@ static mp_obj_t class_timer_init_helper(struct class_timer_t *self_p,
                      args);
 
     /* Second argument must be an event object. */
-    if (mp_obj_get_type(args[1].u_obj) != &module_event_class_event) {
+    if (mp_obj_get_type(args[1].u_obj) != &module_pumbaa_class_event) {
         mp_raise_TypeError("expected <class 'Event'>");
     }
 
@@ -119,7 +101,7 @@ static mp_obj_t class_timer_make_new(const mp_obj_type_t *type_p,
 
     /* Create a new Timer object. */
     self_p = m_new0(struct class_timer_t, 1);
-    self_p->base.type = &module_timer_class_timer;
+    self_p->base.type = &module_pumbaa_class_timer;
 
     /* Initialize the object. */
     mp_map_init_fixed_table(&kwargs, n_kw, args_p + n_args);
@@ -161,6 +143,9 @@ static const mp_map_elem_t class_timer_locals_dict_table[] = {
     /* Instance methods. */
     { MP_OBJ_NEW_QSTR(MP_QSTR_start), (mp_obj_t)&class_timer_start_obj },
     { MP_OBJ_NEW_QSTR(MP_QSTR_stop), (mp_obj_t)&class_timer_stop_obj },
+
+    /* Module constants. */
+    { MP_OBJ_NEW_QSTR(MP_QSTR_PERIODIC), MP_OBJ_NEW_SMALL_INT(TIMER_PERIODIC) },
 };
 
 static MP_DEFINE_CONST_DICT(class_timer_locals_dict, class_timer_locals_dict_table);
@@ -168,44 +153,10 @@ static MP_DEFINE_CONST_DICT(class_timer_locals_dict, class_timer_locals_dict_tab
 /**
  * Timer class type.
  */
-const mp_obj_type_t module_timer_class_timer = {
+const mp_obj_type_t module_pumbaa_class_timer = {
     { &mp_type_type },
     .name = MP_QSTR_Timer,
     .print = class_timer_print,
     .make_new = class_timer_make_new,
     .locals_dict = (mp_obj_t)&class_timer_locals_dict,
-};
-
-/**
- * Function called when this module is imported.
- */
-static mp_obj_t module_init(void)
-{
-    timer_module_init();
-
-    return (mp_const_none);
-}
-
-static MP_DEFINE_CONST_FUN_OBJ_0(module_init_obj, module_init);
-
-/**
- * A table of all the modules' global objects.
- */
-static const mp_map_elem_t module_timer_globals_table[] = {
-    { MP_OBJ_NEW_QSTR(MP_QSTR___name__), MP_OBJ_NEW_QSTR(MP_QSTR_timer) },
-    { MP_OBJ_NEW_QSTR(MP_QSTR___init__), (mp_obj_t)&module_init_obj },
-
-    /* Module constants. */
-    { MP_OBJ_NEW_QSTR(MP_QSTR_PERIODIC), MP_OBJ_NEW_SMALL_INT(TIMER_PERIODIC) },
-
-    /* Timer class. */
-    { MP_OBJ_NEW_QSTR(MP_QSTR_Timer), (mp_obj_t)&module_timer_class_timer },
-};
-
-static MP_DEFINE_CONST_DICT(module_timer_globals, module_timer_globals_table);
-
-const mp_obj_module_t module_timer = {
-    { &mp_type_module },
-    .name = MP_QSTR_timer,
-    .globals = (mp_obj_t)&module_timer_globals,
 };

@@ -21,11 +21,8 @@ import sys
 import time
 import os
 import harness
-import board
-import event
-import fs
-import pin
-import timer
+import pumbaa
+from pumbaa import Board, Event, Pin, Timer
 import other
 
 
@@ -41,21 +38,15 @@ def test_smoke():
     print()
     help(os)
     print()
-    help(board)
+    help(pumbaa)
     print()
-    help(event)
+    help(pumbaa.Board)
     print()
-    help(event.Event)
+    help(pumbaa.Event)
     print()
-    help(fs)
+    help(pumbaa.Pin)
     print()
-    help(pin)
-    print()
-    help(pin.Pin)
-    print()
-    help(timer)
-    print()
-    help(timer.Timer)
+    help(pumbaa.Timer)
     print()
     help(other)
     print()
@@ -109,7 +100,7 @@ def test_smoke():
 
     assert other.foo() == True
 
-    led = pin.Pin(board.PIN_LED, pin.OUTPUT)
+    led = Pin(Board.PIN_LED, Pin.OUTPUT)
     time.sleep(0.1)
     led.write(1)
     led.write(False)
@@ -129,7 +120,7 @@ def test_smoke():
     except Exception as e:
         print(e)
 
-    led.set_mode(pin.INPUT)
+    led.set_mode(Pin.INPUT)
 
     try:
         led.set_mode(3)
@@ -137,21 +128,21 @@ def test_smoke():
         print(e)
 
     try:
-        pin.Pin(-1, pin.OUTPUT)
+        Pin(-1, Pin.OUTPUT)
     except ValueError as e:
         print(e)
 
     try:
-        pin.Pin(300, pin.OUTPUT)
+        Pin(300, Pin.OUTPUT)
     except ValueError as e:
         print(e)
 
     try:
-        pin.Pin(board.PIN_LED, 10)
+        Pin(Board.PIN_LED, 10)
     except ValueError as e:
         print(e)
 
-    fs.call("kernel/thrd/list")
+    pumbaa.fs_call("kernel/thrd/list")
 
     with open("smoke.txt", "w") as fout:
         fout.write("test")

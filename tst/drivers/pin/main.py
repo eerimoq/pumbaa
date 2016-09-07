@@ -17,13 +17,12 @@
 # This file is part of the Pumbaa project.
 #
 
-import board
-import pin
+from pumbaa import Board, Pin
 import harness
 
 
 def test_read_write():
-    led = pin.Pin(board.PIN_LED, pin.OUTPUT)
+    led = Pin(Board.PIN_LED, Pin.OUTPUT)
 
     led.write(1)
     value = led.read()

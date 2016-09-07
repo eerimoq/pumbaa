@@ -1,12 +1,7 @@
-:mod:`event` --- Event channel
-==============================
+`Event` --- Event channel
+=========================
 
-.. module:: event
-   :synopsis: Event channel.
-
-----------------------------------------------
-
-.. class:: event.Event(event)
+.. class:: pumbaa.Event(event)
 
    Initialize given event object.
 

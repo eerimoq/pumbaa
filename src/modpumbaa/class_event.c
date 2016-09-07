@@ -1,5 +1,5 @@
 /**
- * @file modevent.c
+ * @file modpumbaa/class_event.c
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -50,7 +50,7 @@ static mp_obj_t class_event_make_new(const mp_obj_type_t *type_p,
 
     /* Create a new Event object. */
     self_p = m_new0(struct class_event_t, 1);
-    self_p->base.type = &module_event_class_event;
+    self_p->base.type = &module_pumbaa_class_event;
 
     /* Initialize the event if event and mode are given. */
     event_init(&self_p->event);
@@ -134,39 +134,10 @@ static MP_DEFINE_CONST_DICT(class_event_locals_dict, class_event_locals_dict_tab
 /**
  * Event class type.
  */
-const mp_obj_type_t module_event_class_event = {
+const mp_obj_type_t module_pumbaa_class_event = {
     { &mp_type_type },
     .name = MP_QSTR_Event,
     .print = class_event_print,
     .make_new = class_event_make_new,
     .locals_dict = (mp_obj_t)&class_event_locals_dict,
-};
-
-/**
- * Function called when this module is imported.
- */
-static mp_obj_t module_init(void)
-{
-    return (mp_const_none);
-}
-
-static MP_DEFINE_CONST_FUN_OBJ_0(module_init_obj, module_init);
-
-/**
- * A table of all the modules' global objects.
- */
-static const mp_map_elem_t module_event_globals_table[] = {
-    { MP_OBJ_NEW_QSTR(MP_QSTR___name__), MP_OBJ_NEW_QSTR(MP_QSTR_event) },
-    { MP_OBJ_NEW_QSTR(MP_QSTR___init__), (mp_obj_t)&module_init_obj },
-
-    /* Event class. */
-    { MP_OBJ_NEW_QSTR(MP_QSTR_Event), (mp_obj_t)&module_event_class_event },
-};
-
-static MP_DEFINE_CONST_DICT(module_event_globals, module_event_globals_table);
-
-const mp_obj_module_t module_event = {
-    { &mp_type_module },
-    .name = MP_QSTR_event,
-    .globals = (mp_obj_t)&module_event_globals,
 };
