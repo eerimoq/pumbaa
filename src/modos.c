@@ -31,7 +31,7 @@ static const MP_DEFINE_STR_OBJ(os_uname_info_sysname_obj, MICROPY_PY_SYS_PLATFOR
 static const MP_DEFINE_STR_OBJ(os_uname_info_nodename_obj, "");
 static const MP_DEFINE_STR_OBJ(os_uname_info_release_obj, STRINGIFY(VERSION));
 static const MP_DEFINE_STR_OBJ(os_uname_info_version_obj, MICROPY_GIT_TAG);
-static const MP_DEFINE_STR_OBJ(os_uname_info_machine_obj, "Arduino Due");
+static const MP_DEFINE_STR_OBJ(os_uname_info_machine_obj, MICROPY_HW_BOARD_NAME " with " MICROPY_HW_MCU_NAME);
 
 static mp_obj_tuple_t os_uname_info_obj = {
     .base = {&mp_type_attrtuple},

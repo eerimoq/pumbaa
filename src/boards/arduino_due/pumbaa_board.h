@@ -1,8 +1,8 @@
 /**
- * @file mpconfigport.h
+ * @file pumbaa_board.h
  *
  * @section License
- * Copyright (C) 2016, Erik Moqvist
+ * Copyright (C) 2014-2016, Erik Moqvist
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -14,17 +14,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
- * This file is part of the Pumbaa project.
+ * This file is part of the Simba project.
  */
 
-/* Options to control how Micro Python is built. */
+#ifndef __PUMBAA_BOARD_H__
+#define __PUMBAA_BOARD_H__
 
-#ifndef __MPCONFIGPORT_H__
-#define __MPCONFIGPORT_H__
-
-#include "pumbaa_board.h"
-
-#include <pumbaa_config.h>
-#include "pumbaa_config_default.h"
+#define MICROPY_HW_BOARD_NAME       "Arduino Due"
+#define MICROPY_HW_MCU_NAME         "SAM3X8E"
 
 #endif

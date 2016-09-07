@@ -57,8 +57,9 @@ def test_smoke():
         print()
         help(obj)
 
-    print("uname:", os.uname())
-    print("time:", time.time())
+    print("sys.platform:", sys.platform)
+    print("os.uname:", os.uname())
+    print("time.time:", time.time())
     
     try:
         print('CWD:', os.getcwd())
