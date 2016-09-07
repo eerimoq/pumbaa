@@ -31,37 +31,31 @@ import other
 
 
 def test_smoke():
-    print('Hello world!')
+    """Various tests.
 
-    print()
+    """
+    
     help()
-    print()
-    help(sys)
-    print()
-    help(time)
-    print()
-    help(os)
-    print()
-    help(collections)
-    print()
-    help(binascii)
-    print()
-    help(struct)
-    print()
-    help(re)
-    print()
-    help(pumbaa)
-    print()
-    help(pumbaa.Board)
-    print()
-    help(pumbaa.Event)
-    print()
-    help(pumbaa.Pin)
-    print()
-    help(pumbaa.Timer)
-    print()
-    help(other)
-    print()
+
+    objs = [
+        sys,
+        time,
+        os,
+        collections,
+        binascii,
+        struct,
+        re,
+        pumbaa,
+        pumbaa.Board,
+        pumbaa.Event,
+        pumbaa.Pin,
+        pumbaa.Timer,
+        other
+    ]
+
+    for obj in objs:
+        print()
+        help(obj)
 
     print("uname:", os.uname())
     print("time:", time.time())
@@ -113,55 +107,7 @@ def test_smoke():
 
     assert other.foo() == True
 
-    led = Pin(Board.PIN_LED, Pin.OUTPUT)
-    time.sleep(0.1)
-    led.write(1)
-    led.write(False)
-    led.write(True)
-    time.sleep_ms(1)
-    led.toggle()
-    time.sleep_us(1)
-    print("LED value:", led.read())
-
-    try:
-        led.write(2)
-    except ValueError as e:
-        print(e)
-
-    try:
-        led.write(None)
-    except Exception as e:
-        print(e)
-
-    led.set_mode(Pin.INPUT)
-
-    try:
-        led.set_mode(3)
-    except ValueError as e:
-        print(e)
-
-    try:
-        Pin(-1, Pin.OUTPUT)
-    except ValueError as e:
-        print(e)
-
-    try:
-        Pin(300, Pin.OUTPUT)
-    except ValueError as e:
-        print(e)
-
-    try:
-        Pin(Board.PIN_LED, 10)
-    except ValueError as e:
-        print(e)
-
     pumbaa.fs_call("kernel/thrd/list")
-
-    with open("smoke.txt", "w") as fout:
-        fout.write("test")
-
-    with open("smoke.txt", "r") as fin:
-        assert fin.read() == "test"
 
         
 def main():

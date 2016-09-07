@@ -23,6 +23,7 @@ BOARD ?= linux
 
 TESTS = \
 	tst/smoke \
+	tst/filesystem \
 	tst/kernel/timer \
 	tst/sync/event
 

@@ -17,7 +17,7 @@
 # This file is part of the Pumbaa project.
 #
 
-NAME = event_suite
+NAME = filesystem_suite
 BOARD ?= linux
 
 PYSRC += \

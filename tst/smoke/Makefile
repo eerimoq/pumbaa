@@ -17,7 +17,7 @@
 # This file is part of the Pumbaa project.
 #
 
-NAME = smoke
+NAME = smoke_suite
 BOARD ?= linux
 
 PYSRC += other.py \

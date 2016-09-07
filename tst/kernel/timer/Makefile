@@ -17,7 +17,7 @@
 # This file is part of the Pumbaa project.
 #
 
-NAME = timer
+NAME = timer_suite
 BOARD ?= linux
 
 TIMEOUT ?= 20

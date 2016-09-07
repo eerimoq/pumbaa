@@ -17,7 +17,7 @@
 # This file is part of the Pumbaa project.
 #
 
-NAME = pin
+NAME = pin_suite
 BOARD ?= linux
 
 PYSRC += \

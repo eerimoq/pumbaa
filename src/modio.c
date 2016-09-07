@@ -134,6 +134,8 @@ static mp_uint_t file_obj_ioctl(mp_obj_t o_in,
 
             return (MP_STREAM_ERROR);
         }
+
+        s_p->offset = fs_tell(&self_p->file);
     } else {
         *errcode_p = EINVAL;
 
@@ -256,11 +258,11 @@ static mp_obj_t file_open(const mp_obj_type_t *type_p,
             break;
 
         case 'w':
-            mode |= (FS_WRITE | FS_CREAT);
+            mode |= (FS_WRITE | FS_CREAT | FS_TRUNC);
             break;
 
         case 'x':
-            mode |= (FS_WRITE | FS_CREAT);
+            mode |= (FS_WRITE | FS_CREAT | FS_TRUNC);
             break;
 
         case 'a':
@@ -287,7 +289,7 @@ static mp_obj_t file_open(const mp_obj_type_t *type_p,
 
     obj_p = m_new_obj_with_finaliser(struct file_obj_t);
     obj_p->base.type = type_p;
-    
+
     fname_p = mp_obj_str_get_str(args_p[0].u_obj);
     res = fs_open(&obj_p->file, fname_p, mode);
 

@@ -229,7 +229,7 @@
 #endif
 
 #ifndef MICROPY_PY_SYS_PLATFORM
-#    define MICROPY_PY_SYS_PLATFORM     "Pumbaa"
+#    define MICROPY_PY_SYS_PLATFORM     "simba"
 #endif
 
 #ifndef MICROPY_PY_SYS_MAXSIZE
