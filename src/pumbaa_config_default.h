@@ -53,7 +53,7 @@
 #endif
 
 #ifndef MICROPY_DEBUG_PRINTERS
-#    define MICROPY_DEBUG_PRINTERS      (0)
+#    define MICROPY_DEBUG_PRINTERS      (1)
 #endif
 
 #ifndef MICROPY_HELPER_REPL
@@ -69,11 +69,11 @@
 #endif
 
 #ifndef MICROPY_ENABLE_SOURCE_LINE
-#    define MICROPY_ENABLE_SOURCE_LINE  (0)
+#    define MICROPY_ENABLE_SOURCE_LINE  (1)
 #endif
 
 #ifndef MICROPY_ERROR_REPORTING
-#    define MICROPY_ERROR_REPORTING     (MICROPY_ERROR_REPORTING_TERSE)
+#    define MICROPY_ERROR_REPORTING     (MICROPY_ERROR_REPORTING_NORMAL)
 #endif
 
 #ifndef MICROPY_WARNINGS
@@ -193,15 +193,15 @@
 #endif
 
 #ifndef MICROPY_PY_ARRAY
-#    define MICROPY_PY_ARRAY            (0)
+#    define MICROPY_PY_ARRAY            (1)
 #endif
 
 #ifndef MICROPY_PY_COLLECTIONS
-#    define MICROPY_PY_COLLECTIONS      (0)
+#    define MICROPY_PY_COLLECTIONS      (1)
 #endif
 
 #ifndef MICROPY_PY_MATH
-#    define MICROPY_PY_MATH             (0)
+#    define MICROPY_PY_MATH             (1)
 #endif
 
 #ifndef MICROPY_PY_CMATH
@@ -217,7 +217,7 @@
 #endif
 
 #ifndef MICROPY_PY_STRUCT
-#    define MICROPY_PY_STRUCT           (0)
+#    define MICROPY_PY_STRUCT           (1)
 #endif
 
 #ifndef MICROPY_PY_SYS
@@ -253,11 +253,11 @@
 #endif
 
 #ifndef MICROPY_PY_UJSON
-#    define MICROPY_PY_UJSON            (0)
+#    define MICROPY_PY_UJSON            (1)
 #endif
 
 #ifndef MICROPY_PY_URE
-#    define MICROPY_PY_URE              (0)
+#    define MICROPY_PY_URE              (1)
 #endif
 
 #ifndef MICROPY_PY_UHEAPQ
@@ -269,13 +269,12 @@
 #endif
 
 #ifndef MICROPY_PY_UBINASCII
-#    define MICROPY_PY_UBINASCII        (0)
+#    define MICROPY_PY_UBINASCII        (1)
 #endif
 
 #ifndef MICROPY_PY_UTIME
 #    define MICROPY_PY_UTIME            (1)
 #endif
-
 
 #ifndef MICROPY_MODULE_FROZEN_STR
 #    define MICROPY_MODULE_FROZEN_STR   (1)

@@ -20,6 +20,10 @@
 import sys
 import time
 import os
+import ucollections as collections
+import ubinascii as binascii
+import ustruct as struct
+import ure as re
 import harness
 import pumbaa
 from pumbaa import Board, Event, Pin, Timer
@@ -38,6 +42,14 @@ def test_smoke():
     print()
     help(os)
     print()
+    help(collections)
+    print()
+    help(binascii)
+    print()
+    help(struct)
+    print()
+    help(re)
+    print()
     help(pumbaa)
     print()
     help(pumbaa.Board)
@@ -52,7 +64,7 @@ def test_smoke():
     print()
 
     print(os.uname())
-
+    
     try:
         print('CWD:', os.getcwd())
     except OSError as e:

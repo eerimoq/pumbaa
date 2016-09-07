@@ -22,6 +22,9 @@ MICROPYTHON_ROOT = $(PUMBAA_ROOT)/src/micropython
 INC += $(MICROPYTHON_ROOT)
 
 MICROPYTHON_SRC += \
+	extmod/modubinascii.c \
+	extmod/modujson.c \
+	extmod/modure.c \
 	lib/utils/pyhelp.c \
 	lib/utils/pyexec.c \
 	lib/mp-readline/readline.c \
