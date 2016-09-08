@@ -60,6 +60,10 @@ def test_smoke():
     print("sys.platform:", sys.platform)
     print("os.uname:", os.uname())
     print("time.time:", time.time())
+
+    time.sleep(0.1)
+    time.sleep_ms(1)
+    time.sleep_us(1)
     
     try:
         print('CWD:', os.getcwd())
