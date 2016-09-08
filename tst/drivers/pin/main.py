@@ -24,6 +24,7 @@ import harness
 
 def test_output():
     led = Pin(Board.PIN_LED, Pin.OUTPUT)
+    print(led)
 
     led.write(1)
     value = led.read()
@@ -38,26 +39,54 @@ def test_output():
         
 def test_input():
     led = Pin(Board.PIN_LED, Pin.INPUT)
+    print(led)
+
+def test_set_mode():
+    led = Pin(Board.PIN_LED, Pin.INPUT)
+    led.set_mode(Pin.OUTPUT)
+
+    try:
+        led.set_mode(6)
+        assert False
+    except ValueError as e:
+        assert str(e) == "Bad pin mode 6"
 
 
 def test_bad_arguments():
+    # Bad mode.
     try:
         Pin(Board.PIN_LED, 3)
+        assert False
     except ValueError as e:
-        print(e)
+        assert str(e) == "Bad pin mode 3"
+
+    # bad device.
+    try:
+        Pin(-1, Pin.OUTPUT)
+        assert False
+    except ValueError as e:
+        assert str(e) == "Bad pin device -1"
+
+    try:
+        Pin(500, Pin.OUTPUT)
+        assert False
+    except ValueError as e:
+        assert str(e) == "Bad pin device 500"
 
     led = Pin(Board.PIN_LED, Pin.OUTPUT)
 
     try:
         led.write(2)
+        assert False
     except ValueError as e:
-        print(e)
+        assert str(e) == "Bad pin value 2"
 
 
 def main():
     testcases = [
         (test_output, "test_output"),
         (test_input, "test_input"),
+        (test_set_mode, "test_set_mode"),
         (test_bad_arguments, "test_bad_arguments")
     ]
     harness.run(testcases)
