@@ -23,6 +23,8 @@ BOARD ?= linux
 
 TESTS = \
 	tst/smoke \
+	tst/debug/harness \
+	tst/drivers/pin \
 	tst/filesystem \
 	tst/kernel/timer \
 	tst/sync/event

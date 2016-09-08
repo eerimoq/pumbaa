@@ -17,25 +17,48 @@
 # This file is part of the Pumbaa project.
 #
 
+import os
 from pumbaa import Board, Pin
 import harness
 
 
-def test_read_write():
+def test_output():
     led = Pin(Board.PIN_LED, Pin.OUTPUT)
 
     led.write(1)
     value = led.read()
-    assert value == 1
+    if os.uname().machine != "Linux with Linux":
+        assert value == 1
 
     led.toggle()
     value = led.read()
-    assert value == 0
+    if os.uname().machine != "Linux with Linux":
+        assert value == 0
+
+        
+def test_input():
+    led = Pin(Board.PIN_LED, Pin.INPUT)
+
+
+def test_bad_arguments():
+    try:
+        Pin(Board.PIN_LED, 3)
+    except ValueError as e:
+        print(e)
+
+    led = Pin(Board.PIN_LED, Pin.OUTPUT)
+
+    try:
+        led.write(2)
+    except ValueError as e:
+        print(e)
 
 
 def main():
     testcases = [
-        (test_read_write, "test_read_write")
+        (test_output, "test_output"),
+        (test_input, "test_input"),
+        (test_bad_arguments, "test_bad_arguments")
     ]
     harness.run(testcases)
 
