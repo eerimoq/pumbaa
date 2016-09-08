@@ -69,6 +69,20 @@ def test_read_write():
     with open("rw.txt", "r") as fin:
         assert fin.read() == "foo"
 
+    with open("rw.txt", "r") as fin:
+        try:
+            fin.write('foo')
+            assert False
+        except Exception as e:
+            print(e)
+
+    with open("rw.txt", "w") as fout:
+        try:
+            fout.read()
+            assert False
+        except Exception as e:
+            print(e)
+
 
 def test_seek_tell():
     """Seek in a file.
@@ -93,7 +107,17 @@ def test_seek_tell():
         assert fin.seek(-1, 2) == 7
         assert fin.read(1) == "8"
         assert fin.tell() == 8
-
+        # Seek outside of the file.
+        try:
+            fin.seek(-1)
+            assert False
+        except Exception as e:
+            print(e)
+        try:
+            fin.seek(1, 2)
+            assert False
+        except Exception as e:
+            print(e)
 
 def test_stat():
     """Test to stat files.
@@ -114,13 +138,21 @@ def test_stat():
         print(e)
 
 
+def test_print():
+    with open("print.txt", "w") as fout:
+        print(fout)
+        fout.write("")
+        print(fout)
+
+
 def main():
     testcases = [
         (test_create, "test_create"),
         (test_append, "test_append"),
         (test_read_write, "test_read_write"),
         (test_seek_tell, "test_seek_tell"),
-        (test_stat, "test_stat")
+        (test_stat, "test_stat"),
+        (test_print, "test_print")
     ]
     harness.run(testcases)
 
