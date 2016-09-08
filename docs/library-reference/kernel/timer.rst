@@ -12,7 +12,7 @@
       Start the timer.
     
 
-   .. method:: stop(value)
+   .. method:: stop()
     
       Stop the timer.
     

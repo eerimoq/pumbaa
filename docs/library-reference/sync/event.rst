@@ -8,14 +8,15 @@
 
    .. method:: read(mask=0xffffffff)
 
-      Wait for an event to occur and return a mask of all events.
+      Wait for an event to occur and return a mask of all active
+      events.
 
 
-   .. method:: write(mask)
+   .. method:: write(mask=0xffffffff)
 
-      Write given events to the channel.
+      Write given event(s) to the channel.
 
 
    .. method:: size()
 
-      Get the number of events set in the channel.
+      Get the number of event(s) set in the channel.
