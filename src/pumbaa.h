@@ -41,8 +41,8 @@
 #include "lib/mp-readline/readline.h"
 
 #include "class_board.h"
-#include "modpumbaa/class_event.h"
-#include "modpumbaa/class_pin.h"
-#include "modpumbaa/class_timer.h"
+#include "module_pumbaa/class_event.h"
+#include "module_pumbaa/class_pin.h"
+#include "module_pumbaa/class_timer.h"
 
 #endif

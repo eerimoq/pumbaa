@@ -24,16 +24,16 @@ INC += \
 PUMBAA_SRC += \
 	boards/$(BOARD)/class_board.c \
 	boards/$(BOARD)/gccollect.c \
-	builtinhelp.c \
-	builtininput.c \
+	builtin_help.c \
+	builtin_input.c \
 	junk.c \
-	modio.c \
-	modos.c \
-	modpumbaa.c \
-	modpumbaa/class_event.c \
-	modpumbaa/class_pin.c \
-	modpumbaa/class_timer.c \
-	modtime.c
+	module_io.c \
+	module_os.c \
+	module_pumbaa.c \
+	module_pumbaa/class_event.c \
+	module_pumbaa/class_pin.c \
+	module_pumbaa/class_timer.c \
+	module_time.c
 
 ifeq ($(BOARD),arduino_due)
 PUMBAA_SRC += \
