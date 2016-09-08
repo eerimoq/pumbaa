@@ -17,6 +17,7 @@
 # This file is part of the Pumbaa project.
 #
 
+import os
 import harness
 
 
@@ -68,7 +69,7 @@ def test_read_write():
     with open("rw.txt", "r") as fin:
         assert fin.read() == "foo"
 
-        
+
 def test_seek_tell():
     """Seek in a file.
 
@@ -77,7 +78,7 @@ def test_seek_tell():
     with open("seek.txt", "w") as fout:
         fout.write("12345678")
         assert fout.tell() == 8
-        
+
     with open("seek.txt", "r") as fin:
         # Offset relative to the beginning of the file.
         assert fin.seek(1) == 1
@@ -94,12 +95,32 @@ def test_seek_tell():
         assert fin.tell() == 8
 
 
+def test_stat():
+    """Test to stat files.
+
+    """
+
+    print(os.stat("."))
+
+    with open("stat.txt", "w") as fout:
+        fout.write("12345678")
+
+    assert os.stat("stat.txt") == (0, 0, 0, 0, 0, 0, 8, 0, 0, 0)
+
+    try:
+        os.stat("stat2.txt")
+        assert False
+    except OSError as e:
+        print(e)
+
+
 def main():
     testcases = [
         (test_create, "test_create"),
         (test_append, "test_append"),
         (test_read_write, "test_read_write"),
-        (test_seek_tell, "test_seek_tell")
+        (test_seek_tell, "test_seek_tell"),
+        (test_stat, "test_stat")
     ]
     harness.run(testcases)
 
