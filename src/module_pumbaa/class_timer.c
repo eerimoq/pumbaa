@@ -1,5 +1,5 @@
 /**
- * @file modpumbaa/class_timer.c
+ * @file module_pumbaa/class_timer.c
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist

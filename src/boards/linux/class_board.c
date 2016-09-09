@@ -24,6 +24,9 @@
  */
 static const mp_map_elem_t class_board_locals_table[] = {
     { MP_OBJ_NEW_QSTR(MP_QSTR_PIN_LED), MP_OBJ_NEW_SMALL_INT(0) },
+
+    { MP_OBJ_NEW_QSTR(MP_QSTR_PIN_DAC0), MP_OBJ_NEW_SMALL_INT(10) },
+    { MP_OBJ_NEW_QSTR(MP_QSTR_PIN_DAC1), MP_OBJ_NEW_SMALL_INT(11) },
 };
 
 static MP_DEFINE_CONST_DICT(class_board_locals_dict, class_board_locals_table);

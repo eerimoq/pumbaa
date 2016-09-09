@@ -1,5 +1,5 @@
 /**
- * @file modpumbaa.c
+ * @file module_pumbaa.c
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -57,6 +57,7 @@ static const mp_map_elem_t module_pumbaa_globals_table[] = {
 
     /* Module classes. */
     { MP_OBJ_NEW_QSTR(MP_QSTR_Board), (mp_obj_t)&module_pumbaa_class_board },
+    { MP_OBJ_NEW_QSTR(MP_QSTR_Dac), (mp_obj_t)&module_pumbaa_class_dac },
     { MP_OBJ_NEW_QSTR(MP_QSTR_Event), (mp_obj_t)&module_pumbaa_class_event },
     { MP_OBJ_NEW_QSTR(MP_QSTR_Pin), (mp_obj_t)&module_pumbaa_class_pin },
     { MP_OBJ_NEW_QSTR(MP_QSTR_Timer), (mp_obj_t)&module_pumbaa_class_timer },

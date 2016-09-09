@@ -39,7 +39,7 @@ def run(testcases):
             print("exit: {}: SKIPPED\n".format(name))
         except Exception as e:
             failed += 1
-            print(e)
+            print(type(e), e)
             print("exit: {}: FAILED\n".format(name))
 
     ok = passed + skipped == total

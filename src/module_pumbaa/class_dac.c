@@ -1,5 +1,5 @@
 /**
- * @file modpumbaa/class_dac.c
+ * @file module_pumbaa/class_dac.c
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -44,14 +44,19 @@ static mp_obj_t class_dac_make_new(const mp_obj_type_t *type_p,
 {
     static const mp_arg_t allowed_args[] = {
         { MP_QSTR_devices, MP_ARG_REQUIRED | MP_ARG_OBJ },
-        { MP_QSTR_sampling_rate, MP_ARG_REQUIRED | MP_ARG_INT }
+        { MP_QSTR_sample_rate, MP_ARG_INT, { .u_int = 100 } }
     };
     struct class_dac_t *self_p;
     mp_map_t kwargs;
     mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];
+    struct mp_obj_t *devices_p;
     int sampling_rate;
+    struct pin_device_t *pins[2];
+    mp_uint_t len;
+    mp_obj_t *items_p;
+    int i;
 
-    mp_arg_check_num(n_args, n_kw, 2, MP_OBJ_FUN_ARGS_MAX, true);
+    mp_arg_check_num(n_args, n_kw, 1, MP_OBJ_FUN_ARGS_MAX, true);
 
     /* Parse args. */
     mp_map_init(&kwargs, 0);
@@ -66,13 +71,42 @@ static mp_obj_t class_dac_make_new(const mp_obj_type_t *type_p,
     self_p = m_new0(struct class_dac_t, 1);
     self_p->base.type = &module_pumbaa_class_dac;
 
-    //devices = args[0].u_obj;
+    devices_p = MP_OBJ_TO_PTR(args[0].u_obj);
+
+    for (i = 0; i < membersof(pins); i++) {
+        pins[i] = NULL;
+    }
+
+    if (MP_OBJ_IS_TYPE(devices_p, &mp_type_list)) {
+        mp_obj_list_get(devices_p, &len, &items_p);
+
+        if (len > 2) {
+            nlr_raise(mp_obj_new_exception_msg(&mp_type_ValueError,
+                                               "too many devices"));
+        }
+
+        for (i = 0; i < len; i++) {
+            pins[i] = &pin_device[mp_obj_get_int(items_p[i])];
+        }
+    } else if (MP_OBJ_IS_INT(devices_p)) {
+        pins[0] = &pin_device[mp_obj_get_int(devices_p)];
+    } else {
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_TypeError,
+                                           "bad devices"));
+    }
+
+    if ((pins[0] != &pin_dac0_dev)
+        || ((pins[1] != &pin_dac1_dev) && (pins[1] != NULL))) {
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_ValueError,
+                                           "bad pin"));
+    }
+
     sampling_rate = args[1].u_int;
 
     dac_init((struct dac_driver_t *)&self_p->drv,
-             NULL,
-             NULL,
-             NULL,
+             &dac_device[0],
+             pins[0],
+             pins[1],
              sampling_rate);
 
     return (self_p);
@@ -85,7 +119,7 @@ static mp_obj_t class_dac_convert(mp_obj_t self_in, mp_obj_t samples_in)
 {
     struct class_dac_t *self_p;
     mp_buffer_info_t buffer_info;
-
+    
     self_p = MP_OBJ_TO_PTR(self_in);
     mp_get_buffer_raise(MP_OBJ_TO_PTR(samples_in),
                         &buffer_info,

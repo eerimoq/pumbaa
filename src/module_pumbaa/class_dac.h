@@ -1,5 +1,5 @@
 /**
- * @file modpumbaa/class_dac.h
+ * @file module_pumbaa/class_dac.h
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -17,8 +17,8 @@
  * This file is part of the Pumbaa project.
  */
 
-#ifndef __MODPUMBAA_CLASS_DAC_H__
-#define __MODPUMBAA_CLASS_DAC_H__
+#ifndef __MODULE_PUMBAA_CLASS_DAC_H__
+#define __MODULE_PUMBAA_CLASS_DAC_H__
 
 #include "pumbaa.h"
 

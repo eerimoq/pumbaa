@@ -1,5 +1,5 @@
 /**
- * @file modpumbaa/class_pin.c
+ * @file module_pumbaa/class_pin.c
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist

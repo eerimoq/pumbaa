@@ -1,5 +1,5 @@
 /**
- * @file modpumbaa/class_event.c
+ * @file module_pumbaa/class_event.c
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist

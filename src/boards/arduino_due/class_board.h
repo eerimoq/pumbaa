@@ -17,8 +17,8 @@
  * This file is part of the Pumbaa project.
  */
 
-#ifndef __MODPUMBAA_CLASS_BOARD_H__
-#define __MODPUMBAA_CLASS_BOARD_H__
+#ifndef __MODULE_PUMBAA_CLASS_BOARD_H__
+#define __MODULE_PUMBAA_CLASS_BOARD_H__
 
 #include "pumbaa.h"
 

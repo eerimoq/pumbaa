@@ -23,15 +23,39 @@ import harness
 
 
 def test_output():
-    Dac([Board.PIN_DAC0, Board.PIN_DAC1])
+    # Single pin.
+    dac = Dac(Board.PIN_DAC0)
+    dac.convert("\x03\xff")
+
+    # List of pins.
+    dac = Dac([Board.PIN_DAC0, Board.PIN_DAC1], 11025)
+    dac.convert(bytearray(16 * "\x03\xff"))
+    dac.convert(16 * "\x03\xff")
+    dac.async_convert(16 * "\x03\xff")
+    dac.async_wait()
+
 
 def test_bad_arguments():
-    # Bad devices.
+    # Too many devices.
+    try:
+        Dac([0, 1, 2])
+        assert False
+    except ValueError as e:
+        assert str(e) == "too many devices"
+
+    # Bad devices type.
     try:
         Dac(None)
         assert False
+    except TypeError as e:
+        assert str(e) == "bad devices"
+
+    # Bad pin.
+    try:
+        Dac(Board.PIN_LED)
+        assert False
     except ValueError as e:
-        assert str(e) == "Bad pin mode 3"
+        assert str(e) == "bad pin"
 
 
 def main():
