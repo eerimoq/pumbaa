@@ -22,6 +22,12 @@ from pumbaa import Board, Dac
 import harness
 
 
+def test_print():
+    print(Dac)
+    dac = Dac(Board.PIN_DAC0)
+    print(dac)
+
+
 def test_output():
     # Single pin.
     dac = Dac(Board.PIN_DAC0)
@@ -60,6 +66,7 @@ def test_bad_arguments():
 
 def main():
     testcases = [
+        (test_print, "test_print"),
         (test_output, "test_output"),
         (test_bad_arguments, "test_bad_arguments")
     ]
