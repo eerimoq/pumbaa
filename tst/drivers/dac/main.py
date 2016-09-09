@@ -1,5 +1,5 @@
 #
-# @file pumbaa.mk
+# @file main.py
 #
 # @section License
 # Copyright (C) 2016, Erik Moqvist
@@ -17,31 +17,30 @@
 # This file is part of the Pumbaa project.
 #
 
-INC += \
-	$(PUMBAA_ROOT)/src \
-	$(PUMBAA_ROOT)/src/boards/$(BOARD)
+import os
+from pumbaa import Board, Dac
+import harness
 
-PUMBAA_SRC += \
-	boards/$(BOARD)/class_board.c \
-	boards/$(BOARD)/gccollect.c \
-	builtin_help.c \
-	builtin_input.c \
-	junk.c \
-	module_io.c \
-	module_os.c \
-	module_pumbaa.c \
-	module_pumbaa/class_dac.c \
-	module_pumbaa/class_event.c \
-	module_pumbaa/class_pin.c \
-	module_pumbaa/class_timer.c \
-	module_time.c
 
-ifeq ($(BOARD),arduino_due)
-PUMBAA_SRC += \
-	boards/$(BOARD)/gchelper.S \
-	lexer.c
-endif
+def test_output():
+    Dac([Board.PIN_DAC0, Board.PIN_DAC1])
 
-SRC += $(PUMBAA_SRC:%=$(PUMBAA_ROOT)/src/%)
+def test_bad_arguments():
+    # Bad devices.
+    try:
+        Dac(None)
+        assert False
+    except ValueError as e:
+        assert str(e) == "Bad pin mode 3"
 
-include $(PUMBAA_ROOT)/src/micropython/micropython.mk
+
+def main():
+    testcases = [
+        (test_output, "test_output"),
+        (test_bad_arguments, "test_bad_arguments")
+    ]
+    harness.run(testcases)
+
+
+if __name__ == '__main__':
+    main()

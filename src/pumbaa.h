@@ -41,6 +41,7 @@
 #include "lib/mp-readline/readline.h"
 
 #include "class_board.h"
+#include "module_pumbaa/class_dac.h"
 #include "module_pumbaa/class_event.h"
 #include "module_pumbaa/class_pin.h"
 #include "module_pumbaa/class_timer.h"

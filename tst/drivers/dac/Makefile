@@ -1,5 +1,5 @@
 #
-# @file pumbaa.mk
+# @file Makefile
 #
 # @section License
 # Copyright (C) 2016, Erik Moqvist
@@ -17,31 +17,13 @@
 # This file is part of the Pumbaa project.
 #
 
-INC += \
-	$(PUMBAA_ROOT)/src \
-	$(PUMBAA_ROOT)/src/boards/$(BOARD)
+NAME = dac_suite
+BOARD ?= linux
 
-PUMBAA_SRC += \
-	boards/$(BOARD)/class_board.c \
-	boards/$(BOARD)/gccollect.c \
-	builtin_help.c \
-	builtin_input.c \
-	junk.c \
-	module_io.c \
-	module_os.c \
-	module_pumbaa.c \
-	module_pumbaa/class_dac.c \
-	module_pumbaa/class_event.c \
-	module_pumbaa/class_pin.c \
-	module_pumbaa/class_timer.c \
-	module_time.c
+PYSRC += \
+	$(PUMBAA_ROOT)/src/py/harness.py
 
-ifeq ($(BOARD),arduino_due)
-PUMBAA_SRC += \
-	boards/$(BOARD)/gchelper.S \
-	lexer.c
-endif
+CDEFS += CONFIG_MAIN_FRIENDLY_REPL=0
 
-SRC += $(PUMBAA_SRC:%=$(PUMBAA_ROOT)/src/%)
-
-include $(PUMBAA_ROOT)/src/micropython/micropython.mk
+PUMBAA_ROOT ?= ../..
+include $(PUMBAA_ROOT)/make/app.mk
