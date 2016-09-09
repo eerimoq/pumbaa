@@ -31,18 +31,15 @@ Features
 
 * `MicroPython 3`_ language.
 
-* Builtin modules and classes:
+* Python standard library modules.
 
-   - board
-   - :doc:`library-reference/sync/event`
-   - fs
-   - gc
-   - micropython
-   - os
-   - :doc:`library-reference/drivers/pin`
-   - sys
-   - time
-   - :doc:`library-reference/kernel/timer`
+* `MicroPython`_ modules.
+
+* Device drivers (:doc:`Pin<library-reference/drivers/pin>`,
+  :doc:`Dac<library-reference/drivers/dac>`).
+
+* A thin :doc:`C to Python wrapper layer<library-reference/pumbaa>` on
+  top of most Simba modules.
 
 See the :doc:`library-reference` for a full list of features.
 
