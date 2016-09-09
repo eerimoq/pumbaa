@@ -24,6 +24,7 @@ BOARD ?= linux
 TESTS = \
 	tst/smoke \
 	tst/debug/harness \
+	tst/drivers/dac \
 	tst/drivers/pin \
 	tst/filesystem \
 	tst/kernel/timer \
