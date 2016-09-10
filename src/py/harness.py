@@ -31,6 +31,10 @@ class SuiteError(Exception):
         self.failed = failed
 
 
+class ExceptionNotRaisedError(Exception):
+    pass
+
+
 class AssertRaises(object):
 
     def __init__(self, expected_type, expected_message):
@@ -42,7 +46,8 @@ class AssertRaises(object):
 
     def __exit__(self, exc_type, exc_value, tb):
         if exc_type is None:
-            raise RuntimeError("{} not raised".format(exc_type))
+            raise ExceptionNotRaisedError("{} not raised".format(
+                self.expected_type))
         elif exc_type == self.expected_type:
             if self.expected_message in [None, str(exc_value)]:
                 return True

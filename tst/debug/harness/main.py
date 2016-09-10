@@ -18,7 +18,8 @@
 #
 
 import harness
-from harness import TestCaseSkippedError, SuiteError, assert_raises
+from harness import TestCaseSkippedError, SuiteError
+from harness import assert_raises, ExceptionNotRaisedError
 
 
 def test_assert_raises():
@@ -30,6 +31,12 @@ def test_assert_raises():
             raise ValueError("unexpected error")
     except ValueError as e:
         assert str(e) == "unexpected error"
+
+    try:
+        with assert_raises(TypeError):
+            pass
+    except ExceptionNotRaisedError as e:
+        assert str(e) == "<class 'TypeError'> not raised"
 
 
 def test_passed():
