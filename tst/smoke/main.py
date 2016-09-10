@@ -17,16 +17,19 @@
 # This file is part of the Pumbaa project.
 #
 
+import array
+import math
+import os
 import sys
 import time
-import os
-import ucollections as collections
+import micropython
+import uio as io
 import ubinascii as binascii
-import ustruct as struct
+import ucollections as collections
 import ure as re
+import ustruct as struct
 import harness
 import pumbaa
-from pumbaa import Board, Event, Pin, Timer
 import other
 
 
@@ -34,19 +37,23 @@ def test_smoke():
     """Various tests.
 
     """
-    
+
     help()
 
     objs = [
+        array,
+        io,
+        math,
+        os,
         sys,
         time,
-        os,
-        collections,
         binascii,
-        struct,
+        collections,
         re,
+        struct,
         pumbaa,
         pumbaa.Board,
+        pumbaa.Dac,
         pumbaa.Event,
         pumbaa.Pin,
         pumbaa.Timer,
@@ -57,6 +64,8 @@ def test_smoke():
         print()
         help(obj)
 
+    print("dir:", dir())
+
     print("sys.platform:", sys.platform)
     print("os.uname:", os.uname())
     print("time.time:", time.time())
@@ -64,7 +73,7 @@ def test_smoke():
     time.sleep(0.1)
     time.sleep_ms(1)
     time.sleep_us(1)
-    
+
     try:
         print('CWD:', os.getcwd())
     except OSError as e:
@@ -109,13 +118,18 @@ def test_smoke():
 
     pumbaa.fs_call("kernel/thrd/list")
 
-        
+    sio = io.StringIO("foo")
+    sio.seek(0, 2)
+    print("bar", file=sio)
+    sio.seek(0)
+    assert sio.read().strip() == "foobar"
+
 def main():
     testcases = [
         (test_smoke, "test_smoke")
     ]
     harness.run(testcases)
 
-    
+
 if __name__ == '__main__':
     main()
