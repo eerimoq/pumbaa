@@ -76,11 +76,6 @@ def test_smoke():
         print(e)
 
     try:
-        os.listdir()
-    except Exception as e:
-        print(e)
-
-    try:
         os.chdir('foo')
     except NotImplementedError as e:
         print(e)

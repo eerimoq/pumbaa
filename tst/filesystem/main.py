@@ -72,16 +72,18 @@ def test_read_write():
     with open("rw.txt", "r") as fin:
         try:
             fin.write('foo')
-            assert False
         except Exception as e:
             print(e)
+        else:
+            assert False
 
     with open("rw.txt", "w") as fout:
         try:
             fout.read()
-            assert False
         except Exception as e:
             print(e)
+        else:
+            assert False
 
 
 def test_seek_tell():
@@ -110,14 +112,17 @@ def test_seek_tell():
         # Seek outside of the file.
         try:
             fin.seek(-1)
-            assert False
         except Exception as e:
             print(e)
+        else:
+            assert False
         try:
             fin.seek(1, 2)
-            assert False
         except Exception as e:
             print(e)
+        else:
+            assert False
+
 
 def test_stat():
     """Test to stat files.
@@ -133,10 +138,31 @@ def test_stat():
 
     try:
         os.stat("stat2.txt")
-        assert False
     except OSError as e:
         print(e)
+    else:
+        assert False
 
+
+def test_listdir():
+    assert os.listdir() == ['CREATE.TXT',
+                            'APPEND.TXT',
+                            'RW.TXT',
+                            'SEEK.TXT',
+                            'STAT.TXT']
+
+    assert os.listdir('.') == ['CREATE.TXT',
+                               'APPEND.TXT',
+                               'RW.TXT',
+                               'SEEK.TXT',
+                               'STAT.TXT']
+
+    try:
+        os.listdir('non-existing')
+    except OSError as e:
+        assert str(e) == "No such file or directory: 'non-existing'"
+    else:
+        assert False
 
 def test_print():
     with open("print.txt", "w") as fout:
@@ -152,6 +178,7 @@ def main():
         (test_read_write, "test_read_write"),
         (test_seek_tell, "test_seek_tell"),
         (test_stat, "test_stat"),
+        (test_listdir, "test_listdir"),
         (test_print, "test_print")
     ]
     harness.run(testcases)

@@ -116,9 +116,34 @@ static mp_obj_t os_getcwd(void)
  */
 static mp_obj_t os_listdir(mp_uint_t n_args, const mp_obj_t *args_p)
 {
-    mp_not_implemented("os_listdir()");
+    struct fs_dir_t dir;
+    struct fs_dir_entry_t entry;
+    mp_obj_t entries;
+    mp_obj_t name;
+    const char *path_p;
 
-    return (mp_const_none);
+    if (n_args == 0) {
+        path_p = "";
+    } else {
+        path_p = mp_obj_str_get_str(args_p[0]);
+    }
+
+    if (fs_dir_open(&dir, path_p, O_READ) != 0) {
+        nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_OSError,
+                                                "No such file or directory: '%s'",
+                                                path_p));
+    }
+
+    entries = mp_obj_new_list(0, NULL);
+
+    while (fs_dir_read(&dir, &entry) == 1) {
+        name = mp_obj_new_str(&entry.name[0], strlen(entry.name), false);
+        mp_obj_list_append(entries, name);
+    }
+
+    fs_dir_close(&dir);
+
+    return (entries);
 }
 
 /**
