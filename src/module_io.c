@@ -1,5 +1,5 @@
 /**
- * @file modio.c
+ * @file module_io.c
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist

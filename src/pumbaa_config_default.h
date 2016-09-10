@@ -36,22 +36,6 @@
 #    define MICROPY_ENABLE_GC                             (1)
 #endif
 
-#ifndef MICROPY_ENABLE_FINALISER
-#    define MICROPY_ENABLE_FINALISER                      (0)
-#endif
-
-#ifndef MICROPY_STACK_CHECK
-#    define MICROPY_STACK_CHECK                           (0)
-#endif
-
-#ifndef MICROPY_COMP_CONST
-#    define MICROPY_COMP_CONST                            (0)
-#endif
-
-#ifndef MICROPY_MEM_STATS
-#    define MICROPY_MEM_STATS                             (1)
-#endif
-
 #ifndef MICROPY_DEBUG_PRINTERS
 #    define MICROPY_DEBUG_PRINTERS                        (1)
 #endif
@@ -72,184 +56,28 @@
 #    define MICROPY_ENABLE_SOURCE_LINE                    (1)
 #endif
 
-#ifndef MICROPY_ERROR_REPORTING
-#    define MICROPY_ERROR_REPORTING  MICROPY_ERROR_REPORTING_NORMAL
-#endif
-
-#ifndef MICROPY_WARNINGS
-#    define MICROPY_WARNINGS                              (0)
-#endif
-
-#ifndef MICROPY_ENABLE_EMERGENCY_EXCEPTION_BUF
-#    define MICROPY_ENABLE_EMERGENCY_EXCEPTION_BUF        (0)
-#endif
-
 #ifndef MICROPY_FLOAT_IMPL
 #    define MICROPY_FLOAT_IMPL       MICROPY_FLOAT_IMPL_FLOAT
-#endif
-
-#ifndef MICROPY_LONGINT_IMPL
-#    define MICROPY_LONGINT_IMPL    MICROPY_LONGINT_IMPL_NONE
-#endif
-
-#ifndef MICROPY_STREAMS_NON_BLOCK
-#    define MICROPY_STREAMS_NON_BLOCK                     (0)
-#endif
-
-#ifndef MICROPY_OPT_COMPUTED_GOTO
-#    define MICROPY_OPT_COMPUTED_GOTO                     (0)
-#endif
-
-#ifndef MICROPY_OPT_CACHE_MAP_LOOKUP_IN_BYTECODE
-#    define MICROPY_OPT_CACHE_MAP_LOOKUP_IN_BYTECODE      (0)
-#endif
-
-#ifndef MICROPY_CAN_OVERRIDE_BUILTINS
-#    define MICROPY_CAN_OVERRIDE_BUILTINS                 (0)
-#endif
-
-#ifndef MICROPY_BUILTIN_METHOD_CHECK_SELF_ARG
-#    define MICROPY_BUILTIN_METHOD_CHECK_SELF_ARG         (0)
-#endif
-
-#ifndef MICROPY_CPYTHON_COMPAT
-#    define MICROPY_CPYTHON_COMPAT                        (0)
 #endif
 
 #ifndef MICROPY_PY_BUILTINS_FLOAT
 #    define MICROPY_PY_BUILTINS_FLOAT                     (1)
 #endif
 
-#ifndef MICROPY_PY_BUILTINS_COMPLEX
-#    define MICROPY_PY_BUILTINS_COMPLEX                   (0)
-#endif
-
-#ifndef MICROPY_PY_BUILTINS_BYTEARRAY
-#    define MICROPY_PY_BUILTINS_BYTEARRAY                 (1)
-#endif
-
-#ifndef MICROPY_PY_BUILTINS_MEMORYVIEW
-#    define MICROPY_PY_BUILTINS_MEMORYVIEW                (0)
-#endif
-
-#ifndef MICROPY_PY_BUILTINS_COMPILE
-#    define MICROPY_PY_BUILTINS_COMPILE                   (0)
-#endif
-
-#ifndef MICROPY_PY_BUILTINS_ENUMERATE
-#    define MICROPY_PY_BUILTINS_ENUMERATE                 (1)
-#endif
-
-#ifndef MICROPY_PY_BUILTINS_FILTER
-#    define MICROPY_PY_BUILTINS_FILTER                    (0)
-#endif
-
 #ifndef MICROPY_PY_BUILTINS_FROZENSET
 #    define MICROPY_PY_BUILTINS_FROZENSET                 (1)
 #endif
 
-#ifndef MICROPY_PY_BUILTINS_REVERSED
-#    define MICROPY_PY_BUILTINS_REVERSED                  (0)
-#endif
-
-#ifndef MICROPY_PY_BUILTINS_SET
-#    define MICROPY_PY_BUILTINS_SET                       (1)
-#endif
-
-#ifndef MICROPY_PY_BUILTINS_SLICE
-#    define MICROPY_PY_BUILTINS_SLICE                     (1)
-#endif
-
-#ifndef MICROPY_PY_BUILTINS_STR_UNICODE
-#    define MICROPY_PY_BUILTINS_STR_UNICODE               (0)
-#endif
-
-#ifndef MICROPY_PY_BUILTINS_PROPERTY
-#    define MICROPY_PY_BUILTINS_PROPERTY                  (0)
-#endif
-
-#ifndef MICROPY_PY_BUILTINS_MIN_MAX
-#    define MICROPY_PY_BUILTINS_MIN_MAX                   (1)
-#endif
-
-#ifndef MICROPY_PY___FILE__
-#    define MICROPY_PY___FILE__                           (0)
-#endif
-
-#ifndef MICROPY_PY_MICROPYTHON_MEM_INFO
-#    define MICROPY_PY_MICROPYTHON_MEM_INFO               (1)
-#endif
-
-#ifndef MICROPY_MALLOC_USES_ALLOCATED_SIZE
-#    define MICROPY_MALLOC_USES_ALLOCATED_SIZE            (1)
-#endif
-
-#ifndef MICROPY_PY_GC
-#    define MICROPY_PY_GC                                 (1)
-#endif
-
-#ifndef MICROPY_PY_GC_COLLECT_RETVAL
-#    define MICROPY_PY_GC_COLLECT_RETVAL                  (0)
-#endif
-
-#ifndef MICROPY_PY_ARRAY
-#    define MICROPY_PY_ARRAY                              (1)
-#endif
-
-#ifndef MICROPY_PY_COLLECTIONS
-#    define MICROPY_PY_COLLECTIONS                        (1)
-#endif
-
-#ifndef MICROPY_PY_MATH
-#    define MICROPY_PY_MATH                               (1)
-#endif
-
-#ifndef MICROPY_PY_CMATH
-#    define MICROPY_PY_CMATH                              (0)
-#endif
-
-#ifndef MICROPY_PY_IO
-#    define MICROPY_PY_IO                                 (0)
-#endif
-
-#ifndef MICROPY_PY_IO_FILEIO
-#    define MICROPY_PY_IO_FILEIO                          (1)
-#endif
-
-#ifndef MICROPY_PY_STRUCT
-#    define MICROPY_PY_STRUCT                             (1)
-#endif
-
-#ifndef MICROPY_PY_SYS
-#    define MICROPY_PY_SYS                                (1)
-#endif
-
 #ifndef MICROPY_PY_SYS_EXIT
-#    define MICROPY_PY_SYS_EXIT                           (0)
+#    define MICROPY_PY_SYS_EXIT                           (1)
 #endif
 
 #ifndef MICROPY_PY_SYS_PLATFORM
 #    define MICROPY_PY_SYS_PLATFORM                   "simba"
 #endif
 
-#ifndef MICROPY_PY_SYS_MAXSIZE
-#    define MICROPY_PY_SYS_MAXSIZE                        (0)
-#endif
-
 #ifndef MICROPY_PY_SYS_STDFILES
-#    define MICROPY_PY_SYS_STDFILES                       (0)
-#endif
-
-#ifndef MICROPY_PY_CMATH
-#    define MICROPY_PY_CMATH                              (0)
-#endif
-
-#ifndef MICROPY_PY_UCTYPES
-#    define MICROPY_PY_UCTYPES                            (0)
-#endif
-
-#ifndef MICROPY_PY_UZLIB
-#    define MICROPY_PY_UZLIB                              (0)
+#    define MICROPY_PY_SYS_STDFILES                       (1)
 #endif
 
 #ifndef MICROPY_PY_UJSON
@@ -258,14 +86,6 @@
 
 #ifndef MICROPY_PY_URE
 #    define MICROPY_PY_URE                                (1)
-#endif
-
-#ifndef MICROPY_PY_UHEAPQ
-#    define MICROPY_PY_UHEAPQ                             (0)
-#endif
-
-#ifndef MICROPY_PY_UHASHLIB
-#    define MICROPY_PY_UHASHLIB                           (0)
 #endif
 
 #ifndef MICROPY_PY_UBINASCII

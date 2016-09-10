@@ -82,5 +82,5 @@ int mp_hal_stdin_rx_chr(void)
 
     chan_read(sys_get_stdin(), &c, 1);
 
-    return c;
+    return (c);
 }

@@ -1,5 +1,5 @@
 /**
- * @file modtime.c
+ * @file module_time.c
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist

@@ -1,5 +1,5 @@
 /**
- * @file modos.c
+ * @file module_os.c
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist

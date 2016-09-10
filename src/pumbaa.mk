@@ -19,6 +19,7 @@
 
 INC += \
 	$(PUMBAA_ROOT)/src \
+	$(PUMBAA_ROOT)/src/port \
 	$(PUMBAA_ROOT)/src/boards/$(BOARD)
 
 PUMBAA_SRC += \
@@ -26,7 +27,7 @@ PUMBAA_SRC += \
 	boards/$(BOARD)/gccollect.c \
 	builtin_help.c \
 	builtin_input.c \
-	junk.c \
+	port/port.c \
 	module_io.c \
 	module_os.c \
 	module_pumbaa.c \
@@ -34,12 +35,13 @@ PUMBAA_SRC += \
 	module_pumbaa/class_event.c \
 	module_pumbaa/class_pin.c \
 	module_pumbaa/class_timer.c \
+	module_sys.c \
 	module_time.c
 
 ifeq ($(BOARD),arduino_due)
 PUMBAA_SRC += \
 	boards/$(BOARD)/gchelper.S \
-	lexer.c
+	port/lexer.c
 endif
 
 SRC += $(PUMBAA_SRC:%=$(PUMBAA_ROOT)/src/%)
