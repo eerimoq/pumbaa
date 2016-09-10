@@ -65,7 +65,7 @@ static mp_obj_t class_pin_init_helper(const struct class_pin_t *self_p,
                                                 device));
     }
 
-    if ((mode != 0) && (mode != 1)) {
+    if ((mode != PIN_INPUT) && (mode != PIN_OUTPUT)) {
         nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_ValueError,
                                                 "bad pin mode %d",
                                                 mode));
