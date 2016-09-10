@@ -18,7 +18,18 @@
 #
 
 import harness
-from harness import TestCaseSkippedError, SuiteError
+from harness import TestCaseSkippedError, SuiteError, assert_raises
+
+
+def test_assert_raises():
+    with assert_raises(RuntimeError, "expected error"):
+        raise RuntimeError("expected error")
+
+    try:
+        with assert_raises(TypeError):
+            raise ValueError("unexpected error")
+    except ValueError as e:
+        assert str(e) == "unexpected error"
 
 
 def test_passed():
@@ -35,6 +46,7 @@ def test_failed():
 
 def main():
     testcases = [
+        (test_assert_raises, "test_assert_raises"),
         (test_passed, "test_passed"),
         (test_skipped, "test_skipped"),
         (test_failed, "test_failed")
@@ -44,8 +56,8 @@ def main():
         harness.run(testcases)
         raise RuntimeError()
     except harness.SuiteError as e:
-        print((e.total, e.passed, e.skipped, e.failed))
-        pass
+        if e.failed != 1 or e.skipped != 1:
+            raise RuntimeError()
 
 
 if __name__ == '__main__':

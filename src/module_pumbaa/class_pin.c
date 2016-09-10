@@ -61,13 +61,13 @@ static mp_obj_t class_pin_init_helper(const struct class_pin_t *self_p,
 
     if ((device < 0) || (device >= PIN_DEVICE_MAX)) {
         nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_ValueError,
-                                                "Bad pin device %d",
+                                                "bad pin device %d",
                                                 device));
     }
 
     if ((mode != 0) && (mode != 1)) {
         nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_ValueError,
-                                                "Bad pin mode %d",
+                                                "bad pin mode %d",
                                                 mode));
     }
 
@@ -130,7 +130,7 @@ static mp_obj_t class_pin_write(mp_obj_t self_in, mp_obj_t value_in)
 
     if ((value != 0) && (value != 1)) {
         nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_ValueError,
-                                                "Bad pin value %d",
+                                                "bad pin value %d",
                                                 value));
     }
 
@@ -165,7 +165,7 @@ static mp_obj_t class_pin_set_mode(mp_obj_t self_in, mp_obj_t mode_in)
 
     if ((mode != 0) && (mode != 1)) {
         nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_ValueError,
-                                                "Bad pin mode %d",
+                                                "bad pin mode %d",
                                                 mode));
 
     }

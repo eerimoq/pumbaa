@@ -19,6 +19,7 @@
 
 from pumbaa import Event
 import harness
+from harness import assert_raises
 
 
 def test_help():
@@ -39,19 +40,11 @@ def test_read_write():
 def test_bad_arguments():
     EVENT = Event()
 
-    try:
+    with assert_raises(TypeError, "can't convert NoneType to int"):
         EVENT.read(None)
-    except TypeError as e:
-        assert str(e) == "can't convert NoneType to int"
-    else:
-        assert False
 
-    try:
+    with assert_raises(TypeError, "can't convert NoneType to int"):
         EVENT.write(None)
-    except TypeError as e:
-        assert str(e) == "can't convert NoneType to int"
-    else:
-        assert False
 
 
 def main():

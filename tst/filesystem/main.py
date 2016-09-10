@@ -19,6 +19,7 @@
 
 import os
 import harness
+from harness import assert_raises
 
 
 def test_create():
@@ -70,20 +71,12 @@ def test_read_write():
         assert fin.read() == "foo"
 
     with open("rw.txt", "r") as fin:
-        try:
+        with assert_raises(OSError):
             fin.write('foo')
-        except Exception as e:
-            print(e)
-        else:
-            assert False
 
     with open("rw.txt", "w") as fout:
-        try:
+        with assert_raises(OSError):
             fout.read()
-        except Exception as e:
-            print(e)
-        else:
-            assert False
 
 
 def test_seek_tell():
@@ -110,18 +103,10 @@ def test_seek_tell():
         assert fin.read(1) == "8"
         assert fin.tell() == 8
         # Seek outside of the file.
-        try:
+        with assert_raises(OSError):
             fin.seek(-1)
-        except Exception as e:
-            print(e)
-        else:
-            assert False
-        try:
+        with assert_raises(OSError):
             fin.seek(1, 2)
-        except Exception as e:
-            print(e)
-        else:
-            assert False
 
 
 def test_stat():

@@ -20,6 +20,7 @@
 import os
 from pumbaa import Board, Dac
 import harness
+from harness import assert_raises
 
 
 def test_print():
@@ -43,30 +44,16 @@ def test_output():
 
 def test_bad_arguments():
     # Too many devices.
-    try:
+    with assert_raises(ValueError, "too many devices"):
         Dac([0, 1, 2])
-    except ValueError as e:
-        assert str(e) == "too many devices"
-    else:
-        assert False
         
     # Bad devices type.
-    try:
+    with assert_raises(TypeError, "bad devices"):
         Dac(None)
-        assert False
-    except TypeError as e:
-        assert str(e) == "bad devices"
-    else:
-        assert False
 
     # Bad pin.
-    try:
+    with assert_raises(ValueError, "bad pin"):
         Dac(Board.PIN_LED)
-        assert False
-    except ValueError as e:
-        assert str(e) == "bad pin"
-    else:
-        assert False
 
 
 def main():

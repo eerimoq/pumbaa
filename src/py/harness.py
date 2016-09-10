@@ -1,3 +1,22 @@
+#
+# @file harness.py
+#
+# @section License
+# Copyright (C) 2016, Erik Moqvist
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation; either
+# version 2.1 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Lesser General Public License for more details.
+#
+# This file is part of the Pumbaa project.
+#
+
 class TestCaseSkippedError(Exception):
     pass
 
@@ -11,12 +30,33 @@ class SuiteError(Exception):
         self.skipped = skipped
         self.failed = failed
 
-    
+
+class AssertRaises(object):
+
+    def __init__(self, expected_type, expected_message):
+        self.expected_type = expected_type
+        self.expected_message = expected_message
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, tb):
+        if exc_type is None:
+            raise RuntimeError("{} not raised".format(exc_type))
+        elif exc_type == self.expected_type:
+            if self.expected_message in [None, str(exc_value)]:
+                return True
+
+
+def assert_raises(expected_type, expected_message=None):
+    return AssertRaises(expected_type, expected_message)
+
+
 def run(testcases):
     """Run all test cases in the list.
 
     """
-    
+
     # Print a header.
     print()
     print("================================== TEST BEGIN ==================================\n")
@@ -26,7 +66,7 @@ def run(testcases):
     skipped = 0
     failed = 0
     total = len(testcases)
-    
+
     for callback, name in testcases:
         print("enter:", name)
 
@@ -43,7 +83,7 @@ def run(testcases):
             print("exit: {}: FAILED\n".format(name))
 
     ok = passed + skipped == total
-            
+
     print("harness report: total({}), passed({}), failed({}), skipped({})\n".format(
         total, passed, failed, skipped))
 

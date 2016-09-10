@@ -31,6 +31,7 @@ import ustruct as struct
 import harness
 import pumbaa
 import other
+from harness import assert_raises
 
 
 def test_smoke():
@@ -84,30 +85,20 @@ def test_smoke():
     except Exception as e:
         print(e)
 
-    try:
+    with assert_raises(NotImplementedError):
         os.chdir('foo')
-    except NotImplementedError as e:
-        print(e)
 
-    try:
+    with assert_raises(NotImplementedError):
         os.chdir('..')
-    except NotImplementedError as e:
-        print(e)
 
-    try:
+    with assert_raises(NotImplementedError):
         os.rename('foo', 'bar')
-    except NotImplementedError as e:
-        print(e)
 
-    try:
+    with assert_raises(NotImplementedError):
         os.remove('bar')
-    except NotImplementedError as e:
-        print(e)
 
-    try:
+    with assert_raises(NotImplementedError):
         os.rmdir('bar')
-    except NotImplementedError as e:
-        print(e)
 
     assert other.foo() == True
 

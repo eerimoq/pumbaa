@@ -20,6 +20,7 @@
 import os
 from pumbaa import Board, Pin
 import harness
+from harness import assert_raises
 
 
 def test_output():
@@ -45,44 +46,26 @@ def test_set_mode():
     led = Pin(Board.PIN_LED, Pin.INPUT)
     led.set_mode(Pin.OUTPUT)
 
-    try:
+    with assert_raises(ValueError, "bad pin mode 6"):
         led.set_mode(6)
-        assert False
-    except ValueError as e:
-        assert str(e) == "Bad pin mode 6"
 
 
 def test_bad_arguments():
     # Bad mode.
-    try:
+    with assert_raises(ValueError, "bad pin mode 3"):
         Pin(Board.PIN_LED, 3)
-        assert False
-    except ValueError as e:
-        assert str(e) == "Bad pin mode 3"
 
     # bad device.
-    try:
+    with assert_raises(ValueError, "bad pin device -1"):
         Pin(-1, Pin.OUTPUT)
-    except ValueError as e:
-        assert str(e) == "Bad pin device -1"
-    else:
-        assert False
 
-    try:
+    with assert_raises(ValueError, "bad pin device 500"):
         Pin(500, Pin.OUTPUT)
-    except ValueError as e:
-        assert str(e) == "Bad pin device 500"
-    else:
-        assert False
 
     led = Pin(Board.PIN_LED, Pin.OUTPUT)
 
-    try:
+    with assert_raises(ValueError, "bad pin value 2"):
         led.write(2)
-    except ValueError as e:
-        assert str(e) == "Bad pin value 2"
-    else:
-        assert False
 
 
 def main():

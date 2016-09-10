@@ -19,6 +19,7 @@
 
 import harness
 from pumbaa import Timer, Event
+from harness import assert_raises
 
 
 def test_help():
@@ -50,20 +51,12 @@ def test_periodic_timer():
 
 def test_bad_arguments():
     # Wrong type of second argument.
-    try:
+    with assert_raises(TypeError, "expected <class 'Event'>"):
         Timer(1, None, 1)
-    except TypeError as e:
-        assert str(e) == "expected <class 'Event'>"
-    else:
-        assert False
 
     # Too few arguments.
-    try:
+    with assert_raises(TypeError, "'mask' argument required"):
         Timer(1, None)
-    except TypeError as e:
-        assert str(e) == "'mask' argument required"
-    else:
-        assert False
 
 
 def main():
