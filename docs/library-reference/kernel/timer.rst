@@ -19,3 +19,6 @@
       will never exipre. This function has no effect if the timer has
       already expired.
     
+   .. data:: PERIODIC
+
+      Pass this flag to ``pumbaa.Timer`` for periodic timers.

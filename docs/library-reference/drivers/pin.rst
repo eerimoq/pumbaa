@@ -29,4 +29,12 @@
    .. method:: set_mode(mode)
 
       Set the pin mode to given mode `mode`. The mode must be either
-      `INPUT` or `OUTPUT`.
+      ``INPUT`` or ``OUTPUT``.
+
+   .. data:: INPUT
+
+      Input pin mode.
+
+   .. data:: OUTPUT
+
+      Output pin mode.
