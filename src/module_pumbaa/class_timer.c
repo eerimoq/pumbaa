@@ -53,7 +53,7 @@ static mp_obj_t class_timer_init_helper(struct class_timer_t *self_p,
     static const mp_arg_t allowed_args[] = {
         { MP_QSTR_timeout, MP_ARG_REQUIRED | MP_ARG_INT },
         { MP_QSTR_event, MP_ARG_REQUIRED | MP_ARG_OBJ },
-        { MP_QSTR_mask, MP_ARG_INT, { .u_int = 0xffffffff } },
+        { MP_QSTR_mask, MP_ARG_REQUIRED | MP_ARG_INT },
         { MP_QSTR_flags, MP_ARG_INT, { .u_int = 0x0 } },
     };
     mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];

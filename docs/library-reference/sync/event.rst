@@ -6,13 +6,13 @@
    Initialize given event object.
 
 
-   .. method:: read(mask=0xffffffff)
+   .. method:: read(mask)
 
       Wait for an event to occur and return a mask of all active
       events.
 
 
-   .. method:: write(mask=0xffffffff)
+   .. method:: write(mask)
 
       Write given event(s) to the channel.
 

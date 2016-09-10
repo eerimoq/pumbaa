@@ -17,18 +17,15 @@
 # This file is part of the Pumbaa project.
 # 
 
-import event
-import timer
+from pumbaa import Event, Timer
 
-TIMEOUT_EVENT = 0x1
+EVENT = Event()
 
-EVENT = event.Event()
-
-TIMER = timer.Timer(1, EVENT, flags=timer.PERIODIC)
+TIMER = Timer(1, EVENT, 0x1, flags=Timer.PERIODIC)
 TIMER.start()
 
 for i in range(10):
-    EVENT.read()
+    EVENT.read(0x1)
     print("timeout", i)
 
 TIMER.stop()

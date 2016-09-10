@@ -30,18 +30,10 @@ def test_help():
 def test_read_write():
     EVENT = Event()
 
-    try:
-        EVENT.write()
-    except TypeError:
-        pass
-    else:
-        raise
-
-    EVENT.write(0x2)
+    EVENT.write(0x6)
     assert EVENT.size() == 1
-    EVENT.read(0x2)
-    EVENT.write(0x2)
-    EVENT.read()
+    assert EVENT.read(0x2) == 0x2
+    assert EVENT.read(0x4) == 0x4
 
 
 def test_bad_arguments():
@@ -49,10 +41,17 @@ def test_bad_arguments():
 
     try:
         EVENT.read(None)
-    except TypeError:
-        pass
+    except TypeError as e:
+        assert str(e) == "can't convert NoneType to int"
     else:
-        raise
+        assert False
+
+    try:
+        EVENT.write(None)
+    except TypeError as e:
+        assert str(e) == "can't convert NoneType to int"
+    else:
+        assert False
 
 
 def main():

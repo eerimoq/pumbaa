@@ -1,10 +1,11 @@
 `Timer` --- Timer
 =================
 
-.. class:: pumbaa.Timer(timeout, event, mask=-1, flags=0)
+.. class:: pumbaa.Timer(timeout, event, mask, flags=0)
 
-   Initialize given timer object. On timeout given `mask` is written
-   to given `event` channel.
+   Instantiate a timer object from given arguemts. The timer expires
+   `timeout` seconds after the timer has been started. When the timer
+   expires given `mask` is written to given `event` channel.
 
 
    .. method:: start()
@@ -14,5 +15,7 @@
 
    .. method:: stop()
     
-      Stop the timer.
+      Stop the timer. If the timer is stopped before it has expired it
+      will never exipre. This function has no effect if the timer has
+      already expired.
     

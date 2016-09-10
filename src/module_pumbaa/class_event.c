@@ -59,49 +59,37 @@ static mp_obj_t class_event_make_new(const mp_obj_type_t *type_p,
 }
 
 /**
- * def read(self, mask=0xffffffff)
+ * def read(self, mask)
  */
-static mp_obj_t class_event_read(size_t n_args, const mp_obj_t *args_p)
+static mp_obj_t class_event_read(mp_obj_t self_in, mp_obj_t mask_in)
 {
     struct class_event_t *self_p;
     uint32_t mask;
-    static const mp_arg_t allowed_args[] = {
-        { MP_QSTR_mask, MP_ARG_INT, { .u_int = 0xffffffff } },
-    };
-    mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];
-    mp_map_t kwargs;
 
-    mp_arg_check_num(n_args, 1, 1, 2, true);
-
-    /* Parse args. */
-    mp_map_init(&kwargs, 0);
-    mp_arg_parse_all(n_args - 1,
-                     args_p + 1,
-                     &kwargs,
-                     MP_ARRAY_SIZE(allowed_args),
-                     allowed_args,
-                     args);
-    self_p = MP_OBJ_TO_PTR(args_p[0]);
-    mask = args[0].u_int;
+    self_p = MP_OBJ_TO_PTR(self_in);
+    mask = mp_obj_get_int(mask_in);
 
     if (event_read(&self_p->event, &mask, sizeof(mask)) != sizeof(mask)) {
-        mp_not_implemented("failed to read an event");
+        mp_not_implemented("failed to read event mask");
     }
 
     return (MP_OBJ_NEW_SMALL_INT(mask));
 }
 
 /**
- * def write(self, value)
+ * def write(self, mask)
  */
-static mp_obj_t class_event_write(mp_obj_t self_in, mp_obj_t value_in)
+static mp_obj_t class_event_write(mp_obj_t self_in, mp_obj_t mask_in)
 {
     struct class_event_t *self_p;
     uint32_t mask;
 
     self_p = MP_OBJ_TO_PTR(self_in);
-    mask = mp_obj_get_int(value_in);
-    event_write(&self_p->event, &mask, sizeof(mask));
+    mask = mp_obj_get_int(mask_in);
+
+    if (event_write(&self_p->event, &mask, sizeof(mask)) != sizeof(mask)) {
+        mp_not_implemented("failed to write event mask");
+    }
 
     return (mp_const_none);
 }
@@ -118,7 +106,7 @@ static mp_obj_t class_event_size(mp_obj_t self_in)
     return (MP_OBJ_NEW_SMALL_INT(event_size(&self_p->event)));
 }
 
-static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_event_read_obj, 1, 2, class_event_read);
+static MP_DEFINE_CONST_FUN_OBJ_2(class_event_read_obj, class_event_read);
 static MP_DEFINE_CONST_FUN_OBJ_2(class_event_write_obj, class_event_write);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_event_size_obj, class_event_size);
 

@@ -63,23 +63,26 @@ def test_bad_arguments():
     # bad device.
     try:
         Pin(-1, Pin.OUTPUT)
-        assert False
     except ValueError as e:
         assert str(e) == "Bad pin device -1"
+    else:
+        assert False
 
     try:
         Pin(500, Pin.OUTPUT)
-        assert False
     except ValueError as e:
         assert str(e) == "Bad pin device 500"
+    else:
+        assert False
 
     led = Pin(Board.PIN_LED, Pin.OUTPUT)
 
     try:
         led.write(2)
-        assert False
     except ValueError as e:
         assert str(e) == "Bad pin value 2"
+    else:
+        assert False
 
 
 def main():

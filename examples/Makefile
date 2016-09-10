@@ -2,7 +2,7 @@ EXAMPLES = \
 	blink \
 	hello_world \
 	interactive \
-	multiple_modules
+	timer
 
 all:
 	for example in $(EXAMPLES) ; do \

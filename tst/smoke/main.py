@@ -95,11 +95,6 @@ def test_smoke():
         print(e)
 
     try:
-        print(os.stat('foo'))
-    except OSError as e:
-        print(e)
-
-    try:
         os.rename('foo', 'bar')
     except NotImplementedError as e:
         print(e)

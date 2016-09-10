@@ -11,7 +11,7 @@ class SuiteError(Exception):
         self.skipped = skipped
         self.failed = failed
 
-
+    
 def run(testcases):
     """Run all test cases in the list.
 

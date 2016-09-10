@@ -45,16 +45,19 @@ def test_bad_arguments():
     # Too many devices.
     try:
         Dac([0, 1, 2])
-        assert False
     except ValueError as e:
         assert str(e) == "too many devices"
-
+    else:
+        assert False
+        
     # Bad devices type.
     try:
         Dac(None)
         assert False
     except TypeError as e:
         assert str(e) == "bad devices"
+    else:
+        assert False
 
     # Bad pin.
     try:
@@ -62,6 +65,8 @@ def test_bad_arguments():
         assert False
     except ValueError as e:
         assert str(e) == "bad pin"
+    else:
+        assert False
 
 
 def main():

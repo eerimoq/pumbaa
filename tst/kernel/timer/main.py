@@ -20,38 +20,51 @@
 import harness
 from pumbaa import Timer, Event
 
+
 def test_help():
     EVENT = Event()
-    TIMER = Timer(1, EVENT)
+    TIMER = Timer(1, EVENT, 0x1)
     help(Timer)
     help(TIMER)
 
+
 def test_single_shot_timer():
     EVENT = Event()
-    TIMER = Timer(1, event=EVENT, mask=1, flags=1)
-    TIMER = Timer(1, EVENT, -1)
+    TIMER = Timer(1, EVENT, 0x1)
     print("starting single shot timer")
     TIMER.start()
-    EVENT.read()
+    EVENT.read(0x1)
     print("timeout")
+
 
 def test_periodic_timer():
     EVENT = Event()
-    TIMER = Timer(1, EVENT, flags=Timer.PERIODIC)
+    TIMER = Timer(1, EVENT, 0x1, flags=Timer.PERIODIC)
     print("starting periodic timer")
     TIMER.start()
     for i in range(3):
-        EVENT.read()
+        EVENT.read(0x1)
         print("timeout", i)
     TIMER.stop()
 
+
 def test_bad_arguments():
+    # Wrong type of second argument.
+    try:
+        Timer(1, None, 1)
+    except TypeError as e:
+        assert str(e) == "expected <class 'Event'>"
+    else:
+        assert False
+
+    # Too few arguments.
     try:
         Timer(1, None)
-    except TypeError:
-        pass
+    except TypeError as e:
+        assert str(e) == "'mask' argument required"
     else:
-        raise
+        assert False
+
 
 def main():
     testcases = [
@@ -61,6 +74,7 @@ def main():
         (test_bad_arguments, "test_bad_arguments")
     ]
     harness.run(testcases)
-    
+
+
 if __name__ == '__main__':
     main()

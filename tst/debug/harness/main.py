@@ -20,6 +20,7 @@
 import harness
 from harness import TestCaseSkippedError, SuiteError
 
+
 def test_passed():
     pass
 
