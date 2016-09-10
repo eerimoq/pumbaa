@@ -1,5 +1,5 @@
 /**
- * @file builtinhelp.c
+ * @file builtin_help.c
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
