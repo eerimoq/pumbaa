@@ -22,7 +22,7 @@ Download `Cygwin`_ and select the following packages for installation:
    - git               (Devel -> git)
    - doxygen           (Devel -> doxygen)
 
-Start `Cygwin` and execute the one-liner below to install `Simba`.
+Start `Cygwin` and execute the one-liner below to install `Pumbaa`.
 
 .. code-block:: text
 
@@ -36,7 +36,7 @@ Start `Cygwin` and execute the one-liner below to install `Simba`.
 Linux (Ubuntu 14)
 ^^^^^^^^^^^^^^^^^
 
-Execute the one-liner below to install `Simba`.
+Execute the one-liner below to install `Pumbaa`.
 
 .. code-block:: text
 

@@ -39,7 +39,7 @@ Features
   :doc:`Dac<library-reference/drivers/dac>`).
 
 * A thin :doc:`C to Python wrapper layer<library-reference/pumbaa>` on
-  top of most Simba modules.
+  top of some Simba modules.
 
 See the :doc:`library-reference` for a full list of features.
 
