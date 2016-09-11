@@ -51,12 +51,13 @@ static mp_obj_t class_timer_init_helper(struct class_timer_t *self_p,
                                         mp_map_t *kwargs_p)
 {
     static const mp_arg_t allowed_args[] = {
-        { MP_QSTR_timeout, MP_ARG_REQUIRED | MP_ARG_INT },
+        { MP_QSTR_timeout, MP_ARG_REQUIRED | MP_ARG_OBJ },
         { MP_QSTR_event, MP_ARG_REQUIRED | MP_ARG_OBJ },
         { MP_QSTR_mask, MP_ARG_REQUIRED | MP_ARG_INT },
         { MP_QSTR_flags, MP_ARG_INT, { .u_int = 0x0 } },
     };
     mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];
+    float f_timeout
     struct time_t timeout;
     int flags;
 
@@ -73,8 +74,9 @@ static mp_obj_t class_timer_init_helper(struct class_timer_t *self_p,
         mp_raise_TypeError("expected <class 'Event'>");
     }
 
-    timeout.seconds = args[0].u_int;
-    timeout.nanoseconds = 0;
+    f_timeout = mp_obj_get_float(args[0].u_obj);
+    timeout.seconds = (long)f_timeout;
+    timeout.nanoseconds = (f_timeout - timeout.seconds) * 1000000000L;
     self_p->event_obj_p = args[1].u_obj;
     self_p->mask = args[2].u_int;
     flags = args[3].u_int;
