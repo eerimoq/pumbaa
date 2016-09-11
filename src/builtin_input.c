@@ -40,7 +40,7 @@ static mp_obj_t builtin_input(size_t n_args, const mp_obj_t *args_p)
         nlr_raise(mp_obj_new_exception(&mp_type_EOFError));
     }
 
-    return mp_obj_new_str_from_vstr(&mp_type_str, &line);
+    return (mp_obj_new_str_from_vstr(&mp_type_str, &line));
 }
 
 MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(mp_builtin_input_obj, 0, 1, builtin_input);
