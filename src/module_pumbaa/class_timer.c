@@ -57,7 +57,7 @@ static mp_obj_t class_timer_init_helper(struct class_timer_t *self_p,
         { MP_QSTR_flags, MP_ARG_INT, { .u_int = 0x0 } },
     };
     mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];
-    float f_timeout
+    float f_timeout;
     struct time_t timeout;
     int flags;
 
