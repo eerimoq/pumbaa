@@ -26,8 +26,12 @@ static mp_obj_t module_time_time(void)
     struct time_t now;
 
     time_get(&now);
-    
+
+#if MICROPY_PY_BUILTINS_FLOAT
+    return (mp_obj_new_float(now.seconds + now.nanoseconds / 1000000000.0);
+#else 
     return (mp_obj_new_int(now.seconds));
+#endif
 }
 
 static mp_obj_t module_time_sleep(mp_obj_t arg_p)
