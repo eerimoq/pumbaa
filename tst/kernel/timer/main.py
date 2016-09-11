@@ -50,7 +50,13 @@ def test_periodic_timer():
 
 
 def test_bad_arguments():
-    EVENT = Event()
+    # Too long tuple.
+    with assert_raises(TypeError, "expected tuple of length 2"):
+        Timer((1, 0, 0), None, 1)
+
+    # Bad timeout arguement.
+    with assert_raises(TypeError, "can't convert NoneType to float"):
+        Timer(None, None, 1)
 
     # Wrong type of second argument.
     with assert_raises(TypeError, "expected <class 'Event'>"):
@@ -59,10 +65,6 @@ def test_bad_arguments():
     # Too few arguments.
     with assert_raises(TypeError, "'mask' argument required"):
         Timer(1, None)
-
-    # Too long tuple.
-    with assert_raises(ValueError, "expected tuple of length 2"):
-        Timer((1, 0, 0), EVENT, 1)
 
 
 def main():

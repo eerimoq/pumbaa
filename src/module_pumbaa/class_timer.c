@@ -52,7 +52,7 @@ static mp_obj_t class_timer_init_helper(struct class_timer_t *self_p,
 {
     static const mp_arg_t allowed_args[] = {
         { MP_QSTR_timeout, MP_ARG_REQUIRED | MP_ARG_OBJ },
-        { MP_QSTR_event, MP_ARG_REQUIRED | MP_ARG_OBJ, { .u_obj = &module_pumbaa_class_event } },
+        { MP_QSTR_event, MP_ARG_REQUIRED | MP_ARG_OBJ },
         { MP_QSTR_mask, MP_ARG_REQUIRED | MP_ARG_INT },
         { MP_QSTR_flags, MP_ARG_INT, { .u_int = 0x0 } },
     };
@@ -71,11 +71,7 @@ static mp_obj_t class_timer_init_helper(struct class_timer_t *self_p,
                      allowed_args,
                      args);
 
-    /* Second argument must be an event object. */
-    if (mp_obj_get_type(args[1].u_obj) != &module_pumbaa_class_event) {
-        mp_raise_TypeError("expected <class 'Event'>");
-    }
-
+    /* The timeout can be a tuple or a number. */
     if (MP_OBJ_IS_TYPE(args[0].u_obj, &mp_type_tuple)) {
         mp_obj_tuple_get(args[0].u_obj, &len, &items_p);
 
@@ -83,12 +79,17 @@ static mp_obj_t class_timer_init_helper(struct class_timer_t *self_p,
             timeout.seconds = mp_obj_get_int(items_p[0]);
             timeout.nanoseconds = mp_obj_get_int(items_p[1]);
         } else {
-            mp_raise_ValueError("expected tuple of length 2");
+            mp_raise_TypeError("expected tuple of length 2");
         }
     } else {
         f_timeout = mp_obj_get_float(args[0].u_obj);
         timeout.seconds = (long)f_timeout;
         timeout.nanoseconds = (f_timeout - timeout.seconds) * 1000000000L;
+    }
+
+    /* Second argument must be an event object. */
+    if (mp_obj_get_type(args[1].u_obj) != &module_pumbaa_class_event) {
+        mp_raise_TypeError("expected <class 'Event'>");
     }
 
     self_p->event_obj_p = args[1].u_obj;
