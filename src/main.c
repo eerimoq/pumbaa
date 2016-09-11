@@ -20,7 +20,7 @@
 #include "pumbaa.h"
 
 extern char *stack_top_p;
-static char heap[16384];
+static char heap[32768];
 
 int main()
 {
