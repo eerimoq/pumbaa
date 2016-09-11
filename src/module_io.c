@@ -261,10 +261,6 @@ static mp_obj_t file_open(const mp_obj_type_t *type_p,
             mode |= (FS_WRITE | FS_CREAT | FS_TRUNC);
             break;
 
-        case 'x':
-            mode |= (FS_WRITE | FS_CREAT | FS_TRUNC);
-            break;
-
         case 'a':
             mode |= (FS_WRITE | FS_APPEND);
             break;
