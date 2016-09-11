@@ -45,11 +45,11 @@ QSTR_SPLIT = $(GENHDR_DIR)/qstr.split
 QSTR_DEFS_GENERATED_H = $(GENHDR_DIR)/qstrdefs.generated.h
 QSTR_DEFS_COLLECTED_H = $(GENHDR_DIR)/qstrdefs.collected.h
 QSTR_DEFS_PREPROCESSED_H = $(GENHDR_DIR)/qstrdefs.preprocessed.h
-QSTR_DEFS_PY_CORE_H = $(PUMBAA_ROOT)/src/micropython/py/qstrdefs.h
+QSTR_DEFS_PY_CORE_H = $(MICROPYTHON_ROOT)/py/qstrdefs.h
 
 MAKEQSTRDATA_PY = $(MICROPYTHON_ROOT)/py/makeqstrdata.py
 MAKEQSTRDEFS_PY = $(MICROPYTHON_ROOT)/py/makeqstrdefs.py
-MAKE_FROZEN_PY = $(MICROPYTHON_ROOT)/tools/make-frozen.py
+MAKE_FROZEN_PY = $(PUMBAA_ROOT)/bin/make-frozen.py
 
 LDFLAGS_AFTER += -lm
 
