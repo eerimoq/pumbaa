@@ -31,7 +31,7 @@ def test_help():
 
 def test_single_shot_timer():
     EVENT = Event()
-    TIMER = Timer(1, EVENT, 0x1)
+    TIMER = Timer(0.1, EVENT, 0x1)
     print("starting single shot timer")
     TIMER.start()
     EVENT.read(0x1)
@@ -40,7 +40,7 @@ def test_single_shot_timer():
 
 def test_periodic_timer():
     EVENT = Event()
-    TIMER = Timer(1, EVENT, 0x1, flags=Timer.PERIODIC)
+    TIMER = Timer(0.2, EVENT, 0x1, flags=Timer.PERIODIC)
     print("starting periodic timer")
     TIMER.start()
     for i in range(3):
