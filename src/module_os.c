@@ -88,10 +88,8 @@ static mp_obj_t os_chdir(mp_obj_t path_in)
  */
 static mp_obj_t os_getcwd(void)
 {
-    char buf[MICROPY_ALLOC_PATH_MAX + 1];
     const char *path_p;
 
-    buf[0] = '\0';
     path_p = thrd_get_env("CWD");
 
     if (path_p == NULL) {
@@ -99,14 +97,7 @@ static mp_obj_t os_getcwd(void)
                                                 "No such file or directory: ''"));
     }
 
-    if (strlen(path_p) >= membersof(buf)) {
-        nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_OSError,
-                                                "No such file or directory: ''"));
-    }
-
-    strcpy(buf, path_p);
-
-    return (mp_obj_new_str(buf, strlen(buf), false));
+    return (mp_obj_new_str(path_p, strlen(path_p), false));
 }
 
 /**
