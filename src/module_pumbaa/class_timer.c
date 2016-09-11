@@ -52,7 +52,7 @@ static mp_obj_t class_timer_init_helper(struct class_timer_t *self_p,
 {
     static const mp_arg_t allowed_args[] = {
         { MP_QSTR_timeout, MP_ARG_REQUIRED | MP_ARG_OBJ },
-        { MP_QSTR_event, MP_ARG_REQUIRED | MP_ARG_OBJ },
+        { MP_QSTR_event, MP_ARG_REQUIRED | MP_ARG_OBJ, { .u_obj = &module_pumbaa_class_event } },
         { MP_QSTR_mask, MP_ARG_REQUIRED | MP_ARG_INT },
         { MP_QSTR_flags, MP_ARG_INT, { .u_int = 0x0 } },
     };
