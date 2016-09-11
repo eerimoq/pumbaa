@@ -22,6 +22,12 @@ import harness
 from harness import assert_raises
 
 
+def test_missing_file():
+    # Try to open a non-existing file.
+    with assert_raises(OSError):
+        open("missing.txt", "r")
+
+        
 def test_create():
     """Create, write and read. Recreate, write and read.
 
@@ -158,6 +164,7 @@ def test_print():
 
 def main():
     testcases = [
+        (test_missing_file, "test_missing_file"),
         (test_create, "test_create"),
         (test_append, "test_append"),
         (test_read_write, "test_read_write"),
