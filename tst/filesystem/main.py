@@ -23,7 +23,10 @@ from harness import assert_raises
 
 
 def test_missing_file():
-    # Try to open a non-existing file.
+    """Try to open a non-existing file.
+
+    """
+    
     with assert_raises(OSError):
         open("missing.txt", "r")
 
@@ -37,7 +40,7 @@ def test_create():
     with open("create.txt", "w") as fout:
         fout.write("test")
 
-    with open("create.txt", "r") as fin:
+    with open("create.txt", "rt") as fin:
         assert fin.read() == "test"
 
     # Recreate the file, write and read.
@@ -161,6 +164,16 @@ def test_print():
         fout.write("")
         print(fout)
 
+        
+def test_flush():
+    """Flush a file.
+
+    """
+
+    with assert_raises(NotImplementedError, "file_obj_flush"):
+        with open("flush.txt", "w") as fout:
+            fout.write('')
+            fout.flush()
 
 def main():
     testcases = [
@@ -171,6 +184,7 @@ def main():
         (test_seek_tell, "test_seek_tell"),
         (test_stat, "test_stat"),
         (test_listdir, "test_listdir"),
+        (test_flush, "test_flush"),
         (test_print, "test_print")
     ]
     harness.run(testcases)
