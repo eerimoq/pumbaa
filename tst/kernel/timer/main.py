@@ -31,7 +31,7 @@ def test_help():
 
 def test_single_shot_timer():
     EVENT = Event()
-    TIMER = Timer(0.1, EVENT, 0x1)
+    TIMER = Timer((0, 1000000), EVENT, 0x1)
     print("starting single shot timer")
     TIMER.start()
     EVENT.read(0x1)
