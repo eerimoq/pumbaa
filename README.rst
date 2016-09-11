@@ -10,14 +10,6 @@ http://pumbaa.readthedocs.org for further details.
 The implementation is a port of `Micro Python`, designed for embedded
 devices with limited amount of RAM and code memory.
 
-Setup
-=====
-
-.. code-block:: text
-
-   git submodule update --init
-   source setup.sh
-
 .. |buildstatus| image:: https://travis-ci.org/eerimoq/pumbaa.svg
 .. _buildstatus: https://travis-ci.org/eerimoq/pumbaa
 
