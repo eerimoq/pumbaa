@@ -19,6 +19,8 @@
 
 .PHONY: tags docs all help travis clean
 
+PUMBAA_VERSION ?= $(shell cat VERSION.txt)
+
 BOARD ?= linux
 
 TESTS = \
@@ -85,6 +87,9 @@ docs:
 tags:
 	echo "Creating tags file .TAGS"
 	etags -o .TAGS --declarations $$(git ls-files *.[hci] | xargs)
+
+arduino:
+	+make/arduino/arduino.py --remove-outdir --version $(PUMBAA_VERSION)
 
 help:
 	@echo "--------------------------------------------------------------------------------"

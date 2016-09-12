@@ -1,0 +1,45 @@
+{
+  "packages": [
+    {
+      "name": "Pumbaa",
+      "maintainer": "Erik Moqvist",
+      "websiteURL": "https://github.com/eerimoq/pumbaa",
+      "email": "erik.moqvist@gmail.com",
+      "help": {
+        "online": "https://pumbaa-os.readthedocs.org"
+      },
+      "platforms": [
+        {
+          "name": "Pumbaa",
+          "architecture": "sam",
+          "version": "0.1.0",
+          "category": "Pumbaa",
+          "help": {
+            "online": "https://pumbaa.readthedocs.org"
+          },
+          "url": "http://localhost:8000/pumbaa-arduino-sam-0.1.0.zip",
+	  "archiveFileName": "pumbaa-arduino-sam-0.1.0.zip",
+	  "checksum": "SHA-256:f67d3311ffc2282842ffe5b793d17be142664727329fc86f31538ea50b554783",
+	  "size": "4507669",
+          "boards": [
+	      {"name" : "Arduino Due"}
+          ],
+          "toolsDependencies": [
+            {
+              "packager": "arduino",
+              "name": "arm-none-eabi-gcc",
+              "version": "4.8.3-2014q1"
+            },
+            {
+              "packager": "arduino",
+              "name": "bossac",
+              "version": "1.6.1-arduino"
+            }
+          ]
+        }
+      ],
+      "tools": [
+      ]
+    }
+  ]
+}

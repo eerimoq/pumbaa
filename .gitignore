@@ -42,3 +42,6 @@ examples/*/*/snow.png
 examples/*/*/updown.png
 
 *.passed
+
+pumbaa-arduino
+database.json

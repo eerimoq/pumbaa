@@ -41,7 +41,7 @@ PUMBAA_SRC += \
 ifeq ($(BOARD),arduino_due)
 PUMBAA_SRC += \
 	boards/$(BOARD)/gchelper.S \
-	port/lexer.c
+	port/lexer_port.c
 endif
 
 SRC += $(PUMBAA_SRC:%=$(PUMBAA_ROOT)/src/%)
