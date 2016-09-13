@@ -84,7 +84,7 @@ docs:
 
 tags:
 	echo "Creating tags file .TAGS"
-	etags -o .TAGS --declarations $$(git ls-files *.[hci] | xargs)
+	etags -o .TAGS --declarations $$(find . -name "*.[hci]" | xargs)
 
 help:
 	@echo "--------------------------------------------------------------------------------"
