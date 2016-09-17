@@ -91,3 +91,12 @@ Execute the one-liner below to install `Pumbaa`.
      git clone https://github.com/eerimoq/pumbaa --recursive
 
 .. _Cygwin: https://cygwin.com/setup-x86.exe
+.. _Arduino IDE 1.6.10: https://www.arduino.cc/en/Main/Software
+
+.. |arduino| image:: images/Arduino_Logo.png
+             :width: 40 px
+.. _arduino: http://arduino.cc
+
+.. |simba| image:: images/Simba_Logo.jpg
+                :width: 80 px
+.. _simba: http://github.com/eerimoq/simba
