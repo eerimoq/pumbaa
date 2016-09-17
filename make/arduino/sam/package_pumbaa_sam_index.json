@@ -17,10 +17,10 @@
           "help": {
             "online": "https://pumbaa.readthedocs.org"
           },
-          "url": "http://localhost:8000/pumbaa-arduino-sam-0.1.0.zip",
+          "url": "https://sourceforge.net/projects/pumbaa-arduino/files/sam/pumbaa-arduino-sam-0.1.0.zip",
 	  "archiveFileName": "pumbaa-arduino-sam-0.1.0.zip",
-	  "checksum": "SHA-256:f67d3311ffc2282842ffe5b793d17be142664727329fc86f31538ea50b554783",
-	  "size": "4507669",
+	  "checksum": "SHA-256:248b8fa149a65ce097885215bd7254bcfc197e44adc177a3844dbddba51f989d",
+	  "size": "4518844",
           "boards": [
 	      {"name" : "Arduino Due"}
           ],
