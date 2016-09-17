@@ -14,7 +14,7 @@ Execute Python code in the interpreter.
    
 .. code-block:: python
 
-   MicroPython v1.8.3-88-gf98bb2d on 2016-09-01;  with 
+   MicroPython v1.8.3-88-gf98bb2d on 2016-09-17; Arduino Due with SAM3X8E
    Type "help()" for more information.
    >>> 1+2
    3
