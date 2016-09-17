@@ -86,7 +86,7 @@ docs:
 
 tags:
 	echo "Creating tags file .TAGS"
-	etags -o .TAGS --declarations $$(git ls-files *.[hci] | xargs)
+	etags -o .TAGS --declarations $$(find . -name "*.[hci]" | xargs)
 
 arduino:
 	+make/arduino/arduino.py --remove-outdir --version $(PUMBAA_VERSION)

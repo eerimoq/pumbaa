@@ -36,7 +36,7 @@ Features
 * `MicroPython`_ modules.
 
 * Device drivers (:doc:`Pin<library-reference/drivers/pin>`,
-  :doc:`Dac<library-reference/drivers/dac>`).
+  :doc:`Dac<library-reference/drivers/dac>`, ...).
 
 * A thin :doc:`C to Python wrapper layer<library-reference/pumbaa>` on
   top of some Simba modules.
