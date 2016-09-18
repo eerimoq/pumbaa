@@ -31,7 +31,6 @@ PUMBAA_SRC += \
 	module_io.c \
 	module_os.c \
 	module_pumbaa.c \
-	module_pumbaa/class_dac.c \
 	module_pumbaa/class_event.c \
 	module_pumbaa/class_pin.c \
 	module_pumbaa/class_timer.c \
@@ -39,6 +38,18 @@ PUMBAA_SRC += \
 	module_time.c
 
 ifeq ($(BOARD),arduino_due)
+PUMBAA_SRC += \
+	module_pumbaa/class_dac.c \
+	boards/$(BOARD)/gchelper.S \
+	port/lexer_port.c
+endif
+
+ifeq ($(BOARD),linux)
+PUMBAA_SRC += \
+	module_pumbaa/class_dac.c
+endif
+
+ifeq ($(BOARD),esp12e)
 PUMBAA_SRC += \
 	boards/$(BOARD)/gchelper.S \
 	port/lexer_port.c
@@ -100,6 +111,7 @@ MICROPYTHON_SRC += \
 	py/nativeglue.c \
 	py/nlrsetjmp.c \
 	py/nlrthumb.c \
+	py/nlrxtensa.S \
 	py/objarray.c \
 	py/objattrtuple.c \
 	py/objbool.c \
@@ -156,5 +168,38 @@ MICROPYTHON_SRC += \
 	py/vm.c \
 	py/vstr.c \
 	py/warning.c
+
+ifeq ($(BOARD),esp12e)
+MICROPYTHON_SRC += \
+	lib/libm/acoshf.c \
+	lib/libm/asinfacosf.c \
+	lib/libm/asinhf.c \
+	lib/libm/atan2f.c \
+	lib/libm/atanf.c \
+	lib/libm/atanhf.c \
+	lib/libm/ef_rem_pio2.c \
+	lib/libm/ef_sqrt.c \
+	lib/libm/erf_lgamma.c \
+	lib/libm/fdlibm.h \
+	lib/libm/fmodf.c \
+	lib/libm/kf_cos.c \
+	lib/libm/kf_rem_pio2.c \
+	lib/libm/kf_sin.c \
+	lib/libm/kf_tan.c \
+	lib/libm/libm.h \
+	lib/libm/log1pf.c \
+	lib/libm/math.c \
+	lib/libm/roundf.c \
+	lib/libm/sf_cos.c \
+	lib/libm/sf_erf.c \
+	lib/libm/sf_frexp.c \
+	lib/libm/sf_ldexp.c \
+	lib/libm/sf_modf.c \
+	lib/libm/sf_sin.c \
+	lib/libm/sf_tan.c \
+	lib/libm/wf_lgamma.c \
+	lib/libm/wf_tgamma.c
+endif
+
 
 SRC += $(MICROPYTHON_SRC:%=$(MICROPYTHON_ROOT)/%)

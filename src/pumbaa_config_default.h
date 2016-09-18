@@ -108,6 +108,42 @@
 #    define CONFIG_MAIN_FRIENDLY_REPL                     (1)
 #endif
 
+#ifndef CONFIG_HEAD_SIZE
+#    if defined(ARCH_ESP)
+#        define CONFIG_HEAD_SIZE                       (8192)
+#    else
+#        define CONFIG_HEAD_SIZE                      (32768)
+#    endif
+#endif
+
+#ifndef CONFIG_PUMBAA_CLASS_BOARD
+#    define CONFIG_PUMBAA_CLASS_BOARD                       1
+#endif
+
+#ifndef CONFIG_PUMBAA_CLASS_DAC
+#    if defined(FAMILY_SAM) || defined(FAMILY_LINUX)
+#        define CONFIG_PUMBAA_CLASS_DAC                     1
+#    else
+#        define CONFIG_PUMBAA_CLASS_DAC                     0
+#    endif
+#endif
+
+#ifndef CONFIG_PUMBAA_CLASS_EVENT
+#    define CONFIG_PUMBAA_CLASS_EVENT                       1
+#endif
+
+#ifndef CONFIG_PUMBAA_CLASS_PIN
+#    define CONFIG_PUMBAA_CLASS_PIN                         1
+#endif
+
+#ifndef CONFIG_PUMBAA_CLASS_TIMER
+#    define CONFIG_PUMBAA_CLASS_TIMER                       1
+#endif
+
+#ifndef CONFIG_PUMBAA_FS_CALL
+#    define CONFIG_PUMBAA_FS_CALL                           1
+#endif
+
 extern const struct _mp_obj_module_t mp_module_os;
 extern const struct _mp_obj_module_t mp_module_time;
 extern const struct _mp_obj_module_t module_pumbaa;

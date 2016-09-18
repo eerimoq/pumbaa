@@ -27,10 +27,6 @@ FROZEN_C = $(BUILDDIR)/frozen.c
 
 SRC += $(FROZEN_C)
 
-CDEFS += \
-	MICROPY_EMIT_X86=0 \
-	MICROPY_NLR_SETJMP
-
 include $(PUMBAA_ROOT)/src/pumbaa.mk
 include $(SIMBA_ROOT)/make/app.mk
 
@@ -51,7 +47,20 @@ MAKEQSTRDATA_PY = $(MICROPYTHON_ROOT)/py/makeqstrdata.py
 MAKEQSTRDEFS_PY = $(MICROPYTHON_ROOT)/py/makeqstrdefs.py
 MAKE_FROZEN_PY = $(PUMBAA_ROOT)/bin/make-frozen.py
 
+ifneq ($(BOARD),esp12e)
 LDFLAGS_AFTER += -lm
+CDEFS += \
+	MICROPY_EMIT_X86=0 \
+	MICROPY_NLR_SETJMP
+endif
+
+ifeq ($(BOARD),esp12e)
+CDEFS += \
+	CONFIG_MINIMAL_SYSTEM=0 \
+	CONFIG_START_FILESYSTEM=1 \
+	CONFIG_SPIFFS=1 \
+	CONFIG_THRD_ENV=1
+endif
 
 CDEFS_QSTR = $(CDEFS) NO_QSTR
 
