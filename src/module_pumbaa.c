@@ -19,6 +19,8 @@
 
 #include "pumbaa.h"
 
+#if CONFIG_PUMBAA_FS_CALL == 1
+
 /**
  * def fs_call(command)
  */
@@ -33,6 +35,8 @@ static mp_obj_t module_fs_call(mp_obj_t command_in)
     return (mp_const_none);
 }
 
+#endif
+
 static MP_DEFINE_CONST_FUN_OBJ_1(module_fs_call_obj, module_fs_call);
 
 /**
@@ -40,8 +44,12 @@ static MP_DEFINE_CONST_FUN_OBJ_1(module_fs_call_obj, module_fs_call);
  */
 static mp_obj_t module_init(void)
 {
+#if CONFIG_PUMBAA_CLASS_TIMER == 1
     timer_module_init();
+#endif
+#if CONFIG_PUMBAA_CLASS_PIN == 1
     pin_module_init();
+#endif
 
     return (mp_const_none);
 }
