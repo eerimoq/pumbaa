@@ -108,11 +108,11 @@
 #    define CONFIG_MAIN_FRIENDLY_REPL                     (1)
 #endif
 
-#ifndef CONFIG_HEAD_SIZE
+#ifndef CONFIG_HEAP_SIZE
 #    if defined(ARCH_ESP)
-#        define CONFIG_HEAD_SIZE                       (8192)
+#        define CONFIG_HEAP_SIZE                      (11000)
 #    else
-#        define CONFIG_HEAD_SIZE                      (32768)
+#        define CONFIG_HEAP_SIZE                      (32768)
 #    endif
 #endif
 

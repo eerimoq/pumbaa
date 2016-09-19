@@ -201,5 +201,6 @@ MICROPYTHON_SRC += \
 	lib/libm/wf_tgamma.c
 endif
 
-
 SRC += $(MICROPYTHON_SRC:%=$(MICROPYTHON_ROOT)/%)
+
+-include $(PUMBAA_ROOT)/src/boards/$(BOARD)/board.mk
