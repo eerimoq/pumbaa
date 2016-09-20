@@ -107,16 +107,7 @@ SECTIONS
     _irom0_text_start = ABSOLUTE(.);
     *(.irom0.literal .irom.literal .irom.text.literal .irom0.text .irom.text)
     *(.literal.* .text.*)
-    *py/qstr.o(.rodata.mp_qstr_const_pool)
-    *.o(.rodata.mp_type_*)
-    *.o(.rodata.*_locals_dict*)
-    *.o(.rodata.*_type)
-    *.o(.rodata.mp_module_*)
-    *.o(.rodata.module_pumbaa_*)
-    *.o(.rodata.compile_function)
-    *.o(.rodata.two_over_pi)
-    *.o(.rodata.mp_binary_*)
-    *.o(.rodata.rules)
+    */py/*.o(.rodata*)
     _irom0_text_end = ABSOLUTE(.);
   } >irom0_0_seg :irom0_0_phdr
 

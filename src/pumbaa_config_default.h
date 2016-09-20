@@ -110,7 +110,7 @@
 
 #ifndef CONFIG_HEAP_SIZE
 #    if defined(ARCH_ESP)
-#        define CONFIG_HEAP_SIZE                      (11000)
+#        define CONFIG_HEAP_SIZE                      (32768)
 #    else
 #        define CONFIG_HEAP_SIZE                      (32768)
 #    endif
@@ -142,6 +142,10 @@
 
 #ifndef CONFIG_PUMBAA_FS_CALL
 #    define CONFIG_PUMBAA_FS_CALL                           1
+#endif
+
+#ifndef CONFIG_PUMBAA_FS_FORMAT
+#    define CONFIG_PUMBAA_FS_FORMAT                         1
 #endif
 
 extern const struct _mp_obj_module_t mp_module_os;
