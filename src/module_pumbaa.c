@@ -35,9 +35,27 @@ static mp_obj_t module_fs_call(mp_obj_t command_in)
     return (mp_const_none);
 }
 
+static MP_DEFINE_CONST_FUN_OBJ_1(module_fs_call_obj, module_fs_call);
+
 #endif
 
-static MP_DEFINE_CONST_FUN_OBJ_1(module_fs_call_obj, module_fs_call);
+#if CONFIG_PUMBAA_FS_FORMAT == 1
+
+/**
+ * def fs_format(path)
+ */
+static mp_obj_t module_fs_format(mp_obj_t path_in)
+{
+    if (fs_format(mp_obj_str_get_str(path_in)) != 0) {
+        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+    }
+
+    return (mp_const_none);
+}
+
+static MP_DEFINE_CONST_FUN_OBJ_1(module_fs_format_obj, module_fs_format);
+
+#endif
 
 /**
  * Function called when this module is imported.
@@ -83,6 +101,9 @@ static const mp_map_elem_t module_pumbaa_globals_table[] = {
     /* Module functions. */
 #if CONFIG_PUMBAA_FS_CALL == 1
     { MP_OBJ_NEW_QSTR(MP_QSTR_fs_call), (mp_obj_t)&module_fs_call_obj },
+#endif
+#if CONFIG_PUMBAA_FS_FORMAT == 1
+    { MP_OBJ_NEW_QSTR(MP_QSTR_fs_format), (mp_obj_t)&module_fs_format_obj },
 #endif
 };
 
