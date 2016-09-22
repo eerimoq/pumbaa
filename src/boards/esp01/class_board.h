@@ -1,5 +1,5 @@
 /**
- * @file mpconfigport.h
+ * @file class_board.h
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -17,12 +17,11 @@
  * This file is part of the Pumbaa project.
  */
 
-/* Options to control how Micro Python is built. */
+#ifndef __MODULE_PUMBAA_CLASS_BOARD_H__
+#define __MODULE_PUMBAA_CLASS_BOARD_H__
 
-#ifndef __MPCONFIGPORT_H__
-#define __MPCONFIGPORT_H__
+#include "pumbaa.h"
 
-#include "pumbaa_board.h"
-#include "pumbaa_config_default.h"
+extern const mp_obj_type_t module_pumbaa_class_board;
 
 #endif

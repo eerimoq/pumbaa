@@ -24,7 +24,6 @@ INC += \
 
 PUMBAA_SRC += \
 	boards/$(BOARD)/class_board.c \
-	boards/$(BOARD)/gccollect.c \
 	builtin_help.c \
 	builtin_input.c \
 	port/port.c \
@@ -40,18 +39,21 @@ PUMBAA_SRC += \
 ifeq ($(BOARD),arduino_due)
 PUMBAA_SRC += \
 	module_pumbaa/class_dac.c \
-	boards/$(BOARD)/gchelper.S \
+	boards/arduino_due/gccollect.c \
+	boards/arduino_due/gchelper.S \
 	port/lexer_port.c
 endif
 
 ifeq ($(BOARD),linux)
 PUMBAA_SRC += \
+	boards/linux/gccollect.c \
 	module_pumbaa/class_dac.c
 endif
 
-ifeq ($(BOARD),esp12e)
+ifeq ($(BOARD),$(filter $(BOARD), esp12e esp01))
 PUMBAA_SRC += \
-	boards/$(BOARD)/gchelper.S \
+	mcus/esp8266/gccollect.c \
+	mcus/esp8266/gchelper.S \
 	port/lexer_port.c
 endif
 
@@ -169,7 +171,7 @@ MICROPYTHON_SRC += \
 	py/vstr.c \
 	py/warning.c
 
-ifeq ($(BOARD),esp12e)
+ifeq ($(BOARD),$(filter $(BOARD), esp12e esp01))
 MICROPYTHON_SRC += \
 	lib/libm/acoshf.c \
 	lib/libm/asinfacosf.c \

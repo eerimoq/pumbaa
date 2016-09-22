@@ -54,7 +54,6 @@ def test_smoke():
         struct,
         pumbaa,
         pumbaa.Board,
-        pumbaa.Dac,
         pumbaa.Event,
         pumbaa.Pin,
         pumbaa.Timer,
@@ -65,6 +64,11 @@ def test_smoke():
         print()
         help(obj)
 
+    try:
+        import foo
+    except:
+        pass
+        
     print("dir:", dir())
 
     print("sys.platform:", sys.platform)

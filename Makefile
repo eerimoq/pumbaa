@@ -23,6 +23,7 @@ PUMBAA_VERSION ?= $(shell cat VERSION.txt)
 
 BOARD ?= linux
 
+ifeq ($(BOARD), linux)
 TESTS = \
 	tst/smoke \
 	tst/debug/harness \
@@ -31,6 +32,17 @@ TESTS = \
 	tst/filesystem \
 	tst/kernel/timer \
 	tst/sync/event
+endif
+
+ifeq ($(BOARD), esp12e)
+TESTS = \
+	tst/smoke
+endif
+
+ifeq ($(BOARD), arduino_due)
+TESTS = \
+	tst/smoke
+endif
 
 all: $(TESTS:%=%.all)
 	$(MAKE) -C examples all
@@ -68,6 +80,28 @@ test: run
 
 travis:
 	$(MAKE) test
+
+clean-arduino-due:
+	$(MAKE) BOARD=arduino_due SERIAL_PORT=/dev/simba-arduino_due clean
+
+clean-esp12e:
+	$(MAKE) BOARD=esp12e SERIAL_PORT=/dev/simba-esp12e clean
+
+test-arduino-due:
+	@echo "Arduino Due"
+	$(MAKE) BOARD=arduino_due SERIAL_PORT=/dev/simba-arduino_due test
+
+test-esp12e:
+	@echo "ESP12-E"
+	$(MAKE) BOARD=esp12e SERIAL_PORT=/dev/simba-esp12e test
+
+test-all-boards:
+	$(MAKE) test-arduino-due
+	$(MAKE) test-esp12e
+
+clean-all-boards:
+	$(MAKE) clean-arduino-due
+	$(MAKE) clean-esp12e
 
 codecov-coverage: $(TESTS:%=%.ccc)
 

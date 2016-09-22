@@ -28,6 +28,10 @@
 #    define PATH_MAX                                      128
 #endif
 
+#ifndef MICROPY_OBJ_REPR
+#    define MICROPY_OBJ_REPR             (MICROPY_OBJ_REPR_C)
+#endif
+
 #ifndef MICROPY_ALLOC_PATH_MAX
 #    define MICROPY_ALLOC_PATH_MAX                   PATH_MAX
 #endif
@@ -54,6 +58,10 @@
 
 #ifndef MICROPY_ENABLE_SOURCE_LINE
 #    define MICROPY_ENABLE_SOURCE_LINE                    (1)
+#endif
+
+#ifndef MICROPY_MODULE_WEAK_LINKS
+#    define MICROPY_MODULE_WEAK_LINKS                     (1)
 #endif
 
 #ifndef MICROPY_FLOAT_IMPL
@@ -110,7 +118,7 @@
 
 #ifndef CONFIG_HEAP_SIZE
 #    if defined(ARCH_ESP)
-#        define CONFIG_HEAP_SIZE                      (32768)
+#        define CONFIG_HEAP_SIZE                      (16384)
 #    else
 #        define CONFIG_HEAP_SIZE                      (32768)
 #    endif

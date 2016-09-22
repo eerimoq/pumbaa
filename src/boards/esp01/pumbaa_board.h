@@ -1,8 +1,8 @@
 /**
- * @file pumbaa_config.h
+ * @file pumbaa_board.h
  *
  * @section License
- * Copyright (C) 2016, Erik Moqvist
+ * Copyright (C) 2014-2016, Erik Moqvist
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -17,7 +17,10 @@
  * This file is part of the Pumbaa project.
  */
 
-#ifndef __PUMBAA_CONFIG_H__
-#define __PUMBAA_CONFIG_H__
+#ifndef __PUMBAA_BOARD_H__
+#define __PUMBAA_BOARD_H__
+
+#define MICROPY_HW_BOARD_NAME       "ESP-01"
+#define MICROPY_HW_MCU_NAME         "ESP8266"
 
 #endif
