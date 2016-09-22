@@ -42,7 +42,7 @@ int main()
     mp_obj_list_init(MP_OBJ_TO_PTR(mp_sys_argv), 0);
 
     /* 1. Execute the file main.py. */
-    //res = (pyexec_file("main.py") != 1);
+    res = (pyexec_file("main.py") != 1);
 
     /* 2. Execute the frozen main.py module. */
     res = (pyexec_frozen_module("main.py") != 1);

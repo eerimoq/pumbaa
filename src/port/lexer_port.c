@@ -46,7 +46,7 @@
 #include "pumbaa.h"
 
 struct mp_lexer_file_buf_t {
-    struct fs_file_t *file_p;
+    struct fs_file_t file;
     byte buf[20];
     mp_uint_t len;
     mp_uint_t pos;
@@ -60,7 +60,7 @@ static mp_uint_t file_buf_next_byte(struct mp_lexer_file_buf_t *fb_p)
         if (fb_p->len == 0) {
             return (MP_LEXER_EOF);
         } else {
-            n = fs_read(fb_p->file_p, fb_p->buf, sizeof(fb_p->buf));
+            n = fs_read(&fb_p->file, fb_p->buf, sizeof(fb_p->buf));
 
             if (n <= 0) {
                 fb_p->len = 0;
@@ -77,30 +77,27 @@ static mp_uint_t file_buf_next_byte(struct mp_lexer_file_buf_t *fb_p)
 
 static void file_buf_close(struct mp_lexer_file_buf_t *fb_p)
 {
-    fs_close(fb_p->file_p);
+    fs_close(&fb_p->file);
     m_del_obj(struct mp_lexer_file_buf_t, fb_p);
 }
 
 mp_lexer_t *mp_lexer_new_from_file(const char *filename_p)
 {
-    struct fs_file_t file;
     struct mp_lexer_file_buf_t *fb_p;
     int n;
-
-    if (fs_open(&file, filename_p, FS_READ) != 0) {
-        return (NULL);
-    }
 
     fb_p = m_new_obj_maybe(struct mp_lexer_file_buf_t);
 
     if (fb_p == NULL) {
-        fs_close(&file);
-
         return (NULL);
     }
 
-    fb_p->file_p = &file;
-    n = fs_read(fb_p->file_p, fb_p->buf, sizeof(fb_p->buf));
+    if (fs_open(&fb_p->file, filename_p, FS_READ) != 0) {
+        m_del_obj(struct mp_lexer_file_buf_t, fb_p);
+        return (NULL);
+    }
+
+    n = fs_read(&fb_p->file, fb_p->buf, sizeof(fb_p->buf));
     fb_p->len = n;
     fb_p->pos = 0;
 
