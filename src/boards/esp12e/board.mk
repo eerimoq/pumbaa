@@ -20,6 +20,3 @@
 LINKER_SCRIPT ?= pumbaa.flash.4m.ld
 
 LIBPATH += $(PUMBAA_ROOT)/src/mcus/esp8266/ld
-
-
-CDEFS += CONFIG_SYS_SIMBA_MAIN_STACK_MAX=8192

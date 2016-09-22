@@ -20,5 +20,3 @@
 LINKER_SCRIPT ?= pumbaa.flash.512k.ld
 
 LIBPATH += $(PUMBAA_ROOT)/src/mcus/esp8266/ld
-
-include $(PUMBAA_ROOT)/src/mcus/esp8266/mcu.mk
