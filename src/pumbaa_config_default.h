@@ -118,7 +118,7 @@
 
 #ifndef CONFIG_HEAP_SIZE
 #    if defined(ARCH_ESP)
-#        define CONFIG_HEAP_SIZE                      (16384)
+#        define CONFIG_HEAP_SIZE                      (24576)
 #    else
 #        define CONFIG_HEAP_SIZE                      (32768)
 #    endif
