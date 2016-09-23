@@ -18,14 +18,10 @@
 #
 
 import time
-
 from pumbaa import Board, Pin
 
-# Initialize the LED pin and set it high.
 LED = Pin(Board.PIN_LED, Pin.OUTPUT)
-LED.write(1)
 
-# Toggle the LED state periodically.
 while True:
-    time.sleep(0.5)
     LED.toggle()
+    time.sleep(0.5)
