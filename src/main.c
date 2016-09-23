@@ -20,7 +20,7 @@
 #include "pumbaa.h"
 
 extern char *stack_top_p;
-static char heap[CONFIG_HEAP_SIZE];
+static char heap[CONFIG_PUMBAA_HEAP_SIZE];
 
 int main()
 {
@@ -47,7 +47,7 @@ int main()
     /* 2. Execute the frozen main.py module. */
     res = (pyexec_frozen_module("main.py") != 1);
     
-#if CONFIG_MAIN_FRIENDLY_REPL == 1
+#if CONFIG_PUMBAA_MAIN_FRIENDLY_REPL == 1
     /* 3. Execute the interactive interpreter. */
     res = (pyexec_friendly_repl() != 1);
 #endif

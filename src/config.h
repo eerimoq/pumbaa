@@ -20,6 +20,14 @@
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
 
+#ifndef CONFIG_ASSERT
+#    define CONFIG_ASSERT                                   0
+#endif
+
+#ifndef CONFIG_START_NETWORK
+#    define CONFIG_START_NETWORK                            0
+#endif
+
 #ifndef CONFIG_SYS_SIMBA_MAIN_STACK_MAX
 #    define CONFIG_SYS_SIMBA_MAIN_STACK_MAX              8192
 #endif

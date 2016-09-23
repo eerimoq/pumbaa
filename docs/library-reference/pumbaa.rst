@@ -10,6 +10,9 @@ compatible with `MicroPython:s` hardware modules as of today.
 
 ----------------------------------------------
 
+Classes
+-------
+
 .. class:: pumbaa.Timer(timeout, event, mask, flags=0)
 
    Instantiate a timer object from given arguemts. The timer expires
@@ -119,6 +122,9 @@ compatible with `MicroPython:s` hardware modules as of today.
 
       Wait for an ongoing asynchronous convertion to finish.
 
+
+Functions
+---------
       
 .. function:: pumbaa.fs_call(command)
 

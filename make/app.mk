@@ -54,13 +54,6 @@ CDEFS += \
 	MICROPY_NLR_SETJMP
 endif
 
-ifeq ($(ARCH),esp)
-CDEFS += \
-	CONFIG_START_FILESYSTEM=1 \
-	CONFIG_START_NETWORK=0 \
-	CONFIG_ASSERT=0
-endif
-
 CDEFS_QSTR = $(CDEFS) NO_QSTR
 
 $(QSTR_I_LAST): $(CSRC)
@@ -84,3 +77,8 @@ $(FROZEN_C): $(PYSRC)
 	$(PYTHON) $(MAKE_FROZEN_PY) $^ > $@
 
 generate: $(QSTR_DEFS_GENERATED_H) $(FROZEN_C)
+
+pumbaa-default-configuration:
+	gcc -E -dM $(CDEFS:%=-D%) $(PUMBAA_ROOT)/src/pumbaa_config_default.h \
+		| grep "#define CONFIG"_ \
+		| grep -v "#define __CONFIG"

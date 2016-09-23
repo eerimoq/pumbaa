@@ -115,7 +115,8 @@ $(TESTS:%=%.ccc):
 	$(MAKE) -C $(basename $@) codecov-coverage
 
 docs:
-	+bin/docgen.py
+	+bin/dbgen.py > database.json
+	+bin/docgen.py database.json
 	$(MAKE) -C docs sphinx
 
 tags:

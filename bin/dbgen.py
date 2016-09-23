@@ -48,7 +48,7 @@ def get_default_configuration(board):
     return subprocess.check_output(["make",
                                     "-s",
                                     "BOARD=" + board,
-                                    "default-configuration"],
+                                    "pumbaa-default-configuration"],
                                    cwd="examples/default-configuration")
 
 

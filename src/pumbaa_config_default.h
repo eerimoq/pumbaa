@@ -112,15 +112,15 @@
 #    define MICROPY_MODULE_BUILTIN_INIT                   (1)
 #endif
 
-#ifndef CONFIG_MAIN_FRIENDLY_REPL
-#    define CONFIG_MAIN_FRIENDLY_REPL                     (1)
+#ifndef CONFIG_PUMBAA_MAIN_FRIENDLY_REPL
+#    define CONFIG_PUMBAA_MAIN_FRIENDLY_REPL                1
 #endif
 
-#ifndef CONFIG_HEAP_SIZE
+#ifndef CONFIG_PUMBAA_HEAP_SIZE
 #    if defined(ARCH_ESP)
-#        define CONFIG_HEAP_SIZE                      (24576)
+#        define CONFIG_PUMBAA_HEAP_SIZE                 24576
 #    else
-#        define CONFIG_HEAP_SIZE                      (32768)
+#        define CONFIG_PUMBAA_HEAP_SIZE                 32768
 #    endif
 #endif
 
