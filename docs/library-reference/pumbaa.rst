@@ -122,7 +122,6 @@ Classes
 
       Wait for an ongoing asynchronous convertion to finish.
 
-
 Functions
 ---------
       
