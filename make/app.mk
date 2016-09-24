@@ -45,7 +45,7 @@ QSTR_DEFS_PY_CORE_H = $(MICROPYTHON_ROOT)/py/qstrdefs.h
 
 MAKEQSTRDATA_PY = $(MICROPYTHON_ROOT)/py/makeqstrdata.py
 MAKEQSTRDEFS_PY = $(MICROPYTHON_ROOT)/py/makeqstrdefs.py
-MAKE_FROZEN_PY = $(PUMBAA_ROOT)/bin/make-frozen.py
+MAKE_FROZEN_PY = $(PUMBAA_ROOT)/bin/make_frozen.py
 
 ifneq ($(ARCH),esp)
 LDFLAGS_AFTER += -lm

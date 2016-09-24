@@ -27,15 +27,6 @@ const FAR char sysinfo[] = "app:    myapp built - by -.\\r\\n"
                            "mcu:    {mcu}\\r\\n";
 """
 
-FROZEN_C = """#include <stdint.h>
-const char mp_frozen_str_names[] = {
-"\\0"};
-const uint32_t mp_frozen_str_sizes[] = {
-};
-const char mp_frozen_str_content[] = {
-};
-"""
-
 INTERACTIVE_INO = """/**
  * Empty generated sketch file.
  *
@@ -69,6 +60,18 @@ def create_database():
     return json.loads(subprocess.check_output(["bin/dbgen.py"]))
 
 
+def copy_tools():
+    """Copy the frozen generation scripts to the tools folder.
+
+    """
+
+    pumbaa_root = os.environ["PUMBAA_ROOT"]
+
+    os.makedirs("tools")
+    shutil.copy(os.path.join(pumbaa_root, "bin", "compile_ino.py"), "tools")
+    shutil.copy(os.path.join(pumbaa_root, "bin", "make_frozen.py"), "tools")
+
+    
 def generate_cores(family, database):
     """Generate the cores directory, shared among all boards.
 
@@ -81,9 +84,6 @@ def generate_cores(family, database):
 
     with open(os.path.join(cores_dir, "Arduino.h"), "w") as fout:
         fout.write(ARDUINO_H)
-
-    with open(os.path.join(cores_dir, "frozen.c"), "w") as fout:
-        fout.write(FROZEN_C)
         
     pumbaa_root = os.environ["PUMBAA_ROOT"]
     cores_srcs = None
@@ -425,6 +425,7 @@ def generate_files_and_folders(family, database, outdir):
     cwd = os.getcwd()
     os.chdir(outdir)
 
+    copy_tools()
     cores_srcs = generate_cores(family, database)
     generate_variants(family, database, cores_srcs)
     generate_examples()

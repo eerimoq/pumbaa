@@ -8,7 +8,7 @@
 #
 # Run script, passing path to the directory above:
 #
-# ./make-frozen.py frozen1.py frozen2.py > frozen.c
+# ./make_frozen.py frozen1.py frozen2.py > frozen.c
 #
 # Include frozen.c in your build, having defined
 # MICROPY_MODULE_FROZEN_STR in config.
@@ -17,33 +17,45 @@ from __future__ import print_function
 
 import os
 import argparse
+import glob
+import sys
 
 def module_name(module):
     return os.path.basename(module)
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("modules", nargs="*")
-    args = parser.parse_args()
 
-    print("#include <stdint.h>")
-    print("const char mp_frozen_str_names[] = {")
+def generate_frozen(paths):
+    """Genrate the frozen module file.
 
-    for module in args.modules:
-        print('"%s\\0"' % module_name(module))
+    """      
 
-    print('"\\0"};')
+    frozen = []
+    modules = []
+    
+    for module in paths:
+        if os.path.isdir(module):
+            modules += glob.glob(os.path.join(module, "*.py"))
+        else:
+            modules.append(module)
 
-    print("const uint32_t mp_frozen_str_sizes[] = {")
+    frozen.append("#include <stdint.h>")
+    frozen.append("const char mp_frozen_str_names[] = {")
 
-    for module in args.modules:
-        print("%d," % os.stat(module).st_size)
+    for module in modules:
+        frozen.append('"%s\\0"' % module_name(module))
 
-    print("};")
+    frozen.append('"\\0"};')
 
-    print("const char mp_frozen_str_content[] = {")
+    frozen.append("const uint32_t mp_frozen_str_sizes[] = {")
 
-    for module in args.modules:
+    for module in modules:
+        frozen.append("%d," % os.stat(module).st_size)
+
+    frozen.append("};")
+
+    frozen.append("const char mp_frozen_str_content[] = {")
+
+    for module in modules:
         data = open(module, "rb").read()
 
         # We need to properly escape the script data to create a C string.
@@ -77,9 +89,26 @@ def main():
                     break_str = True
 
         chrs.append('\\0"')
-        print(''.join(chrs))
+        frozen.append(''.join(chrs))
 
-    print("};")
+    frozen.append("};")
+
+    return '\n'.join(frozen)
+
+    
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--output-file")
+    parser.add_argument("modules", nargs="*")
+    args = parser.parse_args()
+
+    frozen = generate_frozen(args.modules)
+    
+    if args.output_file:
+        with open(args.output_file, "w") as fout:
+            fout.write(frozen)
+    else:
+        sys.stdout.write(frozen)
 
 
 if __name__ == '__main__':
