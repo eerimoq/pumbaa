@@ -407,6 +407,7 @@ def generate_extra(family, database):
         eboot_dir = os.path.join("bootloaders", "eboot")
         mkdir_p(eboot_dir)
         shutil.copy(os.path.join(pumbaa_root,
+                                 "simba",
                                  "3pp",
                                  "esp8266Arduino",
                                  "2.3.0",
@@ -456,7 +457,7 @@ def main():
     
     print("Writing to " + args.outdir + ".")
 
-    for family in ["sam"]:
+    for family in ["sam", "esp"]:
         packages_family_dir = os.path.join(args.outdir,
                                            "packages",
                                            "Pumbaa",
