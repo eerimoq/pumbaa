@@ -71,5 +71,5 @@ int main()
     print_exit_message(res, "Interactive shell");
 #endif
 
-    return (res);
+    return (res != 1);
 }
