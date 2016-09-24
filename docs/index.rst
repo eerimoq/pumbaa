@@ -23,6 +23,7 @@ Project homepage: https://github.com/eerimoq/pumbaa
 
    installation
    user-guide
+   developer-guide
    boards
    examples
    library-reference
