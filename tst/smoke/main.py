@@ -69,7 +69,7 @@ def test_smoke():
         import foo
     except:
         pass
-        
+
     print("dir:", dir())
 
     print("sys.platform:", sys.platform)
@@ -107,7 +107,10 @@ def test_smoke():
 
     assert other.foo() == True
 
-    simba.fs_call("kernel/thrd/list")
+    with assert_raises(OSError):
+        simba.fs_call("bad")
+
+    print(simba.fs_call("kernel/thrd/list"))
 
     sio = io.StringIO("foo")
     sio.seek(0, 2)

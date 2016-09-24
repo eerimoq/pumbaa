@@ -22,17 +22,62 @@
 #if CONFIG_PUMBAA_FS_CALL == 1
 
 /**
+ * The vstr channel stores all written data in a vstr. No read not
+ * size functions are available.
+ */
+struct vstr_chan_t {
+    struct chan_t base;
+    vstr_t string;
+};
+
+static ssize_t vstr_chan_write(struct vstr_chan_t *self_p,
+                               const void *buf_p,
+                               size_t size);
+
+static int vstr_chan_init(struct vstr_chan_t *self_p)
+{
+    chan_init(&self_p->base,
+              chan_read_null,
+              (chan_write_fn_t)vstr_chan_write,
+              chan_size_null);
+    vstr_init(&self_p->string, 128);
+
+    return (0);
+}
+
+static ssize_t vstr_chan_write(struct vstr_chan_t *self_p,
+                               const void *buf_p,
+                               size_t size)
+{
+    vstr_add_strn(&self_p->string, buf_p, size);
+
+    return (size);
+}
+
+static vstr_t *vstr_chan_get_vstr(struct vstr_chan_t *self_p)
+{
+    return (&self_p->string);
+}
+
+/**
  * def fs_call(command)
  */
 static mp_obj_t module_fs_call(mp_obj_t command_in)
 {
     char command[128];
+    struct vstr_chan_t chout;
 
     strncpy(command, mp_obj_str_get_str(command_in), membersof(command));
     command[membersof(command) - 1] = '\0';
-    fs_call(command, sys_get_stdin(), sys_get_stdout(), NULL);
 
-    return (mp_const_none);
+    vstr_chan_init(&chout);
+
+    if (fs_call(command, sys_get_stdin(), &chout, NULL) != 0) {
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError, "-1"));
+    }
+
+    return (mp_obj_new_str_from_vstr(&mp_type_str,
+                                     vstr_chan_get_vstr(&chout)));
 }
 
 static MP_DEFINE_CONST_FUN_OBJ_1(module_fs_call_obj, module_fs_call);

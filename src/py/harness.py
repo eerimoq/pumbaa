@@ -17,6 +17,8 @@
 # This file is part of the Pumbaa project.
 #
 
+import simba
+
 class TestCaseSkippedError(Exception):
     pass
 
@@ -95,5 +97,7 @@ def run(testcases):
     print("=============================== TEST END ({}) ==============================\n".format(
         "PASSED" if ok else "FAILED"))
 
+    print(simba.fs_call("kernel/thrd/list"))
+    
     if not ok:
         raise SuiteError(total, passed, skipped, failed)
