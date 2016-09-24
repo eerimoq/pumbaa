@@ -36,11 +36,15 @@ static void print_exit_message(int res, const char *prefix_p)
     }
 }
 
+/**
+ * The entry function for a Pumbaa application.
+ */
 int main()
 {
     int stack_dummy;
     int res;
-    
+
+    /* Start the system. */
     sys_start();
 
     std_printf(sys_get_info());

@@ -34,7 +34,7 @@ def test_format():
     try:
         simba.fs_format("/fs")
     except:
-        pass
+        print("Failed to format /fs.")
 
 
 def test_missing_file():

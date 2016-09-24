@@ -20,10 +20,13 @@
 #include "pumbaa.h"
 #include "lib/utils/pyhelp.h"
 
+/**
+ * The Pumbaa help text.
+ */
 static const FAR char *help_text_p =
     "Welcome to Pumbaa!\r\n"
     "\r\n"
-    "For online docs please visit http://pumbaa.readthedocs.io/en/latest/ .\r\n"
+    "For online docs please visit http://pumbaa.readthedocs.io/en/latest/.\r\n"
     "\r\n"
     "Control commands:\r\n"
     "  CTRL-E        -- on a blank line, enter paste mode\r\n"

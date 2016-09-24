@@ -20,7 +20,7 @@
 #include "pumbaa.h"
 
 /**
- * The builtin input() function.
+ * The builtin input() function. Read a line from standard input.
  *
  * input([prompt])
  */

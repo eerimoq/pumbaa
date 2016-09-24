@@ -23,28 +23,28 @@ from harness import assert_raises
 
 
 def test_help():
-    EVENT = Event()
+    event = Event()
     help(Event)
-    help(EVENT)
+    help(event)
 
 
 def test_read_write():
-    EVENT = Event()
+    event = Event()
 
-    EVENT.write(0x6)
-    assert EVENT.size() == 1
-    assert EVENT.read(0x2) == 0x2
-    assert EVENT.read(0x4) == 0x4
+    event.write(0x6)
+    assert event.size() == 1
+    assert event.read(0x2) == 0x2
+    assert event.read(0x4) == 0x4
 
 
 def test_bad_arguments():
-    EVENT = Event()
+    event = Event()
 
     with assert_raises(TypeError, "can't convert NoneType to int"):
-        EVENT.read(None)
+        event.read(None)
 
     with assert_raises(TypeError, "can't convert NoneType to int"):
-        EVENT.write(None)
+        event.write(None)
 
 
 def main():

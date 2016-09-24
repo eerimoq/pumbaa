@@ -43,13 +43,17 @@ static void class_timer_print(const mp_print_t *print_p,
 }
 
 /**
- * Init helper function.
+ * Create a new Timer object associated with the id. If additional
+ * arguments are given, they are used to initialise the timer. See
+ * `init`.
  */
-static mp_obj_t class_timer_init_helper(struct class_timer_t *self_p,
-                                        mp_uint_t n_args,
-                                        const mp_obj_t *pos_args_p,
-                                        mp_map_t *kwargs_p)
+static mp_obj_t class_timer_make_new(const mp_obj_type_t *type_p,
+                                     mp_uint_t n_args,
+                                     mp_uint_t n_kw,
+                                     const mp_obj_t *args_p)
 {
+    struct class_timer_t *self_p;
+    mp_map_t kwargs;
     static const mp_arg_t allowed_args[] = {
         { MP_QSTR_timeout, MP_ARG_REQUIRED | MP_ARG_OBJ },
         { MP_QSTR_event, MP_ARG_REQUIRED | MP_ARG_OBJ },
@@ -63,10 +67,17 @@ static mp_obj_t class_timer_init_helper(struct class_timer_t *self_p,
     mp_obj_t *items_p;
     int flags;
 
+    mp_arg_check_num(n_args, n_kw, 0, 4, true);
+
+    /* Create a new Timer object. */
+    self_p = m_new0(struct class_timer_t, 1);
+    self_p->base.type = &module_simba_class_timer;
+
     /* Parse args. */
+    mp_map_init_fixed_table(&kwargs, n_kw, args_p + n_args);
     mp_arg_parse_all(n_args,
-                     pos_args_p,
-                     kwargs_p,
+                     args_p,
+                     &kwargs,
                      MP_ARRAY_SIZE(allowed_args),
                      allowed_args,
                      args);
@@ -96,33 +107,13 @@ static mp_obj_t class_timer_init_helper(struct class_timer_t *self_p,
     self_p->mask = args[2].u_int;
     flags = args[3].u_int;
 
-    timer_init(&self_p->timer, &timeout, timer_cb_isr, self_p, flags);
-
-    return (mp_const_none);
-}
-
-/**
- * Create a new Timer object associated with the id. If additional
- * arguments are given, they are used to initialise the timer. See
- * `init`.
- */
-static mp_obj_t class_timer_make_new(const mp_obj_type_t *type_p,
-                                     mp_uint_t n_args,
-                                     mp_uint_t n_kw,
-                                     const mp_obj_t *args_p)
-{
-    struct class_timer_t *self_p;
-    mp_map_t kwargs;
-
-    mp_arg_check_num(n_args, n_kw, 0, 4, true);
-
-    /* Create a new Timer object. */
-    self_p = m_new0(struct class_timer_t, 1);
-    self_p->base.type = &module_simba_class_timer;
-
-    /* Initialize the object. */
-    mp_map_init_fixed_table(&kwargs, n_kw, args_p + n_args);
-    class_timer_init_helper(self_p, n_args, args_p, &kwargs);
+    if (timer_init(&self_p->timer,
+                   &timeout,
+                   timer_cb_isr,
+                   self_p,
+                   flags) != 0) {
+        return (mp_const_none);
+    }
 
     return (self_p);
 }

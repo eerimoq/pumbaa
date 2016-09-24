@@ -33,13 +33,17 @@ static void class_pin_print(const mp_print_t *print_p,
 }
 
 /**
- * Init helper function.
+ * Create a new Pin object associated with the id. If additional
+ * arguments are given, they are used to initialise the pin. See
+ * `init`.
  */
-static mp_obj_t class_pin_init_helper(const struct class_pin_t *self_p,
-                                      mp_uint_t n_args,
-                                      const mp_obj_t *pos_args_p,
-                                      mp_map_t *kwargs_p)
+static mp_obj_t class_pin_make_new(const mp_obj_type_t *type_p,
+                                   mp_uint_t n_args,
+                                   mp_uint_t n_kw,
+                                   const mp_obj_t *args_p)
 {
+    struct class_pin_t *self_p;
+    mp_map_t kwargs;
     static const mp_arg_t allowed_args[] = {
         { MP_QSTR_device, MP_ARG_REQUIRED | MP_ARG_INT },
         { MP_QSTR_mode, MP_ARG_REQUIRED | MP_ARG_INT }
@@ -48,10 +52,13 @@ static mp_obj_t class_pin_init_helper(const struct class_pin_t *self_p,
     int device;
     int mode;
 
+    mp_arg_check_num(n_args, n_kw, 1, MP_OBJ_FUN_ARGS_MAX, true);
+
     /* Parse args. */
+    mp_map_init(&kwargs, 0);
     mp_arg_parse_all(n_args,
-                     pos_args_p,
-                     kwargs_p,
+                     args_p,
+                     &kwargs,
                      MP_ARRAY_SIZE(allowed_args),
                      allowed_args,
                      args);
@@ -71,36 +78,14 @@ static mp_obj_t class_pin_init_helper(const struct class_pin_t *self_p,
                                                 mode));
     }
 
-    pin_init((struct pin_driver_t *)&self_p->drv,
-             &pin_device[device],
-             mode);
-
-    return (mp_const_none);
-}
-
-/**
- * Create a new Pin object associated with the id. If additional
- * arguments are given, they are used to initialise the pin. See
- * `init`.
- */
-static mp_obj_t class_pin_make_new(const mp_obj_type_t *type_p,
-                                   mp_uint_t n_args,
-                                   mp_uint_t n_kw,
-                                   const mp_obj_t *args_p)
-{
-    struct class_pin_t *self_p;
-    mp_map_t kwargs;
-
-    mp_arg_check_num(n_args, n_kw, 1, MP_OBJ_FUN_ARGS_MAX, true);
-
     /* Create a new Pin object. */
     self_p = m_new0(struct class_pin_t, 1);
     self_p->base.type = &module_simba_class_pin;
 
-    /* Initialize the pin if pin and mode are given. */
-    if (n_args == 2) {
-        mp_map_init(&kwargs, 0);
-        class_pin_init_helper(self_p, n_args, args_p, &kwargs);
+    if (pin_init((struct pin_driver_t *)&self_p->drv,
+                 &pin_device[device],
+                 mode) != 0) {
+        return (mp_const_none);
     }
 
     return (self_p);

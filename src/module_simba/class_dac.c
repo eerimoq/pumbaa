@@ -103,11 +103,13 @@ static mp_obj_t class_dac_make_new(const mp_obj_type_t *type_p,
 
     sampling_rate = args[1].u_int;
 
-    dac_init((struct dac_driver_t *)&self_p->drv,
-             &dac_device[0],
-             pins[0],
-             pins[1],
-             sampling_rate);
+    if (dac_init((struct dac_driver_t *)&self_p->drv,
+                 &dac_device[0],
+                 pins[0],
+                 pins[1],
+                 sampling_rate) != 0) {
+        return (mp_const_none);
+    }
 
     return (self_p);
 }

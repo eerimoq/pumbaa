@@ -23,30 +23,30 @@ from harness import assert_raises
 
 
 def test_help():
-    EVENT = Event()
-    TIMER = Timer(1, EVENT, 0x1)
+    event = Event()
+    timer = Timer(1, event, 0x1)
     help(Timer)
-    help(TIMER)
+    help(timer)
 
 
 def test_single_shot_timer():
-    EVENT = Event()
-    TIMER = Timer((0, 1000000), EVENT, 0x1)
+    event = Event()
+    timer = Timer((0, 1000000), event, 0x1)
     print("starting single shot timer")
-    TIMER.start()
-    EVENT.read(0x1)
+    timer.start()
+    event.read(0x1)
     print("timeout")
 
 
 def test_periodic_timer():
-    EVENT = Event()
-    TIMER = Timer(0.2, EVENT, 0x1, flags=Timer.PERIODIC)
+    event = Event()
+    timer = Timer(0.2, event, 0x1, flags=Timer.PERIODIC)
     print("starting periodic timer")
-    TIMER.start()
+    timer.start()
     for i in range(3):
-        EVENT.read(0x1)
+        event.read(0x1)
         print("timeout", i)
-    TIMER.stop()
+    timer.stop()
 
 
 def test_bad_arguments():
