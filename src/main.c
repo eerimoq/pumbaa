@@ -22,6 +22,20 @@
 extern char *stack_top_p;
 static char heap[CONFIG_PUMBAA_HEAP_SIZE];
 
+/**
+ * Print a message after a script has been executed.
+ */
+static void print_exit_message(int res, const char *prefix_p)
+{
+    if (res == 1) {
+        std_printf(FSTR("%s exited normally.\r\n\r\n"), prefix_p);
+    } else if (res & PYEXEC_FORCED_EXIT) {
+        std_printf(FSTR("%s forced exit.\r\n\r\n"), prefix_p);
+    } else {
+        std_printf(FSTR("%s exited abnormally.\r\n\r\n"), prefix_p);
+    }
+}
+
 int main()
 {
     int stack_dummy;
@@ -42,14 +56,19 @@ int main()
     mp_obj_list_init(MP_OBJ_TO_PTR(mp_sys_argv), 0);
 
     /* 1. Execute the file main.py. */
-    res = (pyexec_file("main.py") != 1);
+    std_printf(FSTR("Executing file 'main.py'.\r\n"));
+    res = pyexec_file("main.py");
+    print_exit_message(res, "File 'main.py'");
 
-    /* 2. Execute the frozen main.py module. */
-    res = (pyexec_frozen_module("main.py") != 1);
+    /* 2. Execute the frozen module main.py. */
+    std_printf(FSTR("Executing frozen module 'main.py'.\r\n"));
+    res = pyexec_frozen_module("main.py");
+    print_exit_message(res, "Frozen module 'main.py'");
     
 #if CONFIG_PUMBAA_MAIN_FRIENDLY_REPL == 1
-    /* 3. Execute the interactive interpreter. */
-    res = (pyexec_friendly_repl() != 1);
+    /* 3. Execute the interactive shell. */
+    res = pyexec_friendly_repl();
+    print_exit_message(res, "Interactive shell");
 #endif
 
     return (res);
