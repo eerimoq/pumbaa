@@ -20,17 +20,32 @@
 import os
 import harness
 from harness import assert_raises
+import simba
+
+
+def test_format():
+    """Format the file system.
+
+    """
+
+    with assert_raises(OSError):
+        simba.fs_format("apa")
+
+    try:
+        simba.fs_format("/fs")
+    except:
+        pass
 
 
 def test_missing_file():
     """Try to open a non-existing file.
 
     """
-    
+
     with assert_raises(OSError):
         open("missing.txt", "r")
 
-        
+
 def test_create():
     """Create, write and read. Recreate, write and read.
 
@@ -164,7 +179,7 @@ def test_print():
         fout.write("")
         print(fout)
 
-        
+
 def test_flush():
     """Flush a file.
 
@@ -177,6 +192,7 @@ def test_flush():
 
 def main():
     testcases = [
+        (test_format, "test_format"),
         (test_missing_file, "test_missing_file"),
         (test_create, "test_create"),
         (test_append, "test_append"),
