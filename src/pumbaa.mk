@@ -29,16 +29,16 @@ PUMBAA_SRC += \
 	port/port.c \
 	module_io.c \
 	module_os.c \
-	module_pumbaa.c \
-	module_pumbaa/class_event.c \
-	module_pumbaa/class_pin.c \
-	module_pumbaa/class_timer.c \
+	module_simba.c \
+	module_simba/class_event.c \
+	module_simba/class_pin.c \
+	module_simba/class_timer.c \
 	module_sys.c \
 	module_time.c
 
 ifeq ($(BOARD),arduino_due)
 PUMBAA_SRC += \
-	module_pumbaa/class_dac.c \
+	module_simba/class_dac.c \
 	boards/arduino_due/gccollect.c \
 	boards/arduino_due/gchelper.S \
 	port/lexer_port.c
@@ -47,7 +47,7 @@ endif
 ifeq ($(BOARD),linux)
 PUMBAA_SRC += \
 	boards/linux/gccollect.c \
-	module_pumbaa/class_dac.c
+	module_simba/class_dac.c
 endif
 
 ifeq ($(BOARD),$(filter $(BOARD), esp12e esp01))

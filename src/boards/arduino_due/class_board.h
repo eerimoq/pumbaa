@@ -22,6 +22,6 @@
 
 #include "pumbaa.h"
 
-extern const mp_obj_type_t module_pumbaa_class_board;
+extern const mp_obj_type_t module_simba_class_board;
 
 #endif

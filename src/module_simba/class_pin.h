@@ -1,5 +1,5 @@
 /**
- * @file module_pumbaa/class_dac.h
+ * @file module_simba/class_pin.h
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -17,16 +17,16 @@
  * This file is part of the Pumbaa project.
  */
 
-#ifndef __MODULE_PUMBAA_CLASS_DAC_H__
-#define __MODULE_PUMBAA_CLASS_DAC_H__
+#ifndef __MODULE_SIMBA_CLASS_PIN_H__
+#define __MODULE_SIMBA_CLASS_PIN_H__
 
 #include "pumbaa.h"
 
-struct class_dac_t {
+struct class_pin_t {
     mp_obj_base_t base;
-    struct dac_driver_t drv;
+    struct pin_driver_t drv;
 };
 
-extern const mp_obj_type_t module_pumbaa_class_dac;
+extern const mp_obj_type_t module_simba_class_pin;
 
 #endif

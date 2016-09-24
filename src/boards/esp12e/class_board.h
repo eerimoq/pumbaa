@@ -17,11 +17,11 @@
  * This file is part of the Pumbaa project.
  */
 
-#ifndef __MODULE_PUMBAA_CLASS_BOARD_H__
-#define __MODULE_PUMBAA_CLASS_BOARD_H__
+#ifndef __MODULE_SIMBA_CLASS_BOARD_H__
+#define __MODULE_SIMBA_CLASS_BOARD_H__
 
 #include "pumbaa.h"
 
-extern const mp_obj_type_t module_pumbaa_class_board;
+extern const mp_obj_type_t module_simba_class_board;
 
 #endif

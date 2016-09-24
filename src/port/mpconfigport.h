@@ -22,7 +22,7 @@
 #ifndef __MPCONFIGPORT_H__
 #define __MPCONFIGPORT_H__
 
-#include "pumbaa_board.h"
+#include "simba_board.h"
 #include "pumbaa_config_default.h"
 
 #endif

@@ -20,7 +20,7 @@
    #
    
    import time
-   from pumbaa import Board, Pin
+   from simba import Board, Pin
    
    LED = Pin(Board.PIN_LED, Pin.OUTPUT)
    

@@ -17,7 +17,7 @@
 # This file is part of the Pumbaa project.
 # 
 
-from pumbaa import Event, Timer
+from simba import Event, Timer
 
 EVENT = Event()
 

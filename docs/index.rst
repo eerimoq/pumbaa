@@ -36,7 +36,7 @@ Features
 
 * `MicroPython`_ modules.
 
-* A thin :doc:`C to Python wrapper layer<library-reference/pumbaa>` on
+* A thin :doc:`C to Python wrapper layer<library-reference/simba>` on
   top of some Simba modules.
 
 See the :doc:`library-reference` for a full list of features.

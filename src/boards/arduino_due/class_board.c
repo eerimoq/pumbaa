@@ -193,7 +193,7 @@ static MP_DEFINE_CONST_DICT(class_board_locals_dict, class_board_locals_table);
 /**
  * Board class type.
  */
-const mp_obj_type_t module_pumbaa_class_board = {
+const mp_obj_type_t module_simba_class_board = {
     { &mp_type_type },
     .name = MP_QSTR_Board,
     .locals_dict = (mp_obj_t)&class_board_locals_dict,

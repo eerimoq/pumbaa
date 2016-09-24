@@ -1,5 +1,5 @@
 /**
- * @file module_pumbaa.c
+ * @file module_simba.c
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -77,25 +77,25 @@ static MP_DEFINE_CONST_FUN_OBJ_0(module_init_obj, module_init);
 /**
  * A table of all the modules' global objects.
  */
-static const mp_map_elem_t module_pumbaa_globals_table[] = {
-    { MP_OBJ_NEW_QSTR(MP_QSTR___name__), MP_OBJ_NEW_QSTR(MP_QSTR_pumbaa) },
+static const mp_map_elem_t module_simba_globals_table[] = {
+    { MP_OBJ_NEW_QSTR(MP_QSTR___name__), MP_OBJ_NEW_QSTR(MP_QSTR_simba) },
     { MP_OBJ_NEW_QSTR(MP_QSTR___init__), (mp_obj_t)&module_init_obj },
 
     /* Module classes. */
 #if CONFIG_PUMBAA_CLASS_BOARD == 1
-    { MP_OBJ_NEW_QSTR(MP_QSTR_Board), (mp_obj_t)&module_pumbaa_class_board },
+    { MP_OBJ_NEW_QSTR(MP_QSTR_Board), (mp_obj_t)&module_simba_class_board },
 #endif
 #if CONFIG_PUMBAA_CLASS_DAC == 1
-    { MP_OBJ_NEW_QSTR(MP_QSTR_Dac), (mp_obj_t)&module_pumbaa_class_dac },
+    { MP_OBJ_NEW_QSTR(MP_QSTR_Dac), (mp_obj_t)&module_simba_class_dac },
 #endif
 #if CONFIG_PUMBAA_CLASS_EVENT == 1
-    { MP_OBJ_NEW_QSTR(MP_QSTR_Event), (mp_obj_t)&module_pumbaa_class_event },
+    { MP_OBJ_NEW_QSTR(MP_QSTR_Event), (mp_obj_t)&module_simba_class_event },
 #endif
 #if CONFIG_PUMBAA_CLASS_PIN == 1
-    { MP_OBJ_NEW_QSTR(MP_QSTR_Pin), (mp_obj_t)&module_pumbaa_class_pin },
+    { MP_OBJ_NEW_QSTR(MP_QSTR_Pin), (mp_obj_t)&module_simba_class_pin },
 #endif
 #if CONFIG_PUMBAA_CLASS_TIMER == 1
-    { MP_OBJ_NEW_QSTR(MP_QSTR_Timer), (mp_obj_t)&module_pumbaa_class_timer },
+    { MP_OBJ_NEW_QSTR(MP_QSTR_Timer), (mp_obj_t)&module_simba_class_timer },
 #endif
 
     /* Module functions. */
@@ -107,10 +107,10 @@ static const mp_map_elem_t module_pumbaa_globals_table[] = {
 #endif
 };
 
-static MP_DEFINE_CONST_DICT(module_pumbaa_globals, module_pumbaa_globals_table);
+static MP_DEFINE_CONST_DICT(module_simba_globals, module_simba_globals_table);
 
-const mp_obj_module_t module_pumbaa = {
+const mp_obj_module_t module_simba = {
     { &mp_type_module },
-    .name = MP_QSTR_pumbaa,
-    .globals = (mp_obj_t)&module_pumbaa_globals,
+    .name = MP_QSTR_simba,
+    .globals = (mp_obj_t)&module_simba_globals,
 };

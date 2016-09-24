@@ -1,16 +1,16 @@
-:mod:`pumbaa` --- Pumbaa
-========================
+:mod:`simba` --- Simba
+======================
 
-.. module:: pumbaa
-   :synopsis: Pumbaa.
+.. module:: simba
+   :synopsis: Simba.
 
-The pumbaa module is a thin layer on top of `Simba` to make most
+The simba module is a thin layer on top of `Simba` to make most
 `Simba` functionality available in `Python`. It is not intended to be
 compatible with `MicroPython:s` hardware modules as of today.
 
 ----------------------------------------------
 
-.. class:: pumbaa.Timer(timeout, event, mask, flags=0)
+.. class:: simba.Timer(timeout, event, mask, flags=0)
 
    Instantiate a timer object from given arguemts. The timer expires
    `timeout` seconds after the timer has been started. When the timer
@@ -30,10 +30,10 @@ compatible with `MicroPython:s` hardware modules as of today.
     
    .. data:: PERIODIC
 
-      Pass this flag to ``pumbaa.Timer`` for periodic timers.
+      Pass this flag to ``simba.Timer`` for periodic timers.
 
       
-.. class:: pumbaa.Event(event)
+.. class:: simba.Event(event)
 
    Initialize given event object.
 
@@ -54,7 +54,7 @@ compatible with `MicroPython:s` hardware modules as of today.
       Get the number of event(s) set in the channel.
 
       
-.. class:: pumbaa.Pin(device, mode)
+.. class:: simba.Pin(device, mode)
 
    Initialize given pin object with given `device` and `mode`. The
    device is selected among the pins available in the `Board`
@@ -93,7 +93,7 @@ compatible with `MicroPython:s` hardware modules as of today.
       Output pin mode.
 
       
-.. class:: pumbaa.Dac(devices, sampling_rate)
+.. class:: simba.Dac(devices, sampling_rate)
 
    Instansiate a Dac object. `devices` is either a list of DAC pin
    devices or a single DAC pin device. The DAC pin devices can be
@@ -119,12 +119,12 @@ compatible with `MicroPython:s` hardware modules as of today.
 
       Wait for an ongoing asynchronous convertion to finish.
       
-.. function:: pumbaa.fs_call(command)
+.. function:: simba.fs_call(command)
 
    Call given file system command. The output is written to the debug
    port and can not be captured in Python.
               
-.. function:: pumbaa.fs_format(path)
+.. function:: simba.fs_format(path)
 
    Format file system at given path. All data in the file system will
    be lost.

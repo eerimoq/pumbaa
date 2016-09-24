@@ -18,7 +18,7 @@
 #
 
 import os
-from pumbaa import Board, Pin
+from simba import Board, Pin
 import harness
 from harness import assert_raises
 

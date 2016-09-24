@@ -29,7 +29,7 @@ import ucollections as collections
 import ure as re
 import ustruct as struct
 import harness
-import pumbaa
+import simba
 import other
 from harness import assert_raises
 
@@ -52,11 +52,11 @@ def test_smoke():
         collections,
         re,
         struct,
-        pumbaa,
-        pumbaa.Board,
-        pumbaa.Event,
-        pumbaa.Pin,
-        pumbaa.Timer,
+        simba,
+        simba.Board,
+        simba.Event,
+        simba.Pin,
+        simba.Timer,
         other
     ]
 
@@ -106,7 +106,7 @@ def test_smoke():
 
     assert other.foo() == True
 
-    pumbaa.fs_call("kernel/thrd/list")
+    simba.fs_call("kernel/thrd/list")
 
     sio = io.StringIO("foo")
     sio.seek(0, 2)

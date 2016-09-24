@@ -1,5 +1,5 @@
 /**
- * @file module_pumbaa/class_timer.h
+ * @file module_simba/class_dac.h
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -17,18 +17,16 @@
  * This file is part of the Pumbaa project.
  */
 
-#ifndef __PUMBAA_CLASS_TIMER_H__
-#define __PUMBAA_CLASS_TIMER_H__
+#ifndef __MODULE_SIMBA_CLASS_DAC_H__
+#define __MODULE_SIMBA_CLASS_DAC_H__
 
 #include "pumbaa.h"
 
-struct class_timer_t {
+struct class_dac_t {
     mp_obj_base_t base;
-    struct timer_t timer;
-    struct class_event_t *event_obj_p;
-    uint32_t mask;
+    struct dac_driver_t drv;
 };
 
-extern const mp_obj_type_t module_pumbaa_class_timer;
+extern const mp_obj_type_t module_simba_class_dac;
 
 #endif

@@ -18,7 +18,7 @@
 #
 
 import harness
-from pumbaa import Timer, Event
+from simba import Timer, Event
 from harness import assert_raises
 
 

@@ -18,7 +18,7 @@
 #
 
 import os
-from pumbaa import Board, Dac
+from simba import Board, Dac
 import harness
 from harness import assert_raises
 

@@ -1,5 +1,5 @@
 /**
- * @file module_pumbaa/class_pin.h
+ * @file module_simba/class_event.h
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -17,16 +17,16 @@
  * This file is part of the Pumbaa project.
  */
 
-#ifndef __MODULE_PUMBAA_CLASS_PIN_H__
-#define __MODULE_PUMBAA_CLASS_PIN_H__
+#ifndef __MODULE_SIMBA_CLASS_EVENT_H__
+#define __MODULE_SIMBA_CLASS_EVENT_H__
 
 #include "pumbaa.h"
 
-struct class_pin_t {
+struct class_event_t {
     mp_obj_base_t base;
-    struct pin_driver_t drv;
+    struct event_t event;
 };
 
-extern const mp_obj_type_t module_pumbaa_class_pin;
+extern const mp_obj_type_t module_simba_class_event;
 
 #endif

@@ -20,7 +20,7 @@
 import os
 import _thread
 
-from pumbaa import Event, Timer, Dac, Board
+from simba import Event, Timer, Dac, Board
 
 #  Player states.
 STATE_PLAYING = 0

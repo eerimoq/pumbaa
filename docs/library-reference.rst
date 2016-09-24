@@ -11,4 +11,4 @@ Here is a list of builtin modules in `Pumbaa`.
    library-reference/sys
    library-reference/os
    library-reference/time
-   library-reference/pumbaa
+   library-reference/simba

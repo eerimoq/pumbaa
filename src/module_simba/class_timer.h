@@ -1,5 +1,5 @@
 /**
- * @file module_pumbaa/class_event.h
+ * @file module_simba/class_timer.h
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -17,16 +17,18 @@
  * This file is part of the Pumbaa project.
  */
 
-#ifndef __MODULE_PUMBAA_CLASS_EVENT_H__
-#define __MODULE_PUMBAA_CLASS_EVENT_H__
+#ifndef __MODULE_SIMBA_CLASS_TIMER_H__
+#define __MODULE_SIMBA_CLASS_TIMER_H__
 
 #include "pumbaa.h"
 
-struct class_event_t {
+struct class_timer_t {
     mp_obj_base_t base;
-    struct event_t event;
+    struct timer_t timer;
+    struct class_event_t *event_obj_p;
+    uint32_t mask;
 };
 
-extern const mp_obj_type_t module_pumbaa_class_event;
+extern const mp_obj_type_t module_simba_class_timer;
 
 #endif
