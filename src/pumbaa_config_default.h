@@ -24,16 +24,12 @@
  * This is the default configuration of Pumbaa.
  */
 
-#ifndef PATH_MAX
-#    define PATH_MAX                                      128
-#endif
-
 #ifndef MICROPY_OBJ_REPR
 #    define MICROPY_OBJ_REPR             (MICROPY_OBJ_REPR_C)
 #endif
 
 #ifndef MICROPY_ALLOC_PATH_MAX
-#    define MICROPY_ALLOC_PATH_MAX                   PATH_MAX
+#    define MICROPY_ALLOC_PATH_MAX                      (128)
 #endif
 
 #ifndef MICROPY_ENABLE_GC
