@@ -23,11 +23,12 @@ import os
 import sys
 import time
 import micropython
-import uio as io
-import ubinascii as binascii
-import ucollections as collections
-import ure as re
-import ustruct as struct
+import binascii
+import collections
+import io
+import json
+import re
+import struct
 import harness
 import simba
 import other
