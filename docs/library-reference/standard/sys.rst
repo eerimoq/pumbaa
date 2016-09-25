@@ -17,30 +17,36 @@ interpreter. It is always available.
    statements are honored, and it is possible to intercept the exit
    attempt at an outer level.
 
+
 .. function:: sys.print_exception()
+
 
 .. data:: sys.path
 
    A list of strings that specifies the search path for modules.
-              
+
+
 .. data:: sys.argv
 
    The list of command line arguments passed to a Python
    script. ``argv[0]`` is the script name (it is operating system
    dependent whether this is a full pathname or not).
-       
+
+
 .. data:: sys.version
-          
+
    A string containing the version number of the Python
    interpreter. Do not extract version information out of it, rather,
    use `version_info` and the functions provided by the platform
    module.
-   
+
+
 .. data:: sys.version_info
 
    A tuple containing the three components of the version number:
    major, minor and micro. The `version_info` value corresponding to
    the Python version 3.4 is (3, 4, 0).
+
 
 .. data:: sys.implementation
 
@@ -60,10 +66,12 @@ interpreter. It is always available.
    example, for Micropython 1.8 `sys.implementation` might be `(1, 8,
    0)`, whereas `sys.version_info` would be `(3, 4, 0)`.
 
+
 .. data:: sys.platform
 
    This string contains a platform identifier that can be used to
    append platform-specific components to `sys.path`, for instance.
+
 
 .. data:: sys.byteorder
 
@@ -72,6 +80,7 @@ interpreter. It is always available.
    and ``'little'`` on little-endian (least-significant byte first)
    platforms.
 
+
 .. data:: sys.modules
 
    This is a dictionary that maps module names to modules which have
@@ -79,4 +88,3 @@ interpreter. It is always available.
    modules and other tricks. However, replacing the dictionary will
    not necessarily work as expected and deleting essential items from
    the dictionary may cause Python to fail.
-

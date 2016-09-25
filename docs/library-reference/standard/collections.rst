@@ -35,8 +35,9 @@
       >>> p                       # readable __repr__ with a name=value style
       Point(x=11, y=22)
 
+
 .. class:: collections.OrderedDict([items])
-                 
+
    Return an instance of a dict subclass, supporting the usual `dict`
    methods. An OrderedDict is a dict that remembers the order that
    keys were first inserted. If a new entry overwrites an existing
@@ -44,7 +45,7 @@
    an entry and reinserting it will move it to the end.
 
    .. method:: popitem(last=True)
-                       
+
       The ``popitem()`` method for ordered dictionaries returns and
       removes a ``(key, value)`` pair. The pairs are returned in LIFO
       order if last is true or FIFO order if false.

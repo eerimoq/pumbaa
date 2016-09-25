@@ -6,7 +6,7 @@
 
 This module provides access to the mathematical functions defined by
 the C standard.
-              
+
 ----------------------------------------------
 
 .. function:: math.ceil(x)
@@ -15,21 +15,25 @@ the C standard.
    equal to `x`. If `x` is not a float, delegates to ``x.__ceil__()``,
    which should return an Integral value.
 
+
 .. function:: math.copysign(x, y)
-                 
+
    Return a float with the magnitude (absolute value) of `x` but the
    sign of `y`. On platforms that support signed zeros, ``copysign(1.0,
    -0.0)`` returns -1.0.
 
+
 .. function:: math.fabs(x)
 
    Return the absolute value of `x`.
+
 
 .. function:: math.floor(x)
 
    Return the floor of `x`, the largest integer less than or equal to
    `x`. If `x` is not a float, delegates to ``x.__floor__()``, which
    should return an Integral value.
+
 
 .. function:: math.fmod(x, y)
 
@@ -48,6 +52,7 @@ the C standard.
    floats, while Python’s ``x % y`` is preferred when working with
    integers.
 
+
 .. function:: math.frexp(x)
 
    Return the mantissa and exponent of `x` as the pair ``(m, e)``. m
@@ -56,28 +61,34 @@ the C standard.
    abs(m) < 1``. This is used to “pick apart” the internal
    representation of a float in a portable way.
 
+
 .. function:: math.isinf(x)
 
    Return ``True`` if `x` is a positive or negative infinity, and
    ``False`` otherwise.
 
+
 .. function:: math.isnan(x)
 
    Return ``True`` if `x` is a NaN (not a number), and ``False`` otherwise.
 
+
 .. function:: math.ldexp(x, i)
 
    Return ``x * (2**i)``. This is essentially the inverse of function `frexp()`.
+
 
 .. function:: math.modf(x)
 
    Return the fractional and integer parts of `x`. Both results carry
    the sign of `x` and are floats.
 
+
 .. function:: math.trunc(x)
 
    Return the Real value `x` truncated to an Integral (usually an
    integer). Delegates to ``x.__trunc__()``.
+
 
 .. function:: math.log(x[, base])
 
@@ -85,6 +96,7 @@ the C standard.
 
    With two arguments, return the logarithm of `x` to the given
    `base`, calculated as ``log(x)/log(base)``.
+
 
 .. function:: math.pow(x, y)
 
@@ -96,21 +108,26 @@ the C standard.
    arguments to type float. Use ** or the built-in ``pow()`` function for
    computing exact integer powers.
 
+
 .. function:: math.sqrt(x)
 
    Return the square root of `x`.
+
 
 .. function:: math.acos(x)
 
    Return the arc cosine of `x`, in radians.
 
+
 .. function:: math.asin(x)
 
    Return the arc sine of `x`, in radians.
 
+
 .. function:: math.atan(x)
 
    Return the arc tangent of `x`, in radians.
+
 
 .. function:: math.atan2(y, x)
 
@@ -122,29 +139,36 @@ the C standard.
    ``atan2(1, 1)`` are both ``pi/4``, but ``atan2(-1, -1)`` is
    ``-3*pi/4``.
 
+
 .. function:: math.cos(x)
 
    Return the cosine of `x` radians.
+
 
 .. function:: math.sin(x)
 
    Return the sine of `x` radians.
 
+
 .. function:: math.tan(x)
 
    Return the tangent of `x` radians.
+
 
 .. function:: math.degrees(x)
 
    Convert angle `x` from radians to degrees.
 
+
 .. function:: math.radians(x)
 
    Convert angle `x` from degrees to radians.
 
+
 .. function:: math.pi
 
    The mathematical constant π = 3.141592..., to available precision.
+
 
 .. function:: math.e
 

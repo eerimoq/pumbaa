@@ -14,6 +14,7 @@ format inspired by JavaScript object literal syntax.
    Serialize `obj` to a JSON formatted str using this conversion
    table.
 
+
 .. function:: json.loads(s)
 
    Deserialize `s` (a str instance containing a JSON document) to a

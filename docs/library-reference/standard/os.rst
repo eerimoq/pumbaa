@@ -13,16 +13,18 @@ dependent functionality.
 
    Returns information identifying the current operating system. The
    return value is an object with five attributes:
-   
+
    - sysname - operating system name
    - nodename - name of machine on network (implementation-defined)
    - release - operating system release
    - version - operating system version
    - machine - hardware identifier
 
+
 .. function:: os.getcwd()
 
    Return a string representing the current working directory.
+
 
 .. function:: os.listdir(path='.')
 
@@ -30,7 +32,8 @@ dependent functionality.
    given by path. The list is in arbitrary order, and does not include
    the special entries ``'.'`` and ``'..'`` even if they are present
    in the directory.
-              
+
+
 .. function:: os.stat()
 
    Return a `stat_result` object for this entry.

@@ -32,43 +32,52 @@ to the result of the conversion.
       >>> phase(complex(-1.0, -0.0))
       -3.14159
 
+
 .. function:: polar(x)
- 
+
    Return the representation of `x` in polar coordinates. Returns a
    pair ``(r, phi)`` where r is the modulus of `x` and phi is the
    phase of x. ``polar(x)`` is equivalent to ``(abs(x), phase(x))``.
-              
+
+
 .. function:: rect(r, phi)
 
     Return the complex number x with polar coordinates `r` and
     `phi`. Equivalent to ``r * (math.cos(phi) + math.sin(phi)*1j)``.
 
+
 .. function:: exp(x)
 
    Return the exponential value ``e**x``.
+
 
 .. function:: log(x)
 
    Returns the natural logarithm of `x`. There is one branch cut, from
    0 along the negative real axis to -∞, continuous from above.
 
+
 .. function:: sqrt(x)
 
    Return the square root of `x`. This has the same branch cut as
    ``log()``.
 
+
 .. function:: cos(x)
 
    Return the cosine of `x`.
 
+
 .. function:: sin(x)
 
    Return the sine of `x`.
-              
+
+
 .. function:: e
 
    The mathematical constant e, as a float.
-              
+
+
 .. function:: pi
-                                          
+
    The mathematical constant π, as a float.

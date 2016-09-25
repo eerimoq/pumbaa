@@ -6,7 +6,7 @@
 
 This module implements pseudo-random number generators for various
 distributions.
-              
+
 ----------------------------------------------
 
 .. function:: random.seed(a=None)
@@ -20,6 +20,7 @@ distributions.
 
    If `a` is an int, it is used directly.
 
+
 .. function:: random.getrandbits(k)
 
    Returns a Python integer with `k` random bits. This method is
@@ -27,6 +28,7 @@ distributions.
    generators may also provide it as an optional part of the API. When
    available, ``getrandbits()`` enables ``randrange()`` to handle
    arbitrarily large ranges.
+
 
 .. function:: random.randrange(stop)
 .. function:: random.randrange(start, stop[, step])
@@ -39,17 +41,19 @@ distributions.
    ``range()``. Keyword arguments should not be used because the
    function may use them in unexpected ways.
 
+
 .. function:: random.randint(a, b)
 
    Return a random integer N such that `a` <= N <= `b`. Alias for
    ``randrange(a, b+1)``.
 
    .. code-block:: python
-              
+
       >>> random.randrange(10)           # Integer from 0 to 9
       7
       >>> random.randrange(0, 101, 2)    # Even integer from 0 to 100
       26
+
 
 .. function:: random.choice(seq)
 
@@ -57,9 +61,10 @@ distributions.
    is empty, raises IndexError.
 
    .. code-block:: python
-              
+
       >>> random.choice('abcdefghij')    # Single random element
       'c'
+
 
 .. function:: random.random()
 
@@ -67,9 +72,10 @@ distributions.
    1.0]``.
 
    .. code-block:: python
-              
+
       >>> random.random()                # Random float x, 0.0 <= x < 1.0
       0.374448
+
 
 .. function:: random.uniform(a, b)
 
@@ -81,6 +87,6 @@ distributions.
    random()``.
 
    .. code-block:: python
-              
+
       >>> random.uniform(1, 10)          # Random float x, 1.0 <= x < 10.0
       1.180014
