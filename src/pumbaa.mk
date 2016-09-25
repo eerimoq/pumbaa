@@ -65,8 +65,11 @@ INC += $(MICROPYTHON_ROOT)
 
 MICROPYTHON_SRC += \
 	extmod/modubinascii.c \
+	extmod/moduhashlib.c \
 	extmod/modujson.c \
+	extmod/modurandom.c \
 	extmod/modure.c \
+	extmod/moduzlib.c \
 	lib/utils/pyhelp.c \
 	lib/utils/pyexec.c \
 	lib/mp-readline/readline.c \

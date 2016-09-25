@@ -88,8 +88,32 @@
 #    define MICROPY_PY_UBINASCII                          (1)
 #endif
 
+#ifndef MICROPY_PY_UBINASCII_CRC32
+#    define MICROPY_PY_UBINASCII_CRC32                    (1)
+#endif
+
+#ifndef MICROPY_PY_COLLECTIONS_ORDEREDDICT
+#    define MICROPY_PY_COLLECTIONS_ORDEREDDICT            (1)
+#endif
+
+#ifndef MICROPY_PY_CMATH
+#    define MICROPY_PY_CMATH                              (1)
+#endif
+
+#ifndef MICROPY_PY_UHASHLIB
+#    define MICROPY_PY_UHASHLIB                           (1)
+#endif
+
 #ifndef MICROPY_PY_UJSON
 #    define MICROPY_PY_UJSON                              (1)
+#endif
+
+#ifndef MICROPY_PY_URANDOM
+#    define MICROPY_PY_URANDOM                            (1)
+#endif
+
+#ifndef MICROPY_PY_URANDOM_EXTRA_FUNCS
+#    define MICROPY_PY_URANDOM_EXTRA_FUNCS                (1)
 #endif
 
 #ifndef MICROPY_PY_URE
@@ -98,6 +122,10 @@
 
 #ifndef MICROPY_PY_UTIME
 #    define MICROPY_PY_UTIME                              (1)
+#endif
+
+#ifndef MICROPY_PY_UZLIB
+#    define MICROPY_PY_UZLIB                              (1)
 #endif
 
 #ifndef MICROPY_MODULE_FROZEN_STR
@@ -164,10 +192,13 @@ extern const struct _mp_obj_module_t module_simba;
 #define MICROPY_PORT_BUILTIN_MODULE_WEAK_LINKS \
     { MP_OBJ_NEW_QSTR(MP_QSTR_binascii), (mp_obj_t)&mp_module_ubinascii }, \
     { MP_OBJ_NEW_QSTR(MP_QSTR_collections), (mp_obj_t)&mp_module_collections }, \
+    { MP_OBJ_NEW_QSTR(MP_QSTR_hashlib), (mp_obj_t)&mp_module_uhashlib }, \
     { MP_OBJ_NEW_QSTR(MP_QSTR_io), (mp_obj_t)&mp_module_io }, \
     { MP_OBJ_NEW_QSTR(MP_QSTR_json), (mp_obj_t)&mp_module_ujson }, \
+    { MP_OBJ_NEW_QSTR(MP_QSTR_random), (mp_obj_t)&mp_module_urandom }, \
     { MP_OBJ_NEW_QSTR(MP_QSTR_re), (mp_obj_t)&mp_module_ure }, \
-    { MP_OBJ_NEW_QSTR(MP_QSTR_struct), (mp_obj_t)&mp_module_ustruct },
+    { MP_OBJ_NEW_QSTR(MP_QSTR_struct), (mp_obj_t)&mp_module_ustruct }, \
+    { MP_OBJ_NEW_QSTR(MP_QSTR_zlib), (mp_obj_t)&mp_module_uzlib },
 
 /* Extra built in names to add to the global namespace. */
 #define MICROPY_PORT_BUILTINS                                           \

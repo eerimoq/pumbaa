@@ -69,7 +69,7 @@ Start `Cygwin` and execute the one-liner below to install `Pumbaa`.
    $ mkdir pumbaa && \
      cd pumbaa && \
      easy_install-2.7 pip && \
-     pip install pyserial xpect readchar sphinx breathe && \
+     pip install pyserial pyelftools xpect readchar sphinx breathe && \
      git clone https://github.com/eerimoq/arm-toolchain-windows && \
      git clone https://github.com/eerimoq/pumbaa --recursive
 
@@ -87,7 +87,7 @@ Execute the one-liner below to install `Pumbaa`.
      sudo apt install make unrar autoconf automake libtool gcc g++ gperf \
                           flex bison texinfo gawk ncurses-dev libexpat-dev \
                           python-serial sed libtool-bin && \
-     sudo pip install pyserial xpect sphinx breathe sphinx_rtd_theme && \
+     sudo pip install pyserial pyelftools xpect sphinx breathe sphinx_rtd_theme && \
      git clone https://github.com/eerimoq/pumbaa --recursive
 
 .. _Cygwin: https://cygwin.com/setup-x86.exe

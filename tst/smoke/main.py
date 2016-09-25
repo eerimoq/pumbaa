@@ -18,19 +18,27 @@
 #
 
 import array
-import math
-import os
-import sys
-import time
-import micropython
 import binascii
+import cmath
 import collections
+import hashlib
 import io
 import json
+import math
+import os
+import random
 import re
 import struct
-import harness
+import sys
+import time
+import zlib
+
+import gc
+import micropython
+
 import simba
+
+import harness
 import other
 from harness import assert_raises
 
@@ -44,15 +52,22 @@ def test_smoke():
 
     objs = [
         array,
+        binascii,
+        cmath,
+        collections,
+        hashlib,
         io,
+        json,
         math,
         os,
-        sys,
-        time,
-        binascii,
-        collections,
+        random,
         re,
         struct,
+        sys,
+        time,
+        zlib,
+        gc,
+        micropython,
         simba,
         simba.Board,
         simba.Event,
@@ -118,6 +133,20 @@ def test_smoke():
     sio.seek(0)
     assert sio.read().strip() == "foobar"
 
+    print(cmath.phase(complex(-1.0, 0.0)))
+    z = complex(-1.0, 0.0)
+    assert z == z.real + z.imag * 1j
+    print(cmath.cos(math.pi))
+
+    ordered_dict = collections.OrderedDict([(1,"a")])
+    print(ordered_dict.popitem())
+
+    m = hashlib.sha256()
+    m.update(b"Nobody inspects")
+    m.update(b" the spammish repetition")
+    print(m.digest())
+
+      
 def main():
     testcases = [
         (test_smoke, "test_smoke")
