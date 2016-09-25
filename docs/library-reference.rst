@@ -8,6 +8,6 @@ Here is a list of builtin modules in `Pumbaa`.
    :numbered:
    :titlesonly:
 
-   library-reference/standard-library
+   library-reference/standard
    library-reference/micropython
    library-reference/pumbaa
