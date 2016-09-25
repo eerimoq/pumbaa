@@ -4,7 +4,7 @@
 .. module:: simba
    :synopsis: Simba wrapper.
 
-The simba module is a thin Python wrapper on top of `Simba`_ to make
+The simba module is a thin Python wrapper of `Simba`_ to make
 most `Simba` functionality available in `Python`.
 
 ----------------------------------------------
