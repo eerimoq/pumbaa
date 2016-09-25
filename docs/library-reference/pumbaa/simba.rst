@@ -1,12 +1,11 @@
-:mod:`simba` --- Simba
-======================
+:mod:`simba` --- Simba wrapper
+==============================
 
 .. module:: simba
-   :synopsis: Simba.
+   :synopsis: Simba wrapper.
 
-The simba module is a thin layer on top of `Simba` to make most
-`Simba` functionality available in `Python`. It is not intended to be
-compatible with `MicroPython:s` hardware modules as of today.
+The simba module is a thin Python wrapper on top of `Simba`_ to make
+most `Simba` functionality available in `Python`.
 
 ----------------------------------------------
 
@@ -128,3 +127,5 @@ compatible with `MicroPython:s` hardware modules as of today.
 
    Format file system at given path. All data in the file system will
    be lost.
+
+.. _Simba: http://simba-os.readthedocs.io/en/latest/library-reference.html

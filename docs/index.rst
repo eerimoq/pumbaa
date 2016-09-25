@@ -37,8 +37,8 @@ Features
 
 * :doc:`library-reference/micropython` modules.
 
-* A thin :doc:`C to Python wrapper layer<library-reference/pumbaa/simba>` on
-  top of some Simba modules.
+* A thin :doc:`Python wrapper<library-reference/pumbaa/simba>` for
+  `Simba modules`_.
 
 See the :doc:`library-reference` for a full list of features.
 
@@ -59,3 +59,5 @@ Indices and tables
 .. _Simba: http://simba-os.readthedocs.io/en/latest/
 .. _MicroPython: http://www.micropython.org/
 .. _MicroPython 3: http://docs.micropython.org/en/latest/pyboard/reference/index.html
+
+.. _Simba modules: http://simba-os.readthedocs.io/en/latest/library-reference.html
