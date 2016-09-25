@@ -33,7 +33,7 @@ Features
 
 * `MicroPython 3`_ language.
 
-* :doc:`Python standard library<library-reference/standard-library>` modules.
+* :doc:`Python Standard Library<library-reference/standard>` modules.
 
 * :doc:`library-reference/micropython` modules.
 
