@@ -1,8 +1,3 @@
-unction:: by   sphinx-quickstart on Sun Dec 20 08:56:50 2015.()
-
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 |buildstatus|_
 |codecov|_
 
