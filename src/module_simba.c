@@ -122,33 +122,33 @@ static MP_DEFINE_CONST_FUN_OBJ_0(module_init_obj, module_init);
 /**
  * A table of all the modules' global objects.
  */
-static const mp_map_elem_t module_simba_globals_table[] = {
-    { MP_OBJ_NEW_QSTR(MP_QSTR___name__), MP_OBJ_NEW_QSTR(MP_QSTR_simba) },
-    { MP_OBJ_NEW_QSTR(MP_QSTR___init__), (mp_obj_t)&module_init_obj },
+static const mp_rom_map_elem_t module_simba_globals_table[] = {
+    { MP_ROM_QSTR(MP_QSTR___name__), MP_ROM_QSTR(MP_QSTR_simba) },
+    { MP_ROM_QSTR(MP_QSTR___init__), MP_ROM_PTR(&module_init_obj) },
 
     /* Module classes. */
 #if CONFIG_PUMBAA_CLASS_BOARD == 1
-    { MP_OBJ_NEW_QSTR(MP_QSTR_Board), (mp_obj_t)&module_simba_class_board },
+    { MP_ROM_QSTR(MP_QSTR_Board), MP_ROM_PTR(&module_simba_class_board) },
 #endif
 #if CONFIG_PUMBAA_CLASS_DAC == 1
-    { MP_OBJ_NEW_QSTR(MP_QSTR_Dac), (mp_obj_t)&module_simba_class_dac },
+    { MP_ROM_QSTR(MP_QSTR_Dac), MP_ROM_PTR(&module_simba_class_dac) },
 #endif
 #if CONFIG_PUMBAA_CLASS_EVENT == 1
-    { MP_OBJ_NEW_QSTR(MP_QSTR_Event), (mp_obj_t)&module_simba_class_event },
+    { MP_ROM_QSTR(MP_QSTR_Event), MP_ROM_PTR(&module_simba_class_event) },
 #endif
 #if CONFIG_PUMBAA_CLASS_PIN == 1
-    { MP_OBJ_NEW_QSTR(MP_QSTR_Pin), (mp_obj_t)&module_simba_class_pin },
+    { MP_ROM_QSTR(MP_QSTR_Pin), MP_ROM_PTR(&module_simba_class_pin) },
 #endif
 #if CONFIG_PUMBAA_CLASS_TIMER == 1
-    { MP_OBJ_NEW_QSTR(MP_QSTR_Timer), (mp_obj_t)&module_simba_class_timer },
+    { MP_ROM_QSTR(MP_QSTR_Timer), MP_ROM_PTR(&module_simba_class_timer) },
 #endif
 
     /* Module functions. */
 #if CONFIG_PUMBAA_FS_CALL == 1
-    { MP_OBJ_NEW_QSTR(MP_QSTR_fs_call), (mp_obj_t)&module_fs_call_obj },
+    { MP_ROM_QSTR(MP_QSTR_fs_call), MP_ROM_PTR(&module_fs_call_obj) },
 #endif
 #if CONFIG_PUMBAA_FS_FORMAT == 1
-    { MP_OBJ_NEW_QSTR(MP_QSTR_fs_format), (mp_obj_t)&module_fs_format_obj },
+    { MP_ROM_QSTR(MP_QSTR_fs_format), MP_ROM_PTR(&module_fs_format_obj) },
 #endif
 };
 

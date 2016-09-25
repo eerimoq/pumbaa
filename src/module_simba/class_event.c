@@ -110,11 +110,11 @@ static MP_DEFINE_CONST_FUN_OBJ_2(class_event_read_obj, class_event_read);
 static MP_DEFINE_CONST_FUN_OBJ_2(class_event_write_obj, class_event_write);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_event_size_obj, class_event_size);
 
-static const mp_map_elem_t class_event_locals_dict_table[] = {
+static const mp_rom_map_elem_t class_event_locals_dict_table[] = {
     /* Instance methods. */
-    { MP_OBJ_NEW_QSTR(MP_QSTR_read), (mp_obj_t)&class_event_read_obj },
-    { MP_OBJ_NEW_QSTR(MP_QSTR_write), (mp_obj_t)&class_event_write_obj },
-    { MP_OBJ_NEW_QSTR(MP_QSTR_size), (mp_obj_t)&class_event_size_obj },
+    { MP_ROM_QSTR(MP_QSTR_read), MP_ROM_PTR(&class_event_read_obj) },
+    { MP_ROM_QSTR(MP_QSTR_write), MP_ROM_PTR(&class_event_write_obj) },
+    { MP_ROM_QSTR(MP_QSTR_size), MP_ROM_PTR(&class_event_size_obj) },
 };
 
 static MP_DEFINE_CONST_DICT(class_event_locals_dict, class_event_locals_dict_table);

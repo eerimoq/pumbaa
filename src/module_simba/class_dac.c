@@ -176,11 +176,11 @@ static MP_DEFINE_CONST_FUN_OBJ_2(class_dac_convert_obj, class_dac_convert);
 static MP_DEFINE_CONST_FUN_OBJ_2(class_dac_async_convert_obj, class_dac_async_convert);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_dac_async_wait_obj, class_dac_async_wait);
 
-static const mp_map_elem_t class_dac_locals_dict_table[] = {
+static const mp_rom_map_elem_t class_dac_locals_dict_table[] = {
     /* Instance methods. */
-    { MP_OBJ_NEW_QSTR(MP_QSTR_convert), (mp_obj_t)&class_dac_convert_obj },
-    { MP_OBJ_NEW_QSTR(MP_QSTR_async_convert), (mp_obj_t)&class_dac_async_convert_obj },
-    { MP_OBJ_NEW_QSTR(MP_QSTR_async_wait), (mp_obj_t)&class_dac_async_wait_obj },
+    { MP_ROM_QSTR(MP_QSTR_convert), MP_ROM_PTR(&class_dac_convert_obj) },
+    { MP_ROM_QSTR(MP_QSTR_async_convert), MP_ROM_PTR(&class_dac_async_convert_obj) },
+    { MP_ROM_QSTR(MP_QSTR_async_wait), MP_ROM_PTR(&class_dac_async_wait_obj) },
 };
 
 static MP_DEFINE_CONST_DICT(class_dac_locals_dict, class_dac_locals_dict_table);

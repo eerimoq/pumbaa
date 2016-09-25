@@ -166,16 +166,16 @@ static MP_DEFINE_CONST_FUN_OBJ_2(class_pin_write_obj, class_pin_write);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_pin_toggle_obj, class_pin_toggle);
 static MP_DEFINE_CONST_FUN_OBJ_2(class_pin_set_mode_obj, class_pin_set_mode);
 
-static const mp_map_elem_t class_pin_locals_dict_table[] = {
+static const mp_rom_map_elem_t class_pin_locals_dict_table[] = {
     /* Instance methods. */
-    { MP_OBJ_NEW_QSTR(MP_QSTR_read), (mp_obj_t)&class_pin_read_obj },
-    { MP_OBJ_NEW_QSTR(MP_QSTR_write), (mp_obj_t)&class_pin_write_obj },
-    { MP_OBJ_NEW_QSTR(MP_QSTR_toggle), (mp_obj_t)&class_pin_toggle_obj },
-    { MP_OBJ_NEW_QSTR(MP_QSTR_set_mode), (mp_obj_t)&class_pin_set_mode_obj },
+    { MP_ROM_QSTR(MP_QSTR_read), MP_ROM_PTR(&class_pin_read_obj) },
+    { MP_ROM_QSTR(MP_QSTR_write), MP_ROM_PTR(&class_pin_write_obj) },
+    { MP_ROM_QSTR(MP_QSTR_toggle), MP_ROM_PTR(&class_pin_toggle_obj) },
+    { MP_ROM_QSTR(MP_QSTR_set_mode), MP_ROM_PTR(&class_pin_set_mode_obj) },
 
     /* Class constants. */
-    { MP_OBJ_NEW_QSTR(MP_QSTR_INPUT), MP_OBJ_NEW_SMALL_INT(PIN_INPUT) },
-    { MP_OBJ_NEW_QSTR(MP_QSTR_OUTPUT), MP_OBJ_NEW_SMALL_INT(PIN_OUTPUT) },
+    { MP_ROM_QSTR(MP_QSTR_INPUT), MP_ROM_INT(PIN_INPUT) },
+    { MP_ROM_QSTR(MP_QSTR_OUTPUT), MP_ROM_INT(PIN_OUTPUT) },
 };
 
 static MP_DEFINE_CONST_DICT(class_pin_locals_dict, class_pin_locals_dict_table);

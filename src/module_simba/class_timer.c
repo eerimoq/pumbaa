@@ -147,13 +147,13 @@ static mp_obj_t class_timer_stop(mp_obj_t self_in)
 static MP_DEFINE_CONST_FUN_OBJ_1(class_timer_start_obj, class_timer_start);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_timer_stop_obj, class_timer_stop);
 
-static const mp_map_elem_t class_timer_locals_dict_table[] = {
+static const mp_rom_map_elem_t class_timer_locals_dict_table[] = {
     /* Instance methods. */
-    { MP_OBJ_NEW_QSTR(MP_QSTR_start), (mp_obj_t)&class_timer_start_obj },
-    { MP_OBJ_NEW_QSTR(MP_QSTR_stop), (mp_obj_t)&class_timer_stop_obj },
+    { MP_ROM_QSTR(MP_QSTR_start), MP_ROM_PTR(&class_timer_start_obj) },
+    { MP_ROM_QSTR(MP_QSTR_stop), MP_ROM_PTR(&class_timer_stop_obj) },
 
     /* Module constants. */
-    { MP_OBJ_NEW_QSTR(MP_QSTR_PERIODIC), MP_OBJ_NEW_SMALL_INT(TIMER_PERIODIC) },
+    { MP_ROM_QSTR(MP_QSTR_PERIODIC), MP_ROM_INT(TIMER_PERIODIC) },
 };
 
 static MP_DEFINE_CONST_DICT(class_timer_locals_dict, class_timer_locals_dict_table);

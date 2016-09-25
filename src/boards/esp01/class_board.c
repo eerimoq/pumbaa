@@ -19,12 +19,12 @@
 
 #include "pumbaa.h"
 
-static const mp_map_elem_t class_board_locals_table[] = {
-    { MP_OBJ_NEW_QSTR(MP_QSTR_PIN_GPIO0), MP_OBJ_NEW_SMALL_INT(0) },
-    { MP_OBJ_NEW_QSTR(MP_QSTR_PIN_GPIO1), MP_OBJ_NEW_SMALL_INT(1) },
-    { MP_OBJ_NEW_QSTR(MP_QSTR_PIN_GPIO2), MP_OBJ_NEW_SMALL_INT(2) },
+static const mp_rom_map_elem_t class_board_locals_table[] = {
+    { MP_ROM_QSTR(MP_QSTR_PIN_GPIO0), MP_ROM_INT(0) },
+    { MP_ROM_QSTR(MP_QSTR_PIN_GPIO1), MP_ROM_INT(1) },
+    { MP_ROM_QSTR(MP_QSTR_PIN_GPIO2), MP_ROM_INT(2) },
 
-    { MP_OBJ_NEW_QSTR(MP_QSTR_PIN_LED), MP_OBJ_NEW_SMALL_INT(1) }
+    { MP_ROM_QSTR(MP_QSTR_PIN_LED), MP_ROM_INT(1) }
 };
 
 static MP_DEFINE_CONST_DICT(class_board_locals_dict, class_board_locals_table);

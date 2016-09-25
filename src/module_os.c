@@ -282,14 +282,14 @@ static const mp_rom_map_elem_t module_os_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR___name__), MP_ROM_QSTR(MP_QSTR_uos) },
 
     { MP_ROM_QSTR(MP_QSTR_uname), MP_ROM_PTR(&os_uname_obj) },
-    { MP_ROM_QSTR(MP_QSTR_chdir), (mp_obj_t)&os_chdir_obj },
-    { MP_ROM_QSTR(MP_QSTR_getcwd), (mp_obj_t)&os_getcwd_obj },
+    { MP_ROM_QSTR(MP_QSTR_chdir), MP_ROM_PTR(&os_chdir_obj) },
+    { MP_ROM_QSTR(MP_QSTR_getcwd), MP_ROM_PTR(&os_getcwd_obj) },
     { MP_ROM_QSTR(MP_QSTR_listdir), MP_ROM_PTR(&os_listdir_obj) },
-    { MP_ROM_QSTR(MP_QSTR_mkdir), (mp_obj_t)&os_mkdir_obj },
-    { MP_ROM_QSTR(MP_QSTR_remove), (mp_obj_t)&os_remove_obj },
-    { MP_ROM_QSTR(MP_QSTR_rename),(mp_obj_t)&os_rename_obj},
-    { MP_ROM_QSTR(MP_QSTR_rmdir), (mp_obj_t)&os_rmdir_obj },
-    { MP_ROM_QSTR(MP_QSTR_stat), (mp_obj_t)&os_stat_obj },
+    { MP_ROM_QSTR(MP_QSTR_mkdir), MP_ROM_PTR(&os_mkdir_obj) },
+    { MP_ROM_QSTR(MP_QSTR_remove), MP_ROM_PTR(&os_remove_obj) },
+    { MP_ROM_QSTR(MP_QSTR_rename),MP_ROM_PTR(&os_rename_obj) },
+    { MP_ROM_QSTR(MP_QSTR_rmdir), MP_ROM_PTR(&os_rmdir_obj) },
+    { MP_ROM_QSTR(MP_QSTR_stat), MP_ROM_PTR(&os_stat_obj) },
 };
 
 static MP_DEFINE_CONST_DICT(module_os_globals, module_os_globals_table);
