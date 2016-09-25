@@ -1,5 +1,5 @@
-.. s documentation master file, created by
-   sphinx-quickstart on Sun Dec 20 08:56:50 2015.
+unction:: by   sphinx-quickstart on Sun Dec 20 08:56:50 2015.()
+
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
@@ -7,7 +7,7 @@
 |codecov|_
 
 Welcome to Pumbaa's documentation!
-=================================
+==================================
 
 `Pumbaa` is `Python`_ on top of `Simba`_.
 
@@ -33,11 +33,11 @@ Features
 
 * `MicroPython 3`_ language.
 
-* Python standard library modules.
+* :doc:`Python standard library<library-reference/standard-library>` modules.
 
-* `MicroPython`_ modules.
+* :doc:`library-reference/micropython` modules.
 
-* A thin :doc:`C to Python wrapper layer<library-reference/simba>` on
+* A thin :doc:`C to Python wrapper layer<library-reference/pumbaa/simba>` on
   top of some Simba modules.
 
 See the :doc:`library-reference` for a full list of features.

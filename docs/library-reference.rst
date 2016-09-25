@@ -8,19 +8,6 @@ Here is a list of builtin modules in `Pumbaa`.
    :numbered:
    :titlesonly:
 
-   library-reference/array
-   library-reference/binascii
-   library-reference/cmath
-   library-reference/collections
-   library-reference/hashlib
-   library-reference/io
-   library-reference/json
-   library-reference/math
-   library-reference/os
-   library-reference/random
-   library-reference/re
-   library-reference/simba
-   library-reference/struct
-   library-reference/sys
-   library-reference/time
-   library-reference/zlib
+   library-reference/standard-library
+   library-reference/micropython
+   library-reference/pumbaa
