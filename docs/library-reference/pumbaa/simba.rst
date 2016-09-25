@@ -109,8 +109,8 @@ make most `Simba` functionality available in `Python`.
 
 .. function:: simba.fs_call(command)
 
-   Call given file system command. The output is written to the debug
-   port and can not be captured in Python.
+   Returns the output of given file system command. Raises OSError if
+   the command is missing or fails to execute.
 
 
 .. function:: simba.fs_format(path)
