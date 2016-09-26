@@ -21,6 +21,28 @@
 
 char *stack_top_p;
 
+/* The character that raises a keyboard exception. */
+static char interrupt_char = -1;
+
+/**
+ * The write filter callback that raises the keyboard exception when
+ * the interrupt character is read.
+ */
+static int write_filter_isr(void *self_p, const void *buf_p, size_t size)
+{
+    const char *char_p;
+
+    char_p = buf_p;
+
+    if (*char_p == interrupt_char) {
+        MP_STATE_VM(mp_pending_exception) = MP_STATE_VM(keyboard_interrupt_obj);
+
+        return (1);
+    }
+
+    return (0);
+}
+
 mp_import_stat_t mp_import_stat(const char *path_p)
 {
     struct fs_stat_t stat;
@@ -83,4 +105,18 @@ int mp_hal_stdin_rx_chr(void)
     chan_read(sys_get_stdin(), &c, 1);
 
     return (c);
+}
+
+void mp_hal_set_interrupt_char(char c)
+{
+    /* Save the interrupt character in a global variable. */
+    interrupt_char = c;
+
+    /* Raise the keyboard exception from the write filter function. */
+    if (c == -1) {
+        chan_set_write_filter_cb(sys_get_stdin(), NULL);
+    } else {
+        mp_obj_exception_clear_traceback(MP_STATE_VM(keyboard_interrupt_obj));
+        chan_set_write_filter_isr_cb(sys_get_stdin(), write_filter_isr);
+    }
 }

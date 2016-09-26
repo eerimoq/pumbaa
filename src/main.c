@@ -55,6 +55,10 @@ int main()
     gc_init(heap, heap + sizeof(heap));
     mp_init();
 
+    /* Initialize the keyboard interrupt object. */
+    MP_STATE_VM(keyboard_interrupt_obj) =
+        mp_obj_new_exception(&mp_type_KeyboardInterrupt);
+
     /* Initialize sys.path and sys.argv. */
     mp_obj_list_init(MP_OBJ_TO_PTR(mp_sys_path), 0);
     mp_obj_list_init(MP_OBJ_TO_PTR(mp_sys_argv), 0);
@@ -68,7 +72,7 @@ int main()
     std_printf(FSTR("Executing frozen module 'main.py'.\r\n"));
     res = pyexec_frozen_module("main.py");
     print_exit_message(res, "Frozen module 'main.py'");
-    
+
 #if CONFIG_PUMBAA_MAIN_FRIENDLY_REPL == 1
     /* 3. Execute the interactive shell. */
     res = pyexec_friendly_repl();

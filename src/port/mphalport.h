@@ -1,5 +1,5 @@
 /**
- * @file mphalport.h
+ * @file port/mphalport.h
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -18,4 +18,5 @@
  */
 
 static inline mp_uint_t mp_hal_ticks_ms(void) { return 0; }
-static inline void mp_hal_set_interrupt_char(char c) {}
+
+void mp_hal_set_interrupt_char(char c);
