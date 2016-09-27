@@ -58,6 +58,13 @@ PUMBAA_SRC += \
 	port/lexer_port.c
 endif
 
+ifeq ($(BOARD),photon)
+PUMBAA_SRC += \
+	boards/photon/gccollect.c \
+	boards/photon/gchelper.S \
+	port/lexer_port.c
+endif
+
 SRC += $(PUMBAA_SRC:%=$(PUMBAA_ROOT)/src/%)
 
 MICROPYTHON_ROOT = $(PUMBAA_ROOT)/micropython
