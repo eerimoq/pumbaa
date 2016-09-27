@@ -64,6 +64,10 @@
 #    endif
 #endif
 
+#ifndef MICROPY_LONGINT_IMPL
+#    define MICROPY_LONGINT_IMPL   (MICROPY_LONGINT_IMPL_MPZ)
+#endif
+
 #ifndef MICROPY_ENABLE_SOURCE_LINE
 #    define MICROPY_ENABLE_SOURCE_LINE                    (1)
 #endif
