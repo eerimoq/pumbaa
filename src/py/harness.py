@@ -18,6 +18,8 @@
 #
 
 import simba
+import io
+import sys
 
 class TestCaseSkippedError(Exception):
     pass
@@ -86,7 +88,7 @@ def run(testcases):
             print("exit: {}: SKIPPED\n".format(name))
         except Exception as e:
             failed += 1
-            print(type(e), e)
+            sys.print_exception(e)
             print("exit: {}: FAILED\n".format(name))
 
     ok = passed + skipped == total

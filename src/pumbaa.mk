@@ -33,6 +33,7 @@ PUMBAA_SRC += \
 	module_simba/class_event.c \
 	module_simba/class_pin.c \
 	module_simba/class_timer.c \
+	module_select.c \
 	module_sys.c \
 	module_time.c
 

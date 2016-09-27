@@ -49,7 +49,7 @@ static mp_obj_t class_event_make_new(const mp_obj_type_t *type_p,
     mp_arg_check_num(n_args, n_kw, 0, 0, false);
 
     /* Create a new Event object. */
-    self_p = m_new0(struct class_event_t, 1);
+    self_p = m_new_obj(struct class_event_t);
     self_p->base.type = &module_simba_class_event;
 
     /* Initialize the event if event and mode are given. */

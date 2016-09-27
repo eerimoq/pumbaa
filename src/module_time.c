@@ -19,8 +19,6 @@
 
 #include "pumbaa.h"
 
-#if MICROPY_PY_UTIME == 1
-
 static mp_obj_t module_time_time(void)
 {
     struct time_t now;
@@ -73,10 +71,8 @@ static const mp_rom_map_elem_t module_time_globals_table[] = {
 
 static MP_DEFINE_CONST_DICT(module_time_globals, module_time_globals_table);
 
-const mp_obj_module_t mp_module_time = {
+const mp_obj_module_t mp_module_utime = {
     .base = { &mp_type_module },
-    .name = MP_QSTR_time,
+    .name = MP_QSTR_utime,
     .globals = (mp_obj_dict_t*)&module_time_globals,
 };
-
-#endif // MICROPY_PY_UTIME
