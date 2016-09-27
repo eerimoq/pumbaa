@@ -18,9 +18,15 @@
 #
 
 import select
-from simba import Event, Timer
+from simba import Event
 import harness
 from harness import assert_raises
+
+
+def test_help():
+    poll = select.poll()
+    help(select)
+    help(poll)
 
 
 def test_poll():
@@ -64,6 +70,7 @@ def test_bad_arguments():
 
 def main():
     testcases = [
+        (test_help, "test_help"),
         (test_poll, "test_poll"),
         (test_bad_arguments, "test_bad_arguments")
     ]
