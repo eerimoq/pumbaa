@@ -113,6 +113,9 @@ static mp_obj_t module_init(void)
 #if CONFIG_PUMBAA_CLASS_PIN == 1
     pin_module_init();
 #endif
+#if CONFIG_PUMBAA_CLASS_EXTI == 1
+    exti_module_init();
+#endif
 
     return (mp_const_none);
 }
@@ -135,6 +138,9 @@ static const mp_rom_map_elem_t module_simba_globals_table[] = {
 #endif
 #if CONFIG_PUMBAA_CLASS_EVENT == 1
     { MP_ROM_QSTR(MP_QSTR_Event), MP_ROM_PTR(&module_simba_class_event) },
+#endif
+#if CONFIG_PUMBAA_CLASS_EXTI == 1
+    { MP_ROM_QSTR(MP_QSTR_Exti), MP_ROM_PTR(&module_simba_class_exti) },
 #endif
 #if CONFIG_PUMBAA_CLASS_PIN == 1
     { MP_ROM_QSTR(MP_QSTR_Pin), MP_ROM_PTR(&module_simba_class_pin) },

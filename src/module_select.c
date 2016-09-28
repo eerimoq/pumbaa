@@ -36,6 +36,16 @@ struct class_poll_t {
 };
 
 /**
+ * Returns true(1) if the object is a Simba channel, otherwise
+ * false(0).
+ */
+static int is_channel(mp_obj_t obj)
+{
+    return (MP_OBJ_IS_TYPE(obj, &module_simba_class_event)
+            || MP_OBJ_IS_TYPE(obj, &module_simba_class_queue));
+}
+
+/**
  * def register(obj[, eventmask])
  */
 static mp_obj_t poll_register(size_t n_args, const mp_obj_t *args_p)
@@ -47,8 +57,7 @@ static mp_obj_t poll_register(size_t n_args, const mp_obj_t *args_p)
     chan = args_p[1];
 
     /* The object must be a channel. */
-    if (!(MP_OBJ_IS_TYPE(chan, &module_simba_class_event)
-          || MP_OBJ_IS_TYPE(chan, &module_simba_class_queue))) {
+    if (is_channel(chan) == 0) {
         nlr_raise(mp_obj_new_exception_msg(&mp_type_TypeError,
                                            "channel object required"));
     }

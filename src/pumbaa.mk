@@ -31,6 +31,7 @@ PUMBAA_SRC += \
 	module_os.c \
 	module_simba.c \
 	module_simba/class_event.c \
+	module_simba/class_exti.c \
 	module_simba/class_pin.c \
 	module_simba/class_queue.c \
 	module_simba/class_timer.c \

@@ -42,6 +42,7 @@
 
 #include "class_board.h"
 #include "module_simba/class_event.h"
+#include "module_simba/class_exti.h"
 #include "module_simba/class_pin.h"
 #include "module_simba/class_queue.h"
 #include "module_simba/class_timer.h"

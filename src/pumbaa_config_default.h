@@ -176,6 +176,10 @@
 #    endif
 #endif
 
+#ifndef CONFIG_PUMBAA_CLASS_EXTI
+#    define CONFIG_PUMBAA_CLASS_EXTI                        1
+#endif
+
 #ifndef CONFIG_PUMBAA_CLASS_EVENT
 #    define CONFIG_PUMBAA_CLASS_EVENT                       1
 #endif

@@ -101,6 +101,34 @@ make most `Simba` functionality available in `Python`.
 
       Output pin mode.
 
+      
+.. class:: simba.Exti(device, trigger, event, mask)
+
+   Instantiate an object handling interrupts on given
+   `device`. `trigger` may be a combination of ``RISING``, ``FALLING``
+   or ``BOTH``. When an interrupt occurs `mask` is written to the
+   event channel `event`.
+
+   .. method:: start()
+
+      Start the interrupt handler.
+
+   .. method:: stop()
+
+      Stop the interrupt handler.
+
+   .. data:: RISING
+
+      Trigger an interrupt on rising edges.
+
+   .. data:: FALLING
+
+      Trigger an interrupt on falling edges.
+
+   .. data:: BOTH
+
+      Trigger an interrupt on both rising and falling edges.
+
 
 .. class:: simba.Dac(devices, sampling_rate)
 

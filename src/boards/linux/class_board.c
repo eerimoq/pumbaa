@@ -25,8 +25,21 @@
 static const mp_rom_map_elem_t class_board_locals_table[] = {
     { MP_ROM_QSTR(MP_QSTR_PIN_LED), MP_ROM_INT(0) },
 
+    { MP_ROM_QSTR(MP_QSTR_PIN_D0), MP_ROM_INT(0) },
+    { MP_ROM_QSTR(MP_QSTR_PIN_D1), MP_ROM_INT(1) },
+    { MP_ROM_QSTR(MP_QSTR_PIN_D2), MP_ROM_INT(2) },
+    { MP_ROM_QSTR(MP_QSTR_PIN_D3), MP_ROM_INT(3) },
+    { MP_ROM_QSTR(MP_QSTR_PIN_D4), MP_ROM_INT(4) },
+
     { MP_ROM_QSTR(MP_QSTR_PIN_DAC0), MP_ROM_INT(10) },
     { MP_ROM_QSTR(MP_QSTR_PIN_DAC1), MP_ROM_INT(11) },
+
+    /* External interrputs. */
+    { MP_ROM_QSTR(MP_QSTR_EXTI_D0), MP_ROM_INT(0) },
+    { MP_ROM_QSTR(MP_QSTR_EXTI_D1), MP_ROM_INT(1) },
+    { MP_ROM_QSTR(MP_QSTR_EXTI_D2), MP_ROM_INT(2) },
+    { MP_ROM_QSTR(MP_QSTR_EXTI_D3), MP_ROM_INT(3) },
+    { MP_ROM_QSTR(MP_QSTR_EXTI_D4), MP_ROM_INT(4) }
 };
 
 static MP_DEFINE_CONST_DICT(class_board_locals_dict, class_board_locals_table);
