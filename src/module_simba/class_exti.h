@@ -27,6 +27,7 @@ struct class_exti_t {
     struct exti_driver_t exti;
     struct class_event_t *event_obj_p;
     uint32_t mask;
+    mp_obj_t callback;
 };
 
 extern const mp_obj_type_t module_simba_class_exti;

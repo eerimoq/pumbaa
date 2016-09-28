@@ -23,20 +23,30 @@ import harness
 from harness import assert_raises
 
 
+FLAG = False
+
+def callback():
+    """Callback called from interrupt context.
+
+    """
+    global FLAG
+    FLAG = True
+
+
 def test_print():
     print(Exti)
     event = Event()
     exti = Exti(Board.EXTI_D0, Exti.RISING, event, 1)
     print(exti)
 
-    
+
 def test_falling_edge():
     pin = Pin(Board.PIN_D4, Pin.OUTPUT)
     pin.write(1)
 
     event = Event()
-    
-    exti = Exti(Board.EXTI_D3, Exti.FALLING, event, 0x1)
+
+    exti = Exti(Board.EXTI_D3, Exti.FALLING, event, 0x1, callback)
     exti.start()
 
     # Make sure no interrupt has already occured.
@@ -47,6 +57,7 @@ def test_falling_edge():
     if not 'Linux' in os.uname().machine:
         print("Waiting for the interrupt to occur... ", end="")
         assert event.read(0x1) == 0x1
+        assert FLAG is True
         print("ok.")
 
     exti.stop()
@@ -67,7 +78,15 @@ def test_bad_arguments():
     with assert_raises(TypeError, "expected <class 'Event'>"):
         Exti(Board.EXTI_D3, Exti.BOTH, None, 1)
 
-    
+    # Bad event mask.
+    with assert_raises(TypeError, "can't convert NoneType to int"):
+        Exti(Board.EXTI_D3, Exti.BOTH, event, None, 1)
+
+    # Bad callback.
+    with assert_raises(TypeError, "bad callback"):
+        Exti(Board.EXTI_D3, Exti.BOTH, event, 1, 1)
+
+
 def main():
     testcases = [
         (test_print, "test_print"),

@@ -41,18 +41,18 @@ distributions.
    ``range()``. Keyword arguments should not be used because the
    function may use them in unexpected ways.
 
-
-.. function:: random.randint(a, b)
-
-   Return a random integer N such that `a` <= N <= `b`. Alias for
-   ``randrange(a, b+1)``.
-
    .. code-block:: python
 
       >>> random.randrange(10)           # Integer from 0 to 9
       7
       >>> random.randrange(0, 101, 2)    # Even integer from 0 to 100
       26
+
+
+.. function:: random.randint(a, b)
+
+   Return a random integer N such that `a` <= N <= `b`. Alias for
+   ``randrange(a, b+1)``.
 
 
 .. function:: random.choice(seq)

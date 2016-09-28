@@ -9,11 +9,12 @@ make most `Simba` functionality available in `Python`.
 
 ----------------------------------------------
 
-.. class:: simba.Timer(timeout, event, mask, flags=0)
+.. class:: simba.Timer(timeout, event=None, mask=0x1, callback=None, flags=0)
 
    Instantiate a timer object from given arguemts. The timer expires
    `timeout` seconds after the timer has been started. When the timer
-   expires given `mask` is written to given `event` channel.
+   expires given `callback` is called from interrupt context and
+   `mask` is written to given `event` channel.
 
    .. method:: start()
 
@@ -102,12 +103,13 @@ make most `Simba` functionality available in `Python`.
       Output pin mode.
 
       
-.. class:: simba.Exti(device, trigger, event, mask)
+.. class:: simba.Exti(device, trigger, event=None, mask=0x1, callback=None)
 
    Instantiate an object handling interrupts on given
    `device`. `trigger` may be a combination of ``RISING``, ``FALLING``
-   or ``BOTH``. When an interrupt occurs `mask` is written to the
-   event channel `event`.
+   or ``BOTH``. When an interrupt occurs given `callback` is called
+   from interrupt context and `mask` is written to given event channel
+   `event`.
 
    .. method:: start()
 

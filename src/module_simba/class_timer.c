@@ -19,14 +19,24 @@
 
 #include "pumbaa.h"
 
+/**
+ * Timer timeout callback. Called from an interrupt.
+ */
 static void timer_cb_isr(void *self_in)
 {
     struct class_timer_t *self_p;
 
     self_p = MP_OBJ_TO_PTR(self_in);
-    event_write_isr(&self_p->event_obj_p->event,
-                    &self_p->mask,
-                    sizeof(self_p->mask));
+
+    if (self_p->callback != mp_const_none) {
+        mp_call_function_0(self_p->callback);
+    }
+
+    if (self_p->event_obj_p != mp_const_none) {
+        event_write_isr(&self_p->event_obj_p->event,
+                        &self_p->mask,
+                        sizeof(self_p->mask));
+    }
 }
 
 /**
@@ -56,8 +66,9 @@ static mp_obj_t class_timer_make_new(const mp_obj_type_t *type_p,
     mp_map_t kwargs;
     static const mp_arg_t allowed_args[] = {
         { MP_QSTR_timeout, MP_ARG_REQUIRED | MP_ARG_OBJ },
-        { MP_QSTR_event, MP_ARG_REQUIRED | MP_ARG_OBJ },
-        { MP_QSTR_mask, MP_ARG_REQUIRED | MP_ARG_INT },
+        { MP_QSTR_event, MP_ARG_OBJ, { .u_obj = mp_const_none } },
+        { MP_QSTR_mask, MP_ARG_INT, { .u_int = 0x1 } },
+        { MP_QSTR_callback, MP_ARG_OBJ, { .u_obj = mp_const_none } },
         { MP_QSTR_flags, MP_ARG_INT, { .u_int = 0x0 } },
     };
     mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];
@@ -67,11 +78,7 @@ static mp_obj_t class_timer_make_new(const mp_obj_type_t *type_p,
     mp_obj_t *items_p;
     int flags;
 
-    mp_arg_check_num(n_args, n_kw, 0, 4, true);
-
-    /* Create a new Timer object. */
-    self_p = m_new0(struct class_timer_t, 1);
-    self_p->base.type = &module_simba_class_timer;
+    mp_arg_check_num(n_args, n_kw, 0, 5, true);
 
     /* Parse args. */
     mp_map_init_fixed_table(&kwargs, n_kw, args_p + n_args);
@@ -98,14 +105,27 @@ static mp_obj_t class_timer_make_new(const mp_obj_type_t *type_p,
         timeout.nanoseconds = (f_timeout - timeout.seconds) * 1000000000L;
     }
 
-    /* Second argument must be an event object. */
-    if (mp_obj_get_type(args[1].u_obj) != &module_simba_class_event) {
-        mp_raise_TypeError("expected <class 'Event'>");
+    /* Second argument must be an event object or None. */
+    if (mp_obj_get_type(args[1].u_obj) != mp_const_none) {
+        if (mp_obj_get_type(args[1].u_obj) != &module_simba_class_event) {
+            mp_raise_TypeError("expected <class 'Event'>");
+        }
     }
 
+    /* Fourth argument must be a callback or None. */
+    if (args[3].u_obj != mp_const_none) {
+        if (!mp_obj_is_callable(args[3].u_obj)) {
+            mp_raise_TypeError("bad callback");
+        }
+    }
+
+    /* Create a new Timer object. */
+    self_p = m_new_obj(struct class_timer_t);
+    self_p->base.type = &module_simba_class_timer;
     self_p->event_obj_p = args[1].u_obj;
     self_p->mask = args[2].u_int;
-    flags = args[3].u_int;
+    self_p->callback = args[3].u_obj;
+    flags = args[4].u_int;
 
     if (timer_init(&self_p->timer,
                    &timeout,

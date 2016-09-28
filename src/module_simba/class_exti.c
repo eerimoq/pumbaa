@@ -19,14 +19,24 @@
 
 #include "pumbaa.h"
 
+/**
+ * Enternal interrupt callback. Called from an interrupt.
+ */
 static void exti_cb_isr(void *self_in)
 {
     struct class_exti_t *self_p;
 
     self_p = MP_OBJ_TO_PTR(self_in);
-    event_write_isr(&self_p->event_obj_p->event,
-                    &self_p->mask,
-                    sizeof(self_p->mask));
+
+    if (self_p->callback != mp_const_none) {
+        mp_call_function_0(self_p->callback);
+    }
+
+    if (self_p->event_obj_p != mp_const_none) {
+        event_write_isr(&self_p->event_obj_p->event,
+                        &self_p->mask,
+                        sizeof(self_p->mask));
+    }
 }
 
 /**
@@ -56,18 +66,15 @@ static mp_obj_t class_exti_make_new(const mp_obj_type_t *type_p,
     static const mp_arg_t allowed_args[] = {
         { MP_QSTR_device, MP_ARG_REQUIRED | MP_ARG_INT },
         { MP_QSTR_trigger, MP_ARG_REQUIRED | MP_ARG_INT },
-        { MP_QSTR_event, MP_ARG_REQUIRED | MP_ARG_OBJ },
-        { MP_QSTR_mask, MP_ARG_REQUIRED | MP_ARG_INT },
+        { MP_QSTR_event, MP_ARG_OBJ, { .u_obj = mp_const_none } },
+        { MP_QSTR_mask, MP_ARG_INT, { .u_int = 0x1 } },
+        { MP_QSTR_callback, MP_ARG_OBJ, { .u_obj = mp_const_none } },
     };
     mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];
     int device;
     int trigger;
-    
-    mp_arg_check_num(n_args, n_kw, 0, 4, true);
 
-    /* Create a new Exti object. */
-    self_p = m_new0(struct class_exti_t, 1);
-    self_p->base.type = &module_simba_class_exti;
+    mp_arg_check_num(n_args, n_kw, 0, 5, true);
 
     /* Parse args. */
     mp_map_init_fixed_table(&kwargs, n_kw, args_p + n_args);
@@ -78,19 +85,16 @@ static mp_obj_t class_exti_make_new(const mp_obj_type_t *type_p,
                      allowed_args,
                      args);
 
-    /* Second argument must be an event object. */
-    if (mp_obj_get_type(args[2].u_obj) != &module_simba_class_event) {
-        mp_raise_TypeError("expected <class 'Event'>");
-    }
-
+    /* Validate the device. */
     device = args[0].u_int;
-    
+
     if ((device < 0) || (device >= EXTI_DEVICE_MAX)) {
         nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_ValueError,
                                                 "bad exti device %d",
                                                 device));
     }
 
+    /* Validate the trigger. */
     trigger = args[1].u_int;
 
     if (!((trigger == EXTI_TRIGGER_RISING_EDGE)
@@ -101,12 +105,30 @@ static mp_obj_t class_exti_make_new(const mp_obj_type_t *type_p,
                                                 trigger));
     }
 
+    /* Third argument must be an event object or None. */
+    if (mp_obj_get_type(args[2].u_obj) != mp_const_none) {
+        if (mp_obj_get_type(args[2].u_obj) != &module_simba_class_event) {
+            mp_raise_TypeError("expected <class 'Event'>");
+        }
+    }
+
+    /* Fifth argument must be a callback or None. */
+    if (args[4].u_obj != mp_const_none) {
+        if (!mp_obj_is_callable(args[4].u_obj)) {
+            mp_raise_TypeError("bad callback");
+        }
+    }
+
+    /* Create a new Exti object. */
+    self_p = m_new_obj(struct class_exti_t);
+    self_p->base.type = &module_simba_class_exti;
     self_p->event_obj_p = args[2].u_obj;
     self_p->mask = args[3].u_int;
+    self_p->callback = args[4].u_obj;
 
     if (exti_init(&self_p->exti,
                   &exti_device[device],
-                  args[1].u_int,
+                  trigger,
                   exti_cb_isr,
                   self_p) != 0) {
         return (mp_const_none);

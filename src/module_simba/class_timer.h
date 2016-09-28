@@ -27,6 +27,7 @@ struct class_timer_t {
     struct timer_t timer;
     struct class_event_t *event_obj_p;
     uint32_t mask;
+    mp_obj_t callback;
 };
 
 extern const mp_obj_type_t module_simba_class_timer;
