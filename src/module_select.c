@@ -47,7 +47,8 @@ static mp_obj_t poll_register(size_t n_args, const mp_obj_t *args_p)
     chan = args_p[1];
 
     /* The object must be a channel. */
-    if (!MP_OBJ_IS_TYPE(chan, &module_simba_class_event)) {
+    if (!(MP_OBJ_IS_TYPE(chan, &module_simba_class_event)
+          || MP_OBJ_IS_TYPE(chan, &module_simba_class_queue))) {
         nlr_raise(mp_obj_new_exception_msg(&mp_type_TypeError,
                                            "channel object required"));
     }

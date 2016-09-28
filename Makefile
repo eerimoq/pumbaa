@@ -32,7 +32,8 @@ TESTS = \
 	tst/drivers/pin \
 	tst/filesystem \
 	tst/kernel/timer \
-	tst/sync/event
+	tst/sync/event \
+	tst/sync/queue
 endif
 
 ifeq ($(BOARD), esp12e)

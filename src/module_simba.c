@@ -139,6 +139,9 @@ static const mp_rom_map_elem_t module_simba_globals_table[] = {
 #if CONFIG_PUMBAA_CLASS_PIN == 1
     { MP_ROM_QSTR(MP_QSTR_Pin), MP_ROM_PTR(&module_simba_class_pin) },
 #endif
+#if CONFIG_PUMBAA_CLASS_QUEUE == 1
+    { MP_ROM_QSTR(MP_QSTR_Queue), MP_ROM_PTR(&module_simba_class_queue) },
+#endif
 #if CONFIG_PUMBAA_CLASS_TIMER == 1
     { MP_ROM_QSTR(MP_QSTR_Timer), MP_ROM_PTR(&module_simba_class_timer) },
 #endif

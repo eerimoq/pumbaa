@@ -184,6 +184,10 @@
 #    define CONFIG_PUMBAA_CLASS_PIN                         1
 #endif
 
+#ifndef CONFIG_PUMBAA_CLASS_QUEUE
+#    define CONFIG_PUMBAA_CLASS_QUEUE                       1
+#endif
+
 #ifndef CONFIG_PUMBAA_CLASS_TIMER
 #    define CONFIG_PUMBAA_CLASS_TIMER                       1
 #endif

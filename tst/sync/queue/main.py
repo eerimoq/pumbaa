@@ -17,34 +17,33 @@
 # This file is part of the Pumbaa project.
 #
 
-from simba import Event
+from simba import Queue
 import harness
 from harness import assert_raises
 
 
 def test_help():
-    event = Event()
-    help(Event)
-    help(event)
+    queue = Queue()
+    help(Queue)
+    help(queue)
 
 
 def test_read_write():
-    event = Event()
+    queue = Queue()
 
-    event.write(0x6)
-    assert event.size() == 1
-    assert event.read(0x2) == 0x2
-    assert event.read(0x4) == 0x4
+    queue.write(b'foo')
+    assert queue.size() == 3
+    assert queue.read(3) == b'foo'
 
 
 def test_bad_arguments():
-    event = Event()
+    queue = Queue()
 
     with assert_raises(TypeError, "can't convert NoneType to int"):
-        event.read(None)
+        queue.read(None)
 
-    with assert_raises(TypeError, "can't convert NoneType to int"):
-        event.write(None)
+    with assert_raises(TypeError, "object with buffer protocol required"):
+        queue.write(None)
 
 
 def main():

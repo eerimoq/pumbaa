@@ -48,6 +48,25 @@ make most `Simba` functionality available in `Python`.
       Get the number of event(s) set in the channel.
 
 
+.. class:: simba.Queue()
+
+   Initialize given queue object.
+
+   .. method:: read(size)
+
+      Reads up to `size` number of bytes from the queue and returns
+      them as a string. Raises an exception on error.
+
+   .. method:: write(string)
+
+      Write given `string` to the queue. Returns the number of bytes
+      written. Raises an exception on error.
+
+   .. method:: size()
+
+      Get the number of bytes available to read.
+
+
 .. class:: simba.Pin(device, mode)
 
    Initialize given pin object with given `device` and `mode`. The

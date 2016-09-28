@@ -18,7 +18,7 @@
 #
 
 import select
-from simba import Event
+from simba import Event, Queue
 import harness
 from harness import assert_raises
 
@@ -29,33 +29,42 @@ def test_help():
     help(poll)
 
 
+def test_register_unregister():
+    poll = select.poll()
+    queue = Queue()
+    event = Event()
+
+    poll.register(queue)
+    poll.register(event)
+
+    poll.unregister(queue)
+    poll.unregister(event)
+
+    with assert_raises(OSError):
+        poll.unregister(queue)
+
+
 def test_poll():
     poll = select.poll()
-    event1 = Event()
-    event2 = Event()
+    queue = Queue()
+    event = Event()
 
     # Register both event channels.
-    poll.register(event1)
-    poll.register(event2)
+    poll.register(queue)
+    poll.register(event)
 
     # Timeout waiting for event.
     assert poll.poll(0.01) == []
 
     # Event write, poll and read.
-    event2.write(0x1)
-    assert poll.poll() == [(event2, select.POLLIN)]
-    assert event2.read(0x1) == 0x1
+    event.write(0x1)
+    assert poll.poll() == [(event, select.POLLIN)]
+    assert event.read(0x1) == 0x1
 
-    # Unregister first event channel.
-    poll.unregister(event1)
-
-    # Event write, poll and read.
-    event2.write(0x1)
-    assert poll.poll() == [(event2, select.POLLIN)]
-    assert event2.read(0x1) == 0x1
-
-    # Timeout waiting for event.
-    assert poll.poll(0.01) == []
+    # Queue write, poll and read.
+    queue.write(b'foo')
+    assert poll.poll() == [(queue, select.POLLIN)]
+    assert queue.read(3) == b'foo'
 
 
 def test_bad_arguments():
@@ -71,6 +80,7 @@ def test_bad_arguments():
 def main():
     testcases = [
         (test_help, "test_help"),
+        (test_register_unregister, "test_register_unregister"),
         (test_poll, "test_poll"),
         (test_bad_arguments, "test_bad_arguments")
     ]
