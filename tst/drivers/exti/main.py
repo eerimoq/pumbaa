@@ -49,6 +49,8 @@ def test_falling_edge():
         assert event.read(0x1) == 0x1
         print("ok.")
 
+    exti.stop()
+
 
 def test_bad_arguments():
     event = Event()
