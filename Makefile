@@ -29,6 +29,7 @@ TESTS = \
 	tst/select \
 	tst/debug/harness \
 	tst/drivers/dac \
+	tst/drivers/exti \
 	tst/drivers/pin \
 	tst/filesystem \
 	tst/kernel/timer \

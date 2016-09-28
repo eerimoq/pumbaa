@@ -49,11 +49,28 @@ def test_falling_edge():
         assert event.read(0x1) == 0x1
         print("ok.")
 
+
+def test_bad_arguments():
+    event = Event()
+
+    # Bad device.
+    with assert_raises(ValueError, "bad exti device -1"):
+        Exti(-1, Exti.BOTH, event, 1)
+
+    # Bad trigger.
+    with assert_raises(ValueError, "bad trigger -1"):
+        Exti(Board.EXTI_D3, -1, event, 1)
+
+    # Bad event channel.
+    with assert_raises(TypeError, "expected <class 'Event'>"):
+        Exti(Board.EXTI_D3, Exti.BOTH, None, 1)
+
     
 def main():
     testcases = [
         (test_print, "test_print"),
-        (test_falling_edge, "test_falling_edge")
+        (test_falling_edge, "test_falling_edge"),
+        (test_bad_arguments, "test_bad_arguments")
     ]
     harness.run(testcases)
 
