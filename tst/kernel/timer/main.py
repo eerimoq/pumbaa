@@ -60,6 +60,10 @@ def test_periodic_timer():
     timer.stop()
 
 
+def test_empty():
+    Timer(1.0)
+
+
 def test_bad_arguments():
     # Too long tuple.
     with assert_raises(TypeError, "expected tuple of length 2"):
@@ -71,7 +75,7 @@ def test_bad_arguments():
 
     # Wrong type of second argument.
     with assert_raises(TypeError, "expected <class 'Event'>"):
-        Timer(1, None, 1)
+        Timer(1, 1, 1)
 
 
 def main():
@@ -79,6 +83,7 @@ def main():
         (test_help, "test_help"),
         (test_single_shot_timer, "test_single_shot_timer"),
         (test_periodic_timer, "test_periodic_timer"),
+        (test_empty, "test_empty"),
         (test_bad_arguments, "test_bad_arguments")
     ]
     harness.run(testcases)

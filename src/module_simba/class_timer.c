@@ -106,7 +106,7 @@ static mp_obj_t class_timer_make_new(const mp_obj_type_t *type_p,
     }
 
     /* Second argument must be an event object or None. */
-    if (mp_obj_get_type(args[1].u_obj) != mp_const_none) {
+    if (args[1].u_obj != mp_const_none) {
         if (mp_obj_get_type(args[1].u_obj) != &module_simba_class_event) {
             mp_raise_TypeError("expected <class 'Event'>");
         }
