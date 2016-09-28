@@ -74,7 +74,8 @@ static mp_obj_t class_queue_read(mp_obj_t self_in, mp_obj_t size_in)
     size = queue_read(&self_p->queue, vstr.buf, size);
 
     if (size <= 0) {
-        mp_not_implemented("failed to read from queue");
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "failed to read from queue"));
     }
 
     return (mp_obj_new_str_from_vstr(&mp_type_bytes, &vstr));
@@ -95,7 +96,8 @@ static mp_obj_t class_queue_write(mp_obj_t self_in, mp_obj_t buf_in)
     res = queue_write(&self_p->queue, bufinfo.buf, bufinfo.len);
 
     if (res <= 0) {
-        mp_not_implemented("failed to write to queue");
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "failed to write to queue"));
     }
 
     return (MP_OBJ_NEW_SMALL_INT(res));

@@ -70,7 +70,8 @@ static mp_obj_t class_event_read(mp_obj_t self_in, mp_obj_t mask_in)
     mask = mp_obj_get_int(mask_in);
 
     if (event_read(&self_p->event, &mask, sizeof(mask)) != sizeof(mask)) {
-        mp_not_implemented("failed to read event mask");
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "failed to read event mask"));
     }
 
     return (MP_OBJ_NEW_SMALL_INT(mask));
@@ -88,7 +89,8 @@ static mp_obj_t class_event_write(mp_obj_t self_in, mp_obj_t mask_in)
     mask = mp_obj_get_int(mask_in);
 
     if (event_write(&self_p->event, &mask, sizeof(mask)) != sizeof(mask)) {
-        mp_not_implemented("failed to write event mask");
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "failed to write event mask"));
     }
 
     return (mp_const_none);
