@@ -146,6 +146,8 @@ def test_smoke():
     m.update(b" the spammish repetition")
     print(m.digest())
 
+    simba.sys_lock()
+    simba.sys_unlock()
       
 def main():
     testcases = [

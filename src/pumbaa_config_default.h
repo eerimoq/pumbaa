@@ -204,6 +204,10 @@
 #    define CONFIG_PUMBAA_FS_FORMAT                         1
 #endif
 
+#ifndef CONFIG_PUMBAA_SYS_LOCK
+#    define CONFIG_PUMBAA_SYS_LOCK                          1
+#endif
+
 extern const struct _mp_obj_module_t mp_module_uos;
 extern const struct _mp_obj_module_t mp_module_utime;
 extern const struct _mp_obj_module_t mp_module_uselect;
