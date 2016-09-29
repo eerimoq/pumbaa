@@ -16,6 +16,8 @@ make most `Simba` functionality available in `Python`.
    expires given `callback` is called from interrupt context and
    `mask` is written to given `event` channel.
 
+   Simba documentation: `kernel/timer`_
+
    .. method:: start()
 
       Start the timer.
@@ -31,9 +33,11 @@ make most `Simba` functionality available in `Python`.
       Pass this flag to ``simba.Timer`` for periodic timers.
 
 
-.. class:: simba.Event(event)
+.. class:: simba.Event()
 
    Initialize given event object.
+
+   Simba documentation: `sync/event`_
 
    .. method:: read(mask)
 
@@ -53,6 +57,8 @@ make most `Simba` functionality available in `Python`.
 
    Initialize given queue object.
 
+   Simba documentation: `sync/queue`_
+
    .. method:: read(size)
 
       Reads up to `size` number of bytes from the queue and returns
@@ -68,11 +74,70 @@ make most `Simba` functionality available in `Python`.
       Get the number of bytes available to read.
 
 
+.. class:: simba.Dac(devices, sampling_rate)
+
+   Instansiate a Dac object. `devices` is either a list of DAC pin
+   devices or a single DAC pin device. The DAC pin devices can be
+   found in the `Board` class, often named `PIN_DAC0` and `PIN_DAC1`.
+
+   Simba documentation: `drivers/dac`_
+
+   .. method:: convert(samples)
+
+      Start a synchronous convertion of digital samples to an analog
+      signal. This function returns when all samples have been
+      converted.
+
+   .. method:: async_convert(samples)
+
+      Start an asynchronous convertion of digital samples to an analog
+      signal. This function only blocks if the hardware is not ready
+      to convert more samples. Call `async_wait()` to wait for an
+      asynchronous convertion to finish.
+
+   .. method:: async_wait()
+
+      Wait for an ongoing asynchronous convertion to finish.
+
+
+.. class:: simba.Exti(device, trigger, event=None, mask=0x1, callback=None)
+
+   Instantiate an object handling interrupts on given
+   `device`. `trigger` may be a combination of ``RISING``, ``FALLING``
+   or ``BOTH``. When an interrupt occurs given `callback` is called
+   from interrupt context and `mask` is written to given event channel
+   `event`.
+
+   Simba documentation: `drivers/exti`_
+
+   .. method:: start()
+
+      Start the interrupt handler.
+
+   .. method:: stop()
+
+      Stop the interrupt handler.
+
+   .. data:: RISING
+
+      Trigger an interrupt on rising edges.
+
+   .. data:: FALLING
+
+      Trigger an interrupt on falling edges.
+
+   .. data:: BOTH
+
+      Trigger an interrupt on both rising and falling edges.
+
+
 .. class:: simba.Pin(device, mode)
 
    Initialize given pin object with given `device` and `mode`. The
    device is selected among the pins available in the `Board`
    class. Mode must be either `INPUT` or `OUTPUT`.
+
+   Simba documentation: `drivers/pin`_
 
    .. method:: read()
 
@@ -102,64 +167,13 @@ make most `Simba` functionality available in `Python`.
 
       Output pin mode.
 
-      
-.. class:: simba.Exti(device, trigger, event=None, mask=0x1, callback=None)
-
-   Instantiate an object handling interrupts on given
-   `device`. `trigger` may be a combination of ``RISING``, ``FALLING``
-   or ``BOTH``. When an interrupt occurs given `callback` is called
-   from interrupt context and `mask` is written to given event channel
-   `event`.
-
-   .. method:: start()
-
-      Start the interrupt handler.
-
-   .. method:: stop()
-
-      Stop the interrupt handler.
-
-   .. data:: RISING
-
-      Trigger an interrupt on rising edges.
-
-   .. data:: FALLING
-
-      Trigger an interrupt on falling edges.
-
-   .. data:: BOTH
-
-      Trigger an interrupt on both rising and falling edges.
-
-
-.. class:: simba.Dac(devices, sampling_rate)
-
-   Instansiate a Dac object. `devices` is either a list of DAC pin
-   devices or a single DAC pin device. The DAC pin devices can be
-   found in the `Board` class, often named `PIN_DAC0` and `PIN_DAC1`.
-
-   .. method:: convert(samples)
-
-      Start a synchronous convertion of digital samples to an analog
-      signal. This function returns when all samples have been
-      converted.
-
-   .. method:: async_convert(samples)
-
-      Start an asynchronous convertion of digital samples to an analog
-      signal. This function only blocks if the hardware is not ready
-      to convert more samples. Call `async_wait()` to wait for an
-      asynchronous convertion to finish.
-
-   .. method:: async_wait()
-
-      Wait for an ongoing asynchronous convertion to finish.
-
 
 .. function:: simba.fs_call(command)
 
    Returns the output of given file system command. Raises OSError if
    the command is missing or fails to execute.
+
+   Simba documentation: `filesystems/fs`_
 
 
 .. function:: simba.fs_format(path)
@@ -167,5 +181,15 @@ make most `Simba` functionality available in `Python`.
    Format file system at given path. All data in the file system will
    be lost.
 
+   Simba documentation: `filesystems/fs`_
+
 
 .. _Simba Library: http://simba-os.readthedocs.io/en/latest/library-reference.html
+
+.. _kernel/timer: http://simba-os.readthedocs.io/en/latest/library-reference/kernel/timer.html
+.. _sync/event: http://simba-os.readthedocs.io/en/latest/library-reference/sync/event.html
+.. _sync/queue: http://simba-os.readthedocs.io/en/latest/library-reference/sync/queue.html
+.. _drivers/dac: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/dac.html
+.. _drivers/exti: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/exti.html
+.. _drivers/pin: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/pin.html
+.. _filesystems/fs: http://simba-os.readthedocs.io/en/latest/library-reference/filesystems/fs.html
