@@ -50,6 +50,9 @@ int main()
     std_printf(sys_get_info());
     std_printf(FSTR("\r\n"));
 
+    /* Initialize the thread module. */
+    module_thread_init();
+    
     stack_top_p = (char*)&stack_dummy;
     mp_stack_set_limit(40000 * (BYTES_PER_WORD / 4));
     gc_init(heap, heap + sizeof(heap));

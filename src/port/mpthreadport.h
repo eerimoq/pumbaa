@@ -1,5 +1,5 @@
 /**
- * @file mpconfigport.h
+ * @file port/mphalport.h
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -17,10 +17,20 @@
  * This file is part of the Pumbaa project.
  */
 
-#ifndef __MPCONFIGPORT_H__
-#define __MPCONFIGPORT_H__
+#ifndef __MPTHREADPORT_H__
+#define __MPTHREADPORT_H__
 
-#include "simba_board.h"
-#include "pumbaa_config_default.h"
+#include "simba.h"
+
+typedef struct _mp_thread_mutex_t {
+    struct sem_t sem;
+} mp_thread_mutex_t;
+
+/**
+ * Initialize the thread module.
+ */
+void module_thread_init(void);
+
+void mp_thread_gc_others(void);
 
 #endif

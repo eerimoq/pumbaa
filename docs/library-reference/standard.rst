@@ -22,5 +22,6 @@ functionality is implemented in MicroPython.
    standard/select
    standard/struct
    standard/sys
+   standard/_thread
    standard/time
    standard/zlib

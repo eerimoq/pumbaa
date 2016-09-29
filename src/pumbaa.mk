@@ -37,6 +37,7 @@ PUMBAA_SRC += \
 	module_simba/class_timer.c \
 	module_select.c \
 	module_sys.c \
+	module_thread.c \
 	module_time.c
 
 ifeq ($(BOARD),arduino_due)
@@ -78,7 +79,6 @@ MICROPYTHON_SRC += \
 	extmod/moduhashlib.c \
 	extmod/modujson.c \
 	extmod/modurandom.c \
-	extmod/modure.c \
 	extmod/moduzlib.c \
 	lib/utils/pyhelp.c \
 	lib/utils/pyexec.c \
