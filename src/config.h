@@ -28,4 +28,10 @@
 #    define CONFIG_START_NETWORK                            0
 #endif
 
+#ifndef CONFIG_THRD_IDLE_STACK_SIZE
+#    if defined(ARCH_ARM)
+#        define CONFIG_THRD_IDLE_STACK_SIZE              1024
+#    endif
+#endif
+
 #endif
