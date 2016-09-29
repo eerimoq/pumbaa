@@ -17,7 +17,21 @@ operating systems. It only works for Simba channels.
 .. class:: select.poll()
 
    The poll class.
-           
+
+   .. code-block:: python
+
+      >>> from simba import Queue
+      >>> poll = select.poll()
+      >>> queue = Queue()
+      >>> poll.register(queue)
+      >>> poll.poll(1.0)             # Timeout since no data is available in the queue.
+      []
+      >>> queue.write(b'hello')
+      >>> poll.poll()                # Data is available in the queue.
+      [(<0x20034050>, 1)]
+      >>> poll.poll()[0][0].read(5)  # Read the available data.
+      b'hello'
+
    .. method:: register(channel[, eventmask])
 
       Register given `channel` with the polling object. Future calls
@@ -30,21 +44,21 @@ operating systems. It only works for Simba channels.
       Registering a file descriptor that’s already registered is not
       an error, and has the same effect as registering the descriptor
       exactly once.
-               
+
    .. method:: unregister(channel)
 
       Remove given `channel` being tracked by a polling object.
 
       Attempting to remove a file descriptor that was never registered
       causes a `KeyError` exception to be raised.
-               
+
    .. method:: modify(channel, eventmask)
 
       Modifies an already registered channel. This has the same effect
       as `register(channel, eventmask)`. Attempting to modify a
       channel that was never registered causes an `IOError` exception
       with errno `ENOENT` to be raised.
-               
+
    .. method:: poll([timeout])
 
       Polls the set of registered channels, and returns a
@@ -56,11 +70,11 @@ operating systems. It only works for Simba channels.
       before returning. If `timeout` is omitted, negative, or None,
       the call will block until there is an event for this poll
       object.
-               
+
 .. data:: select.POLLIN
 
    There is data to read.
-          
+
 .. data:: select.POLLHUP
 
    Hung up.
