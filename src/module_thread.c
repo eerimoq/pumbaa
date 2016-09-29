@@ -26,6 +26,7 @@ struct thread_t {
     struct thrd_t *thrd_p;
     int ready;
     void *state_p;
+    void *stack_p;
     struct thread_t *next_p;
 };
 
@@ -48,20 +49,23 @@ void module_thread_init(void)
 
 void mp_thread_gc_others(void)
 {
-    PRINT_FILE_LINE();
-    /* mp_thread_mutex_lock(&thread_mutex, 1); */
-    /* for (thread_t *th = thread; th != NULL; th = th->next) { */
-    /*     gc_collect_root((void**)&th, 1); */
-    /*     gc_collect_root(&th->arg, 1); // probably not needed */
-    /*     if (th->id == xTaskGetCurrentTaskHandle()) { */
-    /*         continue; */
-    /*     } */
-    /*     if (!th->ready) { */
-    /*         continue; */
-    /*     } */
-    /*     gc_collect_root(th->stack, th->stack_len); // probably not needed */
-    /* } */
-    /* mp_thread_mutex_unlock(&thread_mutex); */
+    struct thread_t *thread_p;
+
+    mp_thread_mutex_lock(&thread_mutex, 1);
+
+    thread_p = threads_p;
+
+    while (thread_p != NULL) {
+        if (thread_p->thrd_p != thrd_self()) {
+            if (thread_p->ready == 1) {
+                gc_collect_root((void**)&thread_p, 1);
+            }
+        }
+
+        thread_p = thread_p->next_p;
+    }
+
+    mp_thread_mutex_unlock(&thread_mutex);
 }
 
 mp_state_thread_t *mp_thread_get_state(void)
@@ -130,7 +134,6 @@ void mp_thread_create(void *(*entry)(void*),
                       void *arg_p,
                       size_t *stack_size_p)
 {
-    void *stack_p;
     struct thread_t *thread_p;
 
     if (*stack_size_p == 0) {
@@ -139,8 +142,8 @@ void mp_thread_create(void *(*entry)(void*),
         *stack_size_p = 2048;
     }
 
-    stack_p = m_new(uint64_t, *stack_size_p / sizeof(uint64_t));
     thread_p = m_new_obj(struct thread_t);
+    thread_p->stack_p = m_new(uint64_t, *stack_size_p / sizeof(uint64_t));
 
     mp_thread_mutex_lock(&thread_mutex, 1);
 
@@ -148,7 +151,7 @@ void mp_thread_create(void *(*entry)(void*),
     thread_p->thrd_p = thrd_spawn(entry,
                                   arg_p,
                                   0,
-                                  stack_p,
+                                  thread_p->stack_p,
                                   *stack_size_p);
 
     /* Add thread to linked list of all threads. */
@@ -165,23 +168,6 @@ void mp_thread_create(void *(*entry)(void*),
 
 void mp_thread_finish(void)
 {
-    struct thread_t *thread_p;
-
-    mp_thread_mutex_lock(&thread_mutex, 1);
-
-    thread_p = threads_p;
-
-    while (thread_p != NULL) {
-        if (thread_p->thrd_p == thrd_self()) {
-            thread_p->ready = 0;
-            break;
-        }
-
-        thread_p = thread_p->next_p;
-    }
-
-    mp_thread_mutex_unlock(&thread_mutex);
-
     /* Remove once the thread is correctly removed from the simba
        thread list. */
     thrd_suspend(NULL);

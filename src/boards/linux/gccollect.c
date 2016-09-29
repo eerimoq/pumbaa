@@ -145,6 +145,9 @@ void gc_collect_regs_and_stack(void) {
     // GC stack (and regs because we captured them)
     void **regs_ptr = (void**)(void*)&regs;
     gc_collect_root(regs_ptr, ((uintptr_t)MP_STATE_THREAD(stack_top) - (uintptr_t)&regs) / sizeof(uintptr_t));
+
+    /* Garbage collect other threads. */
+    mp_thread_gc_others();
 }
 
 void gc_collect(void) {

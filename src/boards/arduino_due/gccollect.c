@@ -36,7 +36,10 @@ void gc_collect(void)
        the stack in this function). */
     gc_collect_root((void**)sp,
                     ((uint32_t)stack_top_p - sp) / sizeof(uint32_t));
-    
+
+    /* Garbage collect other threads. */
+    mp_thread_gc_others();
+
     /* End the GC. */
     gc_collect_end();
 }
