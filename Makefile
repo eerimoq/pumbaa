@@ -27,6 +27,7 @@ ifeq ($(BOARD), linux)
 TESTS = \
 	tst/smoke \
 	tst/select \
+	tst/thread \
 	tst/debug/harness \
 	tst/drivers/dac \
 	tst/drivers/exti \

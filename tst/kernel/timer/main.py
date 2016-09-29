@@ -22,16 +22,6 @@ from simba import Timer, Event
 from harness import assert_raises
 
 
-FLAG = False
-
-def callback():
-    """Callback called from interrupt context.
-
-    """
-    global FLAG
-    FLAG = True
-
-
 def test_help():
     event = Event()
     timer = Timer(1, event, 0x1)
@@ -41,12 +31,11 @@ def test_help():
 
 def test_single_shot_timer():
     event = Event()
-    timer = Timer((0, 1000000), event, 0x1, callback)
+    timer = Timer((0, 1000000), event, 0x1)
     print("starting single shot timer")
     timer.start()
     event.read(0x1)
     print("timeout")
-    assert FLAG is True
 
 
 def test_periodic_timer():

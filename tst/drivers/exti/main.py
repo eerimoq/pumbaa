@@ -23,16 +23,6 @@ import harness
 from harness import assert_raises
 
 
-FLAG = False
-
-def callback():
-    """Callback called from interrupt context.
-
-    """
-    global FLAG
-    FLAG = True
-
-
 def test_print():
     print(Exti)
     event = Event()
@@ -46,7 +36,7 @@ def test_falling_edge():
 
     event = Event()
 
-    exti = Exti(Board.EXTI_D3, Exti.FALLING, event, 0x1, callback)
+    exti = Exti(Board.EXTI_D3, Exti.FALLING, event, 0x1)
     exti.start()
 
     # Make sure no interrupt has already occured.
@@ -54,10 +44,10 @@ def test_falling_edge():
 
     # Trigger the interrupt and wait for the event.
     pin.write(0)
+
     if not 'Linux' in os.uname().machine:
         print("Waiting for the interrupt to occur... ", end="")
         assert event.read(0x1) == 0x1
-        assert FLAG is True
         print("ok.")
 
     exti.stop()
