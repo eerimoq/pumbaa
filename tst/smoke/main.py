@@ -88,6 +88,8 @@ def test_smoke():
     print("sys.platform:", sys.platform)
     print("os.uname:", os.uname())
     print("time.time:", time.time())
+    print("time.localtime():", time.localtime())
+    print('time.localtime().tm_year:', time.localtime().tm_year)
 
     time.sleep(0.1)
     time.sleep_ms(1)
@@ -146,7 +148,7 @@ def test_smoke():
 
     simba.sys_lock()
     simba.sys_unlock()
-      
+
 def main():
     testcases = [
         (test_smoke, "test_smoke")
