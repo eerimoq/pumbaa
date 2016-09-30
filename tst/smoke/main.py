@@ -89,6 +89,7 @@ def test_smoke():
     print("os.uname:", os.uname())
     print("time.time:", time.time())
     print("time.localtime():", time.localtime())
+    print("time.localtime():", time.localtime(1475271052))
     print('time.localtime().tm_year:', time.localtime().tm_year)
 
     time.sleep(0.1)
