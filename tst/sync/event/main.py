@@ -17,7 +17,7 @@
 # This file is part of the Pumbaa project.
 #
 
-from simba import Event
+from sync import Event
 import harness
 from harness import assert_raises
 

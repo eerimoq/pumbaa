@@ -1,5 +1,5 @@
 /**
- * @file class_board.h
+ * @file module_drivers/class_pin.h
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -17,11 +17,16 @@
  * This file is part of the Pumbaa project.
  */
 
-#ifndef __MODULE_PUMBAA_CLASS_BOARD_H__
-#define __MODULE_PUMBAA_CLASS_BOARD_H__
+#ifndef __MODULE_DRIVERS_CLASS_PIN_H__
+#define __MODULE_DRIVERS_CLASS_PIN_H__
 
 #include "pumbaa.h"
 
-extern const mp_obj_type_t module_simba_class_board;
+struct class_pin_t {
+    mp_obj_base_t base;
+    struct pin_driver_t drv;
+};
+
+extern const mp_obj_type_t module_drivers_class_pin;
 
 #endif

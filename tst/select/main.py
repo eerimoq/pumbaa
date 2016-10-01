@@ -18,7 +18,7 @@
 #
 
 import select
-from simba import Event, Queue
+from sync import Event, Queue
 import harness
 from harness import assert_raises
 

@@ -32,8 +32,8 @@ Features
 
 * :doc:`library-reference/micropython` modules.
 
-* A thin :doc:`Python wrapper<library-reference/pumbaa/simba>` for
-  `Simba modules`_.
+* A thin :doc:`Python wrapper<library-reference/pumbaa>` for `Simba
+  modules`_.
 
 See the :doc:`library-reference` for a full list of features.
 

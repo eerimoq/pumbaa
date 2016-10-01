@@ -20,7 +20,7 @@
 import os
 import harness
 from harness import assert_raises
-import simba
+import filesystems
 
 
 def test_format():
@@ -29,10 +29,10 @@ def test_format():
     """
 
     with assert_raises(OSError):
-        simba.fs_format("apa")
+        filesystems.fs_format("apa")
 
     try:
-        simba.fs_format("/fs")
+        filesystems.fs_format("/fs")
     except:
         print("Failed to format /fs.")
 

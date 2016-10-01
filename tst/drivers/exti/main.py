@@ -18,7 +18,9 @@
 #
 
 import os
-from simba import Board, Exti, Event, Pin
+from sync import Event
+from drivers import Exti, Pin
+import board
 import harness
 from harness import assert_raises
 
@@ -26,17 +28,17 @@ from harness import assert_raises
 def test_print():
     print(Exti)
     event = Event()
-    exti = Exti(Board.EXTI_D0, Exti.RISING, event, 1)
+    exti = Exti(board.EXTI_D0, Exti.RISING, event, 1)
     print(exti)
 
 
 def test_falling_edge():
-    pin = Pin(Board.PIN_D4, Pin.OUTPUT)
+    pin = Pin(board.PIN_D4, Pin.OUTPUT)
     pin.write(1)
 
     event = Event()
 
-    exti = Exti(Board.EXTI_D3, Exti.FALLING, event, 0x1)
+    exti = Exti(board.EXTI_D3, Exti.FALLING, event, 0x1)
     exti.start()
 
     # Make sure no interrupt has already occured.
@@ -62,19 +64,19 @@ def test_bad_arguments():
 
     # Bad trigger.
     with assert_raises(ValueError, "bad trigger -1"):
-        Exti(Board.EXTI_D3, -1, event, 1)
+        Exti(board.EXTI_D3, -1, event, 1)
 
     # Bad event channel.
     with assert_raises(TypeError, "expected <class 'Event'>"):
-        Exti(Board.EXTI_D3, Exti.BOTH, None, 1)
+        Exti(board.EXTI_D3, Exti.BOTH, None, 1)
 
     # Bad event mask.
     with assert_raises(TypeError, "can't convert NoneType to int"):
-        Exti(Board.EXTI_D3, Exti.BOTH, event, None, 1)
+        Exti(board.EXTI_D3, Exti.BOTH, event, None, 1)
 
     # Bad callback.
     with assert_raises(TypeError, "bad callback"):
-        Exti(Board.EXTI_D3, Exti.BOTH, event, 1, 1)
+        Exti(board.EXTI_D3, Exti.BOTH, event, 1, 1)
 
 
 def main():

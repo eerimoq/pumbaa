@@ -1,5 +1,5 @@
 /**
- * @file module_simba/class_timer.c
+ * @file module_kernel/class_timer.c
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -107,7 +107,7 @@ static mp_obj_t class_timer_make_new(const mp_obj_type_t *type_p,
 
     /* Second argument must be an event object or None. */
     if (args[1].u_obj != mp_const_none) {
-        if (mp_obj_get_type(args[1].u_obj) != &module_simba_class_event) {
+        if (mp_obj_get_type(args[1].u_obj) != &module_sync_class_event) {
             mp_raise_TypeError("expected <class 'Event'>");
         }
     }
@@ -121,7 +121,7 @@ static mp_obj_t class_timer_make_new(const mp_obj_type_t *type_p,
 
     /* Create a new Timer object. */
     self_p = m_new_obj(struct class_timer_t);
-    self_p->base.type = &module_simba_class_timer;
+    self_p->base.type = &module_kernel_class_timer;
     self_p->event_obj_p = args[1].u_obj;
     self_p->mask = args[2].u_int;
     self_p->callback = args[3].u_obj;
@@ -181,7 +181,7 @@ static MP_DEFINE_CONST_DICT(class_timer_locals_dict, class_timer_locals_dict_tab
 /**
  * Timer class type.
  */
-const mp_obj_type_t module_simba_class_timer = {
+const mp_obj_type_t module_kernel_class_timer = {
     { &mp_type_type },
     .name = MP_QSTR_Timer,
     .print = class_timer_print,

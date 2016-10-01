@@ -20,7 +20,10 @@
 import os
 import _thread
 
-from simba import Event, Timer, Dac, Board
+import board
+from kernel import Timer
+from sync import Event
+from drivers import Dac
 
 #  Player states.
 STATE_PLAYING = 0

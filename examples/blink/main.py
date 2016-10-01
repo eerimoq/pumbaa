@@ -18,9 +18,10 @@
 #
 
 import time
-from simba import Board, Pin
+import board
+from drivers import Pin
 
-LED = Pin(Board.PIN_LED, Pin.OUTPUT)
+LED = Pin(board.PIN_LED, Pin.OUTPUT)
 
 while True:
     LED.toggle()

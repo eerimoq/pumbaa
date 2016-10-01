@@ -23,26 +23,29 @@ INC += \
 	$(PUMBAA_ROOT)/src/boards/$(BOARD)
 
 PUMBAA_SRC += \
-	boards/$(BOARD)/class_board.c \
+	boards/$(BOARD)/module_board.c \
 	builtin_help.c \
 	builtin_input.c \
 	port/port.c \
 	module_io.c \
 	module_os.c \
-	module_simba.c \
-	module_simba/class_event.c \
-	module_simba/class_exti.c \
-	module_simba/class_pin.c \
-	module_simba/class_queue.c \
-	module_simba/class_timer.c \
+	module_kernel.c \
+	module_drivers.c \
+	module_drivers/class_exti.c \
+	module_drivers/class_pin.c \
+	module_filesystems.c \
+	module_kernel/class_timer.c \
 	module_select.c \
+	module_sync.c \
+	module_sync/class_event.c \
+	module_sync/class_queue.c \
 	module_sys.c \
 	module_thread.c \
 	module_time.c
 
 ifeq ($(BOARD),arduino_due)
 PUMBAA_SRC += \
-	module_simba/class_dac.c \
+	module_drivers/class_dac.c \
 	boards/arduino_due/gccollect.c \
 	boards/arduino_due/gchelper.S \
 	port/lexer_port.c
@@ -51,7 +54,7 @@ endif
 ifeq ($(BOARD),linux)
 PUMBAA_SRC += \
 	boards/linux/gccollect.c \
-	module_simba/class_dac.c
+	module_drivers/class_dac.c
 endif
 
 ifeq ($(BOARD),$(filter $(BOARD), esp12e esp01))

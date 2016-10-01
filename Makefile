@@ -49,10 +49,8 @@ TESTS = \
 endif
 
 all: $(TESTS:%=%.all)
-	$(MAKE) -C examples all
 
 clean: $(TESTS:%=%.clean)
-	$(MAKE) -C examples clean
 
 rerun:
 	for test in $(TESTS) ; do \

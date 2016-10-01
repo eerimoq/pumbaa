@@ -1,5 +1,5 @@
 /**
- * @file module_simba/class_event.c
+ * @file module_sync/class_event.c
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -50,7 +50,7 @@ static mp_obj_t class_event_make_new(const mp_obj_type_t *type_p,
 
     /* Create a new Event object. */
     self_p = m_new_obj(struct class_event_t);
-    self_p->base.type = &module_simba_class_event;
+    self_p->base.type = &module_sync_class_event;
 
     /* Initialize the event if event and mode are given. */
     event_init(&self_p->event);
@@ -124,7 +124,7 @@ static MP_DEFINE_CONST_DICT(class_event_locals_dict, class_event_locals_dict_tab
 /**
  * Event class type.
  */
-const mp_obj_type_t module_simba_class_event = {
+const mp_obj_type_t module_sync_class_event = {
     { &mp_type_type },
     .name = MP_QSTR_Event,
     .print = class_event_print,

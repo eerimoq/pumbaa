@@ -18,24 +18,25 @@
 #
 
 import os
-from simba import Board, Dac
+from drivers import Dac
+import board
 import harness
 from harness import assert_raises
 
 
 def test_print():
     print(Dac)
-    dac = Dac(Board.PIN_DAC0)
+    dac = Dac(board.PIN_DAC0)
     print(dac)
 
 
 def test_output():
     # Single pin.
-    dac = Dac(Board.PIN_DAC0)
+    dac = Dac(board.PIN_DAC0)
     dac.convert("\x03\xff")
 
     # List of pins.
-    dac = Dac([Board.PIN_DAC0, Board.PIN_DAC1], 11025)
+    dac = Dac([board.PIN_DAC0, board.PIN_DAC1], 11025)
     dac.convert(bytearray(16 * "\x03\xff"))
     dac.convert(16 * "\x03\xff")
     dac.async_convert(16 * "\x03\xff")
@@ -53,7 +54,7 @@ def test_bad_arguments():
 
     # Bad pin.
     with assert_raises(ValueError, "bad pin"):
-        Dac(Board.PIN_LED)
+        Dac(board.PIN_LED)
 
 
 def main():

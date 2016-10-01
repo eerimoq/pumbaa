@@ -18,13 +18,14 @@
 #
 
 import os
-from simba import Board, Pin
+from drivers import Pin
+import board
 import harness
 from harness import assert_raises
 
 
 def test_output():
-    led = Pin(Board.PIN_LED, Pin.OUTPUT)
+    led = Pin(board.PIN_LED, Pin.OUTPUT)
     print(led)
 
     led.write(1)
@@ -39,11 +40,11 @@ def test_output():
 
         
 def test_input():
-    led = Pin(Board.PIN_LED, Pin.INPUT)
+    led = Pin(board.PIN_LED, Pin.INPUT)
     print(led)
 
 def test_set_mode():
-    led = Pin(Board.PIN_LED, Pin.INPUT)
+    led = Pin(board.PIN_LED, Pin.INPUT)
     led.set_mode(Pin.OUTPUT)
 
     with assert_raises(ValueError, "bad pin mode 6"):
@@ -53,7 +54,7 @@ def test_set_mode():
 def test_bad_arguments():
     # Bad mode.
     with assert_raises(ValueError, "bad pin mode 3"):
-        Pin(Board.PIN_LED, 3)
+        Pin(board.PIN_LED, 3)
 
     # bad device.
     with assert_raises(ValueError, "bad pin device -1"):
@@ -62,7 +63,7 @@ def test_bad_arguments():
     with assert_raises(ValueError, "bad pin device 500"):
         Pin(500, Pin.OUTPUT)
 
-    led = Pin(Board.PIN_LED, Pin.OUTPUT)
+    led = Pin(board.PIN_LED, Pin.OUTPUT)
 
     with assert_raises(ValueError, "bad pin value 2"):
         led.write(2)

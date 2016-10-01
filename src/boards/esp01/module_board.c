@@ -1,5 +1,5 @@
 /**
- * @file class_board.c
+ * @file module_board.c
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -19,7 +19,20 @@
 
 #include "pumbaa.h"
 
-static const mp_rom_map_elem_t class_board_locals_table[] = {
+/**
+ * Function called when this module is imported.
+ */
+static mp_obj_t module_init(void)
+{
+    return (mp_const_none);
+}
+
+static MP_DEFINE_CONST_FUN_OBJ_0(module_init_obj, module_init);
+
+static const mp_rom_map_elem_t module_board_globals_table[] = {
+    { MP_ROM_QSTR(MP_QSTR___name__), MP_ROM_QSTR(MP_QSTR_board) },
+    { MP_ROM_QSTR(MP_QSTR___init__), MP_ROM_PTR(&module_init_obj) },
+    
     { MP_ROM_QSTR(MP_QSTR_PIN_GPIO0), MP_ROM_INT(0) },
     { MP_ROM_QSTR(MP_QSTR_PIN_GPIO1), MP_ROM_INT(1) },
     { MP_ROM_QSTR(MP_QSTR_PIN_GPIO2), MP_ROM_INT(2) },
@@ -27,13 +40,13 @@ static const mp_rom_map_elem_t class_board_locals_table[] = {
     { MP_ROM_QSTR(MP_QSTR_PIN_LED), MP_ROM_INT(1) }
 };
 
-static MP_DEFINE_CONST_DICT(class_board_locals_dict, class_board_locals_table);
+static MP_DEFINE_CONST_DICT(module_board_globals, module_board_globals_table);
 
 /**
- * Board class type.
+ * Board module type.
  */
-const mp_obj_type_t module_simba_class_board = {
-    { &mp_type_type },
-    .name = MP_QSTR_Board,
-    .locals_dict = (mp_obj_t)&class_board_locals_dict,
+const mp_obj_module_t module_board = {
+    { &mp_type_module },
+    .name = MP_QSTR_board,
+    .globals = (mp_obj_t)&module_board_globals,
 };

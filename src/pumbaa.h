@@ -40,19 +40,18 @@
 #include "lib/utils/pyexec.h"
 #include "lib/mp-readline/readline.h"
 
-#include "class_board.h"
-#include "module_simba/class_event.h"
-#include "module_simba/class_exti.h"
-#include "module_simba/class_pin.h"
-#include "module_simba/class_queue.h"
-#include "module_simba/class_timer.h"
+#include "module_kernel/class_timer.h"
+#include "module_sync/class_event.h"
+#include "module_sync/class_queue.h"
+#include "module_drivers/class_exti.h"
+#include "module_drivers/class_pin.h"
 
 #if defined(FAMILY_SAM)
-#    include "module_simba/class_dac.h"
+#    include "module_drivers/class_dac.h"
 #endif
 
 #if defined(FAMILY_LINUX)
-#    include "module_simba/class_dac.h"
+#    include "module_drivers/class_dac.h"
 #endif
 
 #endif

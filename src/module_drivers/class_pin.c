@@ -1,5 +1,5 @@
 /**
- * @file module_simba/class_pin.c
+ * @file module_drivers/class_pin.c
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -80,7 +80,7 @@ static mp_obj_t class_pin_make_new(const mp_obj_type_t *type_p,
 
     /* Create a new Pin object. */
     self_p = m_new0(struct class_pin_t, 1);
-    self_p->base.type = &module_simba_class_pin;
+    self_p->base.type = &module_drivers_class_pin;
 
     if (pin_init((struct pin_driver_t *)&self_p->drv,
                  &pin_device[device],
@@ -183,7 +183,7 @@ static MP_DEFINE_CONST_DICT(class_pin_locals_dict, class_pin_locals_dict_table);
 /**
  * Pin class type.
  */
-const mp_obj_type_t module_simba_class_pin = {
+const mp_obj_type_t module_drivers_class_pin = {
     { &mp_type_type },
     .name = MP_QSTR_Pin,
     .print = class_pin_print,

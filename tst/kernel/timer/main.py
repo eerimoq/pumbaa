@@ -18,7 +18,8 @@
 #
 
 import harness
-from simba import Timer, Event
+from kernel import Timer
+from sync import Event
 from harness import assert_raises
 
 

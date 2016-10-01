@@ -1,5 +1,5 @@
 /**
- * @file module_simba/class_dac.c
+ * @file module_drivers/class_dac.c
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -69,7 +69,7 @@ static mp_obj_t class_dac_make_new(const mp_obj_type_t *type_p,
 
     /* Create a new dac object. */
     self_p = m_new0(struct class_dac_t, 1);
-    self_p->base.type = &module_simba_class_dac;
+    self_p->base.type = &module_drivers_class_dac;
 
     devices_p = MP_OBJ_TO_PTR(args[0].u_obj);
 
@@ -188,7 +188,7 @@ static MP_DEFINE_CONST_DICT(class_dac_locals_dict, class_dac_locals_dict_table);
 /**
  * Dac class type.
  */
-const mp_obj_type_t module_simba_class_dac = {
+const mp_obj_type_t module_drivers_class_dac = {
     { &mp_type_type },
     .name = MP_QSTR_Dac,
     .print = class_dac_print,

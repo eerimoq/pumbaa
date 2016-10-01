@@ -18,7 +18,7 @@
 #
 
 import _thread
-from simba import Event
+from sync import Event
 import harness
 
 EVENT = Event()

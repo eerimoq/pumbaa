@@ -1,5 +1,5 @@
 /**
- * @file class_board.h
+ * @file module_sync/class_queue.h
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -17,11 +17,17 @@
  * This file is part of the Pumbaa project.
  */
 
-#ifndef __MODULE_SIMBA_CLASS_BOARD_H__
-#define __MODULE_SIMBA_CLASS_BOARD_H__
+#ifndef __MODULE_SYNC_CLASS_QUEUE_H__
+#define __MODULE_SYNC_CLASS_QUEUE_H__
 
 #include "pumbaa.h"
 
-extern const mp_obj_type_t module_simba_class_board;
+struct class_queue_t {
+    mp_obj_base_t base;
+    struct queue_t queue;
+    char buf[64];
+};
+
+extern const mp_obj_type_t module_sync_class_queue;
 
 #endif

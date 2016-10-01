@@ -1,5 +1,5 @@
 /**
- * @file module_simba.c
+ * @file module_filesystems.c
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -102,48 +102,11 @@ static MP_DEFINE_CONST_FUN_OBJ_1(module_fs_format_obj, module_fs_format);
 
 #endif
 
-#if CONFIG_PUMBAA_SYS_LOCK == 1
-
-/**
- * def sys_lock()
- */
-static mp_obj_t module_sys_lock()
-{
-    sys_lock();
-
-    return (mp_const_none);
-}
-
-/**
- * def sys_unlock()
- */
-static mp_obj_t module_sys_unlock()
-{
-    sys_unlock();
-
-    return (mp_const_none);
-}
-
-static MP_DEFINE_CONST_FUN_OBJ_0(module_sys_lock_obj, module_sys_lock);
-static MP_DEFINE_CONST_FUN_OBJ_0(module_sys_unlock_obj, module_sys_unlock);
-
-#endif
-
 /**
  * Function called when this module is imported.
  */
 static mp_obj_t module_init(void)
 {
-#if CONFIG_PUMBAA_CLASS_TIMER == 1
-    timer_module_init();
-#endif
-#if CONFIG_PUMBAA_CLASS_PIN == 1
-    pin_module_init();
-#endif
-#if CONFIG_PUMBAA_CLASS_EXTI == 1
-    exti_module_init();
-#endif
-
     return (mp_const_none);
 }
 
@@ -152,32 +115,9 @@ static MP_DEFINE_CONST_FUN_OBJ_0(module_init_obj, module_init);
 /**
  * A table of all the modules' global objects.
  */
-static const mp_rom_map_elem_t module_simba_globals_table[] = {
-    { MP_ROM_QSTR(MP_QSTR___name__), MP_ROM_QSTR(MP_QSTR_simba) },
+static const mp_rom_map_elem_t module_filesystems_globals_table[] = {
+    { MP_ROM_QSTR(MP_QSTR___name__), MP_ROM_QSTR(MP_QSTR_filesystems) },
     { MP_ROM_QSTR(MP_QSTR___init__), MP_ROM_PTR(&module_init_obj) },
-
-    /* Module classes. */
-#if CONFIG_PUMBAA_CLASS_BOARD == 1
-    { MP_ROM_QSTR(MP_QSTR_Board), MP_ROM_PTR(&module_simba_class_board) },
-#endif
-#if CONFIG_PUMBAA_CLASS_DAC == 1
-    { MP_ROM_QSTR(MP_QSTR_Dac), MP_ROM_PTR(&module_simba_class_dac) },
-#endif
-#if CONFIG_PUMBAA_CLASS_EVENT == 1
-    { MP_ROM_QSTR(MP_QSTR_Event), MP_ROM_PTR(&module_simba_class_event) },
-#endif
-#if CONFIG_PUMBAA_CLASS_EXTI == 1
-    { MP_ROM_QSTR(MP_QSTR_Exti), MP_ROM_PTR(&module_simba_class_exti) },
-#endif
-#if CONFIG_PUMBAA_CLASS_PIN == 1
-    { MP_ROM_QSTR(MP_QSTR_Pin), MP_ROM_PTR(&module_simba_class_pin) },
-#endif
-#if CONFIG_PUMBAA_CLASS_QUEUE == 1
-    { MP_ROM_QSTR(MP_QSTR_Queue), MP_ROM_PTR(&module_simba_class_queue) },
-#endif
-#if CONFIG_PUMBAA_CLASS_TIMER == 1
-    { MP_ROM_QSTR(MP_QSTR_Timer), MP_ROM_PTR(&module_simba_class_timer) },
-#endif
 
     /* Module functions. */
 #if CONFIG_PUMBAA_FS_CALL == 1
@@ -186,16 +126,12 @@ static const mp_rom_map_elem_t module_simba_globals_table[] = {
 #if CONFIG_PUMBAA_FS_FORMAT == 1
     { MP_ROM_QSTR(MP_QSTR_fs_format), MP_ROM_PTR(&module_fs_format_obj) },
 #endif
-#if CONFIG_PUMBAA_SYS_LOCK == 1
-    { MP_ROM_QSTR(MP_QSTR_sys_lock), MP_ROM_PTR(&module_sys_lock_obj) },
-    { MP_ROM_QSTR(MP_QSTR_sys_unlock), MP_ROM_PTR(&module_sys_unlock_obj) },
-#endif
 };
 
-static MP_DEFINE_CONST_DICT(module_simba_globals, module_simba_globals_table);
+static MP_DEFINE_CONST_DICT(module_filesystems_globals, module_filesystems_globals_table);
 
-const mp_obj_module_t module_simba = {
+const mp_obj_module_t module_filesystems = {
     { &mp_type_module },
-    .name = MP_QSTR_simba,
-    .globals = (mp_obj_t)&module_simba_globals,
+    .name = MP_QSTR_filesystems,
+    .globals = (mp_obj_t)&module_filesystems_globals,
 };

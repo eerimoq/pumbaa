@@ -1,5 +1,5 @@
 /**
- * @file module_simba/class_queue.c
+ * @file module_sync/class_queue.c
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -50,7 +50,7 @@ static mp_obj_t class_queue_make_new(const mp_obj_type_t *type_p,
 
     /* Create a new Queue object. */
     self_p = m_new_obj(struct class_queue_t);
-    self_p->base.type = &module_simba_class_queue;
+    self_p->base.type = &module_sync_class_queue;
 
     /* Initialize the queue if queue and mode are given. */
     queue_init(&self_p->queue, &self_p->buf[0], sizeof(self_p->buf));
@@ -131,7 +131,7 @@ static MP_DEFINE_CONST_DICT(class_queue_locals_dict, class_queue_locals_dict_tab
 /**
  * Queue class type.
  */
-const mp_obj_type_t module_simba_class_queue = {
+const mp_obj_type_t module_sync_class_queue = {
     { &mp_type_type },
     .name = MP_QSTR_Queue,
     .print = class_queue_print,

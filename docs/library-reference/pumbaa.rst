@@ -8,4 +8,8 @@ modules.
    :numbered:
    :titlesonly:
 
-   pumbaa/simba
+   pumbaa/kernel
+   pumbaa/sync
+   pumbaa/drivers
+   pumbaa/filesystems
+   pumbaa/board

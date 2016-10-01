@@ -41,8 +41,8 @@ struct class_poll_t {
  */
 static int is_channel(mp_obj_t obj)
 {
-    return (MP_OBJ_IS_TYPE(obj, &module_simba_class_event)
-            || MP_OBJ_IS_TYPE(obj, &module_simba_class_queue));
+    return (MP_OBJ_IS_TYPE(obj, &module_sync_class_event)
+            || MP_OBJ_IS_TYPE(obj, &module_sync_class_queue));
 }
 
 /**

@@ -1,5 +1,5 @@
 /**
- * @file module_simba/class_exti.c
+ * @file module_drivers/class_exti.c
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -107,7 +107,7 @@ static mp_obj_t class_exti_make_new(const mp_obj_type_t *type_p,
 
     /* Third argument must be an event object or None. */
     if (mp_obj_get_type(args[2].u_obj) != mp_const_none) {
-        if (mp_obj_get_type(args[2].u_obj) != &module_simba_class_event) {
+        if (mp_obj_get_type(args[2].u_obj) != &module_sync_class_event) {
             mp_raise_TypeError("expected <class 'Event'>");
         }
     }
@@ -121,7 +121,7 @@ static mp_obj_t class_exti_make_new(const mp_obj_type_t *type_p,
 
     /* Create a new Exti object. */
     self_p = m_new_obj(struct class_exti_t);
-    self_p->base.type = &module_simba_class_exti;
+    self_p->base.type = &module_drivers_class_exti;
     self_p->event_obj_p = args[2].u_obj;
     self_p->mask = args[3].u_int;
     self_p->callback = args[4].u_obj;
@@ -182,7 +182,7 @@ static MP_DEFINE_CONST_DICT(class_exti_locals_dict, class_exti_locals_dict_table
 /**
  * Exti class type.
  */
-const mp_obj_type_t module_simba_class_exti = {
+const mp_obj_type_t module_drivers_class_exti = {
     { &mp_type_type },
     .name = MP_QSTR_Exti,
     .print = class_exti_print,

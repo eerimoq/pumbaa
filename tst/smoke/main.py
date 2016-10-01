@@ -35,7 +35,11 @@ import zlib
 import gc
 import micropython
 
-import simba
+import kernel
+import sync
+import drivers
+import filesystems
+import board
 
 import harness
 import other
@@ -66,11 +70,14 @@ def test_smoke():
         zlib,
         gc,
         micropython,
-        simba,
-        simba.Board,
-        simba.Event,
-        simba.Pin,
-        simba.Timer,
+        kernel,
+        sync,
+        drivers,
+        filesystems,
+        board,
+        sync.Event,
+        drivers.Pin,
+        kernel.Timer,
         other
     ]
 
@@ -124,9 +131,9 @@ def test_smoke():
     assert other.foo() == True
 
     with assert_raises(OSError):
-        simba.fs_call("bad")
+        filesystems.fs_call("bad")
 
-    print(simba.fs_call("kernel/thrd/list"))
+    print(filesystems.fs_call("kernel/thrd/list"))
 
     sio = io.StringIO("foo")
     sio.seek(0, 2)
@@ -147,8 +154,8 @@ def test_smoke():
     m.update(b" the spammish repetition")
     print(m.digest())
 
-    simba.sys_lock()
-    simba.sys_unlock()
+    kernel.sys_lock()
+    kernel.sys_unlock()
 
 def main():
     testcases = [
