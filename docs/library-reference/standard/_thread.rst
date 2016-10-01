@@ -10,9 +10,9 @@ space. For synchronization, simple locks (also called mutexes or
 binary semaphores) are provided.
 
 A thread created by this module is a Simba thread. The classes
-``simba.Event`` and ``simba.Queue`` can be used for synchronization in
+``sync.Event`` and ``sync.Queue`` can be used for synchronization in
 addition to the simple locks.
-              
+
 ----------------------------------------------
 
 .. function:: _thread.start_new_thread(function, args[, kwargs])
@@ -25,8 +25,8 @@ addition to the simple locks.
 
 .. function:: _thread.exit()
 
-   Raise the SystemExit exception. When not caught, this will cause
-   the thread to exit silently.
+   Raise the ``SystemExit`` exception. When not caught, this will
+   cause the thread to exit silently.
 
 .. function:: _thread.allocate_lock()
 
@@ -44,11 +44,11 @@ addition to the simple locks.
 .. function:: _thread.stack_size([size])
 
    Return the thread stack size used when creating new threads.
-   
+
 .. class:: LockType()
 
    .. method:: acquire([waitflag])
-               
+
       Without the optional argument, this method acquires the lock
       unconditionally, if necessary waiting until it is released by
       another thread (only one thread at a time can acquire a lock —
@@ -56,15 +56,15 @@ addition to the simple locks.
       argument is present, the action depends on its value: if it is
       zero, the lock is only acquired if it can be acquired
       immediately without waiting, while if it is nonzero, the lock is
-      acquired unconditionally as before. The return value is True if
-      the lock is acquired successfully, False if not.
+      acquired unconditionally as before. The return value is ``True`` if
+      the lock is acquired successfully, ``False`` if not.
 
    .. method:: release()
- 
+
       Releases the lock. The lock must have been acquired earlier, but
       not necessarily by the same thread.
 
    .. method:: locked()
-               
+
       Return the status of the lock: ``True`` if it has been acquired
       by some thread, ``False`` if not.
