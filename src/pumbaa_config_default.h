@@ -204,6 +204,14 @@
 #    define CONFIG_PUMBAA_CLASS_PIN                         1
 #endif
 
+#ifndef CONFIG_PUMBAA_CLASS_SPI
+#    if defined(FAMILY_SAM) || defined(FAMILY_LINUX)
+#        define CONFIG_PUMBAA_CLASS_SPI                     1
+#    else
+#        define CONFIG_PUMBAA_CLASS_SPI                     0
+#    endif
+#endif
+
 #ifndef CONFIG_PUMBAA_CLASS_QUEUE
 #    define CONFIG_PUMBAA_CLASS_QUEUE                       1
 #endif

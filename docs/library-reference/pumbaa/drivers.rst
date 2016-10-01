@@ -104,7 +104,41 @@ Simba documentation: `drivers`_
       Wait for an ongoing asynchronous convertion to finish.
 
 
+.. class:: drivers.Spi(device, ss, mode, speed, cpol, cpha)
+
+   Instansiate a Spi object.
+
+   Simba documentation: `drivers/spi`_
+
+   .. method:: start()
+
+   .. method:: stop()
+
+   .. method:: take_bus()
+               
+   .. method:: give_bus()
+
+   .. method:: select()
+               
+   .. method:: deselect()
+               
+   .. method:: transfer(read_buffer, write_buffer)
+               
+   .. method:: read(buffer)
+               
+   .. method:: write(buffer)
+               
+   .. method:: get()
+               
+   .. method:: put(data)
+
+   .. data:: MODE_MASTER
+
+   .. data:: MODE_SLAVE
+
+
 .. _drivers: http://simba-os.readthedocs.io/en/latest/library-reference/drivers.html
 .. _drivers/pin: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/pin.html
 .. _drivers/exti: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/exti.html
 .. _drivers/dac: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/dac.html
+.. _drivers/spi: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/spi.html

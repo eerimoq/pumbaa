@@ -48,11 +48,13 @@
 #if defined(FAMILY_SAM)
 #    include "module_drivers/class_dac.h"
 #    include "module_drivers/class_exti.h"
+#    include "module_drivers/class_spi.h"
 #endif
 
 #if defined(FAMILY_LINUX)
 #    include "module_drivers/class_dac.h"
 #    include "module_drivers/class_exti.h"
+#    include "module_drivers/class_spi.h"
 #endif
 
 #if defined(ARCH_ESP)

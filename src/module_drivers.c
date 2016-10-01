@@ -53,6 +53,9 @@ static const mp_rom_map_elem_t module_drivers_globals_table[] = {
 #if CONFIG_PUMBAA_CLASS_PIN == 1
     { MP_ROM_QSTR(MP_QSTR_Pin), MP_ROM_PTR(&module_drivers_class_pin) },
 #endif
+#if CONFIG_PUMBAA_CLASS_SPI == 1
+    { MP_ROM_QSTR(MP_QSTR_Spi), MP_ROM_PTR(&module_drivers_class_spi) },
+#endif
 };
 
 static MP_DEFINE_CONST_DICT(module_drivers_globals, module_drivers_globals_table);

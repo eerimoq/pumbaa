@@ -77,6 +77,9 @@ def test_smoke():
         board,
         sync.Event,
         drivers.Pin,
+        drivers.Exti,
+        drivers.Dac,
+        drivers.Spi,
         kernel.Timer,
         other
     ]

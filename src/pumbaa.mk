@@ -45,6 +45,7 @@ ifeq ($(BOARD),arduino_due)
 PUMBAA_SRC += \
 	module_drivers/class_dac.c \
 	module_drivers/class_exti.c \
+	module_drivers/class_spi.c \
 	boards/arduino_due/gccollect.c \
 	boards/arduino_due/gchelper.S \
 	module_thread.c \
@@ -56,6 +57,7 @@ PUMBAA_SRC += \
 	boards/linux/gccollect.c \
 	module_drivers/class_dac.c \
 	module_drivers/class_exti.c \
+	module_drivers/class_spi.c \
 	module_thread.c
 endif
 
