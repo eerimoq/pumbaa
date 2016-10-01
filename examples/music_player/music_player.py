@@ -34,15 +34,16 @@ EVENT_STOP    = 0x04
 EVENT_NEXT    = 0x08
 EVENT_PREV    = 0x10
 EVENT_TIMEOUT = 0x20
+EVENT_ALL     = 0xff
 
 
 class MusicPlayer(object):
 
     def __init__(self):
         self.state = STATE_STOPPED
-        self.dac = Dac(Board.DAC0, [Board.PIN_DAC0, Board.PIN_DAC1], 10000)
+        self.dac = Dac([Board.PIN_DAC0, Board.PIN_DAC1], 10000)
         self.event = Event()
-        self.playlist = os.listdir(".")
+        self.playlist = os.listdir()
         self.index = 0
         self.fsong = None
         self.timer = None
@@ -53,12 +54,18 @@ class MusicPlayer(object):
         self.timer = Timer(0.1,
                            self.event,
                            EVENT_TIMEOUT,
-                           Timer.TIMER_PERIODIC)
+                           flags=Timer.PERIODIC)
         self.timer.start()
+
+        print('Pumbaa Music Player!')
+
+        print('Playlist:')
+        for number, song in enumerate(self.playlist, 1):
+            print("{}: {}".format(number, song))
 
         # Start the main loop of the music player.
         while True:
-            mask = self.event.read()
+            mask = self.event.read(EVENT_ALL)
 
             if mask & EVENT_STOP:
                 self.handle_event_stop()
@@ -80,7 +87,8 @@ class MusicPlayer(object):
                 self.play_chunk()
 
     def start(self):
-        self.identity = _thread.start_new_thread(self.main)
+        if self.identity is None:
+            self.identity = _thread.start_new_thread(self.main, ())
 
     def play(self):
         self.event.write(EVENT_PLAY)
@@ -121,14 +129,14 @@ class MusicPlayer(object):
             self.fsong.close()
             self.index += 1
             self.index %= len(self.playlist)
-            self.fsong = open(self.playlist[self.index], "rb")            
+            self.fsong = open(self.playlist[self.index], "rb")
 
     def handle_event_prev(self):
         if self.state in [STATE_PLAYING, STATE_PAUSED]:
             self.fsong.close()
             self.index -= 1
             self.index %= len(self.playlist)
-            self.fsong = open(self.playlist[self.index], "rb")            
+            self.fsong = open(self.playlist[self.index], "rb")
 
     def play_chunk(self):
         samples = self.fsong.read(1024)
