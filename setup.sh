@@ -3,8 +3,12 @@
 # in your shell to setup the environment.
 #
 
-export PUMBAA_ROOT=$(readlink -f .)
-export SIMBA_ROOT=$(readlink -f simba)
+# ARM compiler fails on Cygwin if files have absolute paths.
+if [ "${OSTYPE}" != "cygwin" ]; then
+    export PUMBAA_ROOT=$(readlink -f .)
+    export SIMBA_ROOT=$(readlink -f simba)
+fi
+
 export PATH=${PATH}:$(readlink -f simba/bin)
 
 # ESP8266 toolchain
