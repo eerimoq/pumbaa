@@ -1,7 +1,7 @@
-MicroPython
-===========
+MicroPython modules
+===================
 
-MicroPython modules.
+MicroPython specific modules.
 
 .. toctree::
    :numbered:

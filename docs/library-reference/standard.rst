@@ -1,5 +1,5 @@
-Standard Library
-================
+Standard Library modules
+========================
 
 Python Standard Library modules. Only a subset of the cPython module
 functionality is implemented in MicroPython.
@@ -18,7 +18,6 @@ functionality is implemented in MicroPython.
    standard/math
    standard/os
    standard/random
-   standard/re
    standard/select
    standard/struct
    standard/sys
