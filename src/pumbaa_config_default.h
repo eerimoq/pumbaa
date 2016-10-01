@@ -137,7 +137,11 @@
 #endif
 
 #ifndef MICROPY_PY_THREAD
-#    define MICROPY_PY_THREAD                             (1)
+#    if defined(ARCH_ESP)
+#        define MICROPY_PY_THREAD                         (0)
+#    else
+#        define MICROPY_PY_THREAD                         (1)
+#    endif
 #endif
 
 #ifndef MICROPY_PY_THREAD_GIL
@@ -185,7 +189,11 @@
 #endif
 
 #ifndef CONFIG_PUMBAA_CLASS_EXTI
-#    define CONFIG_PUMBAA_CLASS_EXTI                        1
+#    if defined(FAMILY_SAM) || defined(ARCH_ESP) || defined(FAMILY_LINUX)
+#        define CONFIG_PUMBAA_CLASS_EXTI                    1
+#    else
+#        define CONFIG_PUMBAA_CLASS_EXTI                    0
+#    endif
 #endif
 
 #ifndef CONFIG_PUMBAA_CLASS_EVENT

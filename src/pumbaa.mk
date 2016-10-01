@@ -31,7 +31,6 @@ PUMBAA_SRC += \
 	module_os.c \
 	module_kernel.c \
 	module_drivers.c \
-	module_drivers/class_exti.c \
 	module_drivers/class_pin.c \
 	module_filesystems.c \
 	module_kernel/class_timer.c \
@@ -40,27 +39,31 @@ PUMBAA_SRC += \
 	module_sync/class_event.c \
 	module_sync/class_queue.c \
 	module_sys.c \
-	module_thread.c \
 	module_time.c
 
 ifeq ($(BOARD),arduino_due)
 PUMBAA_SRC += \
 	module_drivers/class_dac.c \
+	module_drivers/class_exti.c \
 	boards/arduino_due/gccollect.c \
 	boards/arduino_due/gchelper.S \
+	module_thread.c \
 	port/lexer_port.c
 endif
 
 ifeq ($(BOARD),linux)
 PUMBAA_SRC += \
 	boards/linux/gccollect.c \
-	module_drivers/class_dac.c
+	module_drivers/class_dac.c \
+	module_drivers/class_exti.c \
+	module_thread.c
 endif
 
 ifeq ($(BOARD),$(filter $(BOARD), esp12e esp01))
 PUMBAA_SRC += \
 	mcus/esp8266/gccollect.c \
 	mcus/esp8266/gchelper.S \
+	module_drivers/class_exti.c \
 	port/lexer_port.c
 endif
 
@@ -68,6 +71,7 @@ ifeq ($(BOARD),photon)
 PUMBAA_SRC += \
 	boards/photon/gccollect.c \
 	boards/photon/gchelper.S \
+	module_thread.c \
 	port/lexer_port.c
 endif
 
