@@ -1,13 +1,38 @@
-:mod:`board` --- Board device mapping
-=====================================
+:mod:`board` --- Board devices
+==============================
 
 .. module:: board
-   :synopsis: Board device mapping.
+   :synopsis: Board devices.
 
-This module lists available devices for the board.
-              
+The board module is board unique. This page shows the general
+structure of those modules.
+
 ----------------------------------------------
 
-.. data:: PIN_x
+.. data:: PIN_<ID>
 
-   Pin mappings.
+   Pin devices.
+
+.. data:: EXTI_<ID>
+
+   External interrupt devices.
+
+.. data:: PWM_<ID>
+
+   PWM devices.
+
+.. data:: ADC_<ID>
+
+   ADC devices.
+
+.. data:: DAC_<ID>
+
+   DAC devices.
+
+.. data:: FLASH_<ID>
+
+   Flash devices.
+
+.. data:: SPI_<ID>
+
+   SPI devices.
