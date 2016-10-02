@@ -23,84 +23,110 @@ struct class_socket_t {
     mp_obj_base_t base;
 };
 
-static mp_obj_t class_socket_accept(void)
+static mp_obj_t class_socket_accept(mp_obj_t self_in)
 {
+    mp_not_implemented("socket.accept");
+        
     return (mp_const_none);
 }
 
-static mp_obj_t class_socket_bind(void)
+static mp_obj_t class_socket_bind(mp_obj_t self_in)
 {
+    mp_not_implemented("socket.bind");
+        
     return (mp_const_none);
 }
 
-static mp_obj_t class_socket_close(void)
+static mp_obj_t class_socket_close(mp_obj_t self_in)
 {
+    mp_not_implemented("socket.close");
+        
     return (mp_const_none);
 }
 
-static mp_obj_t class_socket_connect(void)
+static mp_obj_t class_socket_connect(mp_obj_t self_in)
 {
+    mp_not_implemented("socket.connect");
+        
     return (mp_const_none);
 }
 
-static mp_obj_t class_socket_listen(void)
+static mp_obj_t class_socket_listen(mp_obj_t self_in)
 {
+    mp_not_implemented("socket.listen");
+        
     return (mp_const_none);
 }
 
-static mp_obj_t class_socket_recv(void)
+static mp_obj_t class_socket_recv(mp_obj_t self_in)
 {
+    mp_not_implemented("socket.recv");
+        
     return (mp_const_none);
 }
 
-static mp_obj_t class_socket_recvfrom(void)
+static mp_obj_t class_socket_recvfrom(mp_obj_t self_in)
 {
+    mp_not_implemented("socket.recvfrom");
+        
     return (mp_const_none);
 }
 
-static mp_obj_t class_socket_recv_into(void)
+static mp_obj_t class_socket_recv_into(mp_obj_t self_in)
 {
+    mp_not_implemented("socket.recv_into");
+        
     return (mp_const_none);
 }
 
-static mp_obj_t class_socket_recvfrom_into(void)
+static mp_obj_t class_socket_recvfrom_into(mp_obj_t self_in)
 {
+    mp_not_implemented("socket.recvfrom_into");
+        
     return (mp_const_none);
 }
 
-static mp_obj_t class_socket_send(void)
+static mp_obj_t class_socket_send(mp_obj_t self_in)
 {
+    mp_not_implemented("socket.send");
+        
     return (mp_const_none);
 }
 
-static mp_obj_t class_socket_sendall(void)
+static mp_obj_t class_socket_sendall(mp_obj_t self_in)
 {
+    mp_not_implemented("socket.sendall");
+        
     return (mp_const_none);
 }
 
-static mp_obj_t class_socket_sendto(void)
+static mp_obj_t class_socket_sendto(mp_obj_t self_in)
 {
+    mp_not_implemented("socket.sendto");
+        
     return (mp_const_none);
 }
 
-static mp_obj_t class_socket_shutdown(void)
+static mp_obj_t class_socket_shutdown(mp_obj_t self_in)
 {
+    mp_not_implemented("socket.shutdown");
+        
     return (mp_const_none);
 }
 
-static MP_DEFINE_CONST_FUN_OBJ_0(socket_accept_obj, class_socket_accept);
-static MP_DEFINE_CONST_FUN_OBJ_0(socket_bind_obj, class_socket_bind);
-static MP_DEFINE_CONST_FUN_OBJ_0(socket_close_obj, class_socket_close);
-static MP_DEFINE_CONST_FUN_OBJ_0(socket_connect_obj, class_socket_connect);
-static MP_DEFINE_CONST_FUN_OBJ_0(socket_listen_obj, class_socket_listen);
-static MP_DEFINE_CONST_FUN_OBJ_0(socket_recv_obj, class_socket_recv);
-static MP_DEFINE_CONST_FUN_OBJ_0(socket_recvfrom_obj, class_socket_recvfrom);
-static MP_DEFINE_CONST_FUN_OBJ_0(socket_recv_into_obj, class_socket_recv_into);
-static MP_DEFINE_CONST_FUN_OBJ_0(socket_recvfrom_into_obj, class_socket_recvfrom_into);
-static MP_DEFINE_CONST_FUN_OBJ_0(socket_send_obj, class_socket_send);
-static MP_DEFINE_CONST_FUN_OBJ_0(socket_sendall_obj, class_socket_sendall);
-static MP_DEFINE_CONST_FUN_OBJ_0(socket_sendto_obj, class_socket_sendto);
-static MP_DEFINE_CONST_FUN_OBJ_0(socket_shutdown_obj, class_socket_shutdown);
+static MP_DEFINE_CONST_FUN_OBJ_1(socket_accept_obj, class_socket_accept);
+static MP_DEFINE_CONST_FUN_OBJ_1(socket_bind_obj, class_socket_bind);
+static MP_DEFINE_CONST_FUN_OBJ_1(socket_close_obj, class_socket_close);
+static MP_DEFINE_CONST_FUN_OBJ_1(socket_connect_obj, class_socket_connect);
+static MP_DEFINE_CONST_FUN_OBJ_1(socket_listen_obj, class_socket_listen);
+static MP_DEFINE_CONST_FUN_OBJ_1(socket_recv_obj, class_socket_recv);
+static MP_DEFINE_CONST_FUN_OBJ_1(socket_recvfrom_obj, class_socket_recvfrom);
+static MP_DEFINE_CONST_FUN_OBJ_1(socket_recv_into_obj, class_socket_recv_into);
+static MP_DEFINE_CONST_FUN_OBJ_1(socket_recvfrom_into_obj, class_socket_recvfrom_into);
+static MP_DEFINE_CONST_FUN_OBJ_1(socket_send_obj, class_socket_send);
+static MP_DEFINE_CONST_FUN_OBJ_1(socket_sendall_obj, class_socket_sendall);
+static MP_DEFINE_CONST_FUN_OBJ_1(socket_sendto_obj, class_socket_sendto);
+static MP_DEFINE_CONST_FUN_OBJ_1(socket_shutdown_obj, class_socket_shutdown);
 
 static const mp_rom_map_elem_t class_socket_locals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_accept), MP_ROM_PTR(&socket_accept_obj) },
@@ -126,7 +152,7 @@ static MP_DEFINE_CONST_DICT(class_socket_locals_dict, class_socket_locals_dict_t
 static const mp_obj_type_t class_socket = {
     { &mp_type_type },
     .name = MP_QSTR_SocketType,
-    .locals_dict = (void*)&class_socket,
+    .locals_dict = (void*)&class_socket_locals_dict,
 };
 
 /**

@@ -28,6 +28,7 @@ TESTS = \
 	tst/smoke \
 	tst/os \
 	tst/select \
+	tst/socket \
 	tst/thread \
 	tst/debug/harness \
 	tst/drivers/dac \
