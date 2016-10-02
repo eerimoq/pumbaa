@@ -26,6 +26,7 @@ BOARD ?= linux
 ifeq ($(BOARD), linux)
 TESTS = \
 	tst/smoke \
+	tst/os \
 	tst/select \
 	tst/thread \
 	tst/debug/harness \
