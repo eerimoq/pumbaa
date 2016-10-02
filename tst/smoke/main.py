@@ -27,6 +27,7 @@ import json
 import math
 import os
 import random
+import socket
 import struct
 import sys
 import time
@@ -63,6 +64,7 @@ def test_smoke():
         math,
         os,
         random,
+        socket,
         struct,
         sys,
         time,

@@ -19,6 +19,7 @@ functionality is implemented in MicroPython.
    standard/os
    standard/random
    standard/select
+   standard/socket
    standard/struct
    standard/sys
    standard/_thread

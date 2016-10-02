@@ -242,6 +242,7 @@
 
 extern const struct _mp_obj_module_t mp_module_uos;
 extern const struct _mp_obj_module_t mp_module_utime;
+extern const struct _mp_obj_module_t mp_module_usocket;
 extern const struct _mp_obj_module_t mp_module_uselect;
 extern const struct _mp_obj_module_t module_kernel;
 extern const struct _mp_obj_module_t module_sync;
@@ -251,6 +252,7 @@ extern const struct _mp_obj_module_t module_board;
 #define MICROPY_PORT_BUILTIN_MODULES                                    \
     { MP_ROM_QSTR(MP_QSTR_uos), MP_ROM_PTR(&mp_module_uos) },           \
     { MP_ROM_QSTR(MP_QSTR_uselect), MP_ROM_PTR(&mp_module_uselect) },   \
+    { MP_ROM_QSTR(MP_QSTR_uselect), MP_ROM_PTR(&mp_module_usocket) },   \
     { MP_ROM_QSTR(MP_QSTR_kernel), MP_ROM_PTR(&module_kernel) },        \
     { MP_ROM_QSTR(MP_QSTR_sync), MP_ROM_PTR(&module_sync) },            \
     { MP_ROM_QSTR(MP_QSTR_drivers), MP_ROM_PTR(&module_drivers) },      \
@@ -266,6 +268,7 @@ extern const struct _mp_obj_module_t module_board;
     { MP_OBJ_NEW_QSTR(MP_QSTR_os), (mp_obj_t)&mp_module_uos },          \
     { MP_OBJ_NEW_QSTR(MP_QSTR_random), (mp_obj_t)&mp_module_urandom },  \
     { MP_OBJ_NEW_QSTR(MP_QSTR_select), (mp_obj_t)&mp_module_uselect },  \
+    { MP_OBJ_NEW_QSTR(MP_QSTR_socket), (mp_obj_t)&mp_module_usocket },  \
     { MP_OBJ_NEW_QSTR(MP_QSTR_struct), (mp_obj_t)&mp_module_ustruct },  \
     { MP_OBJ_NEW_QSTR(MP_QSTR_time), (mp_obj_t)&mp_module_utime },      \
     { MP_OBJ_NEW_QSTR(MP_QSTR_zlib), (mp_obj_t)&mp_module_uzlib },
