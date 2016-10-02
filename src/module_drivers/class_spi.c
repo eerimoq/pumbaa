@@ -44,7 +44,7 @@ static mp_obj_t class_spi_make_new(const mp_obj_type_t *type_p,
 {
     static const mp_arg_t allowed_args[] = {
         { MP_QSTR_device, MP_ARG_REQUIRED | MP_ARG_INT },
-        { MP_QSTR_ss, MP_ARG_REQUIRED | MP_ARG_INT },
+        { MP_QSTR_slave_select, MP_ARG_REQUIRED | MP_ARG_INT },
         { MP_QSTR_mode, MP_ARG_INT, { .u_int = SPI_MODE_MASTER } },
         { MP_QSTR_speed, MP_ARG_INT, { .u_int = SPI_SPEED_1MBPS } },
         { MP_QSTR_polarity, MP_ARG_INT, { .u_int = 1 } },
