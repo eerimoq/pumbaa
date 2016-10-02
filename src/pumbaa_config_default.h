@@ -220,8 +220,8 @@
 #    define CONFIG_PUMBAA_CLASS_TIMER                       1
 #endif
 
-#ifndef CONFIG_PUMBAA_OS_CALL
-#    define CONFIG_PUMBAA_OS_CALL                           1
+#ifndef CONFIG_PUMBAA_OS_SYSTEM
+#    define CONFIG_PUMBAA_OS_SYSTEM                         1
 #endif
 
 #ifndef CONFIG_PUMBAA_OS_FORMAT

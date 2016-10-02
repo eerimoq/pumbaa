@@ -39,7 +39,7 @@ dependent functionality.
    Return a `stat_result` object for this entry.
 
 
-.. function:: os.call(command)
+.. function:: os.system(command)
 
    Returns the output of given file system command. Raises ``OSError``
    if the command is missing or fails to execute.

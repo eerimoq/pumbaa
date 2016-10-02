@@ -268,7 +268,7 @@ static mp_obj_t os_stat(mp_obj_t path_in)
     return (stat_p);
 }
 
-#if CONFIG_PUMBAA_OS_CALL == 1
+#if CONFIG_PUMBAA_OS_SYSTEM == 1
 
 /**
  * The vstr channel stores all written data in a vstr. No read not
@@ -309,9 +309,9 @@ static vstr_t *vstr_chan_get_vstr(struct vstr_chan_t *self_p)
 }
 
 /**
- * def fs_call(command)
+ * def system(command)
  */
-static mp_obj_t os_call(mp_obj_t command_in)
+static mp_obj_t os_system(mp_obj_t command_in)
 {
     char command[128];
     struct vstr_chan_t chout;
@@ -322,14 +322,14 @@ static mp_obj_t os_call(mp_obj_t command_in)
     vstr_chan_init(&chout);
 
     if (fs_call(command, sys_get_stdin(), &chout, NULL) != 0) {
-        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError, "-1"));
+        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
     }
 
     return (mp_obj_new_str_from_vstr(&mp_type_str,
                                      vstr_chan_get_vstr(&chout)));
 }
 
-static MP_DEFINE_CONST_FUN_OBJ_1(os_call_obj, os_call);
+static MP_DEFINE_CONST_FUN_OBJ_1(os_system_obj, os_system);
 
 #endif
 
@@ -375,8 +375,8 @@ static const mp_rom_map_elem_t module_os_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR_stat), MP_ROM_PTR(&os_stat_obj) },
 
     /* Pumbaa specific. */
-#if CONFIG_PUMBAA_OS_CALL == 1
-    { MP_ROM_QSTR(MP_QSTR_call), MP_ROM_PTR(&os_call_obj) },
+#if CONFIG_PUMBAA_OS_SYSTEM == 1
+    { MP_ROM_QSTR(MP_QSTR_system), MP_ROM_PTR(&os_system_obj) },
 #endif
 #if CONFIG_PUMBAA_OS_FORMAT == 1
     { MP_ROM_QSTR(MP_QSTR_format), MP_ROM_PTR(&os_format_obj) },

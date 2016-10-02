@@ -132,9 +132,9 @@ def test_smoke():
     assert other.foo() == True
 
     with assert_raises(OSError):
-        os.call("bad")
+        os.system("bad")
 
-    print(os.call("kernel/thrd/list"))
+    print(os.system("kernel/thrd/list"))
 
     sio = io.StringIO("foo")
     sio.seek(0, 2)

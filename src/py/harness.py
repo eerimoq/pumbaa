@@ -99,7 +99,7 @@ def run(testcases):
     print("=============================== TEST END ({}) ==============================\n".format(
         "PASSED" if ok else "FAILED"))
 
-    print(os.call("kernel/thrd/list"))
+    print(os.system("kernel/thrd/list"))
     
     if not ok:
         raise SuiteError(total, passed, skipped, failed)
