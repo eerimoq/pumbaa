@@ -16,6 +16,12 @@ Simba documentation: `drivers`_
    selected among the pins available in the `board` module. `mode`
    must be either ``INPUT`` or ``OUTPUT``.
 
+   .. code-block:: python
+
+      >>> led = Pin(board.PIN_LED, Pin.OUTPUT)
+      >>> led.write(1)
+      >>> led.toggle()
+
    Simba documentation: `drivers/pin`_
 
    .. method:: read()
@@ -53,6 +59,14 @@ Simba documentation: `drivers`_
    may be a combination of ``RISING``, ``FALLING`` or ``BOTH``. When
    an interrupt occurs given `callback` is called from interrupt
    context and `mask` is written to given event channel `event`.
+
+   .. code-block:: python
+
+      >>> event = Event()
+      >>> exti = Exti(board.EXTI_D3, Exti.FALLING, event, 0x1)
+      >>> exti.start()
+      >>> event.read(0x1)        # Wait for an interrupt to occur.
+      >>> exti.stop()
 
    Simba documentation: `drivers/exti`_
 
