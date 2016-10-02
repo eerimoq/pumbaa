@@ -268,6 +268,89 @@ static mp_obj_t os_stat(mp_obj_t path_in)
     return (stat_p);
 }
 
+#if CONFIG_PUMBAA_OS_CALL == 1
+
+/**
+ * The vstr channel stores all written data in a vstr. No read not
+ * size functions are available.
+ */
+struct vstr_chan_t {
+    struct chan_t base;
+    vstr_t string;
+};
+
+static ssize_t vstr_chan_write(struct vstr_chan_t *self_p,
+                               const void *buf_p,
+                               size_t size);
+
+static int vstr_chan_init(struct vstr_chan_t *self_p)
+{
+    chan_init(&self_p->base,
+              chan_read_null,
+              (chan_write_fn_t)vstr_chan_write,
+              chan_size_null);
+    vstr_init(&self_p->string, 128);
+
+    return (0);
+}
+
+static ssize_t vstr_chan_write(struct vstr_chan_t *self_p,
+                               const void *buf_p,
+                               size_t size)
+{
+    vstr_add_strn(&self_p->string, buf_p, size);
+
+    return (size);
+}
+
+static vstr_t *vstr_chan_get_vstr(struct vstr_chan_t *self_p)
+{
+    return (&self_p->string);
+}
+
+/**
+ * def fs_call(command)
+ */
+static mp_obj_t os_call(mp_obj_t command_in)
+{
+    char command[128];
+    struct vstr_chan_t chout;
+
+    strncpy(command, mp_obj_str_get_str(command_in), membersof(command));
+    command[membersof(command) - 1] = '\0';
+
+    vstr_chan_init(&chout);
+
+    if (fs_call(command, sys_get_stdin(), &chout, NULL) != 0) {
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError, "-1"));
+    }
+
+    return (mp_obj_new_str_from_vstr(&mp_type_str,
+                                     vstr_chan_get_vstr(&chout)));
+}
+
+static MP_DEFINE_CONST_FUN_OBJ_1(os_call_obj, os_call);
+
+#endif
+
+#if CONFIG_PUMBAA_OS_FORMAT == 1
+
+/**
+ * def format(path)
+ */
+static mp_obj_t os_format(mp_obj_t path_in)
+{
+    if (fs_format(mp_obj_str_get_str(path_in)) != 0) {
+        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+    }
+
+    return (mp_const_none);
+}
+
+static MP_DEFINE_CONST_FUN_OBJ_1(os_format_obj, os_format);
+
+#endif
+
 static MP_DEFINE_CONST_FUN_OBJ_0(os_uname_obj, os_uname);
 static MP_DEFINE_CONST_FUN_OBJ_1(os_chdir_obj, os_chdir);
 static MP_DEFINE_CONST_FUN_OBJ_0(os_getcwd_obj, os_getcwd);
@@ -290,6 +373,14 @@ static const mp_rom_map_elem_t module_os_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR_rename),MP_ROM_PTR(&os_rename_obj) },
     { MP_ROM_QSTR(MP_QSTR_rmdir), MP_ROM_PTR(&os_rmdir_obj) },
     { MP_ROM_QSTR(MP_QSTR_stat), MP_ROM_PTR(&os_stat_obj) },
+
+    /* Pumbaa specific. */
+#if CONFIG_PUMBAA_OS_CALL == 1
+    { MP_ROM_QSTR(MP_QSTR_call), MP_ROM_PTR(&os_call_obj) },
+#endif
+#if CONFIG_PUMBAA_OS_FORMAT == 1
+    { MP_ROM_QSTR(MP_QSTR_format), MP_ROM_PTR(&os_format_obj) },
+#endif
 };
 
 static MP_DEFINE_CONST_DICT(module_os_globals, module_os_globals_table);

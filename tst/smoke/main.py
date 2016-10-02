@@ -38,7 +38,6 @@ import micropython
 import kernel
 import sync
 import drivers
-import filesystems
 import board
 
 import harness
@@ -73,7 +72,6 @@ def test_smoke():
         kernel,
         sync,
         drivers,
-        filesystems,
         board,
         sync.Event,
         drivers.Pin,
@@ -134,9 +132,9 @@ def test_smoke():
     assert other.foo() == True
 
     with assert_raises(OSError):
-        filesystems.fs_call("bad")
+        os.call("bad")
 
-    print(filesystems.fs_call("kernel/thrd/list"))
+    print(os.call("kernel/thrd/list"))
 
     sio = io.StringIO("foo")
     sio.seek(0, 2)

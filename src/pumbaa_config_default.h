@@ -220,12 +220,12 @@
 #    define CONFIG_PUMBAA_CLASS_TIMER                       1
 #endif
 
-#ifndef CONFIG_PUMBAA_FS_CALL
-#    define CONFIG_PUMBAA_FS_CALL                           1
+#ifndef CONFIG_PUMBAA_OS_CALL
+#    define CONFIG_PUMBAA_OS_CALL                           1
 #endif
 
-#ifndef CONFIG_PUMBAA_FS_FORMAT
-#    define CONFIG_PUMBAA_FS_FORMAT                         1
+#ifndef CONFIG_PUMBAA_OS_FORMAT
+#    define CONFIG_PUMBAA_OS_FORMAT                         1
 #endif
 
 #ifndef CONFIG_PUMBAA_SYS_LOCK
@@ -246,7 +246,6 @@ extern const struct _mp_obj_module_t mp_module_uselect;
 extern const struct _mp_obj_module_t module_kernel;
 extern const struct _mp_obj_module_t module_sync;
 extern const struct _mp_obj_module_t module_drivers;
-extern const struct _mp_obj_module_t module_filesystems;
 extern const struct _mp_obj_module_t module_board;
 
 #define MICROPY_PORT_BUILTIN_MODULES                                    \
@@ -255,7 +254,6 @@ extern const struct _mp_obj_module_t module_board;
     { MP_ROM_QSTR(MP_QSTR_kernel), MP_ROM_PTR(&module_kernel) },        \
     { MP_ROM_QSTR(MP_QSTR_sync), MP_ROM_PTR(&module_sync) },            \
     { MP_ROM_QSTR(MP_QSTR_drivers), MP_ROM_PTR(&module_drivers) },      \
-    { MP_ROM_QSTR(MP_QSTR_filesystems), MP_ROM_PTR(&module_filesystems) }, \
     { MP_ROM_QSTR(MP_QSTR_board), MP_ROM_PTR(&module_board) }, \
     { MP_ROM_QSTR(MP_QSTR_utime), MP_ROM_PTR(&mp_module_utime) },
 

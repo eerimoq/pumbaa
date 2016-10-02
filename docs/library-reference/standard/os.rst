@@ -37,3 +37,15 @@ dependent functionality.
 .. function:: os.stat()
 
    Return a `stat_result` object for this entry.
+
+
+.. function:: os.call(command)
+
+   Returns the output of given file system command. Raises ``OSError``
+   if the command is missing or fails to execute.
+
+
+.. function:: os.format(path)
+
+   Format file system at given path. All data in the file system will
+   be lost.

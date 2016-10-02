@@ -17,7 +17,7 @@
 # This file is part of the Pumbaa project.
 #
 
-import filesystems
+import os
 import io
 import sys
 
@@ -99,7 +99,7 @@ def run(testcases):
     print("=============================== TEST END ({}) ==============================\n".format(
         "PASSED" if ok else "FAILED"))
 
-    print(filesystems.fs_call("kernel/thrd/list"))
+    print(os.call("kernel/thrd/list"))
     
     if not ok:
         raise SuiteError(total, passed, skipped, failed)
