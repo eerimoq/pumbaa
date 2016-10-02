@@ -12,9 +12,9 @@ Simba documentation: `drivers`_
 
 .. class:: drivers.Pin(device, mode)
 
-   Initialize given pin object with given `device` and `mode`. The
-   device is selected among the pins available in the `Board`
-   class. Mode must be either `INPUT` or `OUTPUT`.
+   Create a pin object with given `device` and `mode`. The `device` is
+   selected among the pins available in the `board` module. `mode`
+   must be either ``INPUT`` or ``OUTPUT``.
 
    Simba documentation: `drivers/pin`_
 
@@ -25,9 +25,9 @@ Simba documentation: `drivers`_
 
    .. method:: write(value)
 
-      Write `value` to the pin. `value` must be an object that can be
-      converted to an integer. The value is either 0 or 1, where 0 is
-      low and 1 is high.
+      Write the logic level `value` to the pin. `value` must be an
+      object that can be converted to an integer. The value is either
+      0 or 1, where 0 is low and 1 is high.
 
    .. method:: toggle()
 
@@ -49,11 +49,10 @@ Simba documentation: `drivers`_
 
 .. class:: drivers.Exti(device, trigger, event=None, mask=0x1, callback=None)
 
-   Instantiate an object handling interrupts on given
-   `device`. `trigger` may be a combination of ``RISING``, ``FALLING``
-   or ``BOTH``. When an interrupt occurs given `callback` is called
-   from interrupt context and `mask` is written to given event channel
-   `event`.
+   Create an object handling interrupts on given `device`. `trigger`
+   may be a combination of ``RISING``, ``FALLING`` or ``BOTH``. When
+   an interrupt occurs given `callback` is called from interrupt
+   context and `mask` is written to given event channel `event`.
 
    Simba documentation: `drivers/exti`_
 
@@ -82,7 +81,16 @@ Simba documentation: `drivers`_
 
    Instansiate a Dac object. `devices` is either a list of DAC pin
    devices or a single DAC pin device. The DAC pin devices can be
-   found in the `Board` class, often named `PIN_DAC0` and `PIN_DAC1`.
+   found in the ``board`` module, often named ``PIN_DAC0`` and
+   ``PIN_DAC1``.
+
+   Here is an example of how to create a DAC driver and convert
+   digital samples to an analog signal.
+
+   .. code-block:: python
+
+      >>> dac = Dac(board.PIN_DAC0)
+      >>> dac.convert(b'\x01\x02\x03\x04')
 
    Simba documentation: `drivers/dac`_
 
@@ -96,7 +104,7 @@ Simba documentation: `drivers`_
 
       Start an asynchronous convertion of digital samples to an analog
       signal. This function only blocks if the hardware is not ready
-      to convert more samples. Call `async_wait()` to wait for an
+      to convert more samples. Call ``async_wait()`` to wait for an
       asynchronous convertion to finish.
 
    .. method:: async_wait()
@@ -106,7 +114,23 @@ Simba documentation: `drivers`_
 
 .. class:: drivers.Spi(device, slave_select, mode, speed, polarity, phase)
 
-   Instansiate a Spi object.
+   Create a Spi object. Select the SPI device with `device` and slave
+   select pin with `slave_select`. `mode` in one of ``MODE_MASTER``
+   and ``MODE_SLAVE``. `speed` is only used by the master. `polarity`
+   is the bus idle logic level. `phase` controls if sampling are done
+   on falling or rising clock edges..
+
+   Here is an example of how to create a SPI driver and write 4 bytes
+   to the slave.
+
+   .. code-block:: python
+
+      >>> spi = Spi(board.SPI_0, board.PIN_D3, MODE_MASTER, SPEED_1MBPS, 1, 1)
+      >>> spi.start()
+      >>> spi.select()
+      >>> spi.write(b'\x01\x02\x03\x04')
+      >>> spi.deselect()
+      >>> spi.stop()
 
    Simba documentation: `drivers/spi`_
 
@@ -140,12 +164,18 @@ Simba documentation: `drivers`_
 
    .. method:: transfer(write_buffer[, size])
 
-      Simultaniuos read/write operation over the SPI bus. Returns the
-      read data as a bytes object.
+      Simultaniuos read/write operation over the SPI bus. Writes data
+      from `write_buffer` to the bus. The `size` argument can be used to
+      transfer fewer bytes than the size of `write_buffer`. Returns
+      the read data as a bytes object.
+
+      The number of read and written bytes are always equal for a
+      transfer.
 
    .. method:: transfer_into(read_buffer, write_buffer[, size])
 
-      Simultaniuos read/write operation over the SPI bus.
+      Same as ``transfer()``, but the read data is written to
+      `read_buffer`.
 
    .. method:: read(size)
 
@@ -154,8 +184,7 @@ Simba documentation: `drivers`_
 
    .. method:: read_into(buffer[, size])
 
-      Read data from the SPI bus into `buffer`. The `size` arguemnt
-      can be used to read fewer bytes than the size of `buffer`.
+      Same as ``read()``, but the read data is written to `buffer`.
 
    .. method:: write(buffer[, size])
 
@@ -164,7 +193,11 @@ Simba documentation: `drivers`_
 
    .. data:: MODE_MASTER
 
+      SPI master mode.
+
    .. data:: MODE_SLAVE
+
+      SPI slave mode.
 
 
 .. _drivers: http://simba-os.readthedocs.io/en/latest/library-reference/drivers.html
