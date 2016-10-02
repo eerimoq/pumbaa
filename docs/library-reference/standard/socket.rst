@@ -112,14 +112,14 @@ This module provides access to the BSD socket interface.
       to the socket on the other end of the connection.
 
 
-   .. method:: socket.bind(address)
+   .. method:: bind(address)
 
       Bind the socket to address. The socket must not already be
       bound. (The format of address depends on the address family —
       see above.)
 
 
-   .. method:: socket.close()
+   .. method:: close()
 
       Close the socket. All future operations on the socket object
       will fail. The remote end will receive no more data (after
@@ -132,13 +132,13 @@ This module provides access to the BSD socket interface.
       fashion, call ``shutdown()`` before ``close()``.
 
 
-   .. method:: socket.connect(address)
+   .. method:: connect(address)
 
       Connect to a remote socket at address. (The format of address
       depends on the address family — see above.)
 
 
-   .. method:: socket.listen(backlog)
+   .. method:: listen(backlog)
 
       Listen for connections made to the socket. The backlog argument
       specifies the maximum number of queued connections and should be
@@ -146,14 +146,14 @@ This module provides access to the BSD socket interface.
       the minimum value is forced to 0.
 
 
-   .. method:: socket.recv(bufsize)
+   .. method:: recv(bufsize)
 
       Receive data from the socket. The return value is a string
       representing the data received. The maximum amount of data to be
       received at once is specified by `bufsize`.
 
 
-   .. method:: socket.recvfrom(bufsize)
+   .. method:: recvfrom(bufsize)
 
       Receive data from the socket. The return value is a pair
       ``(string, address)`` where string is a string representing the
@@ -161,7 +161,7 @@ This module provides access to the BSD socket interface.
       the data.
 
 
-   .. method:: socket.recv_into(buffer[, nbytes])
+   .. method:: recv_into(buffer[, nbytes])
 
       Receive up to nbytes bytes from the socket, storing the data
       into a buffer rather than creating a new string. If nbytes is
@@ -169,7 +169,7 @@ This module provides access to the BSD socket interface.
       given buffer. Returns the number of bytes received.
 
 
-   .. method:: socket.recvfrom_into(buffer[, nbytes])
+   .. method:: recvfrom_into(buffer[, nbytes])
 
       Receive data from the socket, writing it into `buffer` instead
       of creating a new string. The return value is a pair ``(nbytes,
@@ -177,7 +177,7 @@ This module provides access to the BSD socket interface.
       address is the address of the socket sending the data.
 
 
-   .. method:: socket.send(string)
+   .. method:: send(string)
 
       Send data to the socket. The socket must be connected to a
       remote socket. The optional flags argument has the same meaning
@@ -187,7 +187,7 @@ This module provides access to the BSD socket interface.
       application needs to attempt delivery of the remaining data.
 
 
-   .. method:: socket.sendall(string)
+   .. method:: sendall(string)
 
       Send data to the socket. The socket must be connected to a
       remote socket. The optional flags argument has the same meaning
@@ -198,8 +198,8 @@ This module provides access to the BSD socket interface.
       how much data, if any, was successfully sent.
 
 
-   .. method:: socket.sendto(string, address)
-   .. method:: socket.sendto(string, flags, address)
+   .. method:: sendto(string, address)
+   .. method:: sendto(string, flags, address)
 
       Send data to the socket. The socket should not be connected to a
       remote socket, since the destination socket is specified by
@@ -208,21 +208,21 @@ This module provides access to the BSD socket interface.
       of address depends on the address family — see above.)
 
 
-   .. method:: socket.shutdown(how)
+   .. method:: shutdown(how)
 
       Shut down one or both halves of the connection.
 
 
-   .. data:: socket.family
+   .. data:: family
 
       The socket family. Read only.
 
 
-   .. data:: socket.type
+   .. data:: type
 
       The socket type. Read only.
 
 
-   .. data:: socket.proto
+   .. data:: proto
 
       The socket protocol. Read only.
