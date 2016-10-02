@@ -59,7 +59,7 @@ static mp_obj_t class_spi_make_new(const mp_obj_type_t *type_p,
     int speed;
     int cpol;
     int cpha;
-    
+
     mp_arg_check_num(n_args, n_kw, 1, MP_OBJ_FUN_ARGS_MAX, true);
 
     /* Parse args. */
@@ -101,10 +101,10 @@ static mp_obj_t class_spi_make_new(const mp_obj_type_t *type_p,
 static mp_obj_t class_spi_start(mp_obj_t self_in)
 {
     struct class_spi_t *self_p;
-    
+
     self_p = MP_OBJ_TO_PTR(self_in);
     spi_start(&self_p->drv);
-    
+
     return (mp_const_none);
 }
 
@@ -114,7 +114,7 @@ static mp_obj_t class_spi_start(mp_obj_t self_in)
 static mp_obj_t class_spi_stop(mp_obj_t self_in)
 {
     struct class_spi_t *self_p;
-    
+
     self_p = MP_OBJ_TO_PTR(self_in);
     spi_stop(&self_p->drv);
 
@@ -127,7 +127,7 @@ static mp_obj_t class_spi_stop(mp_obj_t self_in)
 static mp_obj_t class_spi_take_bus(mp_obj_t self_in)
 {
     struct class_spi_t *self_p;
-    
+
     self_p = MP_OBJ_TO_PTR(self_in);
     spi_take_bus(&self_p->drv);
 
@@ -140,7 +140,7 @@ static mp_obj_t class_spi_take_bus(mp_obj_t self_in)
 static mp_obj_t class_spi_give_bus(mp_obj_t self_in)
 {
     struct class_spi_t *self_p;
-    
+
     self_p = MP_OBJ_TO_PTR(self_in);
     spi_give_bus(&self_p->drv);
 
@@ -153,7 +153,7 @@ static mp_obj_t class_spi_give_bus(mp_obj_t self_in)
 static mp_obj_t class_spi_select(mp_obj_t self_in)
 {
     struct class_spi_t *self_p;
-    
+
     self_p = MP_OBJ_TO_PTR(self_in);
     spi_select(&self_p->drv);
 
@@ -166,7 +166,7 @@ static mp_obj_t class_spi_select(mp_obj_t self_in)
 static mp_obj_t class_spi_deselect(mp_obj_t self_in)
 {
     struct class_spi_t *self_p;
-    
+
     self_p = MP_OBJ_TO_PTR(self_in);
     spi_deselect(&self_p->drv);
 
@@ -174,69 +174,154 @@ static mp_obj_t class_spi_deselect(mp_obj_t self_in)
 }
 
 /**
- * def transfer(self, read_buffer, write_buffer)
+ * def transfer(self, write_buffer[, size])
  */
-static mp_obj_t class_spi_transfer(mp_obj_t self_in,
-                                   mp_obj_t read_buffer_in,
-                                   mp_obj_t write_buffer_in)
+static mp_obj_t class_spi_transfer(mp_uint_t n_args, const mp_obj_t *args_p)
+{
+    struct class_spi_t *self_p;
+    vstr_t vstr;
+    mp_buffer_info_t buffer_info;
+    size_t size;
+
+    self_p = MP_OBJ_TO_PTR(args_p[0]);
+    mp_get_buffer_raise(MP_OBJ_TO_PTR(args_p[1]),
+                        &buffer_info,
+                        MP_BUFFER_READ);
+
+    /* Get the size. */
+    if (n_args == 3) {
+        size = mp_obj_get_int(args_p[2]);
+
+        if (buffer_info.len < size) {
+            nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        }
+    } else {
+        size = buffer_info.len;
+    }
+
+    vstr_init_len(&vstr, size);
+
+    spi_transfer(&self_p->drv, vstr.buf, buffer_info.buf, size);
+
+    return (mp_obj_new_str_from_vstr(&mp_type_bytes, &vstr));
+}
+
+/**
+ * def transfer(self, read_buffer, write_buffer[, size])
+ */
+static mp_obj_t class_spi_transfer_into(mp_uint_t n_args, const mp_obj_t *args_p)
 {
     struct class_spi_t *self_p;
     mp_buffer_info_t read_buffer_info;
     mp_buffer_info_t write_buffer_info;
-    
-    self_p = MP_OBJ_TO_PTR(self_in);
-    mp_get_buffer_raise(MP_OBJ_TO_PTR(read_buffer_in),
+    size_t size;
+
+    self_p = MP_OBJ_TO_PTR(args_p[0]);
+    mp_get_buffer_raise(MP_OBJ_TO_PTR(args_p[1]),
                         &read_buffer_info,
                         MP_BUFFER_WRITE);
-    mp_get_buffer_raise(MP_OBJ_TO_PTR(write_buffer_in),
+    mp_get_buffer_raise(MP_OBJ_TO_PTR(args_p[2]),
                         &write_buffer_info,
                         MP_BUFFER_READ);
 
-    /* Read and write buffers must have the same length. */
-    if (read_buffer_info.len != write_buffer_info.len) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+    /* Get the size. */
+    if (n_args == 4) {
+        size = mp_obj_get_int(args_p[3]);
+
+        if ((read_buffer_info.len < size) || (write_buffer_info.len < size)) {
+            nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        }
+    } else {
+        size = read_buffer_info.len;
+
+        if (read_buffer_info.len != write_buffer_info.len) {
+            nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        }
     }
-    
+
     return (MP_OBJ_NEW_SMALL_INT(spi_transfer(&self_p->drv,
                                               read_buffer_info.buf,
                                               write_buffer_info.buf,
-                                              read_buffer_info.len)));
+                                              size)));
 }
 
 /**
- * def read(self, buffer)
+ * def read(self, size)
  */
-static mp_obj_t class_spi_read(mp_obj_t self_in, mp_obj_t buffer_in)
+static mp_obj_t class_spi_read(mp_obj_t self_in, mp_obj_t size_in)
+{
+    struct class_spi_t *self_p;
+    vstr_t vstr;
+    size_t size;
+
+    self_p = MP_OBJ_TO_PTR(self_in);
+    size = mp_obj_get_int(size_in);
+
+    vstr_init_len(&vstr, size);
+
+    spi_read(&self_p->drv, vstr.buf, size);
+
+    return (mp_obj_new_str_from_vstr(&mp_type_bytes, &vstr));
+}
+
+/**
+ * def read_into(self, buffer[, size])
+ */
+static mp_obj_t class_spi_read_into(mp_uint_t n_args, const mp_obj_t *args_p)
 {
     struct class_spi_t *self_p;
     mp_buffer_info_t buffer_info;
-    
-    self_p = MP_OBJ_TO_PTR(self_in);
-    mp_get_buffer_raise(MP_OBJ_TO_PTR(buffer_in),
+    size_t size;
+
+    self_p = MP_OBJ_TO_PTR(args_p[0]);
+    mp_get_buffer_raise(MP_OBJ_TO_PTR(args_p[1]),
                         &buffer_info,
                         MP_BUFFER_WRITE);
-    
+
+    /* Get the size. */
+    if (n_args == 3) {
+        size = mp_obj_get_int(args_p[2]);
+
+        if (buffer_info.len < size) {
+            nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        }
+    } else {
+        size = buffer_info.len;
+    }
+
     return (MP_OBJ_NEW_SMALL_INT(spi_read(&self_p->drv,
                                           buffer_info.buf,
-                                          buffer_info.len)));
+                                          size)));
 }
 
 /**
- * def write(self, buffer)
+ * def write(self, buffer[, size])
  */
-static mp_obj_t class_spi_write(mp_obj_t self_in, mp_obj_t buffer_in)
+static mp_obj_t class_spi_write(mp_uint_t n_args, const mp_obj_t *args_p)
 {
     struct class_spi_t *self_p;
     mp_buffer_info_t buffer_info;
-    
-    self_p = MP_OBJ_TO_PTR(self_in);
-    mp_get_buffer_raise(MP_OBJ_TO_PTR(buffer_in),
+    size_t size;
+
+    self_p = MP_OBJ_TO_PTR(args_p[0]);
+    mp_get_buffer_raise(MP_OBJ_TO_PTR(args_p[1]),
                         &buffer_info,
                         MP_BUFFER_READ);
-    
+
+    /* Get the size. */
+    if (n_args == 3) {
+        size = mp_obj_get_int(args_p[2]);
+
+        if (buffer_info.len < size) {
+            nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        }
+    } else {
+        size = buffer_info.len;
+    }
+
     return (MP_OBJ_NEW_SMALL_INT(spi_write(&self_p->drv,
                                            buffer_info.buf,
-                                           buffer_info.len)));
+                                           size)));
 }
 
 /**
@@ -246,9 +331,9 @@ static mp_obj_t class_spi_get(mp_obj_t self_in)
 {
     struct class_spi_t *self_p;
     uint8_t data;
-    
+
     self_p = MP_OBJ_TO_PTR(self_in);
-    
+
     spi_get(&self_p->drv, &data);
 
     return (MP_OBJ_NEW_SMALL_INT(data));
@@ -260,11 +345,11 @@ static mp_obj_t class_spi_get(mp_obj_t self_in)
 static mp_obj_t class_spi_put(mp_obj_t self_in, mp_obj_t data_in)
 {
     struct class_spi_t *self_p;
-    
+
     self_p = MP_OBJ_TO_PTR(self_in);
-    
-    return (MP_OBJ_NEW_SMALL_INT(spi_put(&self_p->drv,
-                                         mp_obj_get_int(data_in))));
+    spi_put(&self_p->drv, mp_obj_get_int(data_in));
+
+    return (mp_const_none);
 }
 
 static MP_DEFINE_CONST_FUN_OBJ_1(class_spi_start_obj, class_spi_start);
@@ -273,9 +358,11 @@ static MP_DEFINE_CONST_FUN_OBJ_1(class_spi_take_bus_obj, class_spi_take_bus);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_spi_give_bus_obj, class_spi_give_bus);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_spi_select_obj, class_spi_select);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_spi_deselect_obj, class_spi_deselect);
-static MP_DEFINE_CONST_FUN_OBJ_3(class_spi_transfer_obj, class_spi_transfer);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_spi_transfer_obj, 2, 3, class_spi_transfer);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_spi_transfer_into_obj, 3, 4, class_spi_transfer_into);
 static MP_DEFINE_CONST_FUN_OBJ_2(class_spi_read_obj, class_spi_read);
-static MP_DEFINE_CONST_FUN_OBJ_2(class_spi_write_obj, class_spi_write);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_spi_read_into_obj, 2, 3, class_spi_read_into);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_spi_write_obj, 2, 3, class_spi_write);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_spi_get_obj, class_spi_get);
 static MP_DEFINE_CONST_FUN_OBJ_2(class_spi_put_obj, class_spi_put);
 
@@ -288,7 +375,9 @@ static const mp_rom_map_elem_t class_spi_locals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_select), MP_ROM_PTR(&class_spi_select_obj) },
     { MP_ROM_QSTR(MP_QSTR_deselect), MP_ROM_PTR(&class_spi_deselect_obj) },
     { MP_ROM_QSTR(MP_QSTR_transfer), MP_ROM_PTR(&class_spi_transfer_obj) },
+    { MP_ROM_QSTR(MP_QSTR_transfer_into), MP_ROM_PTR(&class_spi_transfer_into_obj) },
     { MP_ROM_QSTR(MP_QSTR_read), MP_ROM_PTR(&class_spi_read_obj) },
+    { MP_ROM_QSTR(MP_QSTR_read_into), MP_ROM_PTR(&class_spi_read_into_obj) },
     { MP_ROM_QSTR(MP_QSTR_write), MP_ROM_PTR(&class_spi_write_obj) },
     { MP_ROM_QSTR(MP_QSTR_get), MP_ROM_PTR(&class_spi_get_obj) },
     { MP_ROM_QSTR(MP_QSTR_put), MP_ROM_PTR(&class_spi_put_obj) },

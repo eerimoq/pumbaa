@@ -182,6 +182,27 @@ def test_smoke():
         kernel.thrd_set_env('foo', 'bar')
     print('thrd_get_env(CWD): ', kernel.thrd_get_env('CWD'))
 
+    spi = drivers.Spi(board.SPI_0, board.PIN_D3, drivers.Spi.MODE_MASTER, 1, 1, 1)
+    spi.start()
+    spi.take_bus()
+    spi.select()
+    print(spi.transfer(b'foo'))
+    print(spi.transfer(b'foo', 1))
+    buf = bytearray(3)
+    print(spi.transfer_into(buf, b'bar'))
+    print(spi.transfer_into(buf, b'bar', 2))
+    print(spi.read(3))
+    buf = bytearray(3)
+    print(spi.read_into(buf))
+    print(spi.read_into(buf, 1))
+    spi.write(b'fie')
+    spi.write(b'fie', 2)
+    print(spi.get())
+    print(spi.put(1))
+    spi.deselect()
+    spi.give_bus()
+    spi.stop()
+
 
 def main():
     testcases = [

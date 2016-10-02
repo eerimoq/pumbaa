@@ -32,7 +32,7 @@ static MP_DEFINE_CONST_FUN_OBJ_0(module_init_obj, module_init);
 static const mp_rom_map_elem_t module_board_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR___name__), MP_ROM_QSTR(MP_QSTR_board) },
     { MP_ROM_QSTR(MP_QSTR___init__), MP_ROM_PTR(&module_init_obj) },
-    
+
     { MP_ROM_QSTR(MP_QSTR_PIN_D0), MP_ROM_INT(SAM_PA+8) },
     { MP_ROM_QSTR(MP_QSTR_PIN_D1), MP_ROM_INT(SAM_PA+9) },
     { MP_ROM_QSTR(MP_QSTR_PIN_D2), MP_ROM_INT(SAM_PB+25) },
@@ -199,6 +199,8 @@ static const mp_rom_map_elem_t module_board_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR_DAC_0), MP_ROM_INT(0) },
 
     { MP_ROM_QSTR(MP_QSTR_FLASH_0), MP_ROM_INT(0) },
+
+    { MP_ROM_QSTR(MP_QSTR_SPI_0), MP_ROM_INT(0) },
 };
 
 static MP_DEFINE_CONST_DICT(module_board_globals, module_board_globals_table);

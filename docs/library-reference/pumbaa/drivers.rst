@@ -104,7 +104,7 @@ Simba documentation: `drivers`_
       Wait for an ongoing asynchronous convertion to finish.
 
 
-.. class:: drivers.Spi(device, ss, mode, speed, cpol, cpha)
+.. class:: drivers.Spi(device, slave_select, mode, speed, polarity, phase)
 
    Instansiate a Spi object.
 
@@ -112,25 +112,63 @@ Simba documentation: `drivers`_
 
    .. method:: start()
 
+      Configures the SPI hardware with the settings of this object.
+
    .. method:: stop()
 
+      Deconfigures the SPI hardware if given driver currently ownes
+      the bus.
+
    .. method:: take_bus()
-               
+
+      In multi master application the driver must take ownership of
+      the SPI bus before performing data transfers. Will re-configure
+      the SPI hardware if configured by another driver.
+
    .. method:: give_bus()
 
+      In multi master application the driver must give ownership of
+      the SPI bus to let other masters take it.
+
    .. method:: select()
-               
+
+      Select the slave by asserting the slave select pin.
+
    .. method:: deselect()
-               
-   .. method:: transfer(read_buffer, write_buffer)
-               
-   .. method:: read(buffer)
-               
-   .. method:: write(buffer)
-               
+
+      Deselect the slave by de-asserting the slave select pin.
+
+   .. method:: transfer(write_buffer[, size])
+
+      Simultaniuos read/write operation over the SPI bus. Returns the
+      read data as a bytes object.
+
+   .. method:: transfer_into(read_buffer, write_buffer[, size])
+
+      Simultaniuos read/write operation over the SPI bus.
+
+   .. method:: read(size)
+
+      Read `size` bytes from the SPI bus. Returns the read data as a
+      bytes object.
+
+   .. method:: read_into(buffer[, size])
+
+      Read data from the SPI bus into `buffer`. The `size` arguemnt
+      can be used to read fewer bytes than the size of `buffer`.
+
+   .. method:: write(buffer[, size])
+
+      Write `size` bytes from `buffer` to the SPI bus. Writes all data
+      in `buffer` is `size` is not given.
+
    .. method:: get()
-               
+
+      Read one byte of data from the SPI bus and return it.
+
    .. method:: put(data)
+
+      Put one byte of data to the SPI bus.
 
    .. data:: MODE_MASTER
 
