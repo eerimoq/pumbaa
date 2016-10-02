@@ -32,6 +32,7 @@ TESTS = \
 	tst/drivers/dac \
 	tst/drivers/exti \
 	tst/drivers/pin \
+	tst/drivers/spi \
 	tst/filesystem \
 	tst/kernel/timer \
 	tst/sync/event \

@@ -47,18 +47,18 @@ static mp_obj_t class_spi_make_new(const mp_obj_type_t *type_p,
         { MP_QSTR_ss, MP_ARG_REQUIRED | MP_ARG_INT },
         { MP_QSTR_mode, MP_ARG_INT, { .u_int = SPI_MODE_MASTER } },
         { MP_QSTR_speed, MP_ARG_INT, { .u_int = SPI_SPEED_1MBPS } },
-        { MP_QSTR_cpol, MP_ARG_INT, { .u_int = 1 } },
-        { MP_QSTR_cpha, MP_ARG_INT, { .u_int = 1 } }
+        { MP_QSTR_polarity, MP_ARG_INT, { .u_int = 1 } },
+        { MP_QSTR_phase, MP_ARG_INT, { .u_int = 1 } }
     };
     struct class_spi_t *self_p;
     mp_map_t kwargs;
     mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];
     int device;
-    int ss;
+    int slave_select;
     int mode;
     int speed;
-    int cpol;
-    int cpha;
+    int polarity;
+    int phase;
 
     mp_arg_check_num(n_args, n_kw, 1, MP_OBJ_FUN_ARGS_MAX, true);
 
@@ -75,21 +75,57 @@ static mp_obj_t class_spi_make_new(const mp_obj_type_t *type_p,
     self_p = m_new_obj(struct class_spi_t);
     self_p->base.type = &module_drivers_class_spi;
 
+    /* Device argument. */
     device = args[0].u_int;
-    ss = args[1].u_int;
+
+    if ((device < 0) || (device > SPI_DEVICE_MAX)) {
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_ValueError,
+                                           "bad device"));
+    }
+
+    /* Slave select argument. */
+    slave_select = args[1].u_int;
+
+    if ((slave_select < 0) || (slave_select > PIN_DEVICE_MAX)) {
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_ValueError,
+                                           "bad slave select"));
+    }
+
+    /* Mode argument. */
     mode = args[2].u_int;
+
+    if ((mode != SPI_MODE_MASTER) && (mode != SPI_MODE_SLAVE)) {
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_ValueError,
+                                           "bad mode"));
+    }
+
+    /* Speed argument. */
     speed = args[3].u_int;
-    cpol = args[4].u_int;
-    cpha = args[5].u_int;
+
+    /* Polarity argument. */
+    polarity = args[4].u_int;
+
+    if ((polarity != 0) && (polarity != 1)) {
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_ValueError,
+                                           "bad polarity"));
+    }
+
+    /* Phase argument. */
+    phase = args[5].u_int;
+
+    if ((phase != 0) && (phase != 1)) {
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_ValueError,
+                                           "bad phase"));
+    }
 
     if (spi_init(&self_p->drv,
                  &spi_device[device],
-                 &pin_device[ss],
+                 &pin_device[slave_select],
                  mode,
                  speed,
-                 cpol,
-                 cpha) != 0) {
-        return (mp_const_none);
+                 polarity,
+                 phase) != 0) {
+        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
     }
 
     return (self_p);
@@ -201,7 +237,9 @@ static mp_obj_t class_spi_transfer(mp_uint_t n_args, const mp_obj_t *args_p)
 
     vstr_init_len(&vstr, size);
 
-    spi_transfer(&self_p->drv, vstr.buf, buffer_info.buf, size);
+    if (spi_transfer(&self_p->drv, vstr.buf, buffer_info.buf, size) != size) {
+        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+    }
 
     return (mp_obj_new_str_from_vstr(&mp_type_bytes, &vstr));
 }
@@ -239,10 +277,14 @@ static mp_obj_t class_spi_transfer_into(mp_uint_t n_args, const mp_obj_t *args_p
         }
     }
 
-    return (MP_OBJ_NEW_SMALL_INT(spi_transfer(&self_p->drv,
-                                              read_buffer_info.buf,
-                                              write_buffer_info.buf,
-                                              size)));
+    if (spi_transfer(&self_p->drv,
+                     read_buffer_info.buf,
+                     write_buffer_info.buf,
+                     size) != size) {
+        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+    }
+
+    return (MP_OBJ_NEW_SMALL_INT(size));
 }
 
 /**
@@ -259,7 +301,9 @@ static mp_obj_t class_spi_read(mp_obj_t self_in, mp_obj_t size_in)
 
     vstr_init_len(&vstr, size);
 
-    spi_read(&self_p->drv, vstr.buf, size);
+    if (spi_read(&self_p->drv, vstr.buf, size) != size) {
+        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+    }
 
     return (mp_obj_new_str_from_vstr(&mp_type_bytes, &vstr));
 }
@@ -289,9 +333,11 @@ static mp_obj_t class_spi_read_into(mp_uint_t n_args, const mp_obj_t *args_p)
         size = buffer_info.len;
     }
 
-    return (MP_OBJ_NEW_SMALL_INT(spi_read(&self_p->drv,
-                                          buffer_info.buf,
-                                          size)));
+    if (spi_read(&self_p->drv, buffer_info.buf, size) != size) {
+        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+    }
+
+    return (MP_OBJ_NEW_SMALL_INT(size));
 }
 
 /**
@@ -319,9 +365,11 @@ static mp_obj_t class_spi_write(mp_uint_t n_args, const mp_obj_t *args_p)
         size = buffer_info.len;
     }
 
-    return (MP_OBJ_NEW_SMALL_INT(spi_write(&self_p->drv,
-                                           buffer_info.buf,
-                                           size)));
+    if (spi_write(&self_p->drv, buffer_info.buf, size) != size) {
+        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+    }
+
+    return (MP_OBJ_NEW_SMALL_INT(size));
 }
 
 static MP_DEFINE_CONST_FUN_OBJ_1(class_spi_start_obj, class_spi_start);

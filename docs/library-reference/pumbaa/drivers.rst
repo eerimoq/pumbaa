@@ -112,7 +112,7 @@ Simba documentation: `drivers`_
       Wait for an ongoing asynchronous convertion to finish.
 
 
-.. class:: drivers.Spi(device, slave_select, mode, speed, polarity, phase)
+.. class:: drivers.Spi(device, slave_select, mode=MODE_MASTER, speed=SPEED_1MBPS, polarity=1, phase=1)
 
    Create a Spi object. Select the SPI device with `device` and slave
    select pin with `slave_select`. `mode` in one of ``MODE_MASTER``
@@ -125,7 +125,7 @@ Simba documentation: `drivers`_
 
    .. code-block:: python
 
-      >>> spi = Spi(board.SPI_0, board.PIN_D3, MODE_MASTER, SPEED_1MBPS, 1, 1)
+      >>> spi = Spi(board.SPI_0, board.PIN_D3)
       >>> spi.start()
       >>> spi.select()
       >>> spi.write(b'\x01\x02\x03\x04')
