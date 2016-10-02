@@ -162,14 +162,6 @@ Simba documentation: `drivers`_
       Write `size` bytes from `buffer` to the SPI bus. Writes all data
       in `buffer` is `size` is not given.
 
-   .. method:: get()
-
-      Read one byte of data from the SPI bus and return it.
-
-   .. method:: put(data)
-
-      Put one byte of data to the SPI bus.
-
    .. data:: MODE_MASTER
 
    .. data:: MODE_SLAVE

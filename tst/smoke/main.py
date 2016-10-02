@@ -197,8 +197,6 @@ def test_smoke():
     print(spi.read_into(buf, 1))
     spi.write(b'fie')
     spi.write(b'fie', 2)
-    print(spi.get())
-    print(spi.put(1))
     spi.deselect()
     spi.give_bus()
     spi.stop()

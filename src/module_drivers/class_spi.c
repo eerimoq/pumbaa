@@ -324,34 +324,6 @@ static mp_obj_t class_spi_write(mp_uint_t n_args, const mp_obj_t *args_p)
                                            size)));
 }
 
-/**
- * def get(self)
- */
-static mp_obj_t class_spi_get(mp_obj_t self_in)
-{
-    struct class_spi_t *self_p;
-    uint8_t data;
-
-    self_p = MP_OBJ_TO_PTR(self_in);
-
-    spi_get(&self_p->drv, &data);
-
-    return (MP_OBJ_NEW_SMALL_INT(data));
-}
-
-/**
- * def put(self, data)
- */
-static mp_obj_t class_spi_put(mp_obj_t self_in, mp_obj_t data_in)
-{
-    struct class_spi_t *self_p;
-
-    self_p = MP_OBJ_TO_PTR(self_in);
-    spi_put(&self_p->drv, mp_obj_get_int(data_in));
-
-    return (mp_const_none);
-}
-
 static MP_DEFINE_CONST_FUN_OBJ_1(class_spi_start_obj, class_spi_start);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_spi_stop_obj, class_spi_stop);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_spi_take_bus_obj, class_spi_take_bus);
@@ -363,8 +335,6 @@ static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_spi_transfer_into_obj, 3, 4, cl
 static MP_DEFINE_CONST_FUN_OBJ_2(class_spi_read_obj, class_spi_read);
 static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_spi_read_into_obj, 2, 3, class_spi_read_into);
 static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_spi_write_obj, 2, 3, class_spi_write);
-static MP_DEFINE_CONST_FUN_OBJ_1(class_spi_get_obj, class_spi_get);
-static MP_DEFINE_CONST_FUN_OBJ_2(class_spi_put_obj, class_spi_put);
 
 static const mp_rom_map_elem_t class_spi_locals_dict_table[] = {
     /* Instance methods. */
@@ -379,8 +349,6 @@ static const mp_rom_map_elem_t class_spi_locals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_read), MP_ROM_PTR(&class_spi_read_obj) },
     { MP_ROM_QSTR(MP_QSTR_read_into), MP_ROM_PTR(&class_spi_read_into_obj) },
     { MP_ROM_QSTR(MP_QSTR_write), MP_ROM_PTR(&class_spi_write_obj) },
-    { MP_ROM_QSTR(MP_QSTR_get), MP_ROM_PTR(&class_spi_get_obj) },
-    { MP_ROM_QSTR(MP_QSTR_put), MP_ROM_PTR(&class_spi_put_obj) },
 
     /* Class constants. */
     { MP_ROM_QSTR(MP_QSTR_MODE_MASTER), MP_ROM_INT(SPI_MODE_MASTER) },
