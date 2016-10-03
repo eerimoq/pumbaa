@@ -42,6 +42,10 @@ def test_tcp_server():
     listener.close()
 
 
+def test_udp():
+    socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+
 def test_bad_arguments():
     # Bad socket family.
     with assert_raises(OSError):
@@ -57,6 +61,7 @@ def main():
         (test_print, "test_print"),
         (test_tcp_client, "test_tcp_client"),
         (test_tcp_server, "test_tcp_server"),
+        (test_udp, "test_udp"),
         (test_bad_arguments, "test_bad_arguments")
     ]
     harness.run(testcases)
