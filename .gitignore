@@ -18,6 +18,10 @@ tst/*/*/index-sort-l.html
 tst/*/*/ruby.png
 tst/*/*/snow.png
 tst/*/*/updown.png
+tst/*/*/micropython
+tst/*/*/src
+tst/*/*/simba
+tst/*/*/tst
 
 tst/*/amber.png
 tst/*/emerald.png
@@ -29,6 +33,10 @@ tst/*/index-sort-l.html
 tst/*/ruby.png
 tst/*/snow.png
 tst/*/updown.png
+tst/*/micropython
+tst/*/src
+tst/*/simba
+tst/*/tst
 
 examples/*/*/amber.png
 examples/*/*/emerald.png

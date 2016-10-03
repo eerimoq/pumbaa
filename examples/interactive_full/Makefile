@@ -17,16 +17,12 @@
 # This file is part of the Pumbaa project.
 #
 
-NAME = socket_suite
+NAME = interactive_full
 BOARD ?= linux
 
-PYSRC += \
-	$(PUMBAA_ROOT)/src/py/harness.py
+MAIN_PY =
 
-SRC += socket_stub.c
-SRC_IGNORE = $(SIMBA_ROOT)/src/inet/socket.c
-
-CDEFS += CONFIG_PUMBAA_MAIN_FRIENDLY_REPL=0
+CDEFS += CONFIG_START_SHELL=0
 
 PUMBAA_ROOT ?= ../..
 include $(PUMBAA_ROOT)/make/app.mk

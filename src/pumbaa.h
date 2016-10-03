@@ -20,9 +20,10 @@
 #ifndef __PUMBAA_H__
 #define __PUMBAA_H__
 
+#include <pumbaa_config.h>
+
 #include "simba.h"
 
-#include <pumbaa_config.h>
 #include "pumbaa_config_default.h"
 
 #include "genhdr/mpversion.h"

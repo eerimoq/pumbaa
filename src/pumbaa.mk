@@ -18,6 +18,7 @@
 #
 
 INC += \
+	. \
 	$(PUMBAA_ROOT)/src \
 	$(PUMBAA_ROOT)/src/port \
 	$(PUMBAA_ROOT)/src/boards/$(BOARD)

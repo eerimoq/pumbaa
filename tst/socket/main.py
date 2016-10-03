@@ -24,43 +24,40 @@ from harness import assert_raises
 
 def test_print():
     print(socket)
-    print(socket.socket())
 
 
 def test_tcp_client():
     client = socket.socket()
-
-    with assert_raises(NotImplementedError):
-        client.connect()
-
-    with assert_raises(NotImplementedError):
-        client.send()
-
-    with assert_raises(NotImplementedError):
-        client.recv()
-
-    with assert_raises(NotImplementedError):
-        client.close()
+    client.connect(("192.168.1.101", 80))
+    assert client.send(b'foo') == 3
+    assert client.recv(3) == b'bar'
+    client.close()
 
 
 def test_tcp_server():
     listener = socket.socket()
+    listener.bind(("192.168.1.102", 8080))
+    listener.listen(5)
+    listener.accept()
+    listener.close()
 
-    with assert_raises(NotImplementedError):
-        listener.bind()
 
-    with assert_raises(NotImplementedError):
-        listener.listen()
+def test_bad_arguments():
+    # Bad socket family.
+    with assert_raises(OSError):
+        socket.socket(-1)
 
-    with assert_raises(NotImplementedError):
-        listener.close()
+        # Bad socket type.
+    with assert_raises(OSError):
+        socket.socket(socket.AF_INET, -1)
 
 
 def main():
     testcases = [
         (test_print, "test_print"),
         (test_tcp_client, "test_tcp_client"),
-        (test_tcp_server, "test_tcp_server")
+        (test_tcp_server, "test_tcp_server"),
+        (test_bad_arguments, "test_bad_arguments")
     ]
     harness.run(testcases)
 
