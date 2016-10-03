@@ -11,15 +11,14 @@ This module provides access to the BSD socket interface.
 .. data:: socket.AF_INET
 
    This constant represent the address (and protocol) family, used for
-   the first argument to socket().
+   the first argument to ``socket()``.
 
 
 .. data:: socket.SOCK_STREAM
 .. data:: socket.SOCK_DGRAM
 
    These constants represent the socket types, used for the second
-   argument to socket(). (Only ``SOCK_STREAM`` and ``SOCK_DGRAM``
-   appear to be generally useful.)
+   argument to ``socket()``.
 
 
 .. function:: socket.getaddrinfo(host, port[, family[, socktype[, proto[, flags]]]])
@@ -106,8 +105,8 @@ This module provides access to the BSD socket interface.
    .. method:: accept()
 
       Accept a connection. The socket must be bound to an address and
-      listening for connections. The return value is a pair (conn,
-      address) where conn is a new socket object usable to send and
+      listening for connections. The return value is a pair ``(conn,
+      address)`` where conn is a new socket object usable to send and
       receive data on the connection, and address is the address bound
       to the socket on the other end of the connection.
 
@@ -115,8 +114,7 @@ This module provides access to the BSD socket interface.
    .. method:: bind(address)
 
       Bind the socket to address. The socket must not already be
-      bound. (The format of address depends on the address family —
-      see above.)
+      bound. The format is of `address` is ``(ip_address, port)``.
 
 
    .. method:: close()
@@ -134,8 +132,8 @@ This module provides access to the BSD socket interface.
 
    .. method:: connect(address)
 
-      Connect to a remote socket at address. (The format of address
-      depends on the address family — see above.)
+      Connect to a remote socket at address. The format is of
+      `address` is ``(ip_address, port)``.
 
 
    .. method:: listen(backlog)
@@ -211,18 +209,3 @@ This module provides access to the BSD socket interface.
    .. method:: shutdown(how)
 
       Shut down one or both halves of the connection.
-
-
-   .. data:: family
-
-      The socket family. Read only.
-
-
-   .. data:: type
-
-      The socket type. Read only.
-
-
-   .. data:: proto
-
-      The socket protocol. Read only.
