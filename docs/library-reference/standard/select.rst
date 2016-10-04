@@ -5,7 +5,8 @@
    :synopsis: Waiting for I/O completion.
 
 This module provides access to the `poll()` function available in most
-operating systems. It only works for Simba channels.
+operating systems. It only works for the Simba channels; events,
+queues and sockets.
 
 ----------------------------------------------
 
@@ -39,7 +40,7 @@ operating systems. It only works for Simba channels.
       any pending I/O events.
 
       `eventmask` is an optional bitmask describing the type of events
-      you want to check for, and can be currently only be POLLIN.
+      you want to check for, and can be currently only be ``POLLIN``.
 
       Registering a file descriptor that’s already registered is not
       an error, and has the same effect as registering the descriptor
@@ -62,14 +63,14 @@ operating systems. It only works for Simba channels.
    .. method:: poll([timeout])
 
       Polls the set of registered channels, and returns a
-      possibly-empty list containing (channel, event) 2-tuples for the
-      descriptors that have events or errors to report. An empty list
-      indicates that the call timed out and no channel had any events
-      to report. If `timeout` is given, it specifies the length of
-      time in milliseconds which the system will wait for events
-      before returning. If `timeout` is omitted, negative, or None,
-      the call will block until there is an event for this poll
-      object.
+      possibly-empty list containing ``(channel, event)`` 2-tuples for
+      the descriptors that have events or errors to report. An empty
+      list indicates that the call timed out and no channel had any
+      events to report. If `timeout` is given, it specifies the length
+      of time in milliseconds which the system will wait for events
+      before returning. If `timeout` is omitted, negative, or
+      ``None``, the call will block until there is an event for this
+      poll object.
 
 .. data:: select.POLLIN
 
