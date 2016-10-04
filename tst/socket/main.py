@@ -17,6 +17,7 @@
 # This file is part of the Pumbaa project.
 #
 
+import select
 import socket
 import harness
 from harness import assert_raises
@@ -46,6 +47,19 @@ def test_udp():
     socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 
+def test_select():
+    poll = select.poll()
+    tcp = socket.socket()
+
+    # Register both event channels.
+    poll.register(tcp)
+
+    # Timeout waiting for data on the socket.
+    assert poll.poll(0.01) == []
+
+    tcp.close()
+
+
 def test_bad_arguments():
     # Bad socket family.
     with assert_raises(OSError):
@@ -62,6 +76,7 @@ def main():
         (test_tcp_client, "test_tcp_client"),
         (test_tcp_server, "test_tcp_server"),
         (test_udp, "test_udp"),
+        (test_select, "test_select"),
         (test_bad_arguments, "test_bad_arguments")
     ]
     harness.run(testcases)

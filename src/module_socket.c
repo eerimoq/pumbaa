@@ -30,7 +30,7 @@ struct class_socket_t {
     struct socket_t socket;
 };
 
-static struct class_socket_t *socket_new(void);
+extern const mp_obj_type_t module_socket_class_socket;
 
 static mp_obj_t socket_make_new(const mp_obj_type_t *type_p,
                                 size_t n_args,
@@ -67,7 +67,8 @@ static mp_obj_t socket_make_new(const mp_obj_type_t *type_p,
         nlr_raise(mp_obj_new_exception(&mp_type_OSError));
     }
 
-    socket_p = socket_new();
+    socket_p = m_new_obj(struct class_socket_t);
+    socket_p->base.type = &module_socket_class_socket;
 
     switch (type) {
 
@@ -99,7 +100,8 @@ static mp_obj_t class_socket_accept(mp_obj_t self_in)
 
     self_p = MP_OBJ_TO_PTR(self_in);
 
-    socket_p = socket_new();
+    socket_p = m_new_obj(struct class_socket_t);
+    socket_p->base.type = &module_socket_class_socket;
 
     if (socket_accept(&self_p->socket, &socket_p->socket, NULL) != 0) {
         nlr_raise(mp_obj_new_exception(&mp_type_OSError));
@@ -295,22 +297,12 @@ static MP_DEFINE_CONST_DICT(class_socket_locals_dict, class_socket_locals_dict_t
 /**
  * The socket class.
  */
-static const mp_obj_type_t class_socket = {
+const mp_obj_type_t module_socket_class_socket = {
     { &mp_type_type },
     .name = MP_QSTR_SocketType,
     .make_new = socket_make_new,
     .locals_dict = (void*)&class_socket_locals_dict,
 };
-
-static struct class_socket_t *socket_new()
-{
-    struct class_socket_t *socket_p;
-
-    socket_p = m_new_obj(struct class_socket_t);
-    socket_p->base.type = &class_socket;
-
-    return (socket_p);
-}
 
 /**
  * Function called when this module is imported.
@@ -332,7 +324,7 @@ static const mp_rom_map_elem_t mp_module_socket_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR___init__), MP_ROM_PTR(&module_init_obj) },
 
     /* Types. */
-    { MP_ROM_QSTR(MP_QSTR_socket), MP_ROM_PTR(&class_socket) },
+    { MP_ROM_QSTR(MP_QSTR_socket), MP_ROM_PTR(&module_socket_class_socket) },
 
     /* Constants. */
     { MP_ROM_QSTR(MP_QSTR_AF_INET), MP_ROM_INT(AF_INET) },
