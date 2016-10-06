@@ -21,7 +21,7 @@ queues and sockets.
 
    .. code-block:: python
 
-      >>> from simba import Queue
+      >>> from sync import Queue
       >>> poll = select.poll()
       >>> queue = Queue()
       >>> poll.register(queue)
