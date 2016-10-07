@@ -295,7 +295,7 @@ static MP_DEFINE_CONST_DICT(class_socket_locals_dict, class_socket_locals_dict_t
 /**
  * The socket class.
  */
-static const mp_obj_type_t class_socket = {
+const mp_obj_type_t module_socket_class_socket = {
     { &mp_type_type },
     .name = MP_QSTR_SocketType,
     .make_new = socket_make_new,
@@ -307,7 +307,7 @@ static struct class_socket_t *socket_new()
     struct class_socket_t *socket_p;
 
     socket_p = m_new_obj(struct class_socket_t);
-    socket_p->base.type = &class_socket;
+    socket_p->base.type = &module_socket_class_socket;
 
     return (socket_p);
 }
@@ -332,7 +332,7 @@ static const mp_rom_map_elem_t mp_module_socket_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR___init__), MP_ROM_PTR(&module_init_obj) },
 
     /* Types. */
-    { MP_ROM_QSTR(MP_QSTR_socket), MP_ROM_PTR(&class_socket) },
+    { MP_ROM_QSTR(MP_QSTR_socket), MP_ROM_PTR(&module_socket_class_socket) },
 
     /* Constants. */
     { MP_ROM_QSTR(MP_QSTR_AF_INET), MP_ROM_INT(AF_INET) },

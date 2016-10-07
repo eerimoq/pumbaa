@@ -22,7 +22,7 @@
 #define CHAN_POLLIN   1
 #define CHAN_POLLHUP  2
 
-extern const mp_obj_type_t mp_type_socket;
+extern const mp_obj_type_t module_socket_class_socket;
 
 struct class_chan_t {
     mp_obj_base_t base;
@@ -42,7 +42,8 @@ struct class_poll_t {
 static int is_channel(mp_obj_t obj)
 {
     return (MP_OBJ_IS_TYPE(obj, &module_sync_class_event)
-            || MP_OBJ_IS_TYPE(obj, &module_sync_class_queue));
+            || MP_OBJ_IS_TYPE(obj, &module_sync_class_queue)
+            || MP_OBJ_IS_TYPE(obj, &module_socket_class_socket));
 }
 
 /**
