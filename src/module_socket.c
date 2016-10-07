@@ -30,7 +30,7 @@ struct class_socket_t {
     struct socket_t socket;
 };
 
-static struct class_socket_t *socket_new(void);
+extern const mp_obj_type_t module_socket_class_socket;
 
 static mp_obj_t socket_make_new(const mp_obj_type_t *type_p,
                                 size_t n_args,
@@ -67,7 +67,8 @@ static mp_obj_t socket_make_new(const mp_obj_type_t *type_p,
         nlr_raise(mp_obj_new_exception(&mp_type_OSError));
     }
 
-    socket_p = socket_new();
+    socket_p = m_new_obj(struct class_socket_t);
+    socket_p->base.type = &module_socket_class_socket;
 
     switch (type) {
 
@@ -99,7 +100,8 @@ static mp_obj_t class_socket_accept(mp_obj_t self_in)
 
     self_p = MP_OBJ_TO_PTR(self_in);
 
-    socket_p = socket_new();
+    socket_p = m_new_obj(struct class_socket_t);
+    socket_p->base.type = &module_socket_class_socket;
 
     if (socket_accept(&self_p->socket, &socket_p->socket, NULL) != 0) {
         nlr_raise(mp_obj_new_exception(&mp_type_OSError));
@@ -301,16 +303,6 @@ const mp_obj_type_t module_socket_class_socket = {
     .make_new = socket_make_new,
     .locals_dict = (void*)&class_socket_locals_dict,
 };
-
-static struct class_socket_t *socket_new()
-{
-    struct class_socket_t *socket_p;
-
-    socket_p = m_new_obj(struct class_socket_t);
-    socket_p->base.type = &module_socket_class_socket;
-
-    return (socket_p);
-}
 
 /**
  * Function called when this module is imported.
