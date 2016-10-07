@@ -5,8 +5,9 @@
    :synopsis: Waiting for I/O completion.
 
 This module provides access to the `poll()` function available in most
-operating systems. It only works for the Simba channels; events,
-queues and sockets.
+operating systems. It only works for the Simba channels;
+:doc:`events<../pumbaa/sync>`, :doc:`queues<../pumbaa/sync>` and
+:doc:`sockets<socket>`.
 
 ----------------------------------------------
 
