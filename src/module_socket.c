@@ -244,11 +244,9 @@ static mp_obj_t class_socket_send(mp_obj_t self_in, mp_obj_t string_in)
     return (mp_obj_new_int(size));
 }
 
-static mp_obj_t class_socket_sendall(mp_obj_t self_in)
+static mp_obj_t class_socket_sendall(mp_obj_t self_in, mp_obj_t string_in)
 {
-    mp_not_implemented("socket.sendall");
-
-    return (mp_const_none);
+    return (class_socket_send(self_in, string_in));
 }
 
 static mp_obj_t class_socket_sendto(mp_obj_t self_in)
@@ -275,7 +273,7 @@ static MP_DEFINE_CONST_FUN_OBJ_1(socket_recvfrom_obj, class_socket_recvfrom);
 static MP_DEFINE_CONST_FUN_OBJ_1(socket_recv_into_obj, class_socket_recv_into);
 static MP_DEFINE_CONST_FUN_OBJ_1(socket_recvfrom_into_obj, class_socket_recvfrom_into);
 static MP_DEFINE_CONST_FUN_OBJ_2(socket_send_obj, class_socket_send);
-static MP_DEFINE_CONST_FUN_OBJ_1(socket_sendall_obj, class_socket_sendall);
+static MP_DEFINE_CONST_FUN_OBJ_2(socket_sendall_obj, class_socket_sendall);
 static MP_DEFINE_CONST_FUN_OBJ_1(socket_sendto_obj, class_socket_sendto);
 static MP_DEFINE_CONST_FUN_OBJ_1(socket_shutdown_obj, class_socket_shutdown);
 
