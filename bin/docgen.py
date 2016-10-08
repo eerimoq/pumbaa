@@ -109,6 +109,7 @@ def examples_generate():
     examples = [
         "blink",
         "hello_world",
+        "select"
     ]
 
     for example in examples:

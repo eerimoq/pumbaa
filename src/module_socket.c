@@ -119,7 +119,7 @@ static mp_obj_t class_socket_bind(mp_obj_t self_in, mp_obj_t addr_in)
     struct class_socket_t *self_p;
     mp_obj_t *addr_items;
     struct inet_addr_t addr;
-    
+
     self_p = MP_OBJ_TO_PTR(self_in);
 
     /* Convert the address. */
@@ -152,7 +152,7 @@ static mp_obj_t class_socket_connect(mp_obj_t self_in, mp_obj_t addr_in)
     struct class_socket_t *self_p;
     mp_obj_t *addr_items;
     struct inet_addr_t addr;
-    
+
     self_p = MP_OBJ_TO_PTR(self_in);
 
     /* Convert the address. */
@@ -191,11 +191,14 @@ static mp_obj_t class_socket_recv(mp_obj_t self_in, mp_obj_t bufsize_in)
     self_p = MP_OBJ_TO_PTR(self_in);
     size = mp_obj_get_int(bufsize_in);
 
-    vstr_init_len(&vstr, size);
+    vstr_init(&vstr, size);
+    size = socket_read(&self_p->socket, vstr.buf, size);
 
-    if (socket_read(&self_p->socket, vstr.buf, size) != size) {
+    if (size < 0) {
         nlr_raise(mp_obj_new_exception(&mp_type_OSError));
     }
+
+    vstr.len = size;
 
     return (mp_obj_new_str_from_vstr(&mp_type_bytes, &vstr));
 }

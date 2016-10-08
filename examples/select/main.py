@@ -17,7 +17,6 @@
 # This file is part of the Pumbaa project.
 #
 
-import sys
 import select
 import socket
 from sync import Event, Queue
@@ -29,24 +28,27 @@ UDP_ADDRESS = '192.168.1.103'
 UDP_PORT = 30303
 
 button = Event()
-exti = Exti(BUTTON_PIN, button, 0x1)
+exti = Exti(BUTTON_PIN, Exti.FALLING, button, 0x1)
+
+queue = Queue()
 
 udp = socket.socket(type=socket.SOCK_DGRAM)
 udp.bind((UDP_ADDRESS, UDP_PORT))
 
 poll = select.poll()
 poll.register(button)
-poll.register(sys.stdin)
+poll.register(queue)
 poll.register(udp)
 
-while True:
-    channels = poll.poll()
+queue.write('foo')
 
-    for channel, evetmask in channels:
-        if channel is button:
-            button.read(0x1)
-            print("button")
-        elif channel is sys.stdin:
-            print("sys.stdin:", sys.stdin.read(1))
-        elif channel is udp:
-            print("udp:", udp.recv(1024))
+while True:
+    [(channel, eventmask)] = poll.poll()
+
+    if channel is button:
+        button.read(0x1)
+        print("button")
+    elif channel is queue:
+        print("queue:", queue.read(3))
+    elif channel is udp:
+        print("udp:", udp.recv(1024))
