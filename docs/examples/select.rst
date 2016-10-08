@@ -5,7 +5,15 @@ About
 -----
 
 Setup three channels, add them to a poll object and wait for events to
-occur. Change the UDP configuration to match your setup.
+occur.
+
+Three channels are polled:
+
+1. An event channel that waits for a button to be pressed.
+2. A queue channel that the string "foo" is written to in the script.
+3. A socket channel waiting for UDP packets.
+
+NOTE: Change the UDP configuration to match your setup.
 
 Source code
 -----------
