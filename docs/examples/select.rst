@@ -31,7 +31,7 @@ Build and upload the application.
 .. code-block:: text
 
    $ cd examples/blink
-   $ make -s BOARD=esp12e run
+   $ make -s BOARD=esp12e CDEFS_EXTRA="CONFIG_START_NETWORK_INTERFACE_WIFI_SSID=ssid CONFIG_START_NETWORK_INTERFACE_WIFI_PASSWORD=password" run
    ...
    queue: b'foo'
 
