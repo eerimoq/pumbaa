@@ -35,6 +35,7 @@ TESTS = \
 	tst/drivers/exti \
 	tst/drivers/pin \
 	tst/drivers/spi \
+	tst/drivers/sd \
 	tst/kernel/timer \
 	tst/sync/event \
 	tst/sync/queue

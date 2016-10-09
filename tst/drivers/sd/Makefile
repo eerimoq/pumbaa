@@ -20,6 +20,8 @@
 NAME = sd_suite
 BOARD ?= linux
 
+SRC += sd_stub.c
+SRC_IGNORE += $(SIMBA_ROOT)/src/drivers/sd.c
 PYSRC += \
 	$(PUMBAA_ROOT)/src/py/harness.py
 

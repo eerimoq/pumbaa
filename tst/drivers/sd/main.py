@@ -28,7 +28,7 @@ SD = None
 
 def test_start():
     global SD
-    spi = Spi(board.SPI_0, board.PIN_D8)
+    spi = Spi(board.SPI_0, board.PIN_D4)
     SD = Sd(spi)
     SD.start()
 
@@ -44,7 +44,15 @@ def test_read_cid():
 
 
 def test_read_csd():
-    print(SD.read_csd())
+    # Version 1.
+    csd = SD.read_csd()
+    print(csd)
+    assert csd.csd_structure == 0
+
+    # Version 2.
+    csd = SD.read_csd()
+    print(csd)
+    assert csd.csd_structure == 1
 
 
 def test_read_write():
@@ -56,10 +64,36 @@ def test_read_write():
     assert buf == block
 
 
+def test_read_write_fail():
+    # The driver fails to read and write data.
+    with assert_raises(OSError):
+        block = 512 * b'1'
+        SD.write_block(0, block)
+
+    with assert_raises(OSError):
+        SD.read_block(0)
+
+    with assert_raises(OSError):
+        buf = bytearray(512)
+        SD.read_block_into(0, buf)
+
+
 def test_bad_arguments():
     # Bad spi object.
     with assert_raises(TypeError):
         Sd(None)
+
+    # Bad block size.
+    with assert_raises(OSError):
+        SD.write_block(0, '')
+    with assert_raises(OSError):
+        SD.write_block(0, 1024 * ' ')
+    with assert_raises(TypeError):
+        SD.read_block_into(0, ' ')
+
+    # Read fails.
+    with assert_raises(OSError):
+        SD.read_block(0)
 
 
 def test_stop():
@@ -73,6 +107,7 @@ def main():
         (test_read_cid, "test_read_cid"),
         (test_read_csd, "test_read_csd"),
         (test_read_write, "test_read_write"),
+        (test_read_write_fail, "test_read_write_fail"),
         (test_bad_arguments, "test_bad_arguments"),
         (test_stop, "test_stop")
     ]
