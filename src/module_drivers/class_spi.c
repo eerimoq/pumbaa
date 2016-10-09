@@ -46,9 +46,9 @@ static mp_obj_t class_spi_make_new(const mp_obj_type_t *type_p,
         { MP_QSTR_device, MP_ARG_REQUIRED | MP_ARG_INT },
         { MP_QSTR_slave_select, MP_ARG_REQUIRED | MP_ARG_INT },
         { MP_QSTR_mode, MP_ARG_INT, { .u_int = SPI_MODE_MASTER } },
-        { MP_QSTR_speed, MP_ARG_INT, { .u_int = SPI_SPEED_1MBPS } },
-        { MP_QSTR_polarity, MP_ARG_INT, { .u_int = 1 } },
-        { MP_QSTR_phase, MP_ARG_INT, { .u_int = 1 } }
+        { MP_QSTR_speed, MP_ARG_INT, { .u_int = SPI_SPEED_250KBPS } },
+        { MP_QSTR_polarity, MP_ARG_INT, { .u_int = 0 } },
+        { MP_QSTR_phase, MP_ARG_INT, { .u_int = 0 } }
     };
     struct class_spi_t *self_p;
     mp_map_t kwargs;
@@ -401,6 +401,14 @@ static const mp_rom_map_elem_t class_spi_locals_dict_table[] = {
     /* Class constants. */
     { MP_ROM_QSTR(MP_QSTR_MODE_MASTER), MP_ROM_INT(SPI_MODE_MASTER) },
     { MP_ROM_QSTR(MP_QSTR_MODE_SLAVE), MP_ROM_INT(SPI_MODE_SLAVE) },
+
+    { MP_ROM_QSTR(MP_QSTR_SPEED_8MBPS), MP_ROM_INT(SPI_SPEED_8MBPS) },
+    { MP_ROM_QSTR(MP_QSTR_SPEED_4MBPS), MP_ROM_INT(SPI_SPEED_4MBPS) },
+    { MP_ROM_QSTR(MP_QSTR_SPEED_2MBPS), MP_ROM_INT(SPI_SPEED_2MBPS) },
+    { MP_ROM_QSTR(MP_QSTR_SPEED_1MBPS), MP_ROM_INT(SPI_SPEED_1MBPS) },
+    { MP_ROM_QSTR(MP_QSTR_SPEED_500KBPS), MP_ROM_INT(SPI_SPEED_500KBPS) },
+    { MP_ROM_QSTR(MP_QSTR_SPEED_250KBPS), MP_ROM_INT(SPI_SPEED_250KBPS) },
+    { MP_ROM_QSTR(MP_QSTR_SPEED_125KBPS), MP_ROM_INT(SPI_SPEED_125KBPS) }
 };
 
 static MP_DEFINE_CONST_DICT(class_spi_locals_dict, class_spi_locals_dict_table);

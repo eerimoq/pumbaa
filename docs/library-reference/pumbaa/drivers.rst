@@ -126,7 +126,7 @@ Simba documentation: `drivers`_
       Wait for an ongoing asynchronous convertion to finish.
 
 
-.. class:: drivers.Spi(device, slave_select, mode=MODE_MASTER, speed=SPEED_1MBPS, polarity=1, phase=1)
+.. class:: drivers.Spi(device, slave_select, mode=MODE_MASTER, speed=SPEED_250KBPS, polarity=0, phase=0)
 
    Create a Spi object. Select the SPI device with `device` and slave
    select pin with `slave_select`. `mode` in one of ``MODE_MASTER``
@@ -213,6 +213,16 @@ Simba documentation: `drivers`_
 
       SPI slave mode.
 
+   .. data:: SPEED_8MBPS
+   .. data:: SPEED_4MBPS
+   .. data:: SPEED_2MBPS
+   .. data:: SPEED_1MBPS
+   .. data:: SPEED_500KBPS
+   .. data:: SPEED_250KBPS
+   .. data:: SPEED_125KBPS
+
+      SPI bus speed. Only used if the driver is configured as master.
+
 
 .. class:: drivers.Sd(spi)
 
@@ -225,7 +235,7 @@ Simba documentation: `drivers`_
       >>> sd = Sd(spi)
       >>> sd.start()
       >>> print(sd.read_cid())
-      ...
+      (mid=2, oid=b'TM', pnm=b'SA04G', prv=22, psn=-681299654, mdt=60416, crc=107)
       >>> sd.stop()
 
    Simba documentation: `drivers/sd`_
@@ -241,9 +251,19 @@ Simba documentation: `drivers`_
 
    .. method:: read_cid()
 
-      Read card CID register. The CID contains card identification
-      information such as Manufacturer ID, Product name, Product
-      serial number and Manufacturing date.
+      Read card CID register and return it as a tuple. The CID
+      contains card identification information such as Manufacturer
+      ID, Product name, Product serial number and Manufacturing date.
+
+      The return value is an object with sevent attributes:
+
+      mid - manufacturer ID
+      oid - OEM/Application ID
+      pnm - Product name
+      prv - Product revision
+      psn - Product serial number
+      mdt - Manufacturing date
+      crc - CRC7 checksum
 
    .. method:: read_csd()
 

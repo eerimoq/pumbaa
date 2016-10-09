@@ -20,6 +20,78 @@
 #include "pumbaa.h"
 
 /**
+ * CID named tuple fields.
+ */
+static const qstr cid_fields[] = {
+    MP_QSTR_mid,
+    MP_QSTR_oid,
+    MP_QSTR_pnm,
+    MP_QSTR_prv,
+    MP_QSTR_psn,
+    MP_QSTR_mdt,
+    MP_QSTR_crc
+};
+
+static const qstr csd_v1_fields[] = {
+    MP_QSTR_csd_structure,
+    MP_QSTR_taac,
+    MP_QSTR_nsac,
+    MP_QSTR_tran_speed,
+    MP_QSTR_ccc,
+    MP_QSTR_read_bl_len,
+    MP_QSTR_read_bl_partial,
+    MP_QSTR_write_blk_misalign,
+    MP_QSTR_read_blk_misalign,
+    MP_QSTR_dsr_imp,
+    MP_QSTR_c_size,
+    MP_QSTR_vdd_r_curr_min,
+    MP_QSTR_vdd_r_curr_max,
+    MP_QSTR_vdd_w_curr_min,
+    MP_QSTR_vdd_w_curr_max,
+    MP_QSTR_c_size_mult,
+    MP_QSTR_erase_blk_en,
+    MP_QSTR_sector_size,
+    MP_QSTR_wp_grp_size,
+    MP_QSTR_wp_grp_enable,
+    MP_QSTR_r2w_factor,
+    MP_QSTR_write_bl_len,
+    MP_QSTR_write_bl_partial,
+    MP_QSTR_file_format_grp,
+    MP_QSTR_copy,
+    MP_QSTR_perm_write_protect,
+    MP_QSTR_tmp_write_protect,
+    MP_QSTR_file_format,
+    MP_QSTR_crc
+};
+
+static const qstr csd_v2_fields[] = {
+    MP_QSTR_csd_structure,
+    MP_QSTR_taac,
+    MP_QSTR_nsac,
+    MP_QSTR_tran_speed,
+    MP_QSTR_ccc,
+    MP_QSTR_read_bl_len,
+    MP_QSTR_dsr_imp,
+    MP_QSTR_read_blk_misalign,
+    MP_QSTR_write_blk_misalign,
+    MP_QSTR_read_bl_partial,
+    MP_QSTR_c_size,
+    MP_QSTR_sector_size,
+    MP_QSTR_erase_blk_en,
+    MP_QSTR_wp_grp_size,
+    MP_QSTR_write_bl_len,
+    MP_QSTR_r2w_factor,
+    MP_QSTR_wp_grp_enable,
+    MP_QSTR_write_partial,
+    MP_QSTR_file_format,
+    MP_QSTR_tmp_write_protect,
+    MP_QSTR_perm_write_protect,
+    MP_QSTR_copy,
+    MP_QSTR_file_format_grp,
+    MP_QSTR_crc
+};
+
+/**
  * Print the sd object.
  */
 static void class_sd_print(const mp_print_t *print_p,
@@ -117,7 +189,7 @@ static mp_obj_t class_sd_read_cid(mp_obj_t self_in)
 {
     struct class_sd_t *self_p;
     struct sd_cid_t cid;
-    mp_obj_tuple_t *cid_p;
+    mp_obj_t tuple[7];
 
     self_p = MP_OBJ_TO_PTR(self_in);
 
@@ -125,17 +197,15 @@ static mp_obj_t class_sd_read_cid(mp_obj_t self_in)
         nlr_raise(mp_obj_new_exception(&mp_type_OSError));
     }
 
-    cid_p = mp_obj_new_tuple(7, NULL);
+    tuple[0] = MP_OBJ_NEW_SMALL_INT(cid.mid);
+    tuple[1] = mp_obj_new_bytes((const byte *)cid.oid, sizeof(cid.oid));
+    tuple[2] = mp_obj_new_bytes((const byte *)cid.pnm, sizeof(cid.pnm));
+    tuple[3] = MP_OBJ_NEW_SMALL_INT(cid.prv);
+    tuple[4] = mp_obj_new_int(cid.psn);
+    tuple[5] = mp_obj_new_int(cid.mdt);
+    tuple[6] = MP_OBJ_NEW_SMALL_INT(cid.crc);
 
-    cid_p->items[0] = MP_OBJ_NEW_SMALL_INT(cid.mid);
-    cid_p->items[1] = mp_obj_new_bytes((const byte *)cid.oid, sizeof(cid.oid));
-    cid_p->items[2] = mp_obj_new_bytes((const byte *)cid.pnm, sizeof(cid.pnm));
-    cid_p->items[3] = MP_OBJ_NEW_SMALL_INT(cid.prv);
-    cid_p->items[4] = mp_obj_new_int(cid.psn);
-    cid_p->items[5] = mp_obj_new_int(cid.mdt);
-    cid_p->items[6] = MP_OBJ_NEW_SMALL_INT(cid.crc);
-
-    return (cid_p);
+    return (mp_obj_new_attrtuple(&cid_fields[0], 7, tuple));
 }
 
 /**
@@ -145,6 +215,7 @@ static mp_obj_t class_sd_read_csd(mp_obj_t self_in)
 {
     struct class_sd_t *self_p;
     union sd_csd_t csd;
+    mp_obj_t tuple[29];
 
     self_p = MP_OBJ_TO_PTR(self_in);
 
@@ -152,9 +223,72 @@ static mp_obj_t class_sd_read_csd(mp_obj_t self_in)
         nlr_raise(mp_obj_new_exception(&mp_type_OSError));
     }
 
-    mp_not_implemented("read_csd");
+    switch (csd.v1.csd_structure) {
 
-    return (mp_const_none);
+    case SD_CSD_STRUCTURE_V1:
+        tuple[0] = MP_OBJ_NEW_SMALL_INT(csd.v1.csd_structure);
+        tuple[1] = MP_OBJ_NEW_SMALL_INT(csd.v1.taac);
+        tuple[2] = MP_OBJ_NEW_SMALL_INT(csd.v1.nsac);
+        tuple[3] = MP_OBJ_NEW_SMALL_INT(csd.v1.tran_speed);
+        tuple[4] = MP_OBJ_NEW_SMALL_INT(SD_CCC(&csd.v1));
+        tuple[5] = MP_OBJ_NEW_SMALL_INT(csd.v1.read_bl_len);
+        tuple[6] = MP_OBJ_NEW_SMALL_INT(csd.v1.read_bl_partial);
+        tuple[7] = MP_OBJ_NEW_SMALL_INT(csd.v1.write_blk_misalign);
+        tuple[8] = MP_OBJ_NEW_SMALL_INT(csd.v1.read_blk_misalign);
+        tuple[9] = MP_OBJ_NEW_SMALL_INT(csd.v1.dsr_imp);
+        tuple[10] = MP_OBJ_NEW_SMALL_INT(SD_C_SIZE(&csd.v1));
+        tuple[11] = MP_OBJ_NEW_SMALL_INT(csd.v1.vdd_r_curr_min);
+        tuple[12] = MP_OBJ_NEW_SMALL_INT(csd.v1.vdd_r_curr_max);
+        tuple[13] = MP_OBJ_NEW_SMALL_INT(csd.v1.vdd_w_curr_min);
+        tuple[14] = MP_OBJ_NEW_SMALL_INT(csd.v1.vdd_w_curr_max);
+        tuple[15] = MP_OBJ_NEW_SMALL_INT(SD_C_SIZE_MULT(&csd.v1));
+        tuple[16] = MP_OBJ_NEW_SMALL_INT(csd.v1.erase_blk_en);
+        tuple[17] = MP_OBJ_NEW_SMALL_INT(SD_SECTOR_SIZE(&csd.v1));
+        tuple[18] = MP_OBJ_NEW_SMALL_INT(csd.v1.wp_grp_size);
+        tuple[19] = MP_OBJ_NEW_SMALL_INT(csd.v1.wp_grp_enable);
+        tuple[20] = MP_OBJ_NEW_SMALL_INT(csd.v1.r2w_factor);
+        tuple[21] = MP_OBJ_NEW_SMALL_INT(SD_WRITE_BL_LEN(&csd.v1));
+        tuple[22] = MP_OBJ_NEW_SMALL_INT(csd.v1.write_bl_partial);
+        tuple[23] = MP_OBJ_NEW_SMALL_INT(csd.v1.file_format_grp);
+        tuple[24] = MP_OBJ_NEW_SMALL_INT(csd.v1.copy);
+        tuple[25] = MP_OBJ_NEW_SMALL_INT(csd.v1.perm_write_protect);
+        tuple[26] = MP_OBJ_NEW_SMALL_INT(csd.v1.tmp_write_protect);
+        tuple[27] = MP_OBJ_NEW_SMALL_INT(csd.v1.file_format);
+        tuple[28] = MP_OBJ_NEW_SMALL_INT(csd.v1.crc);
+
+        return (mp_obj_new_attrtuple(&csd_v1_fields[0], 29, tuple));
+
+    case SD_CSD_STRUCTURE_V2:
+        tuple[0] = MP_OBJ_NEW_SMALL_INT(csd.v2.csd_structure);
+        tuple[1] = MP_OBJ_NEW_SMALL_INT(csd.v2.taac);
+        tuple[2] = MP_OBJ_NEW_SMALL_INT(csd.v2.nsac);
+        tuple[3] = MP_OBJ_NEW_SMALL_INT(csd.v2.tran_speed);
+        tuple[4] = MP_OBJ_NEW_SMALL_INT(SD_CCC(&csd.v2));
+        tuple[5] = MP_OBJ_NEW_SMALL_INT(csd.v2.read_bl_len);
+        tuple[6] = MP_OBJ_NEW_SMALL_INT(csd.v2.dsr_imp);
+        tuple[7] = MP_OBJ_NEW_SMALL_INT(csd.v2.read_blk_misalign);
+        tuple[8] = MP_OBJ_NEW_SMALL_INT(csd.v2.write_blk_misalign);
+        tuple[9] = MP_OBJ_NEW_SMALL_INT(csd.v2.read_bl_partial);
+        tuple[10] = MP_OBJ_NEW_SMALL_INT(SD_C_SIZE(&csd.v2));
+        tuple[11] = MP_OBJ_NEW_SMALL_INT(SD_SECTOR_SIZE(&csd.v2));
+        tuple[12] = MP_OBJ_NEW_SMALL_INT(csd.v2.erase_blk_en);
+        tuple[13] = MP_OBJ_NEW_SMALL_INT(csd.v2.wp_grp_size);
+        tuple[14] = MP_OBJ_NEW_SMALL_INT(SD_WRITE_BL_LEN(&csd.v2));
+        tuple[15] = MP_OBJ_NEW_SMALL_INT(csd.v2.r2w_factor);
+        tuple[16] = MP_OBJ_NEW_SMALL_INT(csd.v2.wp_grp_enable);
+        tuple[17] = MP_OBJ_NEW_SMALL_INT(csd.v2.write_bl_partial);
+        tuple[18] = MP_OBJ_NEW_SMALL_INT(csd.v2.file_format);
+        tuple[19] = MP_OBJ_NEW_SMALL_INT(csd.v2.tmp_write_protect);
+        tuple[20] = MP_OBJ_NEW_SMALL_INT(csd.v2.perm_write_protect);
+        tuple[21] = MP_OBJ_NEW_SMALL_INT(csd.v2.copy);
+        tuple[22] = MP_OBJ_NEW_SMALL_INT(csd.v2.file_format_grp);
+        tuple[23] = MP_OBJ_NEW_SMALL_INT(csd.v2.crc);
+
+        return (mp_obj_new_attrtuple(&csd_v2_fields[0], 24, tuple));
+
+    default:
+        return (mp_const_none);
+    }
 }
 
 /**

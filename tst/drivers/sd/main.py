@@ -26,20 +26,34 @@ from harness import assert_raises
 SD = None
 
 
-def test_print():
-    print(Sd)
-    help(Sd)
-
-
 def test_start():
     global SD
-    spi = Spi(board.SPI_0, board.PIN_D4)
+    spi = Spi(board.SPI_0, board.PIN_D8)
     SD = Sd(spi)
     SD.start()
 
 
+def test_print():
+    print(Sd)
+    print(SD)
+    help(Sd)
+
+
 def test_read_cid():
     print(SD.read_cid())
+
+
+def test_read_csd():
+    print(SD.read_csd())
+
+
+def test_read_write():
+    block = 512 * b'1'
+    SD.write_block(0, block)
+    assert SD.read_block(0) == block
+    buf = bytearray(512)
+    SD.read_block_into(0, buf)
+    assert buf == block
 
 
 def test_bad_arguments():
@@ -48,12 +62,19 @@ def test_bad_arguments():
         Sd(None)
 
 
+def test_stop():
+    SD.stop()
+
+
 def main():
     testcases = [
-        (test_print, "test_print"),
         (test_start, "test_start"),
+        (test_print, "test_print"),
         (test_read_cid, "test_read_cid"),
-        (test_bad_arguments, "test_bad_arguments")
+        (test_read_csd, "test_read_csd"),
+        (test_read_write, "test_read_write"),
+        (test_bad_arguments, "test_bad_arguments"),
+        (test_stop, "test_stop")
     ]
     harness.run(testcases)
 
