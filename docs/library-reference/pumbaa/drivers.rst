@@ -214,8 +214,59 @@ Simba documentation: `drivers`_
       SPI slave mode.
 
 
+.. class:: drivers.Sd(spi)
+
+   Create a Sd object with given SPI driver.
+
+   Here is an example of how to create a SD and read the CID.
+
+   .. code-block:: python
+
+      >>> sd = Sd(spi)
+      >>> sd.start()
+      >>> print(sd.red_cid())
+      ...
+      >>> sd.stop()
+
+   Simba documentation: `drivers/sd`_
+
+   .. method:: start()
+
+      Configures the SD card driver. This resets the SD card and
+      performs the initialization sequence.
+
+   .. method:: stop()
+
+      Deconfigures the SD card driver.
+
+   .. method:: read_cid()
+
+      Read card CID register. The CID contains card identification
+      information such as Manufacturer ID, Product name, Product
+      serial number and Manufacturing date.
+
+   .. method:: read_csd()
+
+      Read card CSD register. The CSD contains that provides
+      information regarding access to the card's contents.
+
+   .. method:: read_block(block)
+
+      Read given block from SD card and returns it as a bytes object.
+
+   .. method:: read_block_into(block, buffer)
+
+      Same as ``read_block()``, but the read data is written to
+      `buffer`.
+
+   .. method:: write_block(block, buffer)
+
+      Write `buffer` to given block.
+
+
 .. _drivers: http://simba-os.readthedocs.io/en/latest/library-reference/drivers.html
 .. _drivers/pin: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/pin.html
 .. _drivers/exti: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/exti.html
 .. _drivers/dac: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/dac.html
 .. _drivers/spi: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/spi.html
+.. _drivers/sd: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/sd.html

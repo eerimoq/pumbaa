@@ -212,6 +212,14 @@
 #    endif
 #endif
 
+#ifndef CONFIG_PUMBAA_CLASS_SD
+#    if defined(FAMILY_SAM) || defined(FAMILY_LINUX)
+#        define CONFIG_PUMBAA_CLASS_SD                      1
+#    else
+#        define CONFIG_PUMBAA_CLASS_SD                      0
+#    endif
+#endif
+
 #ifndef CONFIG_PUMBAA_CLASS_QUEUE
 #    define CONFIG_PUMBAA_CLASS_QUEUE                       1
 #endif

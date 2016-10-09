@@ -364,6 +364,7 @@ static MP_DEFINE_CONST_FUN_OBJ_1(os_stat_obj, os_stat);
 static const mp_rom_map_elem_t module_os_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR___name__), MP_ROM_QSTR(MP_QSTR_uos) },
 
+    /* Functions. */
     { MP_ROM_QSTR(MP_QSTR_uname), MP_ROM_PTR(&os_uname_obj) },
     { MP_ROM_QSTR(MP_QSTR_chdir), MP_ROM_PTR(&os_chdir_obj) },
     { MP_ROM_QSTR(MP_QSTR_getcwd), MP_ROM_PTR(&os_getcwd_obj) },
@@ -374,7 +375,7 @@ static const mp_rom_map_elem_t module_os_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR_rmdir), MP_ROM_PTR(&os_rmdir_obj) },
     { MP_ROM_QSTR(MP_QSTR_stat), MP_ROM_PTR(&os_stat_obj) },
 
-    /* Pumbaa specific. */
+    /* Pumbaa specific functions. */
 #if CONFIG_PUMBAA_OS_SYSTEM == 1
     { MP_ROM_QSTR(MP_QSTR_system), MP_ROM_PTR(&os_system_obj) },
 #endif

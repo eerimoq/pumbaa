@@ -47,6 +47,7 @@ PUMBAA_SRC += \
 	module_drivers/class_dac.c \
 	module_drivers/class_exti.c \
 	module_drivers/class_spi.c \
+	module_drivers/class_sd.c \
 	boards/arduino_due/gccollect.c \
 	boards/arduino_due/gchelper.S \
 	module_thread.c \
@@ -59,6 +60,7 @@ PUMBAA_SRC += \
 	module_drivers/class_dac.c \
 	module_drivers/class_exti.c \
 	module_drivers/class_spi.c \
+	module_drivers/class_sd.c \
 	module_thread.c
 endif
 
