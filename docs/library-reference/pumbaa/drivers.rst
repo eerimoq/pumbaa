@@ -251,24 +251,29 @@ Simba documentation: `drivers`_
 
    .. method:: read_cid()
 
-      Read card CID register and return it as a tuple. The CID
-      contains card identification information such as Manufacturer
-      ID, Product name, Product serial number and Manufacturing date.
+      Read card CID register and return it. The CID contains card
+      identification information such as Manufacturer ID, Product
+      name, Product serial number and Manufacturing date.
 
-      The return value is an object with sevent attributes:
+      The return value is an object with 7 attributes:
 
-      mid - manufacturer ID
-      oid - OEM/Application ID
-      pnm - Product name
-      prv - Product revision
-      psn - Product serial number
-      mdt - Manufacturing date
-      crc - CRC7 checksum
+      - mid - manufacturer ID
+      - oid - OEM/Application ID
+      - pnm - Product name
+      - prv - Product revision
+      - psn - Product serial number
+      - mdt - Manufacturing date
+      - crc - CRC7 checksum
 
    .. method:: read_csd()
 
-      Read card CSD register. The CSD contains that provides
-      information regarding access to the card's contents.
+      Read card CSD register and return it. The CSD contains that
+      provides information regarding access to the card's contents.
+
+      The return value is an object with 29 attributes for version 1
+      cards and 24 attributes for version 2 cards:
+
+      - ...
 
    .. method:: read_block(block)
 
