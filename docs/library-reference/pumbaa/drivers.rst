@@ -224,7 +224,7 @@ Simba documentation: `drivers`_
 
       >>> sd = Sd(spi)
       >>> sd.start()
-      >>> print(sd.red_cid())
+      >>> print(sd.read_cid())
       ...
       >>> sd.stop()
 
