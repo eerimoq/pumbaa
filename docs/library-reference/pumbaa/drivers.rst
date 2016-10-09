@@ -224,6 +224,49 @@ Simba documentation: `drivers`_
       SPI bus speed. Only used if the driver is configured as master.
 
 
+.. class:: drivers.I2CSoft(scl, sda, baudrate=50000, max_clock_stretching_sleep_us=1000000, clock_stretching_sleep_us=10000)
+
+   Create a I2CSoft object.
+
+   Here is an example of how to create a SD and read the CID.
+
+   .. code-block:: python
+
+      >>> i2c = I2CSoft(board.PIN_D3, board.PIN_D4)
+      >>> i2c.start()
+      >>> i2c.scan()
+      [87, 104]
+      >>> i2c.stop()
+
+   Simba documentation: `drivers/i2c_soft`_
+
+   .. method:: start()
+
+      Start the i2c soft driver.
+
+   .. method:: stop()
+
+      Stop the i2c soft driver.
+
+   .. method:: read(address, size)
+
+      Read `size` bytes from slave with address `address`.
+
+   .. method:: read_into(address, buffer[, size])
+
+      Read ``len(buffer)`` bytes from slave with address `address`
+      into `buffer`. Give the argument `size` to read fewer bytes than
+      ``len(buffer)``.
+
+   .. method:: write(address, buffer[, size])
+
+      Write the buffer `buffer` to slave with address `address`.
+
+   .. method:: scan()
+
+      Scan the bus and return a list of all found slave addresses.
+
+
 .. class:: drivers.Sd(spi)
 
    Create a Sd object with given SPI driver.

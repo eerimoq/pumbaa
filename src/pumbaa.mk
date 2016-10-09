@@ -61,6 +61,7 @@ PUMBAA_SRC += \
 	module_drivers/class_exti.c \
 	module_drivers/class_spi.c \
 	module_drivers/class_sd.c \
+	module_drivers/class_i2c_soft.c \
 	module_thread.c
 endif
 

@@ -220,6 +220,14 @@
 #    endif
 #endif
 
+#ifndef CONFIG_PUMBAA_CLASS_I2C_SOFT
+#    if defined(FAMILY_LINUX)
+#        define CONFIG_PUMBAA_CLASS_I2C_SOFT                1
+#    else
+#        define CONFIG_PUMBAA_CLASS_I2C_SOFT                0
+#    endif
+#endif
+
 #ifndef CONFIG_PUMBAA_CLASS_QUEUE
 #    define CONFIG_PUMBAA_CLASS_QUEUE                       1
 #endif

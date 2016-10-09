@@ -58,6 +58,7 @@
 #    include "module_drivers/class_exti.h"
 #    include "module_drivers/class_spi.h"
 #    include "module_drivers/class_sd.h"
+#    include "module_drivers/class_i2c_soft.h"
 #endif
 
 #if defined(ARCH_ESP)
