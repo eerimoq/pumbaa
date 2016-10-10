@@ -15,6 +15,7 @@ addition to the simple locks.
 
 ----------------------------------------------
 
+
 .. function:: _thread.start_new_thread(function, args[, kwargs])
 
    Start a new thread and return its identifier. The thread executes
@@ -23,15 +24,18 @@ addition to the simple locks.
    of keyword arguments. When the function returns, the thread
    silently exits.
 
+
 .. function:: _thread.exit()
 
    Raise the ``SystemExit`` exception. When not caught, this will
    cause the thread to exit silently.
 
+
 .. function:: _thread.allocate_lock()
 
    Return a new lock object. Methods of locks are described below. The
    lock is initially unlocked.
+
 
 .. function:: _thread.get_ident()
 
@@ -41,11 +45,14 @@ addition to the simple locks.
    thread-specific data. Thread identifiers may be recycled when a
    thread exits and another thread is created.
 
+
 .. function:: _thread.stack_size([size])
 
    Return the thread stack size used when creating new threads.
 
+
 .. class:: LockType()
+
 
    .. method:: acquire([waitflag])
 
@@ -59,10 +66,12 @@ addition to the simple locks.
       acquired unconditionally as before. The return value is ``True`` if
       the lock is acquired successfully, ``False`` if not.
 
+
    .. method:: release()
 
       Releases the lock. The lock must have been acquired earlier, but
       not necessarily by the same thread.
+
 
    .. method:: locked()
 

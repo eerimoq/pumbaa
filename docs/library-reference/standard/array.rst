@@ -41,6 +41,7 @@ is a single character. The following type codes are defined:
 
 ----------------------------------------------
 
+
 .. class:: array.array(typecode[, initializer])
 
    A new array whose items are restricted by `typecode`, and
@@ -53,9 +54,11 @@ is a single character. The following type codes are defined:
    below) to add initial items to the array. Otherwise, the iterable
    initializer is passed to the `extend()` method.
 
+
    .. method:: array.append(x)
 
       Append a new item with value `x` to the end of the array.
+
 
    .. method:: array.extend(iterable)
 

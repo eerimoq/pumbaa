@@ -11,6 +11,7 @@ Simba documentation: `kernel`_
 
 ----------------------------------------------
 
+
 .. function:: kernel.sys_lock()
 
    Take the system lock. Turns off interrupts.
@@ -110,15 +111,18 @@ Simba documentation: `kernel`_
 
    Simba documentation: `kernel/timer`_
 
+
    .. method:: start()
 
       Start the timer.
+
 
    .. method:: stop()
 
       Stop the timer. If the timer is stopped before it has expired it
       will never exipre. This function has no effect if the timer has
       already expired.
+
 
    .. data:: PERIODIC
 

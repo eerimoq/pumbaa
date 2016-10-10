@@ -6,6 +6,7 @@
 
 ----------------------------------------------
 
+
 .. function:: gc.enable()
 
    Enable automatic garbage collection.

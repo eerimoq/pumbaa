@@ -11,14 +11,14 @@ This module provides access to the BSD socket interface.
 .. data:: socket.AF_INET
 
    This constant represent the address (and protocol) family, used for
-   the first argument to ``socket()``.
+   the first argument to :func:`socket.socket()`.
 
 
 .. data:: socket.SOCK_STREAM
 .. data:: socket.SOCK_DGRAM
 
    These constants represent the socket types, used for the second
-   argument to ``socket()``.
+   argument to :func:`socket.socket()`.
 
 
 .. function:: socket.getaddrinfo(host, port[, family[, socktype[, proto[, flags]]]])
@@ -37,8 +37,8 @@ This module provides access to the BSD socket interface.
    ``(family, socktype, proto, canonname, sockaddr)``
 
    In these tuples, `family`, `socktype`, `proto` are all integers and
-   are meant to be passed to the ``socket()`` function. `canonname`
-   will be a string representing the canonical name of the host if
+   are meant to be passed to :func:`socket.socket()`. `canonname` will
+   be a string representing the canonical name of the host if
    AI_CANONNAME is part of the flags argument; else canonname will be
    empty. sockaddr is a tuple describing a socket address, whose
    format depends on the returned family (a (address, port) 2-tuple
@@ -57,10 +57,11 @@ This module provides access to the BSD socket interface.
 .. function:: socket.socket([family[, type[, proto]]])
 
    Create a new socket using the given address `family`, socket `type`
-   and protocol number. The address family should be ``AF_INET``. The
-   socket `type` should be `SOCK_STREAM` (the default),
-   `SOCK_DGRAM`. The protocol number is usually zero and may be
-   omitted in that case.
+   and protocol number. The address family should be
+   :data:`socket.AF_INET`. The socket `type` should be
+   :data:`socket.SOCK_STREAM` (the default),
+   :data:`socket.SOCK_DGRAM`. The protocol number is usually zero and
+   may be omitted in that case.
 
 
 .. function:: socket.inet_aton(ip_string)

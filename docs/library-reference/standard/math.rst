@@ -9,6 +9,7 @@ the C standard.
 
 ----------------------------------------------
 
+
 .. function:: math.ceil(x)
 
    Return the ceiling of `x`, the smallest integer greater than or

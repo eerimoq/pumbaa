@@ -11,22 +11,27 @@ can be used for each of them.
 
 ----------------------------------------------
 
+
 .. function:: io.open(name, mode='r')
 
    Open a file named `name`. `mode` is a combination of the characters
    ``'rwbta'``.
+
 
 .. class:: io.FileIO(...)
 
    This is type of a file open in binary mode, e.g. using ``open(name,
    "rb")``. You should not instantiate this class directly.
 
+
 .. class:: io.TextIOWrapper(...)
 
    This is type of a file open in text mode, e.g. using ``open(name,
    "rt")``. You should not instantiate this class directly.
 
+
 .. class:: uio.StringIO([string])
+
 
 .. class:: uio.BytesIO([string])
 
@@ -38,22 +43,27 @@ can be used for each of them.
    normal string for ``StringIO`` or bytes object for
    ``BytesIO``).
 
+
    .. method:: read(size=-1)
 
       Read up to `size` bytes fro mthe file. If `size` is negative or
       ``None``, read until end of file.
 
+
    .. method:: readall()
 
       Read until end of file.
+
 
    .. method:: readline()
 
       Read a line.
 
+
    .. method:: write(b)
 
       Write `b` to the file.
+
 
    .. method:: seek(offset[, whence])
 
@@ -61,13 +71,16 @@ can be used for each of them.
       file (``0``), current position (``1``) or end of the file
       (``2``). The default value of `whence` is ``0``.
 
+
    .. method:: flush()
 
       Flush all buffers.
 
+
    .. method:: close()
 
       Close the file.
+
 
    .. method:: getvalue()
 

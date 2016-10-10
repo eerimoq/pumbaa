@@ -6,6 +6,7 @@
 
 ----------------------------------------------
 
+
 .. function:: collections.namedtuple(typename, field_names)
 
    Returns a new tuple subclass named `typename`. The new subclass is
@@ -43,6 +44,7 @@
    keys were first inserted. If a new entry overwrites an existing
    entry, the original insertion position is left unchanged. Deleting
    an entry and reinserting it will move it to the end.
+
 
    .. method:: popitem(last=True)
 

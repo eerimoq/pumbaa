@@ -6,15 +6,17 @@
 
 This module provides access to the `poll()` function available in most
 operating systems. It only works for the Simba channels;
-:doc:`events<../pumbaa/sync>`, :doc:`queues<../pumbaa/sync>` and
-:doc:`sockets<socket>`.
+:class:`events<sync.sync.Event>`, :class:`queues<sync.sync.Queue>` and
+:class:`sockets<socket.socket.SocketType>`.
 
 ----------------------------------------------
+
 
 .. function:: select.poll()
 
    Returns a polling object, which supports registering and
    unregistering channels, and then polling them for I/O events.
+
 
 .. class:: select.poll()
 
@@ -34,6 +36,7 @@ operating systems. It only works for the Simba channels;
       >>> poll.poll()[0][0].read(5)  # Read the available data.
       b'hello'
 
+
    .. method:: register(channel[, eventmask])
 
       Register given `channel` with the polling object. Future calls
@@ -47,6 +50,7 @@ operating systems. It only works for the Simba channels;
       an error, and has the same effect as registering the descriptor
       exactly once.
 
+
    .. method:: unregister(channel)
 
       Remove given `channel` being tracked by a polling object.
@@ -54,12 +58,14 @@ operating systems. It only works for the Simba channels;
       Attempting to remove a file descriptor that was never registered
       causes a `KeyError` exception to be raised.
 
+
    .. method:: modify(channel, eventmask)
 
       Modifies an already registered channel. This has the same effect
       as `register(channel, eventmask)`. Attempting to modify a
       channel that was never registered causes an `IOError` exception
       with errno `ENOENT` to be raised.
+
 
    .. method:: poll([timeout])
 
@@ -73,9 +79,11 @@ operating systems. It only works for the Simba channels;
       ``None``, the call will block until there is an event for this
       poll object.
 
+
 .. data:: select.POLLIN
 
    There is data to read.
+
 
 .. data:: select.POLLHUP
 

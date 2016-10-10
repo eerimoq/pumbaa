@@ -4,11 +4,21 @@
 .. module:: drivers
    :synopsis: Device drivers.
 
-Device drivers.
+This module contains device drivers.
+
+The following classes are defined:
+
+- :class:`class Pin<.Pin>` -- Digital pins
+- :class:`class Exti<.Exti>` -- External interrupts
+- :class:`class Dac<.Dac>` -- Digital to analog convertion
+- :class:`class Spi<.Spi>` -- Serial Peripheral Interface
+- :class:`class I2CSoft<.I2CSoft>` -- Software I2C
+- :class:`class Sd<.Sd>` -- Secure Digital memory
 
 Simba documentation: `drivers`_
 
 ----------------------------------------------
+
 
 .. class:: drivers.Pin(device, mode)
 
@@ -24,10 +34,12 @@ Simba documentation: `drivers`_
 
    Simba documentation: `drivers/pin`_
 
+
    .. method:: read()
 
       Read the current pin value and return it as an integer. Returns
       0 if the pin is low and 1 if the pin is high.
+
 
    .. method:: write(value)
 
@@ -35,18 +47,22 @@ Simba documentation: `drivers`_
       object that can be converted to an integer. The value is either
       0 or 1, where 0 is low and 1 is high.
 
+
    .. method:: toggle()
 
       Toggle the pin output value (high/low).
+
 
    .. method:: set_mode(mode)
 
       Set the pin mode to given mode `mode`. The mode must be either
       ``INPUT`` or ``OUTPUT``.
 
+
    .. data:: INPUT
 
       Input pin mode.
+
 
    .. data:: OUTPUT
 
@@ -70,21 +86,26 @@ Simba documentation: `drivers`_
 
    Simba documentation: `drivers/exti`_
 
+
    .. method:: start()
 
       Start the interrupt handler.
+
 
    .. method:: stop()
 
       Stop the interrupt handler.
 
+
    .. data:: RISING
 
       Trigger an interrupt on rising edges.
 
+
    .. data:: FALLING
 
       Trigger an interrupt on falling edges.
+
 
    .. data:: BOTH
 
@@ -108,11 +129,13 @@ Simba documentation: `drivers`_
 
    Simba documentation: `drivers/dac`_
 
+
    .. method:: convert(samples)
 
       Start a synchronous convertion of digital samples to an analog
       signal. This function returns when all samples have been
       converted.
+
 
    .. method:: async_convert(samples)
 
@@ -120,6 +143,7 @@ Simba documentation: `drivers`_
       signal. This function only blocks if the hardware is not ready
       to convert more samples. Call ``async_wait()`` to wait for an
       asynchronous convertion to finish.
+
 
    .. method:: async_wait()
 
@@ -148,14 +172,17 @@ Simba documentation: `drivers`_
 
    Simba documentation: `drivers/spi`_
 
+
    .. method:: start()
 
       Configures the SPI hardware with the settings of this object.
+
 
    .. method:: stop()
 
       Deconfigures the SPI hardware if given driver currently ownes
       the bus.
+
 
    .. method:: take_bus()
 
@@ -163,18 +190,22 @@ Simba documentation: `drivers`_
       the SPI bus before performing data transfers. Will re-configure
       the SPI hardware if configured by another driver.
 
+
    .. method:: give_bus()
 
       In multi master application the driver must give ownership of
       the SPI bus to let other masters take it.
 
+
    .. method:: select()
 
       Select the slave by asserting the slave select pin.
 
+
    .. method:: deselect()
 
       Deselect the slave by de-asserting the slave select pin.
+
 
    .. method:: transfer(write_buffer[, size])
 
@@ -186,32 +217,39 @@ Simba documentation: `drivers`_
       The number of read and written bytes are always equal for a
       transfer.
 
+
    .. method:: transfer_into(read_buffer, write_buffer[, size])
 
       Same as ``transfer()``, but the read data is written to
       `read_buffer`.
+
 
    .. method:: read(size)
 
       Read `size` bytes from the SPI bus. Returns the read data as a
       bytes object.
 
+
    .. method:: read_into(buffer[, size])
 
       Same as ``read()``, but the read data is written to `buffer`.
+
 
    .. method:: write(buffer[, size])
 
       Write `size` bytes from `buffer` to the SPI bus. Writes all data
       in `buffer` is `size` is not given.
 
+
    .. data:: MODE_MASTER
 
       SPI master mode.
 
+
    .. data:: MODE_SLAVE
 
       SPI slave mode.
+
 
    .. data:: SPEED_8MBPS
    .. data:: SPEED_4MBPS
@@ -240,17 +278,21 @@ Simba documentation: `drivers`_
 
    Simba documentation: `drivers/i2c_soft`_
 
+
    .. method:: start()
 
       Start the i2c soft driver.
+
 
    .. method:: stop()
 
       Stop the i2c soft driver.
 
+
    .. method:: read(address, size)
 
       Read `size` bytes from slave with address `address`.
+
 
    .. method:: read_into(address, buffer[, size])
 
@@ -258,9 +300,11 @@ Simba documentation: `drivers`_
       into `buffer`. Give the argument `size` to read fewer bytes than
       ``len(buffer)``.
 
+
    .. method:: write(address, buffer[, size])
 
       Write the buffer `buffer` to slave with address `address`.
+
 
    .. method:: scan()
 
@@ -283,14 +327,17 @@ Simba documentation: `drivers`_
 
    Simba documentation: `drivers/sd`_
 
+
    .. method:: start()
 
       Configures the SD card driver. This resets the SD card and
       performs the initialization sequence.
 
+
    .. method:: stop()
 
       Deconfigures the SD card driver.
+
 
    .. method:: read_cid()
 
@@ -308,6 +355,7 @@ Simba documentation: `drivers`_
       - mdt - Manufacturing date
       - crc - CRC7 checksum
 
+
    .. method:: read_csd()
 
       Read card CSD register and return it. The CSD contains that
@@ -318,14 +366,17 @@ Simba documentation: `drivers`_
 
       - ...
 
+
    .. method:: read_block(block)
 
       Read given block from SD card and returns it as a bytes object.
+
 
    .. method:: read_block_into(block, buffer)
 
       Same as ``read_block()``, but the read data is written to
       `buffer`.
+
 
    .. method:: write_block(block, buffer)
 
@@ -338,3 +389,4 @@ Simba documentation: `drivers`_
 .. _drivers/dac: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/dac.html
 .. _drivers/spi: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/spi.html
 .. _drivers/sd: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/sd.html
+.. _drivers/i2c_soft: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/i2c_soft.html

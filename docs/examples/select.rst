@@ -4,14 +4,17 @@ Select
 About
 -----
 
-Setup three channels, add them to a poll object and wait for events to
+Setup three channels, add them to a :class:`poll object<select.select.poll>` and wait for events to
 occur.
 
 Three channels are polled:
 
-1. An event channel that waits for a button to be pressed.
-2. A queue channel that the string "foo" is written to in the script.
-3. A socket channel waiting for UDP packets.
+1. An :class:`event channel<sync.sync.Event>` that waits for a button
+   to be pressed.
+2. A :class:`queue channel<sync.sync.Queue>` that the string "foo" is
+   written to in the script.
+3. A :class:`socket channel<socket.socket.SocketType>` waiting for UDP
+   packets.
 
 NOTE: Change the UDP configuration to match your setup.
 

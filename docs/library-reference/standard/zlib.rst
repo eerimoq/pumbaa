@@ -8,6 +8,7 @@ Decompress compressed data.
 
 ----------------------------------------------
 
+
 .. function:: zlib.decompress(data)
 
    Decompresses the bytes in `data`, returning a bytes object

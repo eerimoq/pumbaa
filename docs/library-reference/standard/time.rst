@@ -8,6 +8,7 @@ This module provides various time-related functions.
 
 ----------------------------------------------
 
+
 .. function:: time.sleep(secs)
 
    Suspend execution of the calling thread for the given number of

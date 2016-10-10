@@ -9,10 +9,12 @@ binary and various ASCII-encoded binary representations.
 
 ----------------------------------------------
 
+
 .. function:: binascii.a2b_base64(string)
 
    Convert a block of base64 data back to binary and return the binary
    data. More than one line may be passed at a time.
+
 
 .. function:: binascii.b2a_base64(data)
 
@@ -22,6 +24,7 @@ binary and various ASCII-encoded binary representations.
    function was to feed it a series of 57 byte input lines to get
    output lines that conform to the MIME-base64 standard. Otherwise
    the output conforms to RFC 3548.
+
 
 .. function:: binascii.crc32(data[, value])
 
@@ -39,12 +42,14 @@ binary and various ASCII-encoded binary representations.
       >>> binascii.crc32(b" world", crc)
       222957957
 
+
 .. function:: binascii.hexlify(data)
 
    Return the hexadecimal representation of the binary `data`. Every
    byte of data is converted into the corresponding 2-digit hex
    representation. The returned bytes object is therefore twice as
    long as the length of data.
+
 
 .. function:: binascii.unhexlify(hexstr)
 

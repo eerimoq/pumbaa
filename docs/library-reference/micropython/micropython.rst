@@ -6,6 +6,7 @@
 
 ----------------------------------------------
 
+
 .. function:: micropython.mem_info([verbose])
 
    Print information about currently used memory. If the `verbose`

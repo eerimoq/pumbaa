@@ -9,6 +9,7 @@ dependent functionality.
 
 ----------------------------------------------
 
+
 .. function:: os.uname()
 
    Returns information identifying the current operating system. The

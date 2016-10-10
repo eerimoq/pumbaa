@@ -9,6 +9,7 @@ format inspired by JavaScript object literal syntax.
 
 ----------------------------------------------
 
+
 .. function:: json.dumps(obj)
 
    Serialize `obj` to a JSON formatted str using this conversion

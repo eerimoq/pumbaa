@@ -9,6 +9,7 @@ distributions.
 
 ----------------------------------------------
 
+
 .. function:: random.seed(a=None)
 
    Initialize the random number generator.
