@@ -24,7 +24,7 @@ Simba documentation: `drivers`_
 
    Create a pin object with given `device` and `mode`. The `device` is
    selected among the pins available in the `board` module. `mode`
-   must be either ``INPUT`` or ``OUTPUT``.
+   must be either :data:`.INPUT` or :data:`.OUTPUT`.
 
    .. code-block:: python
 
@@ -56,7 +56,7 @@ Simba documentation: `drivers`_
    .. method:: set_mode(mode)
 
       Set the pin mode to given mode `mode`. The mode must be either
-      ``INPUT`` or ``OUTPUT``.
+      :data:`.INPUT` or :data:`.OUTPUT`.
 
 
    .. data:: INPUT
@@ -72,9 +72,10 @@ Simba documentation: `drivers`_
 .. class:: drivers.Exti(device, trigger, event=None, mask=0x1, callback=None)
 
    Create an object handling interrupts on given `device`. `trigger`
-   may be a combination of ``RISING``, ``FALLING`` or ``BOTH``. When
-   an interrupt occurs given `callback` is called from interrupt
-   context and `mask` is written to given event channel `event`.
+   may be a combination of :data:`.RISING`, :data:`.FALLING` or
+   :data:`.BOTH`. When an interrupt occurs given `callback` is called
+   from interrupt context and `mask` is written to given event channel
+   `event`.
 
    .. code-block:: python
 
@@ -116,8 +117,8 @@ Simba documentation: `drivers`_
 
    Instansiate a Dac object. `devices` is either a list of DAC pin
    devices or a single DAC pin device. The DAC pin devices can be
-   found in the ``board`` module, often named ``PIN_DAC0`` and
-   ``PIN_DAC1``.
+   found in the :doc:`board<board>` module, often named ``PIN_DAC0``
+   and ``PIN_DAC1``.
 
    Here is an example of how to create a DAC driver and convert
    digital samples to an analog signal.
@@ -141,7 +142,7 @@ Simba documentation: `drivers`_
 
       Start an asynchronous convertion of digital samples to an analog
       signal. This function only blocks if the hardware is not ready
-      to convert more samples. Call ``async_wait()`` to wait for an
+      to convert more samples. Call :meth:`.async_wait` to wait for an
       asynchronous convertion to finish.
 
 
@@ -153,10 +154,10 @@ Simba documentation: `drivers`_
 .. class:: drivers.Spi(device, slave_select, mode=MODE_MASTER, speed=SPEED_250KBPS, polarity=0, phase=0)
 
    Create a Spi object. Select the SPI device with `device` and slave
-   select pin with `slave_select`. `mode` in one of ``MODE_MASTER``
-   and ``MODE_SLAVE``. `speed` is only used by the master. `polarity`
-   is the bus idle logic level. `phase` controls if sampling are done
-   on falling or rising clock edges..
+   select pin with `slave_select`. `mode` in one of
+   :data:`.MODE_MASTER` and :data:`.MODE_SLAVE`. `speed` is only used
+   by the master. `polarity` is the bus idle logic level. `phase`
+   controls if sampling are done on falling or rising clock edges..
 
    Here is an example of how to create a SPI driver and write 4 bytes
    to the slave.
@@ -220,7 +221,7 @@ Simba documentation: `drivers`_
 
    .. method:: transfer_into(read_buffer, write_buffer[, size])
 
-      Same as ``transfer()``, but the read data is written to
+      Same as :meth:`.transfer`, but the read data is written to
       `read_buffer`.
 
 
@@ -232,7 +233,7 @@ Simba documentation: `drivers`_
 
    .. method:: read_into(buffer[, size])
 
-      Same as ``read()``, but the read data is written to `buffer`.
+      Same as :meth:`.read`, but the read data is written to `buffer`.
 
 
    .. method:: write(buffer[, size])
@@ -374,7 +375,7 @@ Simba documentation: `drivers`_
 
    .. method:: read_block_into(block, buffer)
 
-      Same as ``read_block()``, but the read data is written to
+      Same as :meth:`.read_block`, but the read data is written to
       `buffer`.
 
 

@@ -107,7 +107,9 @@ Simba documentation: `kernel`_
    Instantiate a timer object from given arguemts. The timer expires
    `timeout` seconds after the timer has been started. When the timer
    expires given `callback` is called from interrupt context and
-   `mask` is written to given `event` channel.
+   `mask` is written to given :class:`event
+   channel<sync.sync.Event>`. Set `flags` to :data:`.PERIODIC` to
+   create a periodic timer.
 
    Simba documentation: `kernel/timer`_
 
@@ -126,7 +128,8 @@ Simba documentation: `kernel`_
 
    .. data:: PERIODIC
 
-      Pass this flag to ``kernel.Timer`` for periodic timers.
+      Pass this flag to :class:`Timer<kernel.kernel.Timer>` for
+      periodic timers.
 
 
 .. _kernel: http://simba-os.readthedocs.io/en/latest/library-reference/kernel.html
