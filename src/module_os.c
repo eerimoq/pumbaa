@@ -388,6 +388,5 @@ static MP_DEFINE_CONST_DICT(module_os_globals, module_os_globals_table);
 
 const mp_obj_module_t mp_module_uos = {
     .base = { &mp_type_module },
-    .name = MP_QSTR_uos,
     .globals = (mp_obj_dict_t*)&module_os_globals,
 };

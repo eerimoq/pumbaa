@@ -56,6 +56,5 @@ static MP_DEFINE_CONST_DICT(module_board_globals, module_board_globals_table);
  */
 const mp_obj_module_t module_board = {
     { &mp_type_module },
-    .name = MP_QSTR_board,
     .globals = (mp_obj_t)&module_board_globals,
 };

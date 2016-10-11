@@ -49,6 +49,5 @@ static MP_DEFINE_CONST_DICT(module_sync_globals, module_sync_globals_table);
 
 const mp_obj_module_t module_sync = {
     { &mp_type_module },
-    .name = MP_QSTR_sync,
     .globals = (mp_obj_t)&module_sync_globals,
 };

@@ -68,6 +68,5 @@ static MP_DEFINE_CONST_DICT(module_drivers_globals, module_drivers_globals_table
 
 const mp_obj_module_t module_drivers = {
     { &mp_type_module },
-    .name = MP_QSTR_drivers,
     .globals = (mp_obj_t)&module_drivers_globals,
 };
