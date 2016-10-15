@@ -18,10 +18,17 @@ Simba documentation: `inet`_
    is transmitted, no extra payload data is added to the
    packet. Returns the round trip time in milliseconds.
 
+   Raises an `OSError` exception if no response is received within
+   `timeout` seconds after the request is sent.
+
    .. code-block:: python
 
       >>> inet.ping_host_by_ip_address("192.168.0.5", 2)
       10
+      >>> inet.ping_host_by_ip_address("192.168.0.7", 2)
+      Traceback (most recent call last):
+        File "<stdin>", line 1, in <module>
+      OSError:
 
    Simba documentation: `inet/ping`_
 
