@@ -384,9 +384,29 @@ Simba documentation: `drivers`_
       Write `buffer` to given block.
 
 
-.. class:: drivers.espressif_wifi()
+.. class:: drivers.esp_wifi()
 
    This class is a singleton and can not be instanciated.
+
+   An example of how to connect to a WiFi network:
+
+   .. code-block:: python
+
+      >>> esp_wifi.set_op_mode(esp_wifi.OP_MODE_STATION)
+      >>> esp_wifi.station_init('ssid', 'password')
+      >>> print(esp_wifi.station_get_ip_info())
+      (address='192.168.0.5', netmask='255.255.255.0', gateway='192.168.0.1')
+
+   An example of how to setup a SoftAP:
+
+   .. code-block:: python
+
+      >>> esp_wifi.set_op_mode(esp_wifi.OP_MODE_SOFTAP)
+      >>> esp_wifi.softap_init('ssid', 'password')
+      >>> print(esp_wifi.softap_get_ip_info())
+      (address='192.168.4.2', netmask='255.255.255.0', gateway='192.168.4.1')
+
+   Simba documentation: `drivers/esp_wifi`_
 
 
    .. method:: set_op_mode(mode)
@@ -524,14 +544,14 @@ Simba documentation: `drivers`_
    .. data:: OP_MODE_SOFTAP
    .. data:: OP_MODE_STATION_SOFTAP
 
-      WiFi operating mode.
+      WiFi operating modes.
 
 
    .. data:: PHY_MODE_11B
    .. data:: PHY_MODE_11G
    .. data:: PHY_MODE_11N
 
-      WiFi physical mode.
+      WiFi physical modes.
 
 
 .. _drivers: http://simba-os.readthedocs.io/en/latest/library-reference/drivers.html
@@ -541,4 +561,4 @@ Simba documentation: `drivers`_
 .. _drivers/spi: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/spi.html
 .. _drivers/sd: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/sd.html
 .. _drivers/i2c_soft: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/i2c_soft.html
-.. _drivers/espressif_wifi: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/espressif_wifi.html
+.. _drivers/esp_wifi: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/esp_wifi.html

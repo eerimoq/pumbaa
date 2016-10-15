@@ -62,8 +62,8 @@ static const mp_rom_map_elem_t module_drivers_globals_table[] = {
 #if CONFIG_PUMBAA_CLASS_I2C_SOFT == 1
     { MP_ROM_QSTR(MP_QSTR_I2CSoft), MP_ROM_PTR(&module_drivers_class_i2c_soft) },
 #endif
-#if CONFIG_PUMBAA_CLASS_ESPRESSIF_WIFI == 1
-    { MP_ROM_QSTR(MP_QSTR_espressif_wifi), MP_ROM_PTR(&module_drivers_espressif_wifi_obj) },
+#if CONFIG_PUMBAA_CLASS_ESP_WIFI == 1
+    { MP_ROM_QSTR(MP_QSTR_esp_wifi), MP_ROM_PTR(&module_drivers_esp_wifi_obj) },
 #endif
 };
 

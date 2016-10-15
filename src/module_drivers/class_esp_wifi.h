@@ -1,5 +1,5 @@
 /**
- * @file module_drivers/class_espressif_wifi.h
+ * @file module_drivers/class_esp_wifi.h
  *
  * @section License
  * Copyright (C) 2016, Erik Moqvist
@@ -17,15 +17,15 @@
  * This file is part of the Pumbaa project.
  */
 
-#ifndef __MODULE_DRIVERS_CLASS_ESPRESSIF_WIFI_H__
-#define __MODULE_DRIVERS_CLASS_ESPRESSIF_WIFI_H__
+#ifndef __MODULE_DRIVERS_CLASS_ESP_WIFI_H__
+#define __MODULE_DRIVERS_CLASS_ESP_WIFI_H__
 
 #include "pumbaa.h"
 
-struct class_espressif_wifi_t {
+struct class_esp_wifi_t {
     mp_obj_base_t base;
 };
 
-extern const struct class_espressif_wifi_t module_drivers_espressif_wifi_obj;
+extern const struct class_esp_wifi_t module_drivers_esp_wifi_obj;
 
 #endif

@@ -63,7 +63,7 @@
 
 #if defined(ARCH_ESP)
 #    include "module_drivers/class_exti.h"
-#    include "module_drivers/class_espressif_wifi.h"
+#    include "module_drivers/class_esp_wifi.h"
 #endif
 
 #endif
