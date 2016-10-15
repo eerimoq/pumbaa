@@ -109,7 +109,7 @@ static mp_obj_t poll_poll(size_t n_args, const mp_obj_t *args)
     struct class_poll_t *self_p;
     mp_obj_t tuple_items[2];
     mp_obj_t list_items[1];
-    float timeout_f;
+    float f_timeout;
     struct time_t timeout;
     struct time_t *timeout_p;
     void *chan_p;
@@ -120,9 +120,9 @@ static mp_obj_t poll_poll(size_t n_args, const mp_obj_t *args)
     /* Parse the timeout argument. */
     if (n_args >= 2) {
         if (args[1] != mp_const_none) {
-            timeout_f = mp_obj_get_float(args[1]);
-            timeout.seconds = (long)timeout_f;
-            timeout.nanoseconds = (timeout_f - timeout.seconds) * 1000000000L;
+            f_timeout = mp_obj_get_float(args[1]);
+            timeout.seconds = (long)f_timeout;
+            timeout.nanoseconds = (f_timeout - timeout.seconds) * 1000000000L;
             timeout_p = &timeout;
         }
     }
