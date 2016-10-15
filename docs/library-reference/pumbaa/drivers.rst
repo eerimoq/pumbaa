@@ -14,6 +14,7 @@ The following classes are defined:
 - :class:`class Spi<.Spi>` -- Serial Peripheral Interface
 - :class:`class I2CSoft<.I2CSoft>` -- Software I2C
 - :class:`class Sd<.Sd>` -- Secure Digital memory
+- :class:`class esp_wifi<.esp_wifi>` -- Espressif WiFi
 
 Simba documentation: `drivers`_
 
