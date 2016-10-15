@@ -384,6 +384,156 @@ Simba documentation: `drivers`_
       Write `buffer` to given block.
 
 
+.. class:: drivers.espressif_wifi()
+
+   This class is a singleton and can not be instanciated.
+
+
+   .. method:: set_op_mode(mode)
+
+      Set the WiFi operating mode to `mode`. `mode` is one of
+      :data:`.OP_MODE_STATION`, :data:`.OP_MODE_SOFTAP`,
+      :data:`.OP_MODE_STATION_SOFTAP`.
+
+
+   .. method:: get_op_mode()
+
+      Returns the current WiFi operating mode.
+
+
+   .. method:: set_phy_mode(mode)
+
+      Set the WiFi physical mode (802.11b/g/n) to one of
+      :data:`.PHY_MODE_11B`, :data:`.PHY_MODE_11G` and
+      :data:`.PHY_MODE_11N`.
+
+
+   .. method:: get_phy_mode()
+
+      Returns the physical mode (802.11b/g/n).
+
+
+   .. method:: softap_init(ssid, password)
+
+      Initialize the WiFi SoftAP interface with given `ssid` and
+      `password`.
+
+
+   .. method:: softap_set_ip_info(info)
+
+      Set the ip address, netmask and gateway of the WiFi SoftAP. The
+      info object `info` is a three items tuple of address, netmask
+      and gateway strings in IPv4 format.
+
+
+   .. method:: softap_get_ip_info()
+
+      Returns a three items tuple of the SoftAP ip address, netmask
+      and gateway.
+
+
+   .. method:: softap_get_number_of_connected_stations()
+
+      Returns the number of stations connected to the SoftAP.
+
+
+   .. method:: softap_get_station_info()
+
+      Returns the information of stations connected to the SoftAP,
+      including MAC and IP addresses.
+
+
+   .. method:: softap_dhcp_server_start()
+
+      Enable the SoftAP DHCP server.
+
+
+   .. method:: softap_dhcp_server_stop()
+
+      Disable the SoftAP DHCP server. The DHCP server is enabled by
+      default.
+
+
+   .. method:: softap_dhcp_server_status()
+
+      Returns the SoftAP DHCP server status.
+
+
+   .. method:: station_init(ssid, password[, info])
+
+      Initialize the WiFi station.
+
+
+   .. method:: station_connect()
+
+      Connect the WiFi station to the Access Point (AP).
+
+
+   .. method:: station_disconnect()
+
+      Disconnect the WiFi station from the AP.
+
+
+   .. method:: station_set_ip_info(info)
+
+      Set the ip address, netmask and gateway of the WiFi station. The
+      info object `info` is a three items tuple of address, netmask
+      and gateway strings in IPv4 format.
+
+
+   .. method:: station_get_ip_info()
+
+      Returns the station ip address, netmask and gateway.
+
+
+   .. method:: station_set_reconnect_policy(policy)
+
+      Set whether the station will reconnect to the AP after
+      disconnection. Set `policy` to ``True`` to automatically
+      reconnect and ``False`` otherwise.
+
+
+   .. method:: station_get_reconnect_policy()
+
+      Check whether the station will reconnect to the AP after
+      disconnection.
+
+
+   .. method:: station_get_connect_status()
+
+      Get the connection status of the WiFi station.
+
+
+   .. method:: station_dhcp_client_start()
+
+      Enable the station DHCP client.
+
+
+   .. method:: station_dhcp_client_stop()
+
+      Disable the station DHCP client.
+
+
+   .. method:: station_dhcp_client_status()
+
+      Get the station DHCP client status.
+
+
+   .. data:: OP_MODE_NULL
+   .. data:: OP_MODE_STATION
+   .. data:: OP_MODE_SOFTAP
+   .. data:: OP_MODE_STATION_SOFTAP
+
+      WiFi operating mode.
+
+
+   .. data:: PHY_MODE_11B
+   .. data:: PHY_MODE_11G
+   .. data:: PHY_MODE_11N
+
+      WiFi physical mode.
+
+
 .. _drivers: http://simba-os.readthedocs.io/en/latest/library-reference/drivers.html
 .. _drivers/pin: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/pin.html
 .. _drivers/exti: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/exti.html
@@ -391,3 +541,4 @@ Simba documentation: `drivers`_
 .. _drivers/spi: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/spi.html
 .. _drivers/sd: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/sd.html
 .. _drivers/i2c_soft: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/i2c_soft.html
+.. _drivers/espressif_wifi: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/espressif_wifi.html

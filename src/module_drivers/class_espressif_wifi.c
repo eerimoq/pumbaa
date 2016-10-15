@@ -399,7 +399,7 @@ static mp_obj_t class_espressif_wifi_station_set_reconnect_policy(mp_obj_t self_
  */
 static mp_obj_t class_espressif_wifi_station_get_reconnect_policy(mp_obj_t self_in)
 {
-    return (MP_OBJ_NEW_SMALL_INT(espressif_wifi_station_get_reconnect_policy()));
+    return (mp_obj_new_bool(espressif_wifi_station_get_reconnect_policy()));
 }
 
 /**
