@@ -34,6 +34,7 @@ PUMBAA_SRC += \
 	module_drivers.c \
 	module_drivers/class_pin.c \
 	module_kernel/class_timer.c \
+	module_inet.c \
 	module_select.c \
 	module_socket.c \
 	module_sync.c \
