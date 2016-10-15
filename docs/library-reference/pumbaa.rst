@@ -11,4 +11,5 @@ modules.
    pumbaa/kernel
    pumbaa/sync
    pumbaa/drivers
+   pumbaa/inet
    pumbaa/board
