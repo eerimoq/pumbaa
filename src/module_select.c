@@ -87,7 +87,8 @@ static mp_obj_t poll_unregister(mp_obj_t self_in, mp_obj_t obj_in)
     chan_p = MP_OBJ_TO_PTR(obj_in);
 
     if (chan_list_remove(&self_p->list, &chan_p->chan) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "cannot unregister channel"));
     }
 
     return (mp_const_none);

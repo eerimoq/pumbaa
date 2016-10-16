@@ -248,8 +248,9 @@ static mp_obj_t os_stat(mp_obj_t path_in)
     res = fs_stat(path_p, &stat);
 
     if (res != 0) {
-        nlr_raise(mp_obj_new_exception_arg1(&mp_type_OSError,
-                                            MP_OBJ_NEW_SMALL_INT(res)));
+        nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_OSError,
+                                                "Failed to stat '%s'",
+                                                path_p));
     }
 
     stat_p = mp_obj_new_tuple(10, NULL);
@@ -313,6 +314,7 @@ static vstr_t *vstr_chan_get_vstr(struct vstr_chan_t *self_p)
  */
 static mp_obj_t os_system(mp_obj_t command_in)
 {
+    int res;
     char command[128];
     struct vstr_chan_t chout;
 
@@ -321,8 +323,16 @@ static mp_obj_t os_system(mp_obj_t command_in)
 
     vstr_chan_init(&chout);
 
-    if (fs_call(command, sys_get_stdin(), &chout, NULL) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+    res = fs_call(command, sys_get_stdin(), &chout, NULL);
+
+    if (res == -ENOENT) {
+        nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_OSError,
+                                                "Command not found: '%s'",
+                                                mp_obj_str_get_str(command_in)));
+    } else if (res != 0) {
+        nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_OSError,
+                                                "Command failed with %d",
+                                                res));
     }
 
     return (mp_obj_new_str_from_vstr(&mp_type_str,
@@ -340,8 +350,14 @@ static MP_DEFINE_CONST_FUN_OBJ_1(os_system_obj, os_system);
  */
 static mp_obj_t os_format(mp_obj_t path_in)
 {
-    if (fs_format(mp_obj_str_get_str(path_in)) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+    int res;
+
+    res = fs_format(mp_obj_str_get_str(path_in));
+
+    if (res != 0) {
+        nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_OSError,
+                                                "Format failed with %d",
+                                                res));
     }
 
     return (mp_const_none);

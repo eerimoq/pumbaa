@@ -36,6 +36,24 @@ def test_format():
         print("Failed to format /fs.")
 
 
+def test_directory():
+    assert os.getcwd() == '/fs'
+
+    with assert_raises(NotImplementedError):
+        os.chdir('dir')
+
+    os.mkdir('dir')
+
+    with assert_raises(NotImplementedError):
+        os.remove('dir')
+
+    with assert_raises(NotImplementedError):
+        os.rename('dir', 'dir2')
+
+    with assert_raises(NotImplementedError):
+        os.rmdir('dir2')
+
+
 def test_missing_file():
     """Try to open a non-existing file.
 
@@ -153,13 +171,15 @@ def test_stat():
 
 
 def test_listdir():
-    assert os.listdir() == ['CREATE.TXT',
+    assert os.listdir() == ['DIR',
+                            'CREATE.TXT',
                             'APPEND.TXT',
                             'RW.TXT',
                             'SEEK.TXT',
                             'STAT.TXT']
 
-    assert os.listdir('.') == ['CREATE.TXT',
+    assert os.listdir('.') == ['DIR',
+                               'CREATE.TXT',
                                'APPEND.TXT',
                                'RW.TXT',
                                'SEEK.TXT',
@@ -172,12 +192,6 @@ def test_listdir():
     else:
         assert False
 
-def test_print():
-    with open("print.txt", "w") as fout:
-        print(fout)
-        fout.write("")
-        print(fout)
-
 
 def test_flush():
     """Flush a file.
@@ -189,9 +203,31 @@ def test_flush():
             fout.write('')
             fout.flush()
 
+
+def test_print():
+    print(os)
+    print(os.uname())
+
+    with open("print.txt", "w") as fout:
+        print(fout)
+        fout.write("")
+        print(fout)
+
+
+def test_system():
+    os.system('kernel/thrd/list')
+
+    with assert_raises(OSError, "Command not found: '1/2/3'"):
+        os.system('1/2/3')
+
+    with assert_raises(OSError, "Command failed with -1"):
+        os.system('')
+
+
 def main():
     testcases = [
         (test_format, "test_format"),
+        (test_directory, "test_directory"),
         (test_missing_file, "test_missing_file"),
         (test_create, "test_create"),
         (test_append, "test_append"),
@@ -200,7 +236,8 @@ def main():
         (test_stat, "test_stat"),
         (test_listdir, "test_listdir"),
         (test_flush, "test_flush"),
-        (test_print, "test_print")
+        (test_print, "test_print"),
+        (test_system, "test_system")
     ]
     harness.run(testcases)
 
