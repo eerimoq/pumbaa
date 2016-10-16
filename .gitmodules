@@ -3,4 +3,4 @@
 	url = https://github.com/eerimoq/simba
 [submodule "micropython"]
 	path = micropython
-	url = https://github.com/micropython/micropython.git
+	url = https://github.com/eerimoq/micropython.git
