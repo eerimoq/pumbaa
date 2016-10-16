@@ -135,7 +135,8 @@ static mp_obj_t class_sd_make_new(const mp_obj_type_t *type_p,
     spi_p = args[0].u_obj;
 
     if (spi_p->base.type != &module_drivers_class_spi) {
-        nlr_raise(mp_obj_new_exception(&mp_type_TypeError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_TypeError,
+                                           "expected spi driver"));
     }
 
     /* Create a new SD object. */
@@ -144,7 +145,8 @@ static mp_obj_t class_sd_make_new(const mp_obj_type_t *type_p,
     self_p->spi_p = spi_p;
 
     if (sd_init(&self_p->drv, &spi_p->drv) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "sd_init() failed"));
     }
 
     return (self_p);
@@ -160,7 +162,8 @@ static mp_obj_t class_sd_start(mp_obj_t self_in)
     self_p = MP_OBJ_TO_PTR(self_in);
 
     if (sd_start(&self_p->drv) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "sd_start() failed"));
     }
 
     return (mp_const_none);
@@ -176,7 +179,8 @@ static mp_obj_t class_sd_stop(mp_obj_t self_in)
     self_p = MP_OBJ_TO_PTR(self_in);
 
     if (sd_stop(&self_p->drv) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "sd_stop() failed"));
     }
 
     return (mp_const_none);
@@ -194,7 +198,8 @@ static mp_obj_t class_sd_read_cid(mp_obj_t self_in)
     self_p = MP_OBJ_TO_PTR(self_in);
 
     if (sd_read_cid(&self_p->drv, &cid) != sizeof(cid)) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "sd_read_cid() failed"));
     }
 
     tuple[0] = MP_OBJ_NEW_SMALL_INT(cid.mid);
@@ -220,7 +225,8 @@ static mp_obj_t class_sd_read_csd(mp_obj_t self_in)
     self_p = MP_OBJ_TO_PTR(self_in);
 
     if (sd_read_csd(&self_p->drv, &csd) != sizeof(csd)) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "sd_read_csd() failed"));
     }
 
     switch (csd.v1.csd_structure) {
@@ -307,7 +313,9 @@ static mp_obj_t class_sd_read_block(mp_obj_t self_in,
     vstr_init_len(&vstr, SD_BLOCK_SIZE);
 
     if (sd_read_block(&self_p->drv, vstr.buf, block) != SD_BLOCK_SIZE) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_OSError,
+                                                "sd_read_block(%d) failed",
+                                                block));
     }
 
     return (mp_obj_new_str_from_vstr(&mp_type_bytes, &vstr));
@@ -331,11 +339,14 @@ static mp_obj_t class_sd_read_block_into(mp_obj_t self_in,
                         MP_BUFFER_WRITE);
 
     if (buffer_info.len != SD_BLOCK_SIZE) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_ValueError,
+                                           "bad buffer length"));
     }
 
     if (sd_read_block(&self_p->drv, buffer_info.buf, block) != SD_BLOCK_SIZE) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_OSError,
+                                                "sd_read_block(%d) failed",
+                                                block));
     }
 
     return (mp_const_none);
@@ -359,11 +370,14 @@ static mp_obj_t class_sd_write_block(mp_obj_t self_in,
                         MP_BUFFER_READ);
 
     if (buffer_info.len != SD_BLOCK_SIZE) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_ValueError,
+                                           "bad buffer length"));
     }
 
     if (sd_write_block(&self_p->drv, block, buffer_info.buf) != SD_BLOCK_SIZE) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_OSError,
+                                                "sd_write_block(%d) failed",
+                                                block));
     }
 
     return (mp_const_none);

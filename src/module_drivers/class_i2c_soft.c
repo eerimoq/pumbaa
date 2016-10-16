@@ -100,7 +100,8 @@ static mp_obj_t class_i2c_soft_make_new(const mp_obj_type_t *type_p,
                       baudrate,
                       max_clock_stretching_us,
                       clock_stretching_sleep_us) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "i2c_soft_init() failed"));
     }
 
     return (self_p);
@@ -152,7 +153,8 @@ static mp_obj_t class_i2c_soft_read(mp_obj_t self_in,
     size = i2c_soft_read(&self_p->drv, address, vstr.buf, size);
 
     if (size < 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "i2c_soft_read() failed"));
     }
 
     vstr.len = size;
@@ -181,7 +183,8 @@ static mp_obj_t class_i2c_soft_read_into(mp_uint_t n_args, const mp_obj_t *args_
         size = mp_obj_get_int(args_p[3]);
 
         if (buffer_info.len < size) {
-            nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+            nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                               "bad buffer length"));
         }
     } else {
         size = buffer_info.len;
@@ -190,7 +193,8 @@ static mp_obj_t class_i2c_soft_read_into(mp_uint_t n_args, const mp_obj_t *args_
     size = i2c_soft_read(&self_p->drv, address, buffer_info.buf, size);
 
     if (size < 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "i2c_soft_read() failed"));
     }
 
     return (MP_OBJ_NEW_SMALL_INT(size));
@@ -217,7 +221,8 @@ static mp_obj_t class_i2c_soft_write(mp_uint_t n_args, const mp_obj_t *args_p)
         size = mp_obj_get_int(args_p[3]);
 
         if (buffer_info.len < size) {
-            nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+            nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                               "bad buffer length"));
         }
     } else {
         size = buffer_info.len;
@@ -226,7 +231,8 @@ static mp_obj_t class_i2c_soft_write(mp_uint_t n_args, const mp_obj_t *args_p)
     size = i2c_soft_write(&self_p->drv, address, buffer_info.buf, size);
 
     if (size < 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "i2c_soft_write() failed"));
     }
 
     return (MP_OBJ_NEW_SMALL_INT(size));

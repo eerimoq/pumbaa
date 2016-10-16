@@ -64,7 +64,8 @@ static mp_obj_t socket_make_new(const mp_obj_type_t *type_p,
     type = args[1].u_int;
 
     if (family != AF_INET) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "Address family not supported by protocol"));
     }
 
     socket_p = m_new_obj(struct class_socket_t);
@@ -86,7 +87,8 @@ static mp_obj_t socket_make_new(const mp_obj_type_t *type_p,
     }
 
     if (res != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "failed to open socket"));
     }
 
     return (socket_p);
@@ -104,7 +106,8 @@ static mp_obj_t class_socket_accept(mp_obj_t self_in)
     socket_p->base.type = &module_socket_class_socket;
 
     if (socket_accept(&self_p->socket, &socket_p->socket, NULL) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "socket accept failed"));
     }
 
     tuple_p = MP_OBJ_TO_PTR(mp_obj_new_tuple(2, NULL));
@@ -128,7 +131,8 @@ static mp_obj_t class_socket_bind(mp_obj_t self_in, mp_obj_t addr_in)
     addr.port = mp_obj_get_int(addr_items[1]);
 
     if (socket_bind(&self_p->socket, &addr) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "socket bind failed"));
     }
 
     return (mp_const_none);
@@ -141,7 +145,8 @@ static mp_obj_t class_socket_close(mp_obj_t self_in)
     self_p = MP_OBJ_TO_PTR(self_in);
 
     if (socket_close(&self_p->socket) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "socket close failed"));
     }
 
     return (mp_const_none);
@@ -161,7 +166,8 @@ static mp_obj_t class_socket_connect(mp_obj_t self_in, mp_obj_t addr_in)
     addr.port = mp_obj_get_int(addr_items[1]);
 
     if (socket_connect(&self_p->socket, &addr) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "socket connect failed"));
     }
 
     return (mp_const_none);
@@ -176,7 +182,8 @@ static mp_obj_t class_socket_listen(mp_obj_t self_in, mp_obj_t backlog_in)
     backlog = mp_obj_get_int(backlog_in);
 
     if (socket_listen(&self_p->socket, backlog) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "socket listen failed"));
     }
 
     return (mp_const_none);
@@ -195,7 +202,8 @@ static mp_obj_t class_socket_recv(mp_obj_t self_in, mp_obj_t bufsize_in)
     size = socket_read(&self_p->socket, vstr.buf, size);
 
     if (size < 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "socket recv failed"));
     }
 
     vstr.len = size;
@@ -238,7 +246,8 @@ static mp_obj_t class_socket_send(mp_obj_t self_in, mp_obj_t string_in)
     size = socket_write(&self_p->socket, buffer_info.buf, buffer_info.len);
 
     if (size < 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "socket send failed"));
     }
 
     return (mp_obj_new_int(size));

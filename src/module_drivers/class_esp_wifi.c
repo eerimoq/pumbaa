@@ -49,7 +49,7 @@ static const qstr station_info_fields[] = {
  * def set_op_mode(self, mode)
  */
 static mp_obj_t class_esp_wifi_set_op_mode(mp_obj_t self_in,
-                                                 mp_obj_t mode_in)
+                                           mp_obj_t mode_in)
 {
     int mode;
 
@@ -63,7 +63,8 @@ static mp_obj_t class_esp_wifi_set_op_mode(mp_obj_t self_in,
     }
 
     if (esp_wifi_set_op_mode(mode) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "esp_wifi_set_op_mode() failed"));
     }
 
     return (mp_const_none);
@@ -81,7 +82,7 @@ static mp_obj_t class_esp_wifi_get_op_mode(mp_obj_t self_in)
  * def set_phy_mode(self, mode)
  */
 static mp_obj_t class_esp_wifi_set_phy_mode(mp_obj_t self_in,
-                                                  mp_obj_t mode_in)
+                                            mp_obj_t mode_in)
 {
     int mode;
 
@@ -95,7 +96,8 @@ static mp_obj_t class_esp_wifi_set_phy_mode(mp_obj_t self_in,
     }
 
     if (esp_wifi_set_phy_mode(mode) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "esp_wifi_set_phy_mode() failed"));
     }
 
     return (mp_const_none);
@@ -113,8 +115,8 @@ static mp_obj_t class_esp_wifi_get_phy_mode(mp_obj_t self_in)
  * def softap_init(self)
  */
 static mp_obj_t class_esp_wifi_softap_init(mp_obj_t self_in,
-                                                 mp_obj_t ssid_in,
-                                                 mp_obj_t password_in)
+                                           mp_obj_t ssid_in,
+                                           mp_obj_t password_in)
 {
     const char *ssid_p;
     const char *password_p;
@@ -123,7 +125,8 @@ static mp_obj_t class_esp_wifi_softap_init(mp_obj_t self_in,
     password_p = mp_obj_str_get_str(password_in);
 
     if (esp_wifi_softap_init(ssid_p, password_p) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "esp_wifi_softap_init() failed"));
     }
 
     return (mp_const_none);
@@ -133,7 +136,7 @@ static mp_obj_t class_esp_wifi_softap_init(mp_obj_t self_in,
  * def softap_set_ip_info(self)
  */
 static mp_obj_t class_esp_wifi_softap_set_ip_info(mp_obj_t self_in,
-                                                        mp_obj_t info_in)
+                                                  mp_obj_t info_in)
 {
     struct inet_if_ip_info_t info;
     mp_uint_t len;
@@ -150,7 +153,8 @@ static mp_obj_t class_esp_wifi_softap_set_ip_info(mp_obj_t self_in,
     inet_aton(mp_obj_str_get_str(items_p[2]), &info.gateway);
 
     if (esp_wifi_softap_set_ip_info(&info) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "esp_wifi_softap_set_ip_info() failed"));
     }
 
     return (mp_const_none);
@@ -166,7 +170,8 @@ static mp_obj_t class_esp_wifi_softap_get_ip_info(mp_obj_t self_in)
     char buf[16];
 
     if (esp_wifi_softap_get_ip_info(&info) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "esp_wifi_softap_get_ip_info() failed"));
     }
 
     tuple[0] = mp_obj_new_str(inet_ntoa(&info.address, buf),
@@ -203,9 +208,10 @@ static mp_obj_t class_esp_wifi_softap_get_station_info(mp_obj_t self_in)
     char buf[16];
 
     number_of_infos = esp_wifi_softap_get_station_info(&info[0],
-                                                             membersof(info));
+                                                       membersof(info));
     if (number_of_infos < 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "esp_wifi_softap_get_station_info() failed"));
     }
 
     list = mp_obj_new_list(0, NULL);
@@ -230,7 +236,8 @@ static mp_obj_t class_esp_wifi_softap_get_station_info(mp_obj_t self_in)
 static mp_obj_t class_esp_wifi_softap_dhcp_server_start(mp_obj_t self_in)
 {
     if (esp_wifi_softap_dhcp_server_start() != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "esp_wifi_softap_dhcp_server_start() failed"));
     }
 
     return (mp_const_none);
@@ -242,7 +249,8 @@ static mp_obj_t class_esp_wifi_softap_dhcp_server_start(mp_obj_t self_in)
 static mp_obj_t class_esp_wifi_softap_dhcp_server_stop(mp_obj_t self_in)
 {
     if (esp_wifi_softap_dhcp_server_stop() != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "esp_wifi_softap_dhcp_server_stop() failed"));
     }
 
     return (mp_const_none);
@@ -260,7 +268,7 @@ static mp_obj_t class_esp_wifi_softap_dhcp_server_status(mp_obj_t self_in)
  * def station_init(self)
  */
 static mp_obj_t class_esp_wifi_station_init(mp_uint_t n_args,
-                                                  const mp_obj_t *args_p)
+                                            const mp_obj_t *args_p)
 {
     const char *ssid_p;
     const char *password_p;
@@ -288,7 +296,8 @@ static mp_obj_t class_esp_wifi_station_init(mp_uint_t n_args,
     }
 
     if (esp_wifi_station_init(ssid_p, password_p, info_p) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "esp_wifi_station_init() failed"));
     }
 
     return (mp_const_none);
@@ -300,7 +309,8 @@ static mp_obj_t class_esp_wifi_station_init(mp_uint_t n_args,
 static mp_obj_t class_esp_wifi_station_connect(mp_obj_t self_in)
 {
     if (esp_wifi_station_connect() != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "esp_wifi_station_connect() failed"));
     }
 
     return (mp_const_none);
@@ -312,7 +322,8 @@ static mp_obj_t class_esp_wifi_station_connect(mp_obj_t self_in)
 static mp_obj_t class_esp_wifi_station_disconnect(mp_obj_t self_in)
 {
     if (esp_wifi_station_disconnect() != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "esp_wifi_station_disconnect() failed"));
     }
 
     return (mp_const_none);
@@ -322,7 +333,7 @@ static mp_obj_t class_esp_wifi_station_disconnect(mp_obj_t self_in)
  * def station_set_ip_info(self)
  */
 static mp_obj_t class_esp_wifi_station_set_ip_info(mp_obj_t self_in,
-                                                         mp_obj_t info_in)
+                                                   mp_obj_t info_in)
 {
     struct inet_if_ip_info_t info;
     mp_uint_t len;
@@ -339,7 +350,8 @@ static mp_obj_t class_esp_wifi_station_set_ip_info(mp_obj_t self_in,
     inet_aton(mp_obj_str_get_str(items_p[2]), &info.gateway);
 
     if (esp_wifi_station_set_ip_info(&info) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "esp_wifi_station_set_ip_info() failed"));
     }
 
     return (mp_const_none);
@@ -355,7 +367,8 @@ static mp_obj_t class_esp_wifi_station_get_ip_info(mp_obj_t self_in)
     char buf[16];
 
     if (esp_wifi_station_get_ip_info(&info) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "esp_wifi_station_get_ip_info() failed"));
     }
 
     tuple[0] = mp_obj_new_str(inet_ntoa(&info.address, buf),
@@ -375,7 +388,7 @@ static mp_obj_t class_esp_wifi_station_get_ip_info(mp_obj_t self_in)
  * def station_set_reconnect_policy(self)
  */
 static mp_obj_t class_esp_wifi_station_set_reconnect_policy(mp_obj_t self_in,
-                                                                  mp_obj_t policy_in)
+                                                            mp_obj_t policy_in)
 {
     int policy;
 
@@ -388,7 +401,8 @@ static mp_obj_t class_esp_wifi_station_set_reconnect_policy(mp_obj_t self_in,
     }
 
     if (esp_wifi_station_set_reconnect_policy(policy) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "esp_wifi_station_set_reconnect_policy() failed"));
     }
 
     return (mp_const_none);
@@ -416,7 +430,8 @@ static mp_obj_t class_esp_wifi_station_get_connect_status(mp_obj_t self_in)
 static mp_obj_t class_esp_wifi_station_dhcp_client_start(mp_obj_t self_in)
 {
     if (esp_wifi_station_dhcp_client_start() != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "esp_wifi_station_dhcp_client_start() failed"));
     }
 
     return (mp_const_none);
@@ -428,7 +443,8 @@ static mp_obj_t class_esp_wifi_station_dhcp_client_start(mp_obj_t self_in)
 static mp_obj_t class_esp_wifi_station_dhcp_client_stop(mp_obj_t self_in)
 {
     if (esp_wifi_station_dhcp_client_stop() != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "esp_wifi_station_dhcp_client_stop() failed"));
     }
 
     return (mp_const_none);

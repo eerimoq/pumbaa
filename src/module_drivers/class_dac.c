@@ -128,7 +128,8 @@ static mp_obj_t class_dac_convert(mp_obj_t self_in, mp_obj_t samples_in)
                         MP_BUFFER_READ);
 
     if (dac_convert(&self_p->drv, buffer_info.buf, buffer_info.len) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_Exception));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "dac_convert() failed"));
     }
 
     return (mp_const_none);
@@ -150,7 +151,8 @@ static mp_obj_t class_dac_async_convert(mp_obj_t self_in, mp_obj_t samples_in)
     if (dac_async_convert(&self_p->drv,
                           buffer_info.buf,
                           buffer_info.len) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_Exception));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "dac_async_convert() failed"));
     }
 
     return (mp_const_none);
@@ -166,7 +168,8 @@ static mp_obj_t class_dac_async_wait(mp_obj_t self_in)
     self_p = MP_OBJ_TO_PTR(self_in);
 
     if (dac_async_wait(&self_p->drv) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_Exception));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "dac_async_wait() failed"));
     }
 
     return (mp_const_none);

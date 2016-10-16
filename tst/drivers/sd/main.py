@@ -84,9 +84,9 @@ def test_bad_arguments():
         Sd(None)
 
     # Bad block size.
-    with assert_raises(OSError):
+    with assert_raises(ValueError, "bad buffer length"):
         SD.write_block(0, '')
-    with assert_raises(OSError):
+    with assert_raises(ValueError, "bad buffer length"):
         SD.write_block(0, 1024 * ' ')
     with assert_raises(TypeError):
         SD.read_block_into(0, ' ')

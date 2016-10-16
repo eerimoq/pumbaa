@@ -94,7 +94,9 @@ static mp_obj_t module_thrd_get_by_name(mp_obj_t name_in)
     thrd_p = thrd_get_by_name(mp_obj_str_get_str(name_in));
 
     if (thrd_p == NULL) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_OSError,
+                                                "No such thread: '%s'",
+                                                mp_obj_str_get_str(name_in)));
     }
 
     return (mp_obj_new_int((uintptr_t)thrd_p));

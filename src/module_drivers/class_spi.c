@@ -125,7 +125,8 @@ static mp_obj_t class_spi_make_new(const mp_obj_type_t *type_p,
                  speed,
                  polarity,
                  phase) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "spi_init() failed"));
     }
 
     return (self_p);
@@ -229,7 +230,8 @@ static mp_obj_t class_spi_transfer(mp_uint_t n_args, const mp_obj_t *args_p)
         size = mp_obj_get_int(args_p[2]);
 
         if (buffer_info.len < size) {
-            nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+            nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                               "bad buffer length"));
         }
     } else {
         size = buffer_info.len;
@@ -238,7 +240,8 @@ static mp_obj_t class_spi_transfer(mp_uint_t n_args, const mp_obj_t *args_p)
     vstr_init_len(&vstr, size);
 
     if (spi_transfer(&self_p->drv, vstr.buf, buffer_info.buf, size) != size) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "spi_transfer() failed"));
     }
 
     return (mp_obj_new_str_from_vstr(&mp_type_bytes, &vstr));
@@ -267,13 +270,15 @@ static mp_obj_t class_spi_transfer_into(mp_uint_t n_args, const mp_obj_t *args_p
         size = mp_obj_get_int(args_p[3]);
 
         if ((read_buffer_info.len < size) || (write_buffer_info.len < size)) {
-            nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+            nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                               "bad buffer length"));
         }
     } else {
         size = read_buffer_info.len;
 
         if (read_buffer_info.len != write_buffer_info.len) {
-            nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+            nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                               "bad buffer length"));
         }
     }
 
@@ -281,7 +286,8 @@ static mp_obj_t class_spi_transfer_into(mp_uint_t n_args, const mp_obj_t *args_p
                      read_buffer_info.buf,
                      write_buffer_info.buf,
                      size) != size) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "spi_transfer() failed"));
     }
 
     return (MP_OBJ_NEW_SMALL_INT(size));
@@ -302,7 +308,8 @@ static mp_obj_t class_spi_read(mp_obj_t self_in, mp_obj_t size_in)
     vstr_init_len(&vstr, size);
 
     if (spi_read(&self_p->drv, vstr.buf, size) != size) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "spi_read() failed"));
     }
 
     return (mp_obj_new_str_from_vstr(&mp_type_bytes, &vstr));
@@ -327,14 +334,16 @@ static mp_obj_t class_spi_read_into(mp_uint_t n_args, const mp_obj_t *args_p)
         size = mp_obj_get_int(args_p[2]);
 
         if (buffer_info.len < size) {
-            nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+            nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                               "bad buffer length"));
         }
     } else {
         size = buffer_info.len;
     }
 
     if (spi_read(&self_p->drv, buffer_info.buf, size) != size) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "spi_read() failed"));
     }
 
     return (MP_OBJ_NEW_SMALL_INT(size));
@@ -359,14 +368,16 @@ static mp_obj_t class_spi_write(mp_uint_t n_args, const mp_obj_t *args_p)
         size = mp_obj_get_int(args_p[2]);
 
         if (buffer_info.len < size) {
-            nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+            nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                               "bad buffer length"));
         }
     } else {
         size = buffer_info.len;
     }
 
     if (spi_write(&self_p->drv, buffer_info.buf, size) != size) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "spi_write() failed"));
     }
 
     return (MP_OBJ_NEW_SMALL_INT(size));

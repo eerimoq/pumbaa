@@ -40,7 +40,8 @@ static mp_obj_t module_ping_host_by_ip_address(mp_obj_t address_in,
     if (ping_host_by_ip_address(&address,
                                 &timeout,
                                 &round_trip_time) != 0) {
-        nlr_raise(mp_obj_new_exception(&mp_type_OSError));
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "ping_host_by_ip_address() failed"));
     }
 
     round_trip_time_ms = (round_trip_time.seconds * 1000);
