@@ -228,11 +228,11 @@
 #    endif
 #endif
 
-#ifndef CONFIG_PUMBAA_CLASS_ESPRESSIF_WIFI
+#ifndef CONFIG_PUMBAA_CLASS_ESP_WIFI
 #    if defined(ARCH_ESP)
-#        define CONFIG_PUMBAA_CLASS_ESPRESSIF_WIFI          1
+#        define CONFIG_PUMBAA_CLASS_ESP_WIFI                1
 #    else
-#        define CONFIG_PUMBAA_CLASS_ESPRESSIF_WIFI          0
+#        define CONFIG_PUMBAA_CLASS_ESP_WIFI                0
 #    endif
 #endif
 

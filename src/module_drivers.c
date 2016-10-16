@@ -30,6 +30,9 @@ static mp_obj_t module_init(void)
 #if CONFIG_PUMBAA_CLASS_EXTI == 1
     exti_module_init();
 #endif
+#if CONFIG_PUMBAA_CLASS_ESP_WIFI == 1
+    esp_wifi_module_init();
+#endif
 
     return (mp_const_none);
 }

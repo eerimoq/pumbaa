@@ -135,7 +135,7 @@ static mp_obj_t class_esp_wifi_softap_init(mp_obj_t self_in,
 static mp_obj_t class_esp_wifi_softap_set_ip_info(mp_obj_t self_in,
                                                         mp_obj_t info_in)
 {
-    struct esp_wifi_ip_info_t info;
+    struct inet_if_ip_info_t info;
     mp_uint_t len;
     mp_obj_t *items_p;
 
@@ -161,7 +161,7 @@ static mp_obj_t class_esp_wifi_softap_set_ip_info(mp_obj_t self_in,
  */
 static mp_obj_t class_esp_wifi_softap_get_ip_info(mp_obj_t self_in)
 {
-    struct esp_wifi_ip_info_t info;
+    struct inet_if_ip_info_t info;
     mp_obj_t tuple[3];
     char buf[16];
 
@@ -264,8 +264,8 @@ static mp_obj_t class_esp_wifi_station_init(mp_uint_t n_args,
 {
     const char *ssid_p;
     const char *password_p;
-    struct esp_wifi_ip_info_t info;
-    struct esp_wifi_ip_info_t *info_p;
+    struct inet_if_ip_info_t info;
+    struct inet_if_ip_info_t *info_p;
     mp_uint_t len;
     mp_obj_t *items_p;
 
@@ -324,7 +324,7 @@ static mp_obj_t class_esp_wifi_station_disconnect(mp_obj_t self_in)
 static mp_obj_t class_esp_wifi_station_set_ip_info(mp_obj_t self_in,
                                                          mp_obj_t info_in)
 {
-    struct esp_wifi_ip_info_t info;
+    struct inet_if_ip_info_t info;
     mp_uint_t len;
     mp_obj_t *items_p;
 
@@ -350,7 +350,7 @@ static mp_obj_t class_esp_wifi_station_set_ip_info(mp_obj_t self_in,
  */
 static mp_obj_t class_esp_wifi_station_get_ip_info(mp_obj_t self_in)
 {
-    struct esp_wifi_ip_info_t info;
+    struct inet_if_ip_info_t info;
     mp_obj_t tuple[3];
     char buf[16];
 
