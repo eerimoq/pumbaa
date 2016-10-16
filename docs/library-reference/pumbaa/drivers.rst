@@ -387,7 +387,8 @@ Simba documentation: `drivers`_
 
 .. class:: drivers.esp_wifi()
 
-   This class is a singleton and can not be instanciated.
+   This class is a singleton and can not be instanciated. It
+   configures the Espressif WiFi stack.
 
    An example of how to connect to a WiFi network:
 
@@ -395,7 +396,7 @@ Simba documentation: `drivers`_
 
       >>> esp_wifi.set_op_mode(esp_wifi.OP_MODE_STATION)
       >>> esp_wifi.station_init('ssid', 'password')
-      >>> print(esp_wifi.station_get_ip_info())
+      >>> esp_wifi.station_get_ip_info()
       (address='192.168.0.5', netmask='255.255.255.0', gateway='192.168.0.1')
 
    An example of how to setup a SoftAP:
@@ -404,8 +405,8 @@ Simba documentation: `drivers`_
 
       >>> esp_wifi.set_op_mode(esp_wifi.OP_MODE_SOFTAP)
       >>> esp_wifi.softap_init('ssid', 'password')
-      >>> print(esp_wifi.softap_get_ip_info())
-      (address='192.168.4.2', netmask='255.255.255.0', gateway='192.168.4.1')
+      >>> esp_wifi.softap_get_ip_info()
+      (address='192.168.4.1', netmask='255.255.255.0', gateway='192.168.4.1')
 
    Simba documentation: `drivers/esp_wifi`_
 
