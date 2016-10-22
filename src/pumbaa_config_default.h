@@ -137,7 +137,7 @@
 #endif
 
 #ifndef MICROPY_PY_THREAD
-#    if defined(ARCH_ESP)
+#    if defined(ARCH_ESP) || defined(ARCH_ESP32)
 #        define MICROPY_PY_THREAD                         (0)
 #    else
 #        define MICROPY_PY_THREAD                         (1)
@@ -171,6 +171,8 @@
 #ifndef CONFIG_PUMBAA_HEAP_SIZE
 #    if defined(ARCH_ESP)
 #        define CONFIG_PUMBAA_HEAP_SIZE                 24576
+#    elif defined(ARCH_ESP32)
+#        define CONFIG_PUMBAA_HEAP_SIZE                131072
 #    else
 #        define CONFIG_PUMBAA_HEAP_SIZE                 32768
 #    endif
@@ -257,7 +259,7 @@
 #endif
 
 #ifndef CONFIG_PUMBAA_THRD
-#    if defined(ARCH_ESP)
+#    if defined(ARCH_ESP) || defined(ARCH_ESP32)
 #        define CONFIG_PUMBAA_THRD                          0
 #    else
 #        define CONFIG_PUMBAA_THRD                          1

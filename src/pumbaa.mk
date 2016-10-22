@@ -75,6 +75,13 @@ PUMBAA_SRC += \
 	port/lexer_port.c
 endif
 
+ifeq ($(BOARD),$(filter $(BOARD), nano32))
+PUMBAA_SRC += \
+	mcus/esp32/gccollect.c \
+	mcus/esp32/gchelper.S \
+	port/lexer_port.c
+endif
+
 ifeq ($(BOARD),photon)
 PUMBAA_SRC += \
 	boards/photon/gccollect.c \
@@ -199,7 +206,7 @@ MICROPYTHON_SRC += \
 	py/vstr.c \
 	py/warning.c
 
-ifeq ($(BOARD),$(filter $(BOARD), esp12e esp01))
+ifeq ($(BOARD),$(filter $(BOARD), esp12e esp01 nano32))
 MICROPYTHON_SRC += \
 	lib/libm/acoshf.c \
 	lib/libm/asinfacosf.c \
