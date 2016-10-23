@@ -20,3 +20,8 @@
 LINKER_SCRIPT ?= pumbaa.flash.4m.ld
 
 LIBPATH += $(PUMBAA_ROOT)/src/mcus/esp8266/ld
+
+LIB_MINIC =
+SRC += $(SIMBA_ROOT)/3pp/libc/string0.c
+CFLAGS += -mforce-l32
+CXXFLAGS += -mforce-l32
