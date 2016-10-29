@@ -12,6 +12,11 @@ import subprocess
 BOARD_FMT = """{desc}
 {desc_underline}
 
+Pinout and general information
+------------------------------
+
+Simba documentation: http://simba-os.readthedocs.io/en/latest/boards/{name}.html
+
 Memory usage
 ------------
 

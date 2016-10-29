@@ -1,6 +1,11 @@
 Linux
 =====
 
+Pinout and general information
+------------------------------
+
+Simba documentation: http://simba-os.readthedocs.io/en/latest/boards/linux.html
+
 Memory usage
 ------------
 

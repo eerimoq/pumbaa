@@ -1,6 +1,11 @@
 Arduino Due
 ===========
 
+Pinout and general information
+------------------------------
+
+Simba documentation: http://simba-os.readthedocs.io/en/latest/boards/arduino_due.html
+
 Memory usage
 ------------
 

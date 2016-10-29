@@ -1,6 +1,11 @@
 ESP-12E Development Board
 =========================
 
+Pinout and general information
+------------------------------
+
+Simba documentation: http://simba-os.readthedocs.io/en/latest/boards/esp12e.html
+
 Memory usage
 ------------
 

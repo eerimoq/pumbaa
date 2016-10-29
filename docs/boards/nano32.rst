@@ -1,6 +1,11 @@
 Nano32
 ======
 
+Pinout and general information
+------------------------------
+
+Simba documentation: http://simba-os.readthedocs.io/en/latest/boards/nano32.html
+
 Memory usage
 ------------
 
