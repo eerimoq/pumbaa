@@ -45,13 +45,3 @@ void gc_collect(void)
 int *__errno() {
     return NULL;
 }
-
-void __assert_func(const char *file,
-                   int line,
-                   const char *func,
-                   const char *expr)
-{
-    std_printf(FSTR("assert:%s:%d:%s: %s\n"), file, line, func, expr);
-    nlr_raise(mp_obj_new_exception_msg(&mp_type_AssertionError,
-                                       "C-level assert"));
-}

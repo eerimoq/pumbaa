@@ -15,7 +15,7 @@ export PATH=${PATH}:$(readlink -f simba/bin)
 export PATH=$PATH:$(readlink -f ../esp-open-sdk/xtensa-lx106-elf/bin)
 
 # ESP32 toolchain
-export PATH=$PATH:$(readlink -f ../esp/xtensa-esp32-elf/bin)
+export PATH=$PATH:$(readlink -f ../xtensa-esp32-elf/bin)
 
 # ARM toolchain for Cygwin.
 export PATH=$PATH:$(readlink -f ../arm-toolchain-windows/arm-none-eabi-gcc/4.8.3-2014q1/bin)
