@@ -14,12 +14,13 @@ using the Boards Manager.
 
 1. Open `File` -> `Preferences`.
 
-2. Add this URL to `Additional Boards Manager URLs` (click on the
+2. Add these URL:s to `Additional Boards Manager URLs` (click on the
    icon to the right of the text field) and press `OK`.
 
    .. code-block:: text
 
       https://sourceforge.net/projects/pumbaa-arduino/files/sam/package_pumbaa_sam_index.json
+      https://sourceforge.net/projects/pumbaa-arduino/files/esp32/package_pumbaa_esp32_index.json
 
 3. Open `Tools` -> `Board: ...` -> `Boards Manager...` and type
    `pumbaa` in the search box.
