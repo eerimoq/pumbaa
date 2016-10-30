@@ -19,8 +19,8 @@
                     },
                     "url": "https://sourceforge.net/projects/pumbaa-arduino/files/esp32/pumbaa-arduino-esp32-2.0.0.zip",
                     "archiveFileName": "pumbaa-arduino-esp32-2.0.0.zip",
-                    "checksum": "SHA-256:619fe472eeaceef0cd0919b71d010dde96e809e325e8332ce9de6f1342e8a01e",
-                    "size": "11433482",
+                    "checksum": "SHA-256:b2dd61ab0f0daad5240f67ad84a009ad4bc318e18b9ed39bc714a6200640db53",
+                    "size": "11952179",
                     "boards": [
                         {"name" : "Nano32"}
                     ],

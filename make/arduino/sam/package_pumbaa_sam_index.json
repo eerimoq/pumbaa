@@ -75,8 +75,8 @@
           },
           "url": "https://sourceforge.net/projects/pumbaa-arduino/files/sam/pumbaa-arduino-sam-2.0.0.zip",
 	  "archiveFileName": "pumbaa-arduino-sam-2.0.0.zip",
-	  "checksum": "SHA-256:75558054b2253cc39f25e13563ee973ada848a5cb45c562ec419a206fbd1cf0d",
-	  "size": "4218686",
+	  "checksum": "SHA-256:cbe6e591f1621e75f7a183e0a44a1b4f6fbf2cf8d30cd4b60b45624575bf2436",
+	  "size": "4736064",
           "boards": [
 	      {"name" : "Arduino Due"}
           ],

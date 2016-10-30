@@ -34,7 +34,6 @@ Follow these steps to create a new release:
    .. code:: text
 
       scp pumbaa-arduino/pumbaa-arduino-sam-*.zip <user>@frs.sourceforge.net:/home/frs/project/pumbaa-arduino/sam
-      scp pumbaa-arduino/pumbaa-arduino-esp-*.zip <user>@frs.sourceforge.net:/home/frs/project/pumbaa-arduino/esp
       scp pumbaa-arduino/pumbaa-arduino-esp32-*.zip <user>@frs.sourceforge.net:/home/frs/project/pumbaa-arduino/esp32
 
 6. Start a http server used to download package manifests in the Arduino IDE.
@@ -47,7 +46,6 @@ Follow these steps to create a new release:
 
    .. code:: text
 
-      http://localhost:8000/esp/package_pumbaa_esp_index.json
       http://localhost:8000/esp32/package_pumbaa_esp32_index.json
       http://localhost:8000/sam/package_pumbaa_sam_index.json
 
@@ -63,7 +61,6 @@ Follow these steps to create a new release:
    .. code:: text
 
       scp make/arduino/sam/package_pumbaa_sam_index.json <user>@frs.sourceforge.net:/home/frs/project/pumbaa-arduino/sam
-      scp make/arduino/esp/package_pumbaa_esp_index.json <user>@frs.sourceforge.net:/home/frs/project/pumbaa-arduino/esp
       scp make/arduino/esp32/package_pumbaa_esp32_index.json <user>@frs.sourceforge.net:/home/frs/project/pumbaa-arduino/esp32
 
 12. Done.

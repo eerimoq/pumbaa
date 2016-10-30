@@ -526,7 +526,8 @@ def main():
     
     print("Writing to " + args.outdir + ".")
 
-    for family in ["sam", "esp", "esp32"]:
+    # esp requires -mforce-l32 which is not part of the toolchain.
+    for family in ["sam", "esp32"]:
         packages_family_dir = os.path.join(args.outdir,
                                            "packages",
                                            "Pumbaa",

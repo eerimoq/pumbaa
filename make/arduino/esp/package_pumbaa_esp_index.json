@@ -19,8 +19,8 @@
                     },
                     "url": "https://sourceforge.net/projects/pumbaa-arduino/files/esp/pumbaa-arduino-esp-2.0.0.zip",
                     "archiveFileName": "pumbaa-arduino-esp-2.0.0.zip",
-                    "checksum": "SHA-256:1ac55cbf3ab33550cb6d48824ec48d435a61df72fb21ea38c4c4bec61f78dea7",
-                    "size": "5149864",
+                    "checksum": "SHA-256:ee7b4646ceabcefb0fab9b53b66f10b75dd651e8ed9324873632b74cd9f9f9e9",
+                    "size": "5667213",
                     "boards": [
                         {"name" : "ESP-01"},
                         {"name" : "ESP-12E"}
