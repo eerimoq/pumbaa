@@ -28,7 +28,7 @@ void gc_collect(void)
     /* Start the GC. */
     gc_collect_start();
     
-    /* Get the registers and the sp */
+    /* Get the registers and the sp. */
     mp_uint_t regs[8];
     mp_uint_t sp = gc_helper_get_regs_and_sp(regs);
     

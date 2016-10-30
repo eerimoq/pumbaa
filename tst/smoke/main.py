@@ -77,12 +77,24 @@ def test_smoke():
         board,
         sync.Event,
         drivers.Pin,
-        drivers.Exti,
-        drivers.Dac,
-        drivers.Spi,
         kernel.Timer,
         other
     ]
+
+    try:
+        objs.append(drivers.Exti)
+    except:
+        pass
+
+    try:
+        objs.append(drivers.Dac)
+    except:
+        pass
+
+    try:
+        objs.append(drivers.Spi)
+    except:
+        pass
 
     for obj in objs:
         print()
@@ -160,27 +172,32 @@ def test_smoke():
     kernel.sys_lock()
     kernel.sys_unlock()
 
-    kernel.thrd_yield()
-    with assert_raises(NotImplementedError):
-        kernel.thrd_join(None)
-    thrd = kernel.thrd_self()
-    with assert_raises(NotImplementedError):
-        kernel.thrd_set_name('foo')
-    print('thrd_get_name(): ', kernel.thrd_get_name())
-    assert kernel.thrd_get_by_name('main') == thrd
-    with assert_raises(OSError):
-        kernel.thrd_get_by_name('foo')
-    kernel.thrd_set_log_mask(thrd, 0xff)
-    assert kernel.thrd_get_log_mask() == 0xff
-    prio = kernel.thrd_get_prio()
-    kernel.thrd_set_prio(thrd, prio + 1)
-    assert kernel.thrd_get_prio() == prio + 1
-    with assert_raises(NotImplementedError):
-        kernel.thrd_set_global_env('foo', 'bar')
-    print('thrd_get_global_env(CWD): ', kernel.thrd_get_global_env('CWD'))
-    with assert_raises(NotImplementedError):
-        kernel.thrd_set_env('foo', 'bar')
-    print('thrd_get_env(CWD): ', kernel.thrd_get_env('CWD'))
+    if os.uname().machine != "Linux with Linux":
+        print('Collecting the garbage...')
+        gc.collect()
+
+    if hasattr(kernel, 'thrd_yield'):
+        kernel.thrd_yield()
+        with assert_raises(NotImplementedError):
+            kernel.thrd_join(None)
+        thrd = kernel.thrd_self()
+        with assert_raises(NotImplementedError):
+            kernel.thrd_set_name('foo')
+        print('thrd_get_name(): ', kernel.thrd_get_name())
+        assert kernel.thrd_get_by_name('main') == thrd
+        with assert_raises(OSError):
+            kernel.thrd_get_by_name('foo')
+        kernel.thrd_set_log_mask(thrd, 0xff)
+        assert kernel.thrd_get_log_mask() == 0xff
+        prio = kernel.thrd_get_prio()
+        kernel.thrd_set_prio(thrd, prio + 1)
+        assert kernel.thrd_get_prio() == prio + 1
+        with assert_raises(NotImplementedError):
+            kernel.thrd_set_global_env('foo', 'bar')
+        print('thrd_get_global_env(CWD): ', kernel.thrd_get_global_env('CWD'))
+        with assert_raises(NotImplementedError):
+            kernel.thrd_set_env('foo', 'bar')
+        print('thrd_get_env(CWD): ', kernel.thrd_get_env('CWD'))
 
 
 def main():
