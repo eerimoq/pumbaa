@@ -100,6 +100,8 @@ def generate_cores(family, database):
         board = "arduino_due"
     elif family == "esp":
         board = "esp01"
+    elif family == "esp32":
+        board = "nano32"
     else:
         raise ValueError("{}: bad family".format(family))
 
@@ -121,6 +123,22 @@ def generate_cores(family, database):
                 mkdir_p(os.path.join(cores_dir, cores_file_dir))
                 shutil.copy(file_path,
                             os.path.join(cores_dir, cores_file_dir))
+
+    # Copy c-files that are included into another c-file.
+    c_files = [
+        "micropython/extmod/crypto-algorithms/sha256.c",
+        "micropython/extmod/uzlib/adler32.c",
+        "micropython/extmod/uzlib/crc32.c",
+        "micropython/extmod/uzlib/tinfgzip.c",
+        "micropython/extmod/uzlib/tinflate.c",
+        "micropython/extmod/uzlib/tinfzlib.c"
+    ]
+    
+    for c_file in c_files:
+        src_path = os.path.join(pumbaa_root, c_file)
+        dst_dir = os.path.join(cores_dir, os.path.dirname(c_file))
+        mkdir_p(dst_dir)
+        shutil.copy(src_path, dst_dir)
 
     # Various files.
     root_files = [
@@ -244,7 +262,12 @@ def get_c_extra_flags(board, database):
 
     incs = database["boards"][board]["inc"]
     cdefs = database["boards"][board]["cdefs"]
-    cflags = database["boards"][board]["cflags"]
+    cflags = []
+
+    for flag in database["boards"][board]["cflags"]:
+        if "-mforce-l32" in flag:
+            continue
+        cflags.append(flag)
 
     return " ".join(cflags
                     + ["\"-I{runtime.platform.path}/cores/pumbaa/" + inc + "\""
@@ -282,38 +305,14 @@ def get_c_elf_extra_flags(board, database):
                        for libpath in libpaths])
 
 
-def get_c_elf_extra_flags_after(board, database):
-    """Get library path, defines and flags to the linker.
+def get_c_elf_libs(board, database):
+    """Get libraries.
 
     """
 
-    ldflags_after = database["boards"][board]["ldflags_after"]
+    libs = database["boards"][board]["lib"]
 
-    return " ".join(ldflags_after)
-
-
-def generate_boards_txt_avr(database, boards_txt_fmt):
-    """Generate boards.txt for AVR.
-
-    """
-
-    return boards_txt_fmt.format(
-        mega2560_compiler_c_extra_flags=get_c_extra_flags("arduino_mega",
-                                                          database),
-        nano_compiler_c_extra_flags=get_c_extra_flags("arduino_nano",
-                                                      database),
-        uno_compiler_c_extra_flags=get_c_extra_flags("arduino_uno",
-                                                     database),
-        pro_micro_compiler_c_extra_flags=get_c_extra_flags("arduino_pro_micro",
-                                                           database), 
-        mega2560_compiler_cxx_extra_flags=get_cxx_extra_flags("arduino_mega",
-                                                              database),
-        nano_compiler_cxx_extra_flags=get_cxx_extra_flags("arduino_nano",
-                                                          database),
-        uno_compiler_cxx_extra_flags=get_cxx_extra_flags("arduino_uno",
-                                                         database),
-        pro_micro_compiler_cxx_extra_flags=get_cxx_extra_flags("arduino_pro_micro",
-                                                               database))
+    return " ".join(["-l" + lib for lib in libs])
 
 
 def generate_boards_txt_sam(database, boards_txt_fmt):
@@ -353,11 +352,30 @@ def generate_boards_txt_esp(database, boards_txt_fmt):
         esp01_compiler_c_extra_flags=get_c_extra_flags("esp01", database),
         esp01_compiler_cxx_extra_flags=get_cxx_extra_flags("esp01", database),
         esp01_compiler_c_elf_extra_flags=esp01_compiler_c_elf_extra_flags,
-        esp01_compiler_c_elf_extra_flags_after=get_c_elf_extra_flags_after("esp01", database),
+        esp01_compiler_c_elf_libs=get_c_elf_libs("esp01", database),
         esp12e_compiler_c_extra_flags=get_c_extra_flags("esp12e", database),
         esp12e_compiler_cxx_extra_flags=get_cxx_extra_flags("esp12e", database),
         esp12e_compiler_c_elf_extra_flags=esp12e_compiler_c_elf_extra_flags,
-        esp12e_compiler_c_elf_extra_flags_after=get_c_elf_extra_flags_after("esp12e", database))
+        esp12e_compiler_c_elf_libs=get_c_elf_libs("esp12e", database))
+
+
+def generate_boards_txt_esp32(database, boards_txt_fmt):
+    """Generate boards.txt for ESP32.
+
+    """
+
+    # ESP SDK libraries are copied to this location.
+    libpath = "-L{runtime.platform.path}/lib"
+
+    nano32_compiler_c_elf_extra_flags = get_c_elf_extra_flags("nano32", database)
+    nano32_compiler_c_elf_extra_flags += " "
+    nano32_compiler_c_elf_extra_flags += libpath
+
+    return boards_txt_fmt.format(
+        nano32_compiler_c_extra_flags=get_c_extra_flags("nano32", database),
+        nano32_compiler_cxx_extra_flags=get_cxx_extra_flags("nano32", database),
+        nano32_compiler_c_elf_extra_flags=nano32_compiler_c_elf_extra_flags,
+        nano32_compiler_c_elf_libs=get_c_elf_libs("nano32", database))
 
 
 def generate_configuration_files(family, database):
@@ -379,12 +397,12 @@ def generate_configuration_files(family, database):
 
     with open("boards.txt", "w") as fout:
         with open(os.path.join(family_dir, "boards.txt"), "r") as fin:
-            if family == "avr":
-                boards_txt = generate_boards_txt_avr(database, fin.read())
-            elif family == "sam":
+            if family == "sam":
                 boards_txt = generate_boards_txt_sam(database, fin.read())
             elif family == "esp":
                 boards_txt = generate_boards_txt_esp(database, fin.read())
+            elif family == "esp32":
+                boards_txt = generate_boards_txt_esp32(database, fin.read())
             else:
                 raise ValueError("Unsupported family {}.".format(family))
 
@@ -427,6 +445,45 @@ def generate_extra(family, database):
                                  "eboot",
                                  "eboot.elf"),
                     eboot_dir)
+    elif family == "esp32":
+        # Copy all libraries.
+        libpaths = database["boards"]["nano32"]["libpath"]
+        mkdir_p("lib")
+
+        for lib in database["boards"]["nano32"]["lib"]:
+            for libpath in libpaths:
+                libpath_dir = os.path.join(pumbaa_root, libpath)
+                for root, _, filenames in os.walk(libpath_dir):
+                    for filename in filenames:
+                        if filename != "lib" + lib + ".a":
+                            continue
+                        file_path = os.path.join(root, filename)
+                        shutil.copy(file_path, "lib")
+                        break
+
+        # Copy bootloader and partition table.
+        mkdir_p("bin")
+        for filename in ["bootloader.bin", "partitions_singleapp.bin"]:
+            shutil.copy(os.path.join(pumbaa_root,
+                                     "simba",
+                                     "3pp",
+                                     "esp32",
+                                     "bin",
+                                     filename),
+                        "bin")
+
+        # Copy esptool.
+        mkdir_p("tools")
+        shutil.copy(os.path.join(pumbaa_root,
+                                 "simba",
+                                 "3pp",
+                                 "esp32",
+                                 "esp-idf",
+                                 "components",
+                                 "esptool_py",
+                                 "esptool",
+                                 "esptool.py"),
+                    "tools")
 
 
 def generate_files_and_folders(family, database, outdir):
@@ -469,7 +526,7 @@ def main():
     
     print("Writing to " + args.outdir + ".")
 
-    for family in ["sam", "esp"]:
+    for family in ["sam", "esp", "esp32"]:
         packages_family_dir = os.path.join(args.outdir,
                                            "packages",
                                            "Pumbaa",

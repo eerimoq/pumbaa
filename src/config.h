@@ -34,4 +34,10 @@
 #    endif
 #endif
 
+#ifndef CONFIG_START_FILESYSTEM_ADDRESS
+#    if defined(BOARD_ARDUINO_DUE)
+#        define CONFIG_START_FILESYSTEM_ADDRESS    0x000f8000
+#    endif
+#endif
+
 #endif

@@ -12,27 +12,27 @@
                 {
                     "name": "Pumbaa",
                     "architecture": "esp",
-                    "version": "1.0.0",
+                    "version": "2.0.0",
                     "category": "Pumbaa",
                     "help": {
                         "online": "https://pumbaa.readthedocs.org"
                     },
-                    "url": "http://localhost:8000/pumbaa-arduino-esp-1.0.0.zip",
-                    "archiveFileName": "pumbaa-arduino-esp-1.0.0.zip",
-                    "checksum": "SHA-256:81cb177217cf9e3423f76a70871d4f67e160dff3c447aa1f2a83d4ae58cca642",
-                    "size": "5464232",
+                    "url": "https://sourceforge.net/projects/pumbaa-arduino/files/esp/pumbaa-arduino-esp-2.0.0.zip",
+                    "archiveFileName": "pumbaa-arduino-esp-2.0.0.zip",
+                    "checksum": "SHA-256:1ac55cbf3ab33550cb6d48824ec48d435a61df72fb21ea38c4c4bec61f78dea7",
+                    "size": "5149864",
                     "boards": [
                         {"name" : "ESP-01"},
                         {"name" : "ESP-12E"}
                     ],
                     "toolsDependencies": [
                         {
-                            "packager": "Simba",
+                            "packager": "Pumbaa",
                             "version": "1.20.0-26-gb404fb9-2",
                             "name": "xtensa-lx106-elf-gcc"
                         },
                         {
-                            "packager": "Simba",
+                            "packager": "Pumbaa",
                             "version": "0.4.9",
                             "name": "esptool"
                         }

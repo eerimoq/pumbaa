@@ -100,7 +100,7 @@ def main():
         # Get board include paths.
         inc = get_make_variable(board, "INC").split()
         inc = [i.replace(pumbaa_root, "") for i in inc]
-        inc = list(set(inc) - set("."))
+        inc = [i for i in inc if i != "."]
         database["boards"][board]["inc"] = inc
 
         # Get board sources.
@@ -108,9 +108,11 @@ def main():
         # The re lib sources are included in another source file.
         src += glob.glob(os.path.join(pumbaa_root,
                                       "micropython/extmod/re1.5/*.c"))
-        src = list(set(src) - set(["main.c",
-                                   os.path.join("build", board, "frozen.c"),
-                                   os.path.join("build", board, "settings.c")]))
+        src = [s
+               for s in src
+               if s not in ["main.c",
+                            os.path.join("build", board, "frozen.c"),
+                            os.path.join("build", board, "settings.c")]]
         src = [s.replace(pumbaa_root, "") for s in src]
         database["boards"][board]["src"] = src
 

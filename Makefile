@@ -43,12 +43,17 @@ endif
 
 ifeq ($(BOARD), esp12e)
 TESTS = \
-	tst/smoke
+	tst/kernel/timer
+endif
+
+ifeq ($(BOARD), nano32)
+TESTS = \
+	tst/kernel/timer
 endif
 
 ifeq ($(BOARD), arduino_due)
 TESTS = \
-	tst/smoke
+	tst/kernel/timer
 endif
 
 all: $(TESTS:%=%.all)
@@ -92,6 +97,9 @@ clean-arduino-due:
 clean-esp12e:
 	$(MAKE) BOARD=esp12e SERIAL_PORT=/dev/simba-esp12e clean
 
+clean-nano32:
+	$(MAKE) BOARD=nano32 SERIAL_PORT=/dev/simba-nano32 clean
+
 test-arduino-due:
 	@echo "Arduino Due"
 	$(MAKE) BOARD=arduino_due SERIAL_PORT=/dev/simba-arduino_due test
@@ -100,13 +108,19 @@ test-esp12e:
 	@echo "ESP12-E"
 	$(MAKE) BOARD=esp12e SERIAL_PORT=/dev/simba-esp12e test
 
+test-nano32:
+	@echo "Nano32"
+	$(MAKE) BOARD=nano32 SERIAL_PORT=/dev/simba-nano32 test
+
 test-all-boards:
 	$(MAKE) test-arduino-due
 	$(MAKE) test-esp12e
+	$(MAKE) test-nano32
 
 clean-all-boards:
 	$(MAKE) clean-arduino-due
 	$(MAKE) clean-esp12e
+	$(MAKE) clean-nano32
 
 codecov-coverage: $(TESTS:%=%.ccc)
 

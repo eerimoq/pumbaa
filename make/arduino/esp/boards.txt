@@ -39,12 +39,13 @@ esp01.build.flash_freq=40
 
 esp01.compiler.c.extra_flags={esp01_compiler_c_extra_flags}
 esp01.compiler.cpp.extra_flags={esp01_compiler_cxx_extra_flags}
+esp01.compiler.S.extra_flags={esp01_compiler_c_extra_flags}
 esp01.compiler.c.elf.extra_flags={esp01_compiler_c_elf_extra_flags}
-esp01.compiler.c.elf.extra_flags_after={esp01_compiler_c_elf_extra_flags_after}
+esp01.compiler.c.elf.libs={esp01_compiler_c_elf_libs}
 
 ##################################################################
 
-esp12e.name=ESP12E
+esp12e.name=Pumbaa ESP12E
 
 esp12e.upload.tool=esptool
 esp12e.upload.speed=115200
@@ -66,7 +67,8 @@ esp12e.build.flash_freq=40
 
 esp12e.compiler.c.extra_flags={esp12e_compiler_c_extra_flags}
 esp12e.compiler.cpp.extra_flags={esp12e_compiler_cxx_extra_flags}
+esp12e.compiler.S.extra_flags={esp12e_compiler_c_extra_flags}
 esp12e.compiler.c.elf.extra_flags={esp12e_compiler_c_elf_extra_flags}
-esp12e.compiler.c.elf.extra_flags_after={esp12e_compiler_c_elf_extra_flags_after}
+esp12e.compiler.c.elf.libs={esp12e_compiler_c_elf_libs}
 
 ##################################################################

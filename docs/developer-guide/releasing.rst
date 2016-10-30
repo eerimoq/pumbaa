@@ -51,14 +51,14 @@ Follow these steps to create a new release:
       http://localhost:8000/esp32/package_pumbaa_esp32_index.json
       http://localhost:8000/sam/package_pumbaa_sam_index.json
 
-8. Install all four packages and run the blink example for each one of
+8. Install all packages and run the blink example for each one of
    them.
 
 9. Commit the changes, and tag the commit with the new version.
 
 10. Push the new commit and tag.
 
-11. Copy the Pumbaa Arduino package manifests SourceForge.
+11. Copy the Pumbaa Arduino package manifests to SourceForge.
 
    .. code:: text
 
