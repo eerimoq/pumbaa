@@ -40,8 +40,3 @@ void gc_collect(void)
     /* End the GC. */
     gc_collect_end();
 }
-
-
-int *__errno() {
-    return NULL;
-}
