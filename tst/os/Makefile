@@ -31,6 +31,7 @@
 
 NAME = os_suite
 BOARD ?= linux
+TIMEOUT ?= 120
 
 PYSRC += \
 	$(PUMBAA_ROOT)/src/py/harness.py

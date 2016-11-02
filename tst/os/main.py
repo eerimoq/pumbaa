@@ -2,9 +2,9 @@
 # @section License
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (c) 2016, Erik Moqvist
-# 
+#
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
 # files (the "Software"), to deal in the Software without
@@ -33,6 +33,10 @@ import os
 import harness
 from harness import assert_raises
 
+if 'Linux' in os.uname().machine:
+    fs = 'fat16'
+else:
+    fs = 'spiffs'
 
 def test_format():
     """Format the file system.
@@ -54,7 +58,8 @@ def test_directory():
     with assert_raises(NotImplementedError):
         os.chdir('dir')
 
-    os.mkdir('dir')
+    if fs == 'fat16':
+        os.mkdir('dir')
 
     with assert_raises(NotImplementedError):
         os.remove('dir')
@@ -167,7 +172,8 @@ def test_stat():
 
     """
 
-    print(os.stat("."))
+    if fs == 'fat16':
+        print(os.stat("."))
 
     with open("stat.txt", "w") as fout:
         fout.write("12345678")
@@ -183,26 +189,39 @@ def test_stat():
 
 
 def test_listdir():
-    assert os.listdir() == ['DIR',
-                            'CREATE.TXT',
-                            'APPEND.TXT',
-                            'RW.TXT',
-                            'SEEK.TXT',
-                            'STAT.TXT']
+    if fs == 'fat16':
+        assert os.listdir() == ['DIR',
+                                'CREATE.TXT',
+                                'APPEND.TXT',
+                                'RW.TXT',
+                                'SEEK.TXT',
+                                'STAT.TXT']
 
-    assert os.listdir('.') == ['DIR',
-                               'CREATE.TXT',
-                               'APPEND.TXT',
-                               'RW.TXT',
-                               'SEEK.TXT',
-                               'STAT.TXT']
+        assert os.listdir('.') == ['DIR',
+                                   'CREATE.TXT',
+                                   'APPEND.TXT',
+                                   'RW.TXT',
+                                   'SEEK.TXT',
+                                   'STAT.TXT']
 
-    try:
-        os.listdir('non-existing')
-    except OSError as e:
-        assert str(e) == "No such file or directory: 'non-existing'"
+        try:
+            os.listdir('non-existing')
+        except OSError as e:
+            assert str(e) == "No such file or directory: 'non-existing'"
+        else:
+            assert False
     else:
-        assert False
+        assert os.listdir() == ['create.txt',
+                                'append.txt',
+                                'rw.txt',
+                                'seek.txt',
+                                'stat.txt']
+
+        assert os.listdir('.') == ['create.txt',
+                                   'append.txt',
+                                   'rw.txt',
+                                   'seek.txt',
+                                   'stat.txt']
 
 
 def test_flush():

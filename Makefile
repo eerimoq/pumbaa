@@ -60,7 +60,11 @@ endif
 
 ifeq ($(BOARD), nano32)
 TESTS = \
-	tst/kernel/timer
+	tst/drivers/pin \
+	tst/kernel/timer \
+	tst/sync/event \
+	tst/sync/queue \
+	tst/os
 endif
 
 ifeq ($(BOARD), arduino_due)
