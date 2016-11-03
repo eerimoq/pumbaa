@@ -22,6 +22,7 @@ Project homepage: https://github.com/eerimoq/pumbaa
    boards
    examples
    library-reference
+   license
 
 Features
 --------
