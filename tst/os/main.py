@@ -62,9 +62,6 @@ def test_directory():
         os.mkdir('dir')
 
     with assert_raises(NotImplementedError):
-        os.remove('dir')
-
-    with assert_raises(NotImplementedError):
         os.rename('dir', 'dir2')
 
     with assert_raises(NotImplementedError):
@@ -188,6 +185,11 @@ def test_stat():
         assert False
 
 
+def test_remove():
+    if fs == 'spiffs':
+        os.remove('create.txt')
+
+
 def test_listdir():
     if fs == 'fat16':
         assert os.listdir() == ['DIR',
@@ -211,14 +213,12 @@ def test_listdir():
         else:
             assert False
     else:
-        assert os.listdir() == ['create.txt',
-                                'append.txt',
+        assert os.listdir() == ['append.txt',
                                 'rw.txt',
                                 'seek.txt',
                                 'stat.txt']
 
-        assert os.listdir('.') == ['create.txt',
-                                   'append.txt',
+        assert os.listdir('.') == ['append.txt',
                                    'rw.txt',
                                    'seek.txt',
                                    'stat.txt']
@@ -265,6 +265,7 @@ def main():
         (test_read_write, "test_read_write"),
         (test_seek_tell, "test_seek_tell"),
         (test_stat, "test_stat"),
+        (test_remove, "test_remove"),
         (test_listdir, "test_listdir"),
         (test_flush, "test_flush"),
         (test_print, "test_print"),

@@ -150,9 +150,6 @@ def test_smoke():
         os.rename('foo', 'bar')
 
     with assert_raises(NotImplementedError):
-        os.remove('bar')
-
-    with assert_raises(NotImplementedError):
         os.rmdir('bar')
 
     assert other.foo() == True

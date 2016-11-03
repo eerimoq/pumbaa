@@ -182,8 +182,7 @@ static mp_obj_t os_remove(mp_obj_t path_in)
     int res;
 
     path_p = mp_obj_str_get_str(path_in);
-    res = -1;
-    mp_not_implemented("os_remove()");
+    res = fs_remove(path_p);
 
     if (res != 0) {
         nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_OSError,
