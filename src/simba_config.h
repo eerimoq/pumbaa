@@ -32,7 +32,11 @@
 #define __SIMBA_CONFIG_H__
 
 #ifndef CONFIG_ASSERT
-#    define CONFIG_ASSERT                                   0
+#    if defined(ARCH_ESP32) || defined(ARCH_LINUX)
+#        define CONFIG_ASSERT                               1
+#    else
+#        define CONFIG_ASSERT                               0
+#    endif
 #endif
 
 #ifndef CONFIG_START_NETWORK
