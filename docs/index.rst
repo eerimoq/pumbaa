@@ -23,6 +23,7 @@ Project homepage: https://github.com/eerimoq/pumbaa
    examples
    library-reference
    license
+   videos
 
 Features
 --------
