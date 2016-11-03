@@ -2,9 +2,9 @@
  * @section License
  *
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016, Erik Moqvist
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -31,28 +31,7 @@
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
 
-#ifndef CONFIG_ASSERT
-#    define CONFIG_ASSERT                                   0
-#endif
-
-#ifndef CONFIG_START_NETWORK
-#    define CONFIG_START_NETWORK                            0
-#endif
-
-#ifndef CONFIG_START_SHELL
-#    define CONFIG_START_SHELL                              0
-#endif
-
-#ifndef CONFIG_THRD_IDLE_STACK_SIZE
-#    if defined(ARCH_ARM)
-#        define CONFIG_THRD_IDLE_STACK_SIZE              1024
-#    endif
-#endif
-
-#ifndef CONFIG_START_FILESYSTEM_ADDRESS
-#    if defined(BOARD_ARDUINO_DUE)
-#        define CONFIG_START_FILESYSTEM_ADDRESS    0x000f8000
-#    endif
-#endif
+/* Changes of the default Simba configuration. */
+#include "simba_config.h"
 
 #endif
