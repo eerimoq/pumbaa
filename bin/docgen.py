@@ -162,7 +162,7 @@ def drivers_generate(database):
 
     boards = database['boards']
     for board, data in boards.items():
-        board_rst = ':doc:`../../boards/{}.rst`'.format(board)
+        board_rst = ':doc:`../../boards/{}`'.format(board)
         if 'pin' in data['drivers']:
             pin_availability.append(board_rst)
         if 'exti' in data['drivers']:
