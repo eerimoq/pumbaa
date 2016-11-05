@@ -129,11 +129,63 @@ def examples_generate():
 
         rst_path = os.path.join("docs", "examples", example, "source-code.rst")
 
-        print "Writing to ", rst_path
+        print "Writing to", rst_path
         with open(rst_path, "w") as fout:
             fout.write(rst)
 
 
+def drivers_generate(database):
+    pin_availability = []
+    exti_availability = []
+    dac_availability = []
+    spi_availability = []
+    i2c_soft_availability = []
+    sd_availability = []
+    esp_wifi_availability = []
+
+    pumbaa_path = os.path.join("docs",
+                               "library-reference",
+                               "pumbaa")
+    drivers_template_rst_path = os.path.join(pumbaa_path,
+                                             "drivers_template.rst")
+    drivers_rst_path = os.path.join(pumbaa_path,
+                                    "drivers.rst")
+    
+    boards = database['boards']
+    for board, data in boards.items():
+        if 'pin' in data['drivers']:
+            pin_availability.append(board)
+        if 'exti' in data['drivers']:
+            exti_availability.append(board)
+        if 'dac' in data['drivers']:
+            dac_availability.append(board)
+        if 'spi' in data['drivers']:
+            spi_availability.append(board)
+        if 'i2c_soft' in data['drivers']:
+            i2c_soft_availability.append(board)
+        if 'sd' in data['drivers']:
+            sd_availability.append(board)
+        if 'esp_wifi' in data['drivers']:
+            esp_wifi_availability.append(board)
+
+    with open(drivers_template_rst_path) as fin:
+        template = fin.read()
+
+    formatted = template.format(
+        pin_availability=', '.join(pin_availability),
+        exti_availability=', '.join(exti_availability),
+        dac_availability=', '.join(dac_availability),
+        spi_availability=', '.join(spi_availability),
+        i2c_soft_availability=', '.join(i2c_soft_availability),
+        sd_availability=', '.join(sd_availability),
+        esp_wifi_availability=', '.join(esp_wifi_availability))
+
+    print "Writing to", drivers_rst_path
+    
+    with open(drivers_rst_path, "w") as fout:
+        fout.write(formatted)    
+        
+        
 def main():
     """Main.
 
@@ -147,8 +199,8 @@ def main():
         database = json.load(fin)
 
     examples_generate()
+    drivers_generate(database)
     boards_generate(database)
-
 
 if __name__ == "__main__":
     main()

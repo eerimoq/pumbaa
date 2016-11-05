@@ -35,7 +35,7 @@ Simba documentation: `drivers`_
 
    Simba documentation: `drivers/pin`_
 
-   Availability: esp01, photon, nano32, esp12e, arduino_due, linux
+   Availability: {pin_availability}
 
 
    .. method:: read()
@@ -90,7 +90,7 @@ Simba documentation: `drivers`_
 
    Simba documentation: `drivers/exti`_
 
-   Availability: esp01, esp12e, arduino_due, linux
+   Availability: {exti_availability}
 
 
    .. method:: start()
@@ -135,7 +135,7 @@ Simba documentation: `drivers`_
 
    Simba documentation: `drivers/dac`_
 
-   Availability: arduino_due, linux
+   Availability: {dac_availability}
 
 
    .. method:: convert(samples)
@@ -180,7 +180,7 @@ Simba documentation: `drivers`_
 
    Simba documentation: `drivers/spi`_
 
-   Availability: esp01, esp12e, arduino_due, linux
+   Availability: {spi_availability}
 
 
    .. method:: start()
@@ -288,7 +288,7 @@ Simba documentation: `drivers`_
 
    Simba documentation: `drivers/i2c_soft`_
 
-   Availability: esp01, photon, esp12e, arduino_due, linux
+   Availability: {i2c_soft_availability}
 
 
    .. method:: start()
@@ -339,7 +339,7 @@ Simba documentation: `drivers`_
 
    Simba documentation: `drivers/sd`_
 
-   Availability: arduino_due, linux
+   Availability: {sd_availability}
 
 
    .. method:: start()
@@ -422,7 +422,7 @@ Simba documentation: `drivers`_
 
    Simba documentation: `drivers/esp_wifi`_
 
-   Availability: esp01, esp12e
+   Availability: {esp_wifi_availability}
 
 
    .. method:: set_op_mode(mode)
