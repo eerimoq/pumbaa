@@ -6,6 +6,13 @@ Pinout and general information
 
 Simba documentation: http://simba-os.readthedocs.io/en/latest/boards/photon.html
 
+Drivers
+-------
+
+Supported drivers for this board.
+
+- :class:`drivers.drivers.Pin`
+
 Memory usage
 ------------
 
@@ -23,9 +30,9 @@ Below is the memory usage of two applications:
 +--------------------------+-----------+-----------+
 | Application              | Flash     | RAM       |
 +==========================+===========+===========+
-| minimal-configuration    |    368696 |     65420 |
+| minimal-configuration    |    369672 |     65504 |
 +--------------------------+-----------+-----------+
-| default-configuration    |    381320 |     67208 |
+| default-configuration    |    381704 |     67356 |
 +--------------------------+-----------+-----------+
 
 Default configuration

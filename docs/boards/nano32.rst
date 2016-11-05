@@ -6,6 +6,13 @@ Pinout and general information
 
 Simba documentation: http://simba-os.readthedocs.io/en/latest/boards/nano32.html
 
+Drivers
+-------
+
+Supported drivers for this board.
+
+- :class:`drivers.drivers.Pin`
+
 Memory usage
 ------------
 
@@ -23,9 +30,9 @@ Below is the memory usage of two applications:
 +--------------------------+-----------+-----------+
 | Application              | Flash     | RAM       |
 +==========================+===========+===========+
-| minimal-configuration    |    320617 |    218312 |
+| minimal-configuration    |    320753 |    218408 |
 +--------------------------+-----------+-----------+
-| default-configuration    |    341293 |    225276 |
+| default-configuration    |    346401 |    236216 |
 +--------------------------+-----------+-----------+
 
 Default configuration

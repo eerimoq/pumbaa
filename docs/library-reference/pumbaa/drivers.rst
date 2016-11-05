@@ -35,8 +35,6 @@ Simba documentation: `drivers`_
 
    Simba documentation: `drivers/pin`_
 
-   Availability: :doc:`../../boards/esp01`, :doc:`../../boards/photon`, :doc:`../../boards/nano32`, :doc:`../../boards/esp12e`, :doc:`../../boards/arduino_due` and :doc:`../../boards/linux`.
-
 
    .. method:: read()
 
@@ -90,8 +88,6 @@ Simba documentation: `drivers`_
 
    Simba documentation: `drivers/exti`_
 
-   Availability: :doc:`../../boards/esp01`, :doc:`../../boards/esp12e`, :doc:`../../boards/arduino_due` and :doc:`../../boards/linux`.
-
 
    .. method:: start()
 
@@ -135,8 +131,6 @@ Simba documentation: `drivers`_
 
    Simba documentation: `drivers/dac`_
 
-   Availability: :doc:`../../boards/arduino_due` and :doc:`../../boards/linux`.
-
 
    .. method:: convert(samples)
 
@@ -179,8 +173,6 @@ Simba documentation: `drivers`_
       >>> spi.stop()
 
    Simba documentation: `drivers/spi`_
-
-   Availability: :doc:`../../boards/esp01`, :doc:`../../boards/esp12e`, :doc:`../../boards/arduino_due` and :doc:`../../boards/linux`.
 
 
    .. method:: start()
@@ -288,8 +280,6 @@ Simba documentation: `drivers`_
 
    Simba documentation: `drivers/i2c_soft`_
 
-   Availability: :doc:`../../boards/esp01`, :doc:`../../boards/photon`, :doc:`../../boards/esp12e`, :doc:`../../boards/arduino_due` and :doc:`../../boards/linux`.
-
 
    .. method:: start()
 
@@ -338,8 +328,6 @@ Simba documentation: `drivers`_
       >>> sd.stop()
 
    Simba documentation: `drivers/sd`_
-
-   Availability: :doc:`../../boards/arduino_due` and :doc:`../../boards/linux`.
 
 
    .. method:: start()
@@ -421,8 +409,6 @@ Simba documentation: `drivers`_
       (address='192.168.4.1', netmask='255.255.255.0', gateway='192.168.4.1')
 
    Simba documentation: `drivers/esp_wifi`_
-
-   Availability: :doc:`../../boards/esp01` and :doc:`../../boards/esp12e`.
 
 
    .. method:: set_op_mode(mode)

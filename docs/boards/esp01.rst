@@ -6,6 +6,15 @@ Pinout and general information
 
 Simba documentation: http://simba-os.readthedocs.io/en/latest/boards/esp01.html
 
+Drivers
+-------
+
+Supported drivers for this board.
+
+- :class:`drivers.drivers.esp_wifi`
+- :class:`drivers.drivers.Exti`
+- :class:`drivers.drivers.Pin`
+
 Memory usage
 ------------
 
@@ -23,9 +32,9 @@ Below is the memory usage of two applications:
 +--------------------------+-----------+-----------+
 | Application              | Flash     | RAM       |
 +==========================+===========+===========+
-| minimal-configuration    |    475056 |     66268 |
+| minimal-configuration    |    475932 |     66356 |
 +--------------------------+-----------+-----------+
-| default-configuration    |    506768 |     73276 |
+| default-configuration    |    507976 |     73364 |
 +--------------------------+-----------+-----------+
 
 Default configuration

@@ -7,7 +7,7 @@ import os
 import argparse
 import json
 import subprocess
-
+import re
 
 BOARD_FMT = """{desc}
 {desc_underline}
@@ -16,6 +16,13 @@ Pinout and general information
 ------------------------------
 
 Simba documentation: http://simba-os.readthedocs.io/en/latest/boards/{name}.html
+
+Drivers
+-------
+
+Supported drivers for this board.
+
+{drivers}
 
 Memory usage
 ------------
@@ -59,12 +66,31 @@ SOURCE_CODE_FMT = """.. code-block:: python
 """
 
 
+def driver_file_name_to_class(filename):
+    class_map = {
+        'i2c_soft': 'I2CSoft',
+        'esp_wifi': 'esp_wifi'
+    }
+    name = filename[6:-2]
+    try:
+        return class_map[name]
+    except KeyError:
+        return name[0].upper() + name[1:]
+
+
 def boards_generate(database):
     """Generate boards.
 
     """
 
     for board, data in database["boards"].items():
+        # Board drivers.
+        drivers = []
+        for driver in sorted(data["src"]):
+            mo = re.match(r'src/module_drivers/(.+)', driver)
+            if mo:
+                drivers.append('- :class:`drivers.drivers.{}`'.format(driver_file_name_to_class(mo.group(1))))
+
         # Default configuration.
         default_configuration = ""
         for config in data["default-configuration"]:
@@ -96,6 +122,7 @@ def boards_generate(database):
         rst = BOARD_FMT.format(name=board,
                                desc=data["board_desc"],
                                desc_underline="=" * len(data["board_desc"]),
+                               drivers='\n'.join(drivers),
                                default_configuration=default_configuration,
                                memory_usage='\n+-{}-+-----------+-----------+\n'.format(
                                    24 * '-').join(memory_usage))
@@ -134,68 +161,6 @@ def examples_generate():
             fout.write(rst)
 
 
-def format_comma_separated_list(lst):
-    if len(lst) == 0:
-        return ''
-    elif len(lst) == 1:
-        return lst[0] + '.'
-    else:
-        return ', '.join(lst[:-1]) + ' and ' + lst[-1] + '.'
-
-
-def drivers_generate(database):
-    pin_availability = []
-    exti_availability = []
-    dac_availability = []
-    spi_availability = []
-    i2c_soft_availability = []
-    sd_availability = []
-    esp_wifi_availability = []
-
-    pumbaa_path = os.path.join("docs",
-                               "library-reference",
-                               "pumbaa")
-    drivers_template_rst_path = os.path.join(pumbaa_path,
-                                             "drivers_template.rst")
-    drivers_rst_path = os.path.join(pumbaa_path,
-                                    "drivers.rst")
-
-    boards = database['boards']
-    for board, data in boards.items():
-        board_rst = ':doc:`../../boards/{}`'.format(board)
-        if 'pin' in data['drivers']:
-            pin_availability.append(board_rst)
-        if 'exti' in data['drivers']:
-            exti_availability.append(board_rst)
-        if 'dac' in data['drivers']:
-            dac_availability.append(board_rst)
-        if 'spi' in data['drivers']:
-            spi_availability.append(board_rst)
-        if 'i2c_soft' in data['drivers']:
-            i2c_soft_availability.append(board_rst)
-        if 'sd' in data['drivers']:
-            sd_availability.append(board_rst)
-        if 'esp_wifi' in data['drivers']:
-            esp_wifi_availability.append(board_rst)
-
-    with open(drivers_template_rst_path) as fin:
-        template = fin.read()
-
-    formatted = template.format(
-        pin_availability=format_comma_separated_list(pin_availability),
-        exti_availability=format_comma_separated_list(exti_availability),
-        dac_availability=format_comma_separated_list(dac_availability),
-        spi_availability=format_comma_separated_list(spi_availability),
-        i2c_soft_availability=format_comma_separated_list(i2c_soft_availability),
-        sd_availability=format_comma_separated_list(sd_availability),
-        esp_wifi_availability=format_comma_separated_list(esp_wifi_availability))
-
-    print "Writing to", drivers_rst_path
-
-    with open(drivers_rst_path, "w") as fout:
-        fout.write(formatted)
-
-
 def main():
     """Main.
 
@@ -209,7 +174,6 @@ def main():
         database = json.load(fin)
 
     examples_generate()
-    drivers_generate(database)
     boards_generate(database)
 
 if __name__ == "__main__":

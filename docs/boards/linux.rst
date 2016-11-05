@@ -6,6 +6,18 @@ Pinout and general information
 
 Simba documentation: http://simba-os.readthedocs.io/en/latest/boards/linux.html
 
+Drivers
+-------
+
+Supported drivers for this board.
+
+- :class:`drivers.drivers.Dac`
+- :class:`drivers.drivers.Exti`
+- :class:`drivers.drivers.I2CSoft`
+- :class:`drivers.drivers.Pin`
+- :class:`drivers.drivers.Sd`
+- :class:`drivers.drivers.Spi`
+
 Memory usage
 ------------
 
@@ -23,9 +35,9 @@ Below is the memory usage of two applications:
 +--------------------------+-----------+-----------+
 | Application              | Flash     | RAM       |
 +==========================+===========+===========+
-| minimal-configuration    |    964365 |    363440 |
+| minimal-configuration    |    965125 |    363760 |
 +--------------------------+-----------+-----------+
-| default-configuration    |    987357 |    438800 |
+| default-configuration    |   1051637 |    451504 |
 +--------------------------+-----------+-----------+
 
 Default configuration

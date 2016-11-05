@@ -6,6 +6,17 @@ Pinout and general information
 
 Simba documentation: http://simba-os.readthedocs.io/en/latest/boards/arduino_due.html
 
+Drivers
+-------
+
+Supported drivers for this board.
+
+- :class:`drivers.drivers.Dac`
+- :class:`drivers.drivers.Exti`
+- :class:`drivers.drivers.Pin`
+- :class:`drivers.drivers.Sd`
+- :class:`drivers.drivers.Spi`
+
 Memory usage
 ------------
 
@@ -23,9 +34,9 @@ Below is the memory usage of two applications:
 +--------------------------+-----------+-----------+
 | Application              | Flash     | RAM       |
 +==========================+===========+===========+
-| minimal-configuration    |    390796 |     67248 |
+| minimal-configuration    |    391172 |     67420 |
 +--------------------------+-----------+-----------+
-| default-configuration    |    433276 |     70744 |
+| default-configuration    |    434076 |     70732 |
 +--------------------------+-----------+-----------+
 
 Default configuration
