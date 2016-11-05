@@ -11,12 +11,12 @@ Drivers
 
 Supported drivers for this board.
 
-- :class:`drivers.drivers.Dac`
-- :class:`drivers.drivers.Exti`
-- :class:`drivers.drivers.I2CSoft`
-- :class:`drivers.drivers.Pin`
-- :class:`drivers.drivers.Sd`
-- :class:`drivers.drivers.Spi`
+- :class:`Dac<drivers.drivers.Dac>`
+- :class:`Exti<drivers.drivers.Exti>`
+- :class:`I2CSoft<drivers.drivers.I2CSoft>`
+- :class:`Pin<drivers.drivers.Pin>`
+- :class:`Sd<drivers.drivers.Sd>`
+- :class:`Spi<drivers.drivers.Spi>`
 
 Memory usage
 ------------

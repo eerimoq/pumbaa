@@ -11,7 +11,7 @@ Drivers
 
 Supported drivers for this board.
 
-- :class:`drivers.drivers.Pin`
+- :class:`Pin<drivers.drivers.Pin>`
 
 Memory usage
 ------------

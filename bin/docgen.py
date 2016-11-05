@@ -89,7 +89,7 @@ def boards_generate(database):
         for driver in sorted(data["src"]):
             mo = re.match(r'src/module_drivers/(.+)', driver)
             if mo:
-                drivers.append('- :class:`drivers.drivers.{}`'.format(driver_file_name_to_class(mo.group(1))))
+                drivers.append('- :class:`{name}<drivers.drivers.{name}>`'.format(name=driver_file_name_to_class(mo.group(1))))
 
         # Default configuration.
         default_configuration = ""

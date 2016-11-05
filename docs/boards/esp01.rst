@@ -11,9 +11,9 @@ Drivers
 
 Supported drivers for this board.
 
-- :class:`drivers.drivers.esp_wifi`
-- :class:`drivers.drivers.Exti`
-- :class:`drivers.drivers.Pin`
+- :class:`esp_wifi<drivers.drivers.esp_wifi>`
+- :class:`Exti<drivers.drivers.Exti>`
+- :class:`Pin<drivers.drivers.Pin>`
 
 Memory usage
 ------------
