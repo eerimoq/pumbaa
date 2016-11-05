@@ -35,7 +35,7 @@ Simba documentation: `drivers`_
 
    Simba documentation: `drivers/pin`_
 
-   Availability: esp01, photon, nano32, esp12e, arduino_due, linux
+   Availability: :doc:`../../boards/esp01.rst`, :doc:`../../boards/photon.rst`, :doc:`../../boards/nano32.rst`, :doc:`../../boards/esp12e.rst`, :doc:`../../boards/arduino_due.rst` and :doc:`../../boards/linux.rst`.
 
 
    .. method:: read()
@@ -90,7 +90,7 @@ Simba documentation: `drivers`_
 
    Simba documentation: `drivers/exti`_
 
-   Availability: esp01, esp12e, arduino_due, linux
+   Availability: :doc:`../../boards/esp01.rst`, :doc:`../../boards/esp12e.rst`, :doc:`../../boards/arduino_due.rst` and :doc:`../../boards/linux.rst`.
 
 
    .. method:: start()
@@ -135,7 +135,7 @@ Simba documentation: `drivers`_
 
    Simba documentation: `drivers/dac`_
 
-   Availability: arduino_due, linux
+   Availability: :doc:`../../boards/arduino_due.rst` and :doc:`../../boards/linux.rst`.
 
 
    .. method:: convert(samples)
@@ -180,7 +180,7 @@ Simba documentation: `drivers`_
 
    Simba documentation: `drivers/spi`_
 
-   Availability: esp01, esp12e, arduino_due, linux
+   Availability: :doc:`../../boards/esp01.rst`, :doc:`../../boards/esp12e.rst`, :doc:`../../boards/arduino_due.rst` and :doc:`../../boards/linux.rst`.
 
 
    .. method:: start()
@@ -288,7 +288,7 @@ Simba documentation: `drivers`_
 
    Simba documentation: `drivers/i2c_soft`_
 
-   Availability: esp01, photon, esp12e, arduino_due, linux
+   Availability: :doc:`../../boards/esp01.rst`, :doc:`../../boards/photon.rst`, :doc:`../../boards/esp12e.rst`, :doc:`../../boards/arduino_due.rst` and :doc:`../../boards/linux.rst`.
 
 
    .. method:: start()
@@ -339,7 +339,7 @@ Simba documentation: `drivers`_
 
    Simba documentation: `drivers/sd`_
 
-   Availability: arduino_due, linux
+   Availability: :doc:`../../boards/arduino_due.rst` and :doc:`../../boards/linux.rst`.
 
 
    .. method:: start()
@@ -422,7 +422,7 @@ Simba documentation: `drivers`_
 
    Simba documentation: `drivers/esp_wifi`_
 
-   Availability: esp01, esp12e
+   Availability: :doc:`../../boards/esp01.rst` and :doc:`../../boards/esp12e.rst`.
 
 
    .. method:: set_op_mode(mode)

@@ -105,7 +105,7 @@ def boards_generate(database):
         with open(rst_path, "w") as fout:
             fout.write(rst)
 
-            
+
 def examples_generate():
     """Generate examples.
 
@@ -134,6 +134,15 @@ def examples_generate():
             fout.write(rst)
 
 
+def format_comma_separated_list(lst):
+    if len(lst) == 0:
+        return ''
+    elif len(lst) == 1:
+        return lst[0] + '.'
+    else:
+        return ', '.join(lst[:-1]) + ' and ' + lst[-1] + '.'
+
+
 def drivers_generate(database):
     pin_availability = []
     exti_availability = []
@@ -150,42 +159,43 @@ def drivers_generate(database):
                                              "drivers_template.rst")
     drivers_rst_path = os.path.join(pumbaa_path,
                                     "drivers.rst")
-    
+
     boards = database['boards']
     for board, data in boards.items():
+        board_rst = ':doc:`../../boards/{}.rst`'.format(board)
         if 'pin' in data['drivers']:
-            pin_availability.append(board)
+            pin_availability.append(board_rst)
         if 'exti' in data['drivers']:
-            exti_availability.append(board)
+            exti_availability.append(board_rst)
         if 'dac' in data['drivers']:
-            dac_availability.append(board)
+            dac_availability.append(board_rst)
         if 'spi' in data['drivers']:
-            spi_availability.append(board)
+            spi_availability.append(board_rst)
         if 'i2c_soft' in data['drivers']:
-            i2c_soft_availability.append(board)
+            i2c_soft_availability.append(board_rst)
         if 'sd' in data['drivers']:
-            sd_availability.append(board)
+            sd_availability.append(board_rst)
         if 'esp_wifi' in data['drivers']:
-            esp_wifi_availability.append(board)
+            esp_wifi_availability.append(board_rst)
 
     with open(drivers_template_rst_path) as fin:
         template = fin.read()
 
     formatted = template.format(
-        pin_availability=', '.join(pin_availability),
-        exti_availability=', '.join(exti_availability),
-        dac_availability=', '.join(dac_availability),
-        spi_availability=', '.join(spi_availability),
-        i2c_soft_availability=', '.join(i2c_soft_availability),
-        sd_availability=', '.join(sd_availability),
-        esp_wifi_availability=', '.join(esp_wifi_availability))
+        pin_availability=format_comma_separated_list(pin_availability),
+        exti_availability=format_comma_separated_list(exti_availability),
+        dac_availability=format_comma_separated_list(dac_availability),
+        spi_availability=format_comma_separated_list(spi_availability),
+        i2c_soft_availability=format_comma_separated_list(i2c_soft_availability),
+        sd_availability=format_comma_separated_list(sd_availability),
+        esp_wifi_availability=format_comma_separated_list(esp_wifi_availability))
 
     print "Writing to", drivers_rst_path
-    
+
     with open(drivers_rst_path, "w") as fout:
-        fout.write(formatted)    
-        
-        
+        fout.write(formatted)
+
+
 def main():
     """Main.
 
