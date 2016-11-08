@@ -11,6 +11,18 @@ devices with limited amount of RAM and code memory.
 
 Project homepage: https://github.com/eerimoq/pumbaa
 
+Videos
+------
+
+The classic blink example on Nano32. More videos are available on the
+:doc:`videos` page.
+
+.. raw:: html
+
+   <iframe width="560" height="315" src="https://www.youtube.com/embed/bzCYW8BuIzw" frameborder="0" allowfullscreen></iframe>
+   </br>
+   </br>
+
 .. toctree::
    :maxdepth: 1
    :titlesonly:
