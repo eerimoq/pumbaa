@@ -242,7 +242,7 @@
 #endif
 
 #ifndef CONFIG_PUMBAA_CLASS_ESP_WIFI
-#    if defined(ARCH_ESP)
+#    if defined(ARCH_ESP) || defined(ARCH_ESP32)
 #        define CONFIG_PUMBAA_CLASS_ESP_WIFI                1
 #    else
 #        define CONFIG_PUMBAA_CLASS_ESP_WIFI                0

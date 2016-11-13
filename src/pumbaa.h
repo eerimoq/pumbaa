@@ -75,4 +75,8 @@
 #    include "module_drivers/class_esp_wifi.h"
 #endif
 
+#if defined(ARCH_ESP32)
+#    include "module_drivers/class_esp_wifi.h"
+#endif
+
 #endif

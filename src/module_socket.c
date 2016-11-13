@@ -163,20 +163,21 @@ static mp_obj_t class_socket_close(mp_obj_t self_in)
     return (mp_const_none);
 }
 
-static mp_obj_t class_socket_connect(mp_obj_t self_in, mp_obj_t addr_in)
+static mp_obj_t class_socket_connect(mp_obj_t self_in,
+                                     mp_obj_t address_in)
 {
     struct class_socket_t *self_p;
-    mp_obj_t *addr_items;
-    struct inet_addr_t addr;
+    mp_obj_t *address_items;
+    struct inet_addr_t address;
 
     self_p = MP_OBJ_TO_PTR(self_in);
 
     /* Convert the address. */
-    mp_obj_get_array_fixed_n(addr_in, 2, &addr_items);
-    inet_aton(mp_obj_str_get_str(addr_items[0]), &addr.ip);
-    addr.port = mp_obj_get_int(addr_items[1]);
+    mp_obj_get_array_fixed_n(address_in, 2, &address_items);
+    inet_aton(mp_obj_str_get_str(address_items[0]), &address.ip);
+    address.port = mp_obj_get_int(address_items[1]);
 
-    if (socket_connect(&self_p->socket, &addr) != 0) {
+    if (socket_connect(&self_p->socket, &address) != 0) {
         nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
                                            "socket connect failed"));
     }
@@ -184,7 +185,8 @@ static mp_obj_t class_socket_connect(mp_obj_t self_in, mp_obj_t addr_in)
     return (mp_const_none);
 }
 
-static mp_obj_t class_socket_listen(mp_obj_t self_in, mp_obj_t backlog_in)
+static mp_obj_t class_socket_listen(mp_obj_t self_in,
+                                    mp_obj_t backlog_in)
 {
     struct class_socket_t *self_p;
     int backlog;
@@ -200,7 +202,8 @@ static mp_obj_t class_socket_listen(mp_obj_t self_in, mp_obj_t backlog_in)
     return (mp_const_none);
 }
 
-static mp_obj_t class_socket_recv(mp_obj_t self_in, mp_obj_t bufsize_in)
+static mp_obj_t class_socket_recv(mp_obj_t self_in,
+                                  mp_obj_t bufsize_in)
 {
     struct class_socket_t *self_p;
     vstr_t vstr;
@@ -222,11 +225,58 @@ static mp_obj_t class_socket_recv(mp_obj_t self_in, mp_obj_t bufsize_in)
     return (mp_obj_new_str_from_vstr(&mp_type_bytes, &vstr));
 }
 
-static mp_obj_t class_socket_recvfrom(mp_obj_t self_in)
+static mp_obj_t class_socket_recvfrom(mp_obj_t self_in,
+                                      mp_obj_t bufsize_in)
 {
-    mp_not_implemented("socket.recvfrom");
+    struct class_socket_t *self_p;
+    vstr_t vstr;
+    ssize_t size;
+    vstr_t vstr_remote_address;
+    struct inet_addr_t remote_address;
+    mp_obj_tuple_t *tuple_p;
+    mp_obj_tuple_t *address_tuple_p;
 
-    return (mp_const_none);
+    self_p = MP_OBJ_TO_PTR(self_in);
+    size = mp_obj_get_int(bufsize_in);
+
+    /* Read the data from the socket. */
+    vstr_init(&vstr, size);
+
+    size = socket_recvfrom(&self_p->socket,
+                           vstr.buf,
+                           size,
+                           0,
+                           &remote_address);
+
+    if (size < 0) {
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "socket recvfrom failed"));
+    }
+
+    vstr.len = size;
+
+    /* Convert the remote address IP to a vstr. */
+    vstr_init(&vstr_remote_address, 20);
+
+    if (inet_ntoa(&remote_address.ip, vstr_remote_address.buf) == NULL) {
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "socket recvfrom failed"));
+    }
+
+    vstr_remote_address.len = strlen(vstr_remote_address.buf);
+
+    /* Address tuple. */
+    address_tuple_p = MP_OBJ_TO_PTR(mp_obj_new_tuple(2, NULL));
+    address_tuple_p->items[0] = mp_obj_new_str_from_vstr(&mp_type_bytes,
+                                                         &vstr_remote_address);
+    address_tuple_p->items[1] = mp_obj_new_int(remote_address.port);
+
+    /* Return tuple. */
+    tuple_p = MP_OBJ_TO_PTR(mp_obj_new_tuple(2, NULL));
+    tuple_p->items[0] = mp_obj_new_str_from_vstr(&mp_type_bytes, &vstr);
+    tuple_p->items[1] = MP_OBJ_FROM_PTR(address_tuple_p);
+
+    return (MP_OBJ_FROM_PTR(tuple_p));
 }
 
 static mp_obj_t class_socket_recv_into(mp_obj_t self_in)
@@ -264,16 +314,46 @@ static mp_obj_t class_socket_send(mp_obj_t self_in, mp_obj_t string_in)
     return (mp_obj_new_int(size));
 }
 
-static mp_obj_t class_socket_sendall(mp_obj_t self_in, mp_obj_t string_in)
+static mp_obj_t class_socket_sendall(mp_obj_t self_in,
+                                     mp_obj_t string_in)
 {
     return (class_socket_send(self_in, string_in));
 }
 
-static mp_obj_t class_socket_sendto(mp_obj_t self_in)
+static mp_obj_t class_socket_sendto(mp_obj_t self_in,
+                                    mp_obj_t string_in,
+                                    mp_obj_t address_in)
 {
-    mp_not_implemented("socket.sendto");
+    struct class_socket_t *self_p;
+    mp_buffer_info_t buffer_info;
+    mp_obj_t *address_items;
+    struct inet_addr_t address;
+    ssize_t size;
 
-    return (mp_const_none);
+    self_p = MP_OBJ_TO_PTR(self_in);
+
+    /* Get the string. */
+    mp_get_buffer_raise(MP_OBJ_TO_PTR(string_in),
+                        &buffer_info,
+                        MP_BUFFER_READ);
+
+    /* Convert the address. */
+    mp_obj_get_array_fixed_n(address_in, 2, &address_items);
+    inet_aton(mp_obj_str_get_str(address_items[0]), &address.ip);
+    address.port = mp_obj_get_int(address_items[1]);
+
+    size = socket_sendto(&self_p->socket,
+                         buffer_info.buf,
+                         buffer_info.len,
+                         0,
+                         &address);
+
+    if (size < 0) {
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "socket send failed"));
+    }
+
+    return (mp_obj_new_int(size));
 }
 
 static mp_obj_t class_socket_shutdown(mp_obj_t self_in)
@@ -289,12 +369,12 @@ static MP_DEFINE_CONST_FUN_OBJ_1(socket_close_obj, class_socket_close);
 static MP_DEFINE_CONST_FUN_OBJ_2(socket_connect_obj, class_socket_connect);
 static MP_DEFINE_CONST_FUN_OBJ_2(socket_listen_obj, class_socket_listen);
 static MP_DEFINE_CONST_FUN_OBJ_2(socket_recv_obj, class_socket_recv);
-static MP_DEFINE_CONST_FUN_OBJ_1(socket_recvfrom_obj, class_socket_recvfrom);
+static MP_DEFINE_CONST_FUN_OBJ_2(socket_recvfrom_obj, class_socket_recvfrom);
 static MP_DEFINE_CONST_FUN_OBJ_1(socket_recv_into_obj, class_socket_recv_into);
 static MP_DEFINE_CONST_FUN_OBJ_1(socket_recvfrom_into_obj, class_socket_recvfrom_into);
 static MP_DEFINE_CONST_FUN_OBJ_2(socket_send_obj, class_socket_send);
 static MP_DEFINE_CONST_FUN_OBJ_2(socket_sendall_obj, class_socket_sendall);
-static MP_DEFINE_CONST_FUN_OBJ_1(socket_sendto_obj, class_socket_sendto);
+static MP_DEFINE_CONST_FUN_OBJ_3(socket_sendto_obj, class_socket_sendto);
 static MP_DEFINE_CONST_FUN_OBJ_1(socket_shutdown_obj, class_socket_shutdown);
 
 static const mp_rom_map_elem_t class_socket_locals_dict_table[] = {
