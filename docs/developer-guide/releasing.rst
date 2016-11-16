@@ -29,12 +29,13 @@ Follow these steps to create a new release:
    sha256 sums of the zip-archives are calculated by ``make arduino``
    and written to ``pumbaa-arduino/*.sha256``.
 
-5. Copy the Pumbaa Arduino releases to SourceForge.
+5. Copy the Pumbaa Arduino releases to the release repository, add,
+   commit and push in the release repository.
 
    .. code:: text
 
-      scp pumbaa-arduino/pumbaa-arduino-sam-*.zip <user>@frs.sourceforge.net:/home/frs/project/pumbaa-arduino/sam
-      scp pumbaa-arduino/pumbaa-arduino-esp32-*.zip <user>@frs.sourceforge.net:/home/frs/project/pumbaa-arduino/esp32
+      cp pumbaa-arduino/pumbaa-arduino-sam-*.zip ../pumbaa-releases/arduino/sam
+      cp pumbaa-arduino/pumbaa-arduino-esp32-*.zip ../pumbaa-releases/arduino/esp32
 
 6. Start a http server used to download package manifests in the Arduino IDE.
 
@@ -56,11 +57,12 @@ Follow these steps to create a new release:
 
 10. Push the new commit and tag.
 
-11. Copy the Pumbaa Arduino package manifests to SourceForge.
+11. Copy the Pumbaa Arduino package manifests to the release
+    repository, add, commit and push in the release repository.
 
    .. code:: text
 
-      scp make/arduino/sam/package_pumbaa_sam_index.json <user>@frs.sourceforge.net:/home/frs/project/pumbaa-arduino/sam
-      scp make/arduino/esp32/package_pumbaa_esp32_index.json <user>@frs.sourceforge.net:/home/frs/project/pumbaa-arduino/esp32
+      cp make/arduino/sam/package_pumbaa_sam_index.json ../pumbaa-releases/arduino/sam
+      cp make/arduino/esp32/package_pumbaa_esp32_index.json ../pumbaa-releases/arduino/esp32
 
 12. Done.
