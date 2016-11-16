@@ -57,6 +57,22 @@ static MP_DEFINE_CONST_FUN_OBJ_0(module_sys_unlock_obj, module_sys_unlock);
 
 #endif
 
+#if CONFIG_PUMBAA_SYS_REBOOT == 1
+
+/**
+ * def sys_reboot()
+ */
+static mp_obj_t module_sys_reboot()
+{
+    sys_reboot();
+
+    return (mp_const_none);
+}
+
+static MP_DEFINE_CONST_FUN_OBJ_0(module_sys_reboot_obj, module_sys_reboot);
+
+#endif
+
 #if CONFIG_PUMBAA_THRD == 1
 
 static mp_obj_t module_thrd_yield(void)
@@ -226,6 +242,10 @@ static const mp_rom_map_elem_t module_kernel_globals_table[] = {
 #if CONFIG_PUMBAA_SYS_LOCK == 1
     { MP_ROM_QSTR(MP_QSTR_sys_lock), MP_ROM_PTR(&module_sys_lock_obj) },
     { MP_ROM_QSTR(MP_QSTR_sys_unlock), MP_ROM_PTR(&module_sys_unlock_obj) },
+#endif
+
+#if CONFIG_PUMBAA_SYS_REBOOT == 1
+    { MP_ROM_QSTR(MP_QSTR_sys_reboot), MP_ROM_PTR(&module_sys_reboot_obj) },
 #endif
 
 #if CONFIG_PUMBAA_THRD == 1

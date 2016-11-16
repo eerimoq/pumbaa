@@ -269,6 +269,10 @@
 #    define CONFIG_PUMBAA_SYS_LOCK                          1
 #endif
 
+#ifndef CONFIG_PUMBAA_SYS_REBOOT
+#    define CONFIG_PUMBAA_SYS_REBOOT                        1
+#endif
+
 #ifndef CONFIG_PUMBAA_THRD
 #    if defined(ARCH_ESP) || defined(ARCH_ESP32)
 #        define CONFIG_PUMBAA_THRD                          0

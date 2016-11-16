@@ -22,6 +22,12 @@ Simba documentation: `kernel`_
    Release the system lock. Turns on interrupts.
 
 
+.. function:: kernel.sys_reboot()
+
+   Reboot the system. Sets all registers to their known, default
+   values and restarts the application. Also known as a soft reset.
+
+
 .. function:: kernel.thrd_yield()
 
   Put the currently executing thread on the ready list and reschedule.
