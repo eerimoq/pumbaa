@@ -19,8 +19,8 @@ using the Boards Manager.
 
    .. code-block:: text
 
-      https://sourceforge.net/projects/pumbaa-arduino/files/sam/package_pumbaa_sam_index.json
-      https://sourceforge.net/projects/pumbaa-arduino/files/esp32/package_pumbaa_esp32_index.json
+      https://raw.githubusercontent.com/eerimoq/pumbaa-releases/master/arduino/sam/package_pumbaa_sam_index.json
+      https://raw.githubusercontent.com/eerimoq/pumbaa-releases/master/arduino/esp32/package_pumbaa_esp32_index.json
 
 3. Open `Tools` -> `Board: ...` -> `Boards Manager...` and type
    `pumbaa` in the search box.
