@@ -63,7 +63,8 @@ static mp_obj_t class_esp_wifi_set_op_mode(mp_obj_t self_in,
                                            mp_obj_t mode_in)
 {
     int mode;
-
+    int res;
+    
     mode = mp_obj_get_int(mode_in);
 
     if ((mode < esp_wifi_op_mode_null_t)
@@ -73,9 +74,12 @@ static mp_obj_t class_esp_wifi_set_op_mode(mp_obj_t self_in,
                                                 mode));
     }
 
-    if (esp_wifi_set_op_mode(mode) != 0) {
-        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
-                                           "esp_wifi_set_op_mode() failed"));
+    res = esp_wifi_set_op_mode(mode);
+    
+    if (res != 0) {
+        nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_OSError,
+                                                "esp_wifi_set_op_mode() failed with %d",
+                                                res));
     }
 
     return (mp_const_none);

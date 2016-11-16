@@ -91,6 +91,7 @@ ifeq ($(BOARD),$(filter $(BOARD), nano32))
 PUMBAA_SRC += \
 	mcus/esp32/gccollect.c \
 	mcus/esp32/gchelper.S \
+	module_drivers/class_esp_wifi.c \
 	port/lexer_port.c
 endif
 
