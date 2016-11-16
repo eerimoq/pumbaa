@@ -2,9 +2,9 @@
  * @section License
  *
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016, Erik Moqvist
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -32,22 +32,26 @@
 
 char *stack_top_p;
 
-extern mp_uint_t gc_helper_get_regs_and_sp(mp_uint_t *regs);
+extern void xthal_window_spill( void );
+
+extern mp_uint_t gc_helper_get_regs_and_sp();
 
 void gc_collect(void)
 {
+    mp_uint_t sp;
+
     /* Start the GC. */
     gc_collect_start();
-    
+
     /* Get the registers and the sp. */
-    mp_uint_t regs[8];
-    mp_uint_t sp = gc_helper_get_regs_and_sp(regs);
-    
+    xthal_window_spill();
+    sp = gc_helper_get_regs_and_sp();
+
     /* Trace the stack, including the registers (since they live on
        the stack in this function). */
     gc_collect_root((void**)sp,
                     ((uint32_t)stack_top_p - sp) / sizeof(uint32_t));
-    
+
     /* End the GC. */
     gc_collect_end();
 }
