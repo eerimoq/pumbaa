@@ -38,8 +38,9 @@ from harness import assert_raises
 
 def test_print():
     print(Adc)
-    adc = Adc(board.ADC_0, board.PIN_A0, Adc.REFERENCE_VCC, 100)
-    print(adc)
+    help(Adc)
+    a0 = Adc(board.ADC_0, board.PIN_A0, Adc.REFERENCE_VCC, 100)
+    print(a0)
 
 
 def test_convert():
