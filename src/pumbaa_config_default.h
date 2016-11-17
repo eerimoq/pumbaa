@@ -202,7 +202,7 @@
 #endif
 
 #ifndef CONFIG_PUMBAA_CLASS_ADC
-#    if defined(FAMILY_SAM)
+#    if defined(FAMILY_SAM) || defined(FAMILY_LINUX)
 #        define CONFIG_PUMBAA_CLASS_ADC                     1
 #    else
 #        define CONFIG_PUMBAA_CLASS_ADC                     0

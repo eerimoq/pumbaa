@@ -64,6 +64,7 @@
 #endif
 
 #if defined(FAMILY_LINUX)
+#    include "module_drivers/class_adc.h"
 #    include "module_drivers/class_dac.h"
 #    include "module_drivers/class_exti.h"
 #    include "module_drivers/class_spi.h"

@@ -71,6 +71,7 @@ endif
 ifeq ($(BOARD),linux)
 PUMBAA_SRC += \
 	boards/linux/gccollect.c \
+	module_drivers/class_adc.c \
 	module_drivers/class_dac.c \
 	module_drivers/class_exti.c \
 	module_drivers/class_spi.c \

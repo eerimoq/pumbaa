@@ -43,6 +43,7 @@ TESTS = \
 	tst/socket \
 	tst/thread \
 	tst/debug/harness \
+	tst/drivers/adc \
 	tst/drivers/dac \
 	tst/drivers/exti \
 	tst/drivers/pin \
