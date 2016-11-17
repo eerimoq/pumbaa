@@ -117,16 +117,27 @@ Simba documentation: `drivers`_
 
 .. class:: drivers.Adc(device, pin_device, reference, sampling_rate)
 
-   Instansiate an Adc object. `device` is ...
+   Instansiate an Adc object with given `device` and `pin_device`
+   devices. `reference` is the voltage reference and `sampling_rate`
+   is the sampling frequency.
 
-   Here is an example of how to create a ADC driver and convert an
-   analog signal level to three digital samples with a sampling rate
-   of 1 kHz.
+   Here is an example of how to create a ADC driver object and convert
+   an analog signal level to three digital samples with a sampling
+   rate of 1 kHz.
 
    .. code-block:: python
 
       >>> a0 = Adc(board.PIN_ADC0, board.PIN_A0, Adc.REFERENCE_VCC, 1000)
       >>> a0.convert(3)
+      b'\x01\x02\x03\x04\x05\x06'
+
+   The equivalent asynchronous example.
+
+   .. code-block:: python
+
+      >>> a0 = Adc(board.PIN_ADC0, board.PIN_A0, Adc.REFERENCE_VCC, 1000)
+      >>> a0.async_convert(3)
+      >>> a0.async_wait()
       b'\x01\x02\x03\x04\x05\x06'
 
    Simba documentation: `drivers/adc`_
@@ -135,21 +146,23 @@ Simba documentation: `drivers`_
    .. method:: convert(number_of_samples)
 
       Start a synchronous convertion of an analog signal to digital
-      samples. This is equivalent to `async_convert()` +
-      `async_wait()`, but in a single function call. Returns a bytes
-      object where each sample is 2 bytes.
+      samples. This is equivalent to :meth:`.async_convert()` +
+      :meth:`.async_wait()`, but in a single function call. Returns a
+      bytes object where each sample is 2 bytes.
 
 
    .. method:: async_convert(number_of_samples)
 
       Start an asynchronous convertion of analog signal to digital
-      samples. Call `async_wait()` to wait for the convertion to
-      complete.
+      samples. Call :meth:`.async_wait()` to wait for the convertion
+      to complete.
 
 
    .. method:: async_wait()
 
-      Wait for an asynchronous convertion to complete.
+      Wait for an asynchronous convertion started with
+      :meth:`.async_convert()` to complete. Returns a bytes object
+      where each sample is 2 bytes.
 
 
    .. data:: REFERENCE_VCC
