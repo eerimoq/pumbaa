@@ -10,6 +10,7 @@ The following classes are defined:
 
 - :class:`class Pin<.Pin>` -- Digital pins
 - :class:`class Exti<.Exti>` -- External interrupts
+- :class:`class Adc<.Adc>` -- Analog to digital convertion
 - :class:`class Dac<.Dac>` -- Digital to analog convertion
 - :class:`class Spi<.Spi>` -- Serial Peripheral Interface
 - :class:`class I2CSoft<.I2CSoft>` -- Software I2C
@@ -112,6 +113,48 @@ Simba documentation: `drivers`_
    .. data:: BOTH
 
       Trigger an interrupt on both rising and falling edges.
+
+
+.. class:: drivers.Adc(device, pin_device, reference, sampling_rate)
+
+   Instansiate an Adc object. `device` is ...
+
+   Here is an example of how to create a ADC driver and convert an
+   analog signal level to three digital samples with a sampling rate
+   of 1 kHz.
+
+   .. code-block:: python
+
+      >>> a0 = Adc(board.PIN_ADC0, board.PIN_A0, Adc.REFERENCE_VCC, 1000)
+      >>> a0.convert(3)
+      b'\x01\x02\x03\x04\x05\x06'
+
+   Simba documentation: `drivers/adc`_
+
+
+   .. method:: convert(number_of_samples)
+
+      Start a synchronous convertion of an analog signal to digital
+      samples. This is equivalent to `async_convert()` +
+      `async_wait()`, but in a single function call. Returns a bytes
+      object where each sample is 2 bytes.
+
+
+   .. method:: async_convert(number_of_samples)
+
+      Start an asynchronous convertion of analog signal to digital
+      samples. Call `async_wait()` to wait for the convertion to
+      complete.
+
+
+   .. method:: async_wait()
+
+      Wait for an asynchronous convertion to complete.
+
+
+   .. data:: REFERENCE_VCC
+
+      Use VCC as reference.
 
 
 .. class:: drivers.Dac(devices, sampling_rate)
@@ -559,6 +602,7 @@ Simba documentation: `drivers`_
 .. _drivers: http://simba-os.readthedocs.io/en/latest/library-reference/drivers.html
 .. _drivers/pin: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/pin.html
 .. _drivers/exti: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/exti.html
+.. _drivers/adc: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/adc.html
 .. _drivers/dac: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/dac.html
 .. _drivers/spi: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/spi.html
 .. _drivers/sd: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/sd.html

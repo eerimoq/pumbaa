@@ -201,6 +201,14 @@
 #    endif
 #endif
 
+#ifndef CONFIG_PUMBAA_CLASS_ADC
+#    if defined(FAMILY_SAM)
+#        define CONFIG_PUMBAA_CLASS_ADC                     1
+#    else
+#        define CONFIG_PUMBAA_CLASS_ADC                     0
+#    endif
+#endif
+
 #ifndef CONFIG_PUMBAA_CLASS_EXTI
 #    if defined(FAMILY_SAM) || defined(ARCH_ESP) || defined(FAMILY_LINUX)
 #        define CONFIG_PUMBAA_CLASS_EXTI                    1
