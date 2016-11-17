@@ -54,6 +54,14 @@ def test_convert():
     print("A1 sample:", a1_sample, struct.unpack('H', a1_sample)[0])
 
 
+def test_async_convert():
+    a0 = Adc(board.ADC_0, board.PIN_A0)
+    a0.async_convert(2)
+    a0_sample = a0.async_wait()
+    assert len(a0_sample) == 4
+    print("A0 sample:", a0_sample, struct.unpack('HH', a0_sample))
+
+
 def test_bad_arguments():
     # Bad device.
     with assert_raises(ValueError, "bad device"):
@@ -76,6 +84,7 @@ def main():
     testcases = [
         (test_print, "test_print"),
         (test_convert, "test_convert"),
+        (test_async_convert, "test_async_convert"),
         (test_bad_arguments, "test_bad_arguments")
     ]
     harness.run(testcases)
