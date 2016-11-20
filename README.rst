@@ -17,8 +17,8 @@ Try it out!
 
    .. code-block:: text
 
-      https://sourceforge.net/projects/pumbaa-arduino/files/sam/package_pumbaa_sam_index.json
-      https://sourceforge.net/projects/pumbaa-arduino/files/esp32/package_pumbaa_esp32_index.json
+      https://raw.githubusercontent.com/eerimoq/pumbaa-releases/master/arduino/sam/package_pumbaa_sam_index.json
+      https://raw.githubusercontent.com/eerimoq/pumbaa-releases/master/arduino/esp32/package_pumbaa_esp32_index.json
 
 2. Select a Pumbaa board.
 3. Open the interactive example.
