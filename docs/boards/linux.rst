@@ -11,6 +11,7 @@ Drivers
 
 Supported drivers for this board.
 
+- :class:`Adc<drivers.drivers.Adc>`
 - :class:`Dac<drivers.drivers.Dac>`
 - :class:`Exti<drivers.drivers.Exti>`
 - :class:`I2CSoft<drivers.drivers.I2CSoft>`
@@ -35,9 +36,9 @@ Below is the memory usage of two applications:
 +--------------------------+-----------+-----------+
 | Application              | Flash     | RAM       |
 +==========================+===========+===========+
-| minimal-configuration    |    966925 |    364080 |
+| minimal-configuration    |    969741 |    364952 |
 +--------------------------+-----------+-----------+
-| default-configuration    |   1054013 |    451888 |
+| default-configuration    |   1056829 |    452760 |
 +--------------------------+-----------+-----------+
 
 Default configuration
@@ -48,7 +49,7 @@ Default Standard Library configuration.
 +--------------------------------------------------------+-----------------------------------------------------+
 |  Name                                                  |  Value                                              |
 +========================================================+=====================================================+
-|  CONFIG_PUMBAA_CLASS_ADC                               |  0                                                  |
+|  CONFIG_PUMBAA_CLASS_ADC                               |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_BOARD                             |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+

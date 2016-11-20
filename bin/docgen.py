@@ -141,7 +141,8 @@ def examples_generate():
     examples = [
         "blink",
         "hello_world",
-        "select"
+        "select",
+        "tcp_server"
     ]
 
     for example in examples:
