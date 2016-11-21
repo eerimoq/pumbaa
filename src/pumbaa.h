@@ -61,6 +61,8 @@
 #    include "module_drivers/class_exti.h"
 #    include "module_drivers/class_spi.h"
 #    include "module_drivers/class_sd.h"
+#    include "module_drivers/class_owi.h"
+#    include "module_drivers/class_ds18b20.h"
 #endif
 
 #if defined(FAMILY_LINUX)
@@ -79,6 +81,8 @@
 
 #if defined(ARCH_ESP32)
 #    include "module_drivers/class_esp_wifi.h"
+#    include "module_drivers/class_owi.h"
+#    include "module_drivers/class_ds18b20.h"
 #endif
 
 #endif

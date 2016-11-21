@@ -257,6 +257,22 @@
 #    endif
 #endif
 
+#ifndef CONFIG_PUMBAA_CLASS_OWI
+#    if defined(FAMILY_SAM) || defined(ARCH_ESP32)
+#        define CONFIG_PUMBAA_CLASS_OWI                     1
+#    else
+#        define CONFIG_PUMBAA_CLASS_OWI                     0
+#    endif
+#endif
+
+#ifndef CONFIG_PUMBAA_CLASS_DS18B20
+#    if defined(FAMILY_SAM) || defined(ARCH_ESP32)
+#        define CONFIG_PUMBAA_CLASS_DS18B20                 1
+#    else
+#        define CONFIG_PUMBAA_CLASS_DS18B20                 0
+#    endif
+#endif
+
 #ifndef CONFIG_PUMBAA_CLASS_QUEUE
 #    define CONFIG_PUMBAA_CLASS_QUEUE                       1
 #endif

@@ -47,6 +47,9 @@ static mp_obj_t module_init(void)
 #if CONFIG_PUMBAA_CLASS_ESP_WIFI == 1
     esp_wifi_module_init();
 #endif
+#if CONFIG_PUMBAA_CLASS_DS18B20 == 1
+    ds18b20_module_init();
+#endif
 
     return (mp_const_none);
 }
@@ -84,6 +87,12 @@ static const mp_rom_map_elem_t module_drivers_globals_table[] = {
 #endif
 #if CONFIG_PUMBAA_CLASS_ESP_WIFI == 1
     { MP_ROM_QSTR(MP_QSTR_esp_wifi), MP_ROM_PTR(&module_drivers_esp_wifi_obj) },
+#endif
+#if CONFIG_PUMBAA_CLASS_OWI == 1
+    { MP_ROM_QSTR(MP_QSTR_Owi), MP_ROM_PTR(&module_drivers_class_owi) },
+#endif
+#if CONFIG_PUMBAA_CLASS_DS18B20 == 1
+    { MP_ROM_QSTR(MP_QSTR_Ds18b20), MP_ROM_PTR(&module_drivers_class_ds18b20) },
 #endif
 };
 

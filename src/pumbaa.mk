@@ -59,7 +59,9 @@ ifeq ($(BOARD),arduino_due)
 PUMBAA_SRC += \
 	module_drivers/class_adc.c \
 	module_drivers/class_dac.c \
+	module_drivers/class_ds18b20.c \
 	module_drivers/class_exti.c \
+	module_drivers/class_owi.c \
 	module_drivers/class_spi.c \
 	module_drivers/class_sd.c \
 	boards/arduino_due/gccollect.c \
@@ -93,7 +95,9 @@ ifeq ($(BOARD),$(filter $(BOARD), nano32))
 PUMBAA_SRC += \
 	mcus/esp32/gccollect.c \
 	mcus/esp32/gchelper.S \
+	module_drivers/class_ds18b20.c \
 	module_drivers/class_esp_wifi.c \
+	module_drivers/class_owi.c \
 	port/lexer_port.c
 endif
 
