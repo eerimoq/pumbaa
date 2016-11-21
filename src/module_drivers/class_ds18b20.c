@@ -119,6 +119,7 @@ static mp_obj_t class_ds18b20_get_devices(mp_obj_t self_in)
 {
     struct class_ds18b20_t *self_p;
     struct owi_driver_t *owi_p;
+    struct owi_device_t *device_p;
     mp_obj_t devices_list;
     int i;
 
@@ -129,14 +130,16 @@ static mp_obj_t class_ds18b20_get_devices(mp_obj_t self_in)
     devices_list = mp_obj_new_list(0, NULL);
 
     for (i = 0; i < owi_p->len; i++) {
-        if (owi_p->devices_p->id[0] != DS18B20_FAMILY_CODE) {
+        device_p = &owi_p->devices_p[i];
+
+        if (device_p->id[0] != DS18B20_FAMILY_CODE) {
             continue;
         }
 
         /* Create a new bytes object of the device id. */
         mp_obj_list_append(devices_list,
-                           mp_obj_new_bytes(owi_p->devices_p->id,
-                                            sizeof(owi_p->devices_p->id)));
+                           mp_obj_new_bytes(device_p->id,
+                                            sizeof(device_p->id)));
     }
 
     return (devices_list);
