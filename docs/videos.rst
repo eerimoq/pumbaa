@@ -1,6 +1,17 @@
 Videos
 ======
 
+#4 Pumbaa: Room temperature (DS18B20).
+--------------------------------------
+
+Read and print the room temperature measured with a DS18B20 sensor.
+
+.. raw:: html
+
+   <iframe width="560" height="315" src="https://www.youtube.com/embed/M65enXPkcnQ" frameborder="0" allowfullscreen></iframe>
+   </br>
+   </br>
+
 #3 Pumbaa: Gource of the Pumbaa repository.
 -------------------------------------------
 
