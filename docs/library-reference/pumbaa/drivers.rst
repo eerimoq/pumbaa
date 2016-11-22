@@ -402,12 +402,14 @@ Simba documentation: `drivers`_
 
    .. method:: search()
 
-      Search network for devices.
+      Search network for devices. The device id of all found devices
+      are stored and returned by :meth:`.get_devices`.
 
 
    .. method:: get_devices()
 
-      Returns a list of all found devices.
+      Returns a list of all devices found in the latest call to
+      :meth:`.search`.
 
 
    .. method:: read(device_id, size)
@@ -448,7 +450,8 @@ Simba documentation: `drivers`_
 
    .. method:: get_devices()
 
-      Returns a list of all found DS18B20 devices.
+      Returns a list of all DS18B20 devices found in the latest call
+      to :meth:`.Owi.search`.
 
 
    .. method:: get_temperature(device_id)
