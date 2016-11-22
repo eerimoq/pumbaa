@@ -72,6 +72,8 @@
 #    include "module_drivers/class_spi.h"
 #    include "module_drivers/class_sd.h"
 #    include "module_drivers/class_i2c_soft.h"
+#    include "module_drivers/class_owi.h"
+#    include "module_drivers/class_ds18b20.h"
 #endif
 
 #if defined(ARCH_ESP)

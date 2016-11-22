@@ -12,8 +12,10 @@ The following classes are defined:
 - :class:`class Exti<.Exti>` -- External interrupts
 - :class:`class Adc<.Adc>` -- Analog to digital convertion
 - :class:`class Dac<.Dac>` -- Digital to analog convertion
-- :class:`class Spi<.Spi>` -- Serial Peripheral Interface
+- :class:`class Spi<.Spi>` -- Serial peripheral interface
 - :class:`class I2CSoft<.I2CSoft>` -- Software I2C
+- :class:`class Owi<.Owi>` -- Onewire
+- :class:`class Ds18b20<.Ds18b20>` -- DS18B20 temperature
 - :class:`class Sd<.Sd>` -- Secure Digital memory
 - :class:`class esp_wifi<.esp_wifi>` -- Espressif WiFi
 
@@ -129,7 +131,9 @@ Simba documentation: `drivers`_
 
       >>> a0 = Adc(board.PIN_ADC0, board.PIN_A0, Adc.REFERENCE_VCC, 1000)
       >>> a0.convert(3)
-      b'\x01\x02\x03\x04\x05\x06'
+      b'\x00\x01\x00\x02\x00\x03'
+      >>> array.array('h', a0.convert(3))
+      array('h', [1, 2, 3])
 
    The equivalent asynchronous example.
 
@@ -137,8 +141,8 @@ Simba documentation: `drivers`_
 
       >>> a0 = Adc(board.PIN_ADC0, board.PIN_A0, Adc.REFERENCE_VCC, 1000)
       >>> a0.async_convert(3)
-      >>> a0.async_wait()
-      b'\x01\x02\x03\x04\x05\x06'
+      >>> array.array('h', a0.async_wait())
+      array('h', [1, 2, 3])
 
    Simba documentation: `drivers/adc`_
 
@@ -367,6 +371,92 @@ Simba documentation: `drivers`_
    .. method:: scan()
 
       Scan the bus and return a list of all found slave addresses.
+
+
+.. class:: drivers.Owi(pin_device)
+
+   Create an Owi object with `pin_device` as the one wire bus pin.
+
+   Here is an example of how to use the Owi class.
+
+   .. code-block:: python
+
+      >>> owi = Owi(board.PIN_D3)
+      >>> owi.reset()
+      >>> owi.search()
+      2
+      >>> owi.get_devices()
+      [b'12345678', b'abcdefgh']
+      >>> owi.read(b'12345678', 3)
+      b'\x00\x01\x02'
+      >>> owi.write(b'12345678', b'\x00')
+      1
+
+   Simba documentation: `drivers/owi`_
+
+
+   .. method:: reset()
+
+      Send reset on one wire bus.
+
+
+   .. method:: search()
+
+      Search network for devices.
+
+
+   .. method:: get_devices()
+
+      Returns a list of all found devices.
+
+
+   .. method:: read(device_id, size)
+
+      Read `size` bytes from device with id `device_id`.
+
+
+   .. method:: write(device_id, buffer[, size])
+
+      Write buffer `buffer` to device with id `device_id`. Give `size`
+      to write fewer bytes than the buffer size.
+
+
+.. class:: drivers.Ds18b20(owi)
+
+   Create a Ds18b20 object.
+
+   Here is an example of how to use the Ds18b20 class.
+
+   .. code-block:: python
+
+      >>> owi = Owi(board.PIN_D3)
+      >>> owi.search()
+      >>> ds18b20 = Ds18b20(owi)
+      >>> ds18b20.get_devices()
+      [b'(2345678']
+      >>> ds18b20.convert()
+      >>> ds18b20.get_temperature(b'(2345678')
+      20.5
+
+   Simba documentation: `drivers/ds18b20`_
+
+
+   .. method:: convert()
+
+      Start temperature convertion on all sensors.
+
+
+   .. method:: get_devices()
+
+      Returns a list of all found DS18B20 devices.
+
+
+   .. method:: get_temperature(device_id)
+
+      Get the temperature for given device identity. Reads the latest
+      converted sample in the device with id `device_id`. Call
+      :meth:`.convert` before calling this function to get the current
+      temperature.
 
 
 .. class:: drivers.Sd(spi)

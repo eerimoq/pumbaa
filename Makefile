@@ -45,8 +45,10 @@ TESTS = \
 	tst/debug/harness \
 	tst/drivers/adc \
 	tst/drivers/dac \
+	tst/drivers/ds18b20 \
 	tst/drivers/exti \
 	tst/drivers/pin \
+	tst/drivers/owi \
 	tst/drivers/spi \
 	tst/drivers/sd \
 	tst/kernel/timer \

@@ -130,6 +130,30 @@ static mp_obj_t class_owi_search(mp_obj_t self_in)
 }
 
 /**
+ * def get_devices(self)
+ */
+static mp_obj_t class_owi_get_devices(mp_obj_t self_in)
+{
+    struct class_owi_t *self_p;
+    mp_obj_t devices_list;
+    int i;
+
+    self_p = MP_OBJ_TO_PTR(self_in);
+
+    /* Create en empty list for device ids. */
+    devices_list = mp_obj_new_list(0, NULL);
+
+    for (i = 0; i < self_p->drv.len; i++) {
+        /* Create a new bytes object of the device id. */
+        mp_obj_list_append(devices_list,
+                           mp_obj_new_bytes(self_p->drv.devices_p[i].id,
+                                            sizeof(self_p->drv.devices_p[i].id)));
+    }
+
+    return (devices_list);
+}
+
+/**
  * def read(self, size)
  */
 static mp_obj_t class_owi_read(mp_obj_t self_in, mp_obj_t size_in)
@@ -187,6 +211,7 @@ static mp_obj_t class_owi_write(mp_uint_t n_args, const mp_obj_t *args_p)
 
 static MP_DEFINE_CONST_FUN_OBJ_1(class_owi_reset_obj, class_owi_reset);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_owi_search_obj, class_owi_search);
+static MP_DEFINE_CONST_FUN_OBJ_1(class_owi_get_devices_obj, class_owi_get_devices);
 static MP_DEFINE_CONST_FUN_OBJ_2(class_owi_read_obj, class_owi_read);
 static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_owi_write_obj, 2, 3, class_owi_write);
 
@@ -194,6 +219,7 @@ static const mp_rom_map_elem_t class_owi_locals_dict_table[] = {
     /* Instance methods. */
     { MP_ROM_QSTR(MP_QSTR_reset), MP_ROM_PTR(&class_owi_reset_obj) },
     { MP_ROM_QSTR(MP_QSTR_search), MP_ROM_PTR(&class_owi_search_obj) },
+    { MP_ROM_QSTR(MP_QSTR_get_devices), MP_ROM_PTR(&class_owi_get_devices_obj) },
     { MP_ROM_QSTR(MP_QSTR_read), MP_ROM_PTR(&class_owi_read_obj) },
     { MP_ROM_QSTR(MP_QSTR_write), MP_ROM_PTR(&class_owi_write_obj) },
 };

@@ -258,7 +258,7 @@
 #endif
 
 #ifndef CONFIG_PUMBAA_CLASS_OWI
-#    if defined(FAMILY_SAM) || defined(ARCH_ESP32)
+#    if defined(FAMILY_SAM) || defined(ARCH_ESP32) || defined(ARCH_LINUX)
 #        define CONFIG_PUMBAA_CLASS_OWI                     1
 #    else
 #        define CONFIG_PUMBAA_CLASS_OWI                     0
@@ -266,7 +266,7 @@
 #endif
 
 #ifndef CONFIG_PUMBAA_CLASS_DS18B20
-#    if defined(FAMILY_SAM) || defined(ARCH_ESP32)
+#    if defined(FAMILY_SAM) || defined(ARCH_ESP32) || defined(ARCH_LINUX)
 #        define CONFIG_PUMBAA_CLASS_DS18B20                 1
 #    else
 #        define CONFIG_PUMBAA_CLASS_DS18B20                 0
