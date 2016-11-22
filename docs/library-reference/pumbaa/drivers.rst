@@ -710,4 +710,6 @@ Simba documentation: `drivers`_
 .. _drivers/spi: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/spi.html
 .. _drivers/sd: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/sd.html
 .. _drivers/i2c_soft: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/i2c_soft.html
+.. _drivers/owi: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/owi.html
+.. _drivers/ds18b20: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/ds18b20.html
 .. _drivers/esp_wifi: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/esp_wifi.html
