@@ -140,6 +140,7 @@ def examples_generate():
 
     examples = [
         "blink",
+        "ds18b20",
         "hello_world",
         "select",
         "tcp_server"

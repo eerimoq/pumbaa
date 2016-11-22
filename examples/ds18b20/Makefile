@@ -31,6 +31,7 @@
 
 NAME = ds18b20
 BOARD ?= linux
+TIMEOUT ?= 30
 
 PUMBAA_ROOT ?= ../..
 include $(PUMBAA_ROOT)/make/app.mk

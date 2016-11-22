@@ -13,8 +13,10 @@ Supported drivers for this board.
 
 - :class:`Adc<drivers.drivers.Adc>`
 - :class:`Dac<drivers.drivers.Dac>`
+- :class:`Ds18b20<drivers.drivers.Ds18b20>`
 - :class:`Exti<drivers.drivers.Exti>`
 - :class:`I2CSoft<drivers.drivers.I2CSoft>`
+- :class:`Owi<drivers.drivers.Owi>`
 - :class:`Pin<drivers.drivers.Pin>`
 - :class:`Sd<drivers.drivers.Sd>`
 - :class:`Spi<drivers.drivers.Spi>`
@@ -36,9 +38,9 @@ Below is the memory usage of two applications:
 +--------------------------+-----------+-----------+
 | Application              | Flash     | RAM       |
 +==========================+===========+===========+
-| minimal-configuration    |    969741 |    364952 |
+| minimal-configuration    |    979589 |    368888 |
 +--------------------------+-----------+-----------+
-| default-configuration    |   1056829 |    452760 |
+| default-configuration    |   1070325 |    457368 |
 +--------------------------+-----------+-----------+
 
 Default configuration
@@ -55,6 +57,8 @@ Default Standard Library configuration.
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_DAC                               |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
+|  CONFIG_PUMBAA_CLASS_DS18B20                           |  1                                                  |
++--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_ESP_WIFI                          |  0                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_EVENT                             |  1                                                  |
@@ -62,6 +66,8 @@ Default Standard Library configuration.
 |  CONFIG_PUMBAA_CLASS_EXTI                              |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_I2C_SOFT                          |  1                                                  |
++--------------------------------------------------------+-----------------------------------------------------+
+|  CONFIG_PUMBAA_CLASS_OWI                               |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_PIN                               |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+

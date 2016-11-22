@@ -1,0 +1,31 @@
+Ds18b20
+=======
+
+About
+-----
+
+Read and print the room temperature measured with a DS18B20 sensor.
+
+.. raw:: html
+
+   <iframe width="560" height="315" src="https://www.youtube.com/embed/M65enXPkcnQ" frameborder="0" allowfullscreen></iframe>
+   </br>
+   </br>
+
+Source code
+-----------
+
+.. include:: ds18b20/source-code.rst
+
+The source code can also be found on Github in the
+:github-tree:`examples/ds18b20` folder.
+
+Build and run
+-------------
+
+Build and upload the application.
+
+.. code-block:: text
+
+   $ cd examples/ds18b20
+   $ make -s BOARD=<board> upload

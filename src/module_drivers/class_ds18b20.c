@@ -164,7 +164,7 @@ static mp_obj_t class_ds18b20_get_temperature(mp_obj_t self_in,
                                 device_id_info.buf,
                                 &temperature) != 0) {
         nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
-                                           "ds18b20_async_wait() failed"));
+                                           "ds18b20_get_temperature() failed"));
     }
 
     return (mp_obj_new_float(temperature * 0.0625f));
