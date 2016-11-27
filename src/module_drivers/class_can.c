@@ -154,7 +154,7 @@ static mp_obj_t class_can_read(mp_obj_t self_in)
 
     tuple[0] = MP_OBJ_NEW_SMALL_INT(frame.id);
     tuple[1] = mp_obj_new_bytes((const byte *)&frame.data, frame.size);
-    tuple[2] = 0;
+    tuple[2] = MP_OBJ_NEW_SMALL_INT(0);
 
     return (mp_obj_new_attrtuple(&can_frame_fields[0], 3, tuple));
 }
