@@ -72,6 +72,9 @@ static const mp_rom_map_elem_t module_board_globals_table[] = {
 
     /* SPI. */
     { MP_ROM_QSTR(MP_QSTR_SPI_0), MP_ROM_INT(0) },
+
+    /* CAN. */
+    { MP_ROM_QSTR(MP_QSTR_CAN_0), MP_ROM_INT(0) },
 };
 
 static MP_DEFINE_CONST_DICT(module_board_globals, module_board_globals_table);

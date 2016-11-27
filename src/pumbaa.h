@@ -63,6 +63,7 @@
 #    include "module_drivers/class_sd.h"
 #    include "module_drivers/class_owi.h"
 #    include "module_drivers/class_ds18b20.h"
+#    include "module_drivers/class_can.h"
 #endif
 
 #if defined(FAMILY_LINUX)
@@ -74,6 +75,7 @@
 #    include "module_drivers/class_i2c_soft.h"
 #    include "module_drivers/class_owi.h"
 #    include "module_drivers/class_ds18b20.h"
+#    include "module_drivers/class_can.h"
 #endif
 
 #if defined(ARCH_ESP)
@@ -85,6 +87,7 @@
 #    include "module_drivers/class_esp_wifi.h"
 #    include "module_drivers/class_owi.h"
 #    include "module_drivers/class_ds18b20.h"
+#    include "module_drivers/class_can.h"
 #endif
 
 #endif

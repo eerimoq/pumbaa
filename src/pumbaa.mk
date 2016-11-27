@@ -58,6 +58,7 @@ PUMBAA_SRC += \
 ifeq ($(BOARD),arduino_due)
 PUMBAA_SRC += \
 	module_drivers/class_adc.c \
+	module_drivers/class_can.c \
 	module_drivers/class_dac.c \
 	module_drivers/class_ds18b20.c \
 	module_drivers/class_exti.c \
@@ -74,6 +75,7 @@ ifeq ($(BOARD),linux)
 PUMBAA_SRC += \
 	boards/linux/gccollect.c \
 	module_drivers/class_adc.c \
+	module_drivers/class_can.c \
 	module_drivers/class_dac.c \
 	module_drivers/class_ds18b20.c \
 	module_drivers/class_exti.c \
@@ -97,6 +99,7 @@ ifeq ($(BOARD),$(filter $(BOARD), nano32))
 PUMBAA_SRC += \
 	mcus/esp32/gccollect.c \
 	mcus/esp32/gchelper.S \
+	module_drivers/class_can.c \
 	module_drivers/class_ds18b20.c \
 	module_drivers/class_esp_wifi.c \
 	module_drivers/class_owi.c \

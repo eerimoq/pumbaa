@@ -13,6 +13,7 @@ The following classes are defined:
 - :class:`class Adc<.Adc>` -- Analog to digital convertion
 - :class:`class Dac<.Dac>` -- Digital to analog convertion
 - :class:`class Spi<.Spi>` -- Serial peripheral interface
+- :class:`class Can<.Can>` -- Controller Area Network
 - :class:`class I2CSoft<.I2CSoft>` -- Software I2C
 - :class:`class Owi<.Owi>` -- Onewire
 - :class:`class Ds18b20<.Ds18b20>` -- DS18B20 temperature
@@ -218,7 +219,7 @@ Simba documentation: `drivers`_
    select pin with `slave_select`. `mode` in one of
    :data:`.MODE_MASTER` and :data:`.MODE_SLAVE`. `speed` is only used
    by the master. `polarity` is the bus idle logic level. `phase`
-   controls if sampling are done on falling or rising clock edges..
+   controls if sampling are done on falling or rising clock edges.
 
    Here is an example of how to create a SPI driver and write 4 bytes
    to the slave.
@@ -322,6 +323,54 @@ Simba documentation: `drivers`_
    .. data:: SPEED_125KBPS
 
       SPI bus speed. Only used if the driver is configured as master.
+
+
+.. class:: drivers.Can(device, speed=SPEED_500KBPS)
+
+   Create a Can object. Select CAN device and speed with `device` and
+   `speed`.
+
+   Here is an example of how to create a CAN driver, write a frame and
+   then read a frame.
+
+   .. code-block:: python
+
+      >>> can = Can(board.CAN_0)
+      >>> can.start()
+      >>> can.write(0x123, b'\x01\x02')
+      >>> can.read()
+      ('id': 0x32, 'data': b'\x34\x35\x36', 'flags': 0)
+      >>> can.stop()
+
+   Simba documentation: `drivers/can`_
+
+
+   .. method:: start()
+
+      Starts the CAN device.
+
+
+   .. method:: stop()
+
+      Stops the CAN device.
+
+
+   .. method:: read()
+
+      Read a frame from the CAN bus and return it as a named tuple
+      with three items; ``id``, ``data`` and ``flags``. ``id`` and
+      ``flags`` are integers and ``data`` is a bytes object.
+
+
+   .. method:: write(id, data)
+
+      Write a frame with given `id` and `data` to the CAN bus. `id` is
+      an integer and `data` is a bytes object of max 8 bytes.
+
+
+   .. data:: SPEED_500KBPS
+
+      CAN bus speed.
 
 
 .. class:: drivers.I2CSoft(scl, sda, baudrate=50000, max_clock_stretching_sleep_us=1000000, clock_stretching_sleep_us=10000)
@@ -708,6 +757,7 @@ Simba documentation: `drivers`_
 .. _drivers/adc: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/adc.html
 .. _drivers/dac: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/dac.html
 .. _drivers/spi: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/spi.html
+.. _drivers/can: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/can.html
 .. _drivers/sd: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/sd.html
 .. _drivers/i2c_soft: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/i2c_soft.html
 .. _drivers/owi: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/owi.html

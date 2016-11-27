@@ -77,7 +77,9 @@ static const mp_rom_map_elem_t module_board_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR_PIN_GPIO36), MP_ROM_INT(32) },
     { MP_ROM_QSTR(MP_QSTR_PIN_GPIO39), MP_ROM_INT(35) },
 
-    { MP_ROM_QSTR(MP_QSTR_PIN_LED), MP_ROM_INT(16) }
+    { MP_ROM_QSTR(MP_QSTR_PIN_LED), MP_ROM_INT(16) },
+
+    { MP_ROM_QSTR(MP_QSTR_CAN_0), MP_ROM_INT(0) },
 };
 
 static MP_DEFINE_CONST_DICT(module_board_globals, module_board_globals_table);

@@ -67,6 +67,9 @@ static const mp_rom_map_elem_t module_drivers_globals_table[] = {
 #if CONFIG_PUMBAA_CLASS_ADC == 1
     { MP_ROM_QSTR(MP_QSTR_Adc), MP_ROM_PTR(&module_drivers_class_adc) },
 #endif
+#if CONFIG_PUMBAA_CLASS_CAN == 1
+    { MP_ROM_QSTR(MP_QSTR_Can), MP_ROM_PTR(&module_drivers_class_can) },
+#endif
 #if CONFIG_PUMBAA_CLASS_DAC == 1
     { MP_ROM_QSTR(MP_QSTR_Dac), MP_ROM_PTR(&module_drivers_class_dac) },
 #endif

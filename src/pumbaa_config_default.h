@@ -273,6 +273,14 @@
 #    endif
 #endif
 
+#ifndef CONFIG_PUMBAA_CLASS_CAN
+#    if defined(ARCH_ESP32) || defined(FAMILY_SAM) || defined(FAMILY_LINUX)
+#        define CONFIG_PUMBAA_CLASS_CAN                     1
+#    else
+#        define CONFIG_PUMBAA_CLASS_CAN                     0
+#    endif
+#endif
+
 #ifndef CONFIG_PUMBAA_CLASS_QUEUE
 #    define CONFIG_PUMBAA_CLASS_QUEUE                       1
 #endif
