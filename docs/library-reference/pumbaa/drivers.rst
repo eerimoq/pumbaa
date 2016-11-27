@@ -339,7 +339,7 @@ Simba documentation: `drivers`_
       >>> can.start()
       >>> can.write(0x123, b'\x01\x02')
       >>> can.read()
-      ('id': 0x32, 'data': b'\x34\x35\x36', 'flags': 0)
+      (id=0x32, data=b'\x34\x35\x36', flags=0)
       >>> can.stop()
 
    Simba documentation: `drivers/can`_
