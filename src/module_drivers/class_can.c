@@ -30,6 +30,8 @@
 
 #include "pumbaa.h"
 
+#define FLAGS_EXTENDED_FRAME                    0x1
+
 /**
  * CAN frame fields.
  */
@@ -144,6 +146,7 @@ static mp_obj_t class_can_read(mp_obj_t self_in)
     struct class_can_t *self_p;
     struct can_frame_t frame;
     mp_obj_t tuple[3];
+    int flags;
 
     self_p = MP_OBJ_TO_PTR(self_in);
 
@@ -152,29 +155,34 @@ static mp_obj_t class_can_read(mp_obj_t self_in)
                                            "can_read() failed"));
     }
 
+    flags = 0;
+
+    if (frame.extended_id == 1) {
+        flags |= FLAGS_EXTENDED_FRAME;
+    }
+
     tuple[0] = MP_OBJ_NEW_SMALL_INT(frame.id);
     tuple[1] = mp_obj_new_bytes((const byte *)&frame.data, frame.size);
-    tuple[2] = MP_OBJ_NEW_SMALL_INT(0);
+    tuple[2] = MP_OBJ_NEW_SMALL_INT(flags);
 
     return (mp_obj_new_attrtuple(&can_frame_fields[0], 3, tuple));
 }
 
 /**
- * def write(self, id, data)
+ * def write(self, id, data[, flags])
  */
-static mp_obj_t class_can_write(mp_obj_t self_in,
-                                mp_obj_t id_in,
-                                mp_obj_t data_in)
+static mp_obj_t class_can_write(mp_uint_t n_args, const mp_obj_t *args_p)
 {
     struct class_can_t *self_p;
     struct can_frame_t frame;
     mp_buffer_info_t buffer_info;
     int id;
+    int flags;
 
-    self_p = MP_OBJ_TO_PTR(self_in);
+    self_p = MP_OBJ_TO_PTR(args_p[0]);
 
     /* Id arguement. */
-    id = mp_obj_get_int(id_in);
+    id = mp_obj_get_int(args_p[1]);
 
     if ((id < 0) || (id > 0x7ff)) {
         nlr_raise(mp_obj_new_exception_msg(&mp_type_ValueError,
@@ -182,16 +190,24 @@ static mp_obj_t class_can_write(mp_obj_t self_in,
     }
 
     /* Data arguement. */
-    mp_get_buffer_raise(data_in, &buffer_info, MP_BUFFER_READ);
+    mp_get_buffer_raise(args_p[2], &buffer_info, MP_BUFFER_READ);
 
     if (buffer_info.len > 8) {
         nlr_raise(mp_obj_new_exception_msg(&mp_type_ValueError,
                                            "bad frame data length"));
     }
 
+    /* Flags argument. */
+    if (n_args != 4) {
+        flags = 0;
+    } else {
+        flags = mp_obj_get_int(args_p[3]);
+    }
+
     /* Initiate the frame. */
     memset(&frame, 0, sizeof(frame));
     frame.id = id;
+    frame.extended_id = (flags & FLAGS_EXTENDED_FRAME);
     frame.size = buffer_info.len;
     memcpy(&frame.data, buffer_info.buf, buffer_info.len);
 
@@ -206,7 +222,7 @@ static mp_obj_t class_can_write(mp_obj_t self_in,
 static MP_DEFINE_CONST_FUN_OBJ_1(class_can_start_obj, class_can_start);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_can_stop_obj, class_can_stop);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_can_read_obj, class_can_read);
-static MP_DEFINE_CONST_FUN_OBJ_3(class_can_write_obj, class_can_write);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_can_write_obj, 3, 4, class_can_write);
 
 static const mp_rom_map_elem_t class_can_locals_dict_table[] = {
     /* Instance methods. */
@@ -219,6 +235,8 @@ static const mp_rom_map_elem_t class_can_locals_dict_table[] = {
     /* { MP_ROM_QSTR(MP_QSTR_SPEED_1MBPS), MP_ROM_INT(CAN_SPEED_1MBPS) }, */
     { MP_ROM_QSTR(MP_QSTR_SPEED_500KBPS), MP_ROM_INT(CAN_SPEED_500KBPS) },
     /* { MP_ROM_QSTR(MP_QSTR_SPEED_250KBPS), MP_ROM_INT(CAN_SPEED_250KBPS) } */
+
+    { MP_ROM_QSTR(MP_QSTR_FLAGS_EXTENDED_FRAME), MP_ROM_INT(FLAGS_EXTENDED_FRAME) },
 };
 
 static MP_DEFINE_CONST_DICT(class_can_locals_dict, class_can_locals_dict_table);

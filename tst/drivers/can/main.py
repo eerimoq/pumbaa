@@ -41,13 +41,25 @@ def test_print():
     print(can)
 
 
-def test_data_transfer():
+def test_standard_frame():
     can = Can(board.CAN_0, Can.SPEED_500KBPS)
     can.start()
     assert can.write(0x57, b'') is None
     frame = can.read()
     assert frame.id == 0x58
     assert frame.data == b''
+    assert frame.flags == 0
+    can.stop()
+
+
+def test_extended_frame():
+    can = Can(board.CAN_0, Can.SPEED_500KBPS)
+    can.start()
+    assert can.write(0x57, b'', Can.FLAGS_EXTENDED_FRAME) is None
+    frame = can.read()
+    assert frame.id == 0x58
+    assert frame.data == b''
+    assert frame.flags == Can.FLAGS_EXTENDED_FRAME
     can.stop()
 
 
@@ -71,7 +83,8 @@ def test_bad_arguments():
 def main():
     testcases = [
         (test_print, "test_print"),
-        (test_data_transfer, "test_data_transfer"),
+        (test_standard_frame, "test_standard_frame"),
+        (test_extended_frame, "test_extended_frame"),
         (test_bad_arguments, "test_bad_arguments")
     ]
     harness.run(testcases)

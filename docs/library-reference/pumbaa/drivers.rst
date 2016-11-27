@@ -358,19 +358,29 @@ Simba documentation: `drivers`_
    .. method:: read()
 
       Read a frame from the CAN bus and return it as a named tuple
-      with three items; ``id``, ``data`` and ``flags``. ``id`` and
-      ``flags`` are integers and ``data`` is a bytes object.
+      with three items; `id`, `data` and `flags`. `id` is the frame id
+      as an integer. `flags` contains information about the frame
+      format, and possibly additional information in the
+      future. `data` is a bytes object of up to 8 bytes of read frame
+      data.
 
 
-   .. method:: write(id, data)
+   .. method:: write(id, data[, flags])
 
       Write a frame with given `id` and `data` to the CAN bus. `id` is
-      an integer and `data` is a bytes object of max 8 bytes.
+      an integer and `data` is a bytes object of up to 8 bytes. Set
+      :data:`.FLAGS_EXTENDED_FRAME` in `flags` to write an extended
+      frame (29 bits frame id), otherwise a standard frame is written.
 
 
    .. data:: SPEED_500KBPS
 
       CAN bus speed.
+
+
+   .. data:: FLAGS_EXTENDED_FRAME
+
+      Extended frame flag. A 29 bits frame id will be sent/received.
 
 
 .. class:: drivers.I2CSoft(scl, sda, baudrate=50000, max_clock_stretching_sleep_us=1000000, clock_stretching_sleep_us=10000)
