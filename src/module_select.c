@@ -54,7 +54,8 @@ static int is_channel(mp_obj_t obj)
 {
     return (MP_OBJ_IS_TYPE(obj, &module_sync_class_event)
             || MP_OBJ_IS_TYPE(obj, &module_sync_class_queue)
-            || MP_OBJ_IS_TYPE(obj, &module_socket_class_socket));
+            || MP_OBJ_IS_TYPE(obj, &module_socket_class_socket)
+            || MP_OBJ_IS_TYPE(obj, &module_drivers_class_can));
 }
 
 /**

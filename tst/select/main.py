@@ -30,7 +30,9 @@
 
 
 import select
+import board
 from sync import Event, Queue
+from drivers import Can
 import harness
 from harness import assert_raises
 
@@ -45,12 +47,15 @@ def test_register_unregister():
     poll = select.poll()
     queue = Queue()
     event = Event()
+    can = Can(board.CAN_0)
 
     poll.register(queue)
     poll.register(event)
+    poll.register(can)
 
     poll.unregister(queue)
     poll.unregister(event)
+    poll.unregister(can)
 
     with assert_raises(OSError):
         poll.unregister(queue)
@@ -60,10 +65,12 @@ def test_poll():
     poll = select.poll()
     queue = Queue()
     event = Event()
+    can = Can(board.CAN_0)
 
     # Register both event channels.
     poll.register(queue)
     poll.register(event)
+    poll.register(can)
 
     # Timeout waiting for event.
     assert poll.poll(0.01) == []

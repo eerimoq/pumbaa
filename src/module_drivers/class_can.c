@@ -219,10 +219,23 @@ static mp_obj_t class_can_write(mp_uint_t n_args, const mp_obj_t *args_p)
     return (mp_const_none);
 }
 
+/**
+ * def read(self)
+ */
+static mp_obj_t class_can_size(mp_obj_t self_in)
+{
+    struct class_can_t *self_p;
+
+    self_p = MP_OBJ_TO_PTR(self_in);
+
+    return (MP_OBJ_NEW_SMALL_INT(chan_size(&self_p->drv)));
+}
+
 static MP_DEFINE_CONST_FUN_OBJ_1(class_can_start_obj, class_can_start);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_can_stop_obj, class_can_stop);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_can_read_obj, class_can_read);
 static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_can_write_obj, 3, 4, class_can_write);
+static MP_DEFINE_CONST_FUN_OBJ_1(class_can_size_obj, class_can_size);
 
 static const mp_rom_map_elem_t class_can_locals_dict_table[] = {
     /* Instance methods. */
@@ -230,6 +243,7 @@ static const mp_rom_map_elem_t class_can_locals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_stop), MP_ROM_PTR(&class_can_stop_obj) },
     { MP_ROM_QSTR(MP_QSTR_write), MP_ROM_PTR(&class_can_write_obj) },
     { MP_ROM_QSTR(MP_QSTR_read), MP_ROM_PTR(&class_can_read_obj) },
+    { MP_ROM_QSTR(MP_QSTR_size), MP_ROM_PTR(&class_can_size_obj) },
 
     /* Class constants. */
     /* { MP_ROM_QSTR(MP_QSTR_SPEED_1MBPS), MP_ROM_INT(CAN_SPEED_1MBPS) }, */
