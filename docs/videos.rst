@@ -1,6 +1,17 @@
 Videos
 ======
 
+#5 Pumbaa: Dual board CAN blink on Nano32 (ESP32) and Arduino Due.
+------------------------------------------------------------------
+
+Blink a LED on Nano32 by sending a CAN frame from an Arduino Due.
+
+.. raw:: html
+
+   <iframe width="560" height="315" src="https://www.youtube.com/embed/rnbyfbsrgfE" frameborder="0" allowfullscreen></iframe>
+   </br>
+   </br>
+
 #4 Pumbaa: Room temperature (DS18B20).
 --------------------------------------
 
