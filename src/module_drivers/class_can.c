@@ -157,7 +157,7 @@ static mp_obj_t class_can_read(mp_obj_t self_in)
 
     flags = 0;
 
-    if (frame.extended_id == 1) {
+    if (frame.extended_frame == 1) {
         flags |= FLAGS_EXTENDED_FRAME;
     }
 
@@ -207,7 +207,7 @@ static mp_obj_t class_can_write(mp_uint_t n_args, const mp_obj_t *args_p)
     /* Initiate the frame. */
     memset(&frame, 0, sizeof(frame));
     frame.id = id;
-    frame.extended_id = (flags & FLAGS_EXTENDED_FRAME);
+    frame.extended_frame = (flags & FLAGS_EXTENDED_FRAME);
     frame.size = buffer_info.len;
     memcpy(&frame.data, buffer_info.buf, buffer_info.len);
 

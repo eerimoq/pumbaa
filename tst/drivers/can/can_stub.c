@@ -62,7 +62,7 @@ ssize_t can_read(struct can_driver_t *self_p,
     } else {
         memset(frame_p, 0, sizeof(*frame_p));
         frame_p->id = 0x58;
-        frame_p->extended_id = 1;
+        frame_p->extended_frame = 1;
         frame_p->size = 0;
     }
 
@@ -86,7 +86,7 @@ ssize_t can_write(struct can_driver_t *self_p,
             return (-1);
         }
 
-        if (frame_p->extended_id != 0) {
+        if (frame_p->extended_frame != 0) {
             return (-1);
         }
     } else {
@@ -98,7 +98,7 @@ ssize_t can_write(struct can_driver_t *self_p,
             return (-1);
         }
 
-        if (frame_p->extended_id != 1) {
+        if (frame_p->extended_frame != 1) {
             return (-1);
         }
     }
