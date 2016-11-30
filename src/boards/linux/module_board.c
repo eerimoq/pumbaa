@@ -54,6 +54,9 @@ static const mp_rom_map_elem_t module_board_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR_PIN_D2), MP_ROM_INT(2) },
     { MP_ROM_QSTR(MP_QSTR_PIN_D3), MP_ROM_INT(3) },
     { MP_ROM_QSTR(MP_QSTR_PIN_D4), MP_ROM_INT(4) },
+    { MP_ROM_QSTR(MP_QSTR_PIN_D5), MP_ROM_INT(5) },
+    { MP_ROM_QSTR(MP_QSTR_PIN_D6), MP_ROM_INT(6) },
+    { MP_ROM_QSTR(MP_QSTR_PIN_D7), MP_ROM_INT(7) },
 
     { MP_ROM_QSTR(MP_QSTR_PIN_A0), MP_ROM_INT(5) },
     { MP_ROM_QSTR(MP_QSTR_PIN_A1), MP_ROM_INT(6) },

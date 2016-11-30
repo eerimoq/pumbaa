@@ -74,13 +74,15 @@ Simba documentation: `drivers`_
       Output pin mode.
 
 
-.. class:: drivers.Exti(device, trigger, event=None, mask=0x1, callback=None)
+.. class:: drivers.Exti(device, trigger, channel=None, data=0x1, callback=None)
 
    Create an object handling interrupts on given `device`. `trigger`
    may be a combination of :data:`.RISING`, :data:`.FALLING` or
    :data:`.BOTH`. When an interrupt occurs given `callback` is called
-   from interrupt context and `mask` is written to given event channel
-   `event`.
+   from interrupt context and `data` is written to given event or
+   queue channel `channel`.
+
+   Event channel example.
 
    .. code-block:: python
 
@@ -88,6 +90,17 @@ Simba documentation: `drivers`_
       >>> exti = Exti(board.EXTI_D3, Exti.FALLING, event, 0x1)
       >>> exti.start()
       >>> event.read(0x1)        # Wait for an interrupt to occur.
+      >>> exti.stop()
+
+   Queue channel example.
+
+   .. code-block:: python
+
+      >>> queue = Queue()
+      >>> exti = Exti(board.EXTI_D4, Exti.RISING, queue, b'1')
+      >>> exti.start()
+      >>> queue.read(1)        # Wait for an interrupt to occur.
+      b'1'
       >>> exti.stop()
 
    Simba documentation: `drivers/exti`_

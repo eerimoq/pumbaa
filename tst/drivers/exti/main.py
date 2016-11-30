@@ -2,9 +2,9 @@
 # @section License
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (c) 2016, Erik Moqvist
-# 
+#
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
 # files (the "Software"), to deal in the Software without
@@ -30,7 +30,7 @@
 
 
 import os
-from sync import Event
+from sync import Event, Queue
 from drivers import Exti, Pin
 import board
 import harness
@@ -60,15 +60,53 @@ def test_falling_edge():
     pin.write(0)
 
     if not 'Linux' in os.uname().machine:
-        print("Waiting for the interrupt to occur... ", end="")
+        print("Waiting for the interrupt to occur... ")
         assert event.read(0x1) == 0x1
-        print("ok.")
 
     exti.stop()
 
 
+def test_rising_edge_two_pins():
+    pin_a = Pin(board.PIN_D4, Pin.OUTPUT)
+    pin_b = Pin(board.PIN_D6, Pin.OUTPUT)
+
+    pin_a.write(0)
+    pin_b.write(0)
+
+    queue = Queue()
+
+    exti_a = Exti(board.EXTI_D3, Exti.RISING, queue, 'a')
+    exti_b = Exti(board.EXTI_D5, Exti.RISING, queue, 'b')
+
+    exti_a.start()
+    exti_b.start()
+
+    # Make sure no interrupt has already occured.
+    assert queue.size() == 0
+
+    # Trigger interrupts to create the character sequence 'aaba'.
+    pin_a.write(1)
+    pin_a.write(0)
+    pin_a.write(1)
+    pin_a.write(0)
+
+    pin_b.write(1)
+    pin_b.write(0)
+
+    pin_a.write(1)
+    pin_a.write(0)
+
+    if not 'Linux' in os.uname().machine:
+        print("Waiting for the character sequence... ")
+        assert queue.read(4) == b'aaba'
+
+    exti_a.stop()
+    exti_b.stop()
+
+
 def test_bad_arguments():
     event = Event()
+    queue = Queue()
 
     # Bad device.
     with assert_raises(ValueError, "bad exti device -1"):
@@ -78,13 +116,17 @@ def test_bad_arguments():
     with assert_raises(ValueError, "bad trigger -1"):
         Exti(board.EXTI_D3, -1, event, 1)
 
-    # Bad event channel.
-    with assert_raises(TypeError, "expected <class 'Event'>"):
+    # Bad channel.
+    with assert_raises(TypeError, "expected <class 'Event'> or <class 'Queue'>"):
         Exti(board.EXTI_D3, Exti.BOTH, None, 1)
 
-    # Bad event mask.
+    # Bad event data.
     with assert_raises(TypeError, "can't convert NoneType to int"):
         Exti(board.EXTI_D3, Exti.BOTH, event, None, 1)
+
+    # Bad queue data.
+    with assert_raises(TypeError, "object with buffer protocol required"):
+        Exti(board.EXTI_D3, Exti.BOTH, queue, None, 1)
 
     # Bad callback.
     with assert_raises(TypeError, "bad callback"):
@@ -95,6 +137,7 @@ def main():
     testcases = [
         (test_print, "test_print"),
         (test_falling_edge, "test_falling_edge"),
+        (test_rising_edge_two_pins, "test_rising_edge_two_pins"),
         (test_bad_arguments, "test_bad_arguments")
     ]
     harness.run(testcases)

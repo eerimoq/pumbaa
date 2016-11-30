@@ -2,9 +2,9 @@
  * @section License
  *
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016, Erik Moqvist
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -43,10 +43,14 @@ static void exti_cb_isr(void *self_in)
         mp_call_function_0(self_p->callback);
     }
 
-    if (self_p->event_obj_p != mp_const_none) {
-        event_write_isr(&self_p->event_obj_p->event,
-                        &self_p->mask,
-                        sizeof(self_p->mask));
+    if (self_p->chan_type == class_exti_chan_type_event_t) {
+        event_write_isr(&self_p->chan.event.obj_p->event,
+                        &self_p->chan.event.mask,
+                        sizeof(self_p->chan.event.mask));
+    } else if (self_p->chan_type == class_exti_chan_type_queue_t) {
+        queue_write_isr(&self_p->chan.queue.obj_p->queue,
+                        self_p->chan.queue.buf_p,
+                        self_p->chan.queue.size);
     }
 }
 
@@ -77,13 +81,14 @@ static mp_obj_t class_exti_make_new(const mp_obj_type_t *type_p,
     static const mp_arg_t allowed_args[] = {
         { MP_QSTR_device, MP_ARG_REQUIRED | MP_ARG_INT },
         { MP_QSTR_trigger, MP_ARG_REQUIRED | MP_ARG_INT },
-        { MP_QSTR_event, MP_ARG_OBJ, { .u_obj = mp_const_none } },
-        { MP_QSTR_mask, MP_ARG_INT, { .u_int = 0x1 } },
+        { MP_QSTR_channel, MP_ARG_OBJ, { .u_obj = mp_const_none } },
+        { MP_QSTR_data, MP_ARG_OBJ, { .u_obj = mp_const_none } },
         { MP_QSTR_callback, MP_ARG_OBJ, { .u_obj = mp_const_none } },
     };
     mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];
     int device;
     int trigger;
+    mp_buffer_info_t buffer_info;
 
     mp_arg_check_num(n_args, n_kw, 0, 5, true);
 
@@ -116,11 +121,31 @@ static mp_obj_t class_exti_make_new(const mp_obj_type_t *type_p,
                                                 trigger));
     }
 
-    /* Third argument must be an event object or None. */
-    if (mp_obj_get_type(args[2].u_obj) != mp_const_none) {
-        if (mp_obj_get_type(args[2].u_obj) != &module_sync_class_event) {
-            mp_raise_TypeError("expected <class 'Event'>");
-        }
+    /* Create a new Exti object. */
+    self_p = m_new_obj(struct class_exti_t);
+    self_p->base.type = &module_drivers_class_exti;
+
+    /* Third argument must be an event object, queue object or
+       None. */
+    if (mp_obj_get_type(args[2].u_obj) == mp_const_none) {
+        self_p->chan_type = class_exti_chan_type_none_t;
+    } else if (mp_obj_get_type(args[2].u_obj) == &module_sync_class_event) {
+        self_p->chan_type = class_exti_chan_type_event_t;
+        self_p->chan.event.obj_p = args[2].u_obj;
+        self_p->chan.event.mask = mp_obj_get_int(args[3].u_obj);
+    } else if (mp_obj_get_type(args[2].u_obj) == &module_sync_class_queue) {
+        self_p->chan_type = class_exti_chan_type_queue_t;
+        self_p->chan.queue.obj_p = args[2].u_obj;
+        self_p->chan.queue.str_obj = args[3].u_obj;
+
+        mp_get_buffer_raise(MP_OBJ_TO_PTR(args[3].u_obj),
+                            &buffer_info,
+                            MP_BUFFER_READ);
+
+        self_p->chan.queue.buf_p = buffer_info.buf;
+        self_p->chan.queue.size = buffer_info.len;
+    } else {
+        mp_raise_TypeError("expected <class 'Event'> or <class 'Queue'>");
     }
 
     /* Fifth argument must be a callback or None. */
@@ -130,11 +155,6 @@ static mp_obj_t class_exti_make_new(const mp_obj_type_t *type_p,
         }
     }
 
-    /* Create a new Exti object. */
-    self_p = m_new_obj(struct class_exti_t);
-    self_p->base.type = &module_drivers_class_exti;
-    self_p->event_obj_p = args[2].u_obj;
-    self_p->mask = args[3].u_int;
     self_p->callback = args[4].u_obj;
 
     if (exti_init(&self_p->exti,

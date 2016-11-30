@@ -33,11 +33,28 @@
 
 #include "pumbaa.h"
 
+enum class_exti_chan_type_t {
+    class_exti_chan_type_none_t = 0,
+    class_exti_chan_type_event_t,
+    class_exti_chan_type_queue_t
+};
+
 struct class_exti_t {
     mp_obj_base_t base;
     struct exti_driver_t exti;
-    struct class_event_t *event_obj_p;
-    uint32_t mask;
+    enum class_exti_chan_type_t chan_type;
+    union {
+        struct {
+            struct class_event_t *obj_p;
+            uint32_t mask;
+        } event;
+        struct {
+            struct class_queue_t *obj_p;
+            mp_obj_t str_obj;
+            char *buf_p;
+            size_t size;
+        } queue;
+    } chan;
     mp_obj_t callback;
 };
 
