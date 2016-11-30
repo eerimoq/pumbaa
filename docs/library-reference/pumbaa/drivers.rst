@@ -74,7 +74,7 @@ Simba documentation: `drivers`_
       Output pin mode.
 
 
-.. class:: drivers.Exti(device, trigger, channel=None, data=0x1, callback=None)
+.. class:: drivers.Exti(device, trigger, channel=None, data=None, callback=None)
 
    Create an object handling interrupts on given `device`. `trigger`
    may be a combination of :data:`.RISING`, :data:`.FALLING` or
