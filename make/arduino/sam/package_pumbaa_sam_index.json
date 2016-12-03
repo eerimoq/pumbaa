@@ -17,7 +17,7 @@
           "help": {
             "online": "https://pumbaa.readthedocs.org"
           },
-          "url": "https://sourceforge.net/projects/pumbaa-arduino/files/sam/pumbaa-arduino-sam-0.1.0.zip",
+          "url": "https://github.com/eerimoq/pumbaa-releases/raw/master/arduino/sam/pumbaa-arduino-sam-0.1.0.zip",
 	  "archiveFileName": "pumbaa-arduino-sam-0.1.0.zip",
 	  "checksum": "SHA-256:14e385369190a319cbe8e88fd4dbdabb38226e25a657a4e934a9ae28c472b1cc",
 	  "size": "4518973",
@@ -45,7 +45,7 @@
           "help": {
             "online": "https://pumbaa.readthedocs.org"
           },
-          "url": "https://sourceforge.net/projects/pumbaa-arduino/files/sam/pumbaa-arduino-sam-1.0.0.zip",
+          "url": "https://github.com/eerimoq/pumbaa-releases/raw/master/arduino/sam/pumbaa-arduino-sam-1.0.0.zip",
 	  "archiveFileName": "pumbaa-arduino-sam-1.0.0.zip",
 	  "checksum": "SHA-256:4118a7d1ac052d3dc1898aa03c6cc55e217a35773a220494d5f9081bf60b7a6a",
 	  "size": "4536028",
@@ -73,7 +73,7 @@
           "help": {
             "online": "https://pumbaa.readthedocs.org"
           },
-          "url": "https://sourceforge.net/projects/pumbaa-arduino/files/sam/pumbaa-arduino-sam-2.0.0.zip",
+          "url": "https://github.com/eerimoq/pumbaa-releases/raw/master/arduino/sam/pumbaa-arduino-sam-2.0.0.zip",
 	  "archiveFileName": "pumbaa-arduino-sam-2.0.0.zip",
 	  "checksum": "SHA-256:cbe6e591f1621e75f7a183e0a44a1b4f6fbf2cf8d30cd4b60b45624575bf2436",
 	  "size": "4736064",
