@@ -226,7 +226,7 @@
 #endif
 
 #ifndef CONFIG_PUMBAA_CLASS_SPI
-#    if defined(FAMILY_SAM) || defined(FAMILY_LINUX)
+#    if defined(FAMILY_SAM) || defined(FAMILY_LINUX) || defined(ARCH_ESP) || defined(ARCH_ESP32)
 #        define CONFIG_PUMBAA_CLASS_SPI                     1
 #    else
 #        define CONFIG_PUMBAA_CLASS_SPI                     0

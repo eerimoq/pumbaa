@@ -79,6 +79,10 @@ static const mp_rom_map_elem_t module_board_globals_table[] = {
 
     { MP_ROM_QSTR(MP_QSTR_PIN_LED), MP_ROM_INT(16) },
 
+    { MP_ROM_QSTR(MP_QSTR_SPI_0), MP_ROM_INT(0) },
+    { MP_ROM_QSTR(MP_QSTR_SPI_1), MP_ROM_INT(1) },
+    { MP_ROM_QSTR(MP_QSTR_SPI_2), MP_ROM_INT(2) },
+
     { MP_ROM_QSTR(MP_QSTR_CAN_0), MP_ROM_INT(0) },
 };
 

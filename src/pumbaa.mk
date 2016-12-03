@@ -91,6 +91,7 @@ PUMBAA_SRC += \
 	mcus/esp8266/gccollect.c \
 	mcus/esp8266/gchelper.S \
 	module_drivers/class_exti.c \
+	module_drivers/class_spi.c \
 	module_drivers/class_esp_wifi.c \
 	port/lexer_port.c
 endif
@@ -100,6 +101,7 @@ PUMBAA_SRC += \
 	mcus/esp32/gccollect.c \
 	mcus/esp32/gchelper.S \
 	module_drivers/class_can.c \
+	module_drivers/class_spi.c \
 	module_drivers/class_ds18b20.c \
 	module_drivers/class_esp_wifi.c \
 	module_drivers/class_owi.c \
