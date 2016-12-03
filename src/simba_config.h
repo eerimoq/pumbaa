@@ -39,10 +39,6 @@
 #    endif
 #endif
 
-#ifndef CONFIG_START_NETWORK
-#    define CONFIG_START_NETWORK                            0
-#endif
-
 #ifndef CONFIG_START_SHELL
 #    define CONFIG_START_SHELL                              0
 #endif
