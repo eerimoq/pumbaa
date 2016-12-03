@@ -11,10 +11,12 @@ Drivers
 
 Supported drivers for this board.
 
+- :class:`Can<drivers.drivers.Can>`
 - :class:`Ds18b20<drivers.drivers.Ds18b20>`
 - :class:`esp_wifi<drivers.drivers.esp_wifi>`
 - :class:`Owi<drivers.drivers.Owi>`
 - :class:`Pin<drivers.drivers.Pin>`
+- :class:`Spi<drivers.drivers.Spi>`
 
 Memory usage
 ------------
@@ -33,9 +35,9 @@ Below is the memory usage of two applications:
 +--------------------------+-----------+-----------+
 | Application              | Flash     | RAM       |
 +==========================+===========+===========+
-| minimal-configuration    |    402027 |    272992 |
+| minimal-configuration    |    405091 |    274612 |
 +--------------------------+-----------+-----------+
-| default-configuration    |    428967 |    292508 |
+| default-configuration    |    432683 |    295292 |
 +--------------------------+-----------+-----------+
 
 Default configuration
@@ -49,6 +51,8 @@ Default Standard Library configuration.
 |  CONFIG_PUMBAA_CLASS_ADC                               |  0                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_BOARD                             |  1                                                  |
++--------------------------------------------------------+-----------------------------------------------------+
+|  CONFIG_PUMBAA_CLASS_CAN                               |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_DAC                               |  0                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
@@ -70,7 +74,7 @@ Default Standard Library configuration.
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_SD                                |  0                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
-|  CONFIG_PUMBAA_CLASS_SPI                               |  0                                                  |
+|  CONFIG_PUMBAA_CLASS_SPI                               |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_TIMER                             |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
