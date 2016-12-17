@@ -32,7 +32,7 @@
 
 char *stack_top_p;
 
-extern void xthal_window_spill( void );
+extern void esp_xthal_window_spill( void );
 
 extern mp_uint_t gc_helper_get_regs_and_sp();
 
@@ -44,7 +44,7 @@ void gc_collect(void)
     gc_collect_start();
 
     /* Get the registers and the sp. */
-    xthal_window_spill();
+    esp_xthal_window_spill();
     sp = gc_helper_get_regs_and_sp();
 
     /* Trace the stack, including the registers (since they live on

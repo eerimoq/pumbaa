@@ -35,17 +35,23 @@ import board
 import harness
 from harness import assert_raises
 
+try:
+    PIN_A0 = board.PIN_A0
+    PIN_A1 = board.PIN_A1
+except AttributeError:
+    PIN_A0 = board.PIN_GPIO32
+    PIN_A1 = board.PIN_GPIO33
 
 def test_print():
     print(Adc)
     help(Adc)
-    a0 = Adc(board.ADC_0, board.PIN_A0, Adc.REFERENCE_VCC, 100)
+    a0 = Adc(board.ADC_0, PIN_A0, Adc.REFERENCE_VCC, 100)
     print(a0)
 
 
 def test_convert():
-    a0 = Adc(board.ADC_0, board.PIN_A0, Adc.REFERENCE_VCC, 100)
-    a1 = Adc(board.ADC_0, board.PIN_A1)
+    a0 = Adc(board.ADC_0, PIN_A0, Adc.REFERENCE_VCC, 100)
+    a1 = Adc(board.ADC_0, PIN_A1)
     a0_sample = a0.convert(1)
     a1_sample = a1.convert(1)
     assert len(a0_sample) == 2
@@ -55,7 +61,7 @@ def test_convert():
 
 
 def test_async_convert():
-    a0 = Adc(board.ADC_0, board.PIN_A0)
+    a0 = Adc(board.ADC_0, PIN_A0)
     a0.async_convert(2)
     a0_sample = a0.async_wait()
     assert len(a0_sample) == 4
@@ -73,11 +79,11 @@ def test_bad_arguments():
 
     # Bad reference.
     with assert_raises(ValueError, "bad reference"):
-        Adc(board.ADC_0, board.PIN_A0, -1)
+        Adc(board.ADC_0, PIN_A0, -1)
 
     # Bad sampling rate.
     with assert_raises(ValueError, "bad sampling rate"):
-        Adc(board.ADC_0, board.PIN_A0, Adc.REFERENCE_VCC, 0)
+        Adc(board.ADC_0, PIN_A0, Adc.REFERENCE_VCC, 0)
 
 
 def main():

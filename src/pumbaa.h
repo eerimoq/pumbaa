@@ -85,6 +85,7 @@
 #endif
 
 #if defined(ARCH_ESP32)
+#    include "module_drivers/class_adc.h"
 #    include "module_drivers/class_esp_wifi.h"
 #    include "module_drivers/class_owi.h"
 #    include "module_drivers/class_spi.h"
