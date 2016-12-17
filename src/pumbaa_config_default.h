@@ -194,7 +194,7 @@
 #endif
 
 #ifndef CONFIG_PUMBAA_CLASS_DAC
-#    if defined(FAMILY_SAM) || defined(FAMILY_LINUX)
+#    if defined(FAMILY_SAM) || defined(FAMILY_LINUX) || defined(ARCH_ESP32)
 #        define CONFIG_PUMBAA_CLASS_DAC                     1
 #    else
 #        define CONFIG_PUMBAA_CLASS_DAC                     0

@@ -13,6 +13,7 @@ Supported drivers for this board.
 
 - :class:`Adc<drivers.drivers.Adc>`
 - :class:`Can<drivers.drivers.Can>`
+- :class:`Dac<drivers.drivers.Dac>`
 - :class:`Ds18b20<drivers.drivers.Ds18b20>`
 - :class:`esp_wifi<drivers.drivers.esp_wifi>`
 - :class:`Owi<drivers.drivers.Owi>`
@@ -36,9 +37,9 @@ Below is the memory usage of two applications:
 +--------------------------+-----------+-----------+
 | Application              | Flash     | RAM       |
 +==========================+===========+===========+
-| minimal-configuration    |    480371 |    289356 |
+| minimal-configuration    |    481427 |    289720 |
 +--------------------------+-----------+-----------+
-| default-configuration    |    508203 |    310756 |
+| default-configuration    |    509607 |    311820 |
 +--------------------------+-----------+-----------+
 
 Default configuration
@@ -55,7 +56,7 @@ Default Standard Library configuration.
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_CAN                               |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
-|  CONFIG_PUMBAA_CLASS_DAC                               |  0                                                  |
+|  CONFIG_PUMBAA_CLASS_DAC                               |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_DS18B20                           |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+

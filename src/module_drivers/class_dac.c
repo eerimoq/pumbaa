@@ -106,12 +106,6 @@ static mp_obj_t class_dac_make_new(const mp_obj_type_t *type_p,
                                            "bad devices"));
     }
 
-    if ((pins[0] != &pin_dac0_dev)
-        || ((pins[1] != &pin_dac1_dev) && (pins[1] != NULL))) {
-        nlr_raise(mp_obj_new_exception_msg(&mp_type_ValueError,
-                                           "bad pin"));
-    }
-
     sampling_rate = args[1].u_int;
 
     if (dac_init((struct dac_driver_t *)&self_p->drv,

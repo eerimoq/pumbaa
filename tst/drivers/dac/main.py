@@ -64,10 +64,6 @@ def test_bad_arguments():
     with assert_raises(TypeError, "bad devices"):
         Dac(None)
 
-    # Bad pin.
-    with assert_raises(ValueError, "bad pin"):
-        Dac(board.PIN_LED)
-
 
 def main():
     testcases = [
