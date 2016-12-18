@@ -58,7 +58,7 @@ BOARDS = {
             "MCU_SAM3X8E", 
             "BOARD_ARDUINO_DUE", 
             "VERSION=master", 
-            "MBEDTLS_USER_CONFIG_FILE=\"mbedtls/user_config.h\"", 
+            "MBEDTLS_USER_CONFIG_FILE=\"\\\"mbedtls/user_config.h\\\"\"", 
             "MICROPY_EMIT_X86=0", 
             "MICROPY_NLR_SETJMP"
         ], 
@@ -373,7 +373,7 @@ BOARDS = {
             "MCU_ESP32", 
             "BOARD_NANO32", 
             "VERSION=master", 
-            "MBEDTLS_USER_CONFIG_FILE=\"mbedtls/user_config.h\"", 
+            "MBEDTLS_USER_CONFIG_FILE=\"\\\"mbedtls/user_config.h\\\"\"", 
             "MICROPY_EMIT_X86=0", 
             "MICROPY_NLR_SETJMP"
         ], 
@@ -850,6 +850,17 @@ def setup_board_nano32(env):
             continue
         ccflags.append(flag)
     env.Replace(CCFLAGS=ccflags)
+
+    cppdefines = []
+
+    for cppdefine in env["CPPDEFINES"]:
+        try:
+            if "MBEDTLS" in cppdefine[0]:
+                continue
+        except:
+            pass
+        cppdefines.append(cppdefine)
+    env.Replace(CPPDEFINES=cppdefines)
 
 
 env = DefaultEnvironment()
