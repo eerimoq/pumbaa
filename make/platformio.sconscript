@@ -1,0 +1,858 @@
+#
+# @file make/platformio.sconscript
+# @section License
+#
+# The MIT License (MIT)
+# 
+# Copyright (c) 2014-2016, Erik Moqvist
+# 
+# Permission is hereby granted, free of charge, to any person
+# obtaining a copy of this software and associated documentation
+# files (the "Software"), to deal in the Software without
+# restriction, including without limitation the rights to use, copy,
+# modify, merge, publish, distribute, sublicense, and/or sell copies
+# of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+# BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+# ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+# This file is part of the Pumbaa project.
+#
+
+import os
+from os.path import join
+import subprocess
+import shutil
+
+from SCons.Script import DefaultEnvironment
+from platformio.builder.tools.platformio import SRC_DEFAULT_FILTER
+
+# Map the PlatformIO board name to the Simba board name
+BOARD_MAP = {
+    "due": "arduino_due"
+}
+
+# Map the PlatformIO board name to the Simba board name
+SUPPORTED_BOARDS = [
+    "arduino_due",
+    "nano32"
+]
+
+
+BOARDS = {
+    "arduino_due": {
+        "board_desc": "Arduino Due", 
+        "cdefs": [
+            "ARCH_ARM", 
+            "FAMILY_SAM", 
+            "MCU_SAM3X8E", 
+            "BOARD_ARDUINO_DUE", 
+            "VERSION=master", 
+            "MICROPY_EMIT_X86=0", 
+            "MICROPY_NLR_SETJMP"
+        ], 
+        "cflags": [
+            "-Werror", 
+            "-g", 
+            "-mthumb", 
+            "-mcpu=cortex-m3", 
+            "-ffunction-sections", 
+            "-fdata-sections", 
+            "-fpack-struct", 
+            "-c", 
+            "-Wall", 
+            "-funsigned-bitfields", 
+            "-std=gnu99", 
+            "-Wno-error=unused-variable"
+        ], 
+        "cxxflags": [
+            "-Werror", 
+            "-g", 
+            "-mthumb", 
+            "-mcpu=cortex-m3", 
+            "-ffunction-sections", 
+            "-fdata-sections", 
+            "-fpack-struct", 
+            "-c", 
+            "-Wall", 
+            "-funsigned-bitfields", 
+            "-std=c++11", 
+            "-Wno-error=unused-variable"
+        ], 
+        "inc": [
+            "src", 
+            "src/port", 
+            "src/boards/arduino_due", 
+            "micropython", 
+            "simba/src", 
+            "build/arduino_due", 
+            "simba/src/boards/arduino_due", 
+            "simba/src/mcus/sam", 
+            "simba/src", 
+            "simba/src/drivers/ports/sam", 
+            "simba/3pp/lwip-1.4.1/src/include", 
+            "simba/3pp/lwip-1.4.1/src/include/ipv4", 
+            "simba/3pp/mbedtls/include", 
+            "simba/src/inet", 
+            "simba/src/kernel/ports/arm/gnu", 
+            "simba/3pp/spiffs-0.3.5/src"
+        ], 
+        "ldflags": [
+            "-mcpu=cortex-m3", 
+            "-Wl,--cref", 
+            "-Tscript.ld", 
+            "-mthumb", 
+            "-Wl,-Map=build/arduino_due/default_configuration.map", 
+            "-Wl,--gc-sections"
+        ], 
+        "lib": [
+            "m"
+        ], 
+        "libpath": [
+            "simba/src/mcus/sam3x8e"
+        ], 
+        "linker_script": "script.ld", 
+        "mcu_desc": "Atmel SAM3X8E Cortex-M3 @ 84MHz, 96k sram, 512k flash", 
+        "src": [
+            "src/boards/arduino_due/module_board.c", 
+            "src/builtin_help.c", 
+            "src/builtin_input.c", 
+            "src/port/port.c", 
+            "src/module_io.c", 
+            "src/module_os.c", 
+            "src/module_kernel.c", 
+            "src/module_drivers.c", 
+            "src/module_drivers/class_pin.c", 
+            "src/module_kernel/class_timer.c", 
+            "src/module_inet.c", 
+            "src/module_select.c", 
+            "src/module_socket.c", 
+            "src/module_sync.c", 
+            "src/module_sync/class_event.c", 
+            "src/module_sync/class_queue.c", 
+            "src/module_sys.c", 
+            "src/module_time.c", 
+            "src/module_drivers/class_adc.c", 
+            "src/module_drivers/class_can.c", 
+            "src/module_drivers/class_dac.c", 
+            "src/module_drivers/class_ds18b20.c", 
+            "src/module_drivers/class_exti.c", 
+            "src/module_drivers/class_owi.c", 
+            "src/module_drivers/class_spi.c", 
+            "src/module_drivers/class_sd.c", 
+            "src/boards/arduino_due/gccollect.c", 
+            "src/boards/arduino_due/gchelper.S", 
+            "src/module_thread.c", 
+            "src/port/lexer_port.c", 
+            "micropython/extmod/modubinascii.c", 
+            "micropython/extmod/moduhashlib.c", 
+            "micropython/extmod/modujson.c", 
+            "micropython/extmod/modurandom.c", 
+            "micropython/extmod/moduzlib.c", 
+            "micropython/lib/utils/pyhelp.c", 
+            "micropython/lib/utils/pyexec.c", 
+            "micropython/lib/mp-readline/readline.c", 
+            "micropython/py/argcheck.c", 
+            "micropython/py/asmarm.c", 
+            "micropython/py/asmthumb.c", 
+            "micropython/py/asmx64.c", 
+            "micropython/py/asmx86.c", 
+            "micropython/py/bc.c", 
+            "micropython/py/binary.c", 
+            "micropython/py/builtinevex.c", 
+            "micropython/py/builtinimport.c", 
+            "micropython/py/compile.c", 
+            "micropython/py/emitbc.c", 
+            "micropython/py/emitcommon.c", 
+            "micropython/py/emitglue.c", 
+            "micropython/py/emitinlinethumb.c", 
+            "micropython/py/emitnative.c", 
+            "micropython/py/formatfloat.c", 
+            "micropython/py/frozenmod.c", 
+            "micropython/py/gc.c", 
+            "micropython/py/lexer.c", 
+            "micropython/py/lexerstr.c", 
+            "micropython/py/lexerunix.c", 
+            "micropython/py/malloc.c", 
+            "micropython/py/map.c", 
+            "micropython/py/mkenv.mk", 
+            "micropython/py/mkrules.mk", 
+            "micropython/py/modarray.c", 
+            "micropython/py/modbuiltins.c", 
+            "micropython/py/modcmath.c", 
+            "micropython/py/modcollections.c", 
+            "micropython/py/modgc.c", 
+            "micropython/py/modio.c", 
+            "micropython/py/modmath.c", 
+            "micropython/py/modmicropython.c", 
+            "micropython/py/modstruct.c", 
+            "micropython/py/modsys.c", 
+            "micropython/py/modthread.c", 
+            "micropython/py/moduerrno.c", 
+            "micropython/py/mpprint.c", 
+            "micropython/py/mpstate.c", 
+            "micropython/py/mpz.c", 
+            "micropython/py/nativeglue.c", 
+            "micropython/py/nlrsetjmp.c", 
+            "micropython/py/nlrthumb.c", 
+            "micropython/py/nlrxtensa.S", 
+            "micropython/py/objarray.c", 
+            "micropython/py/objattrtuple.c", 
+            "micropython/py/objbool.c", 
+            "micropython/py/objboundmeth.c", 
+            "micropython/py/obj.c", 
+            "micropython/py/objcell.c", 
+            "micropython/py/objclosure.c", 
+            "micropython/py/objcomplex.c", 
+            "micropython/py/objdict.c", 
+            "micropython/py/objenumerate.c", 
+            "micropython/py/objexcept.c", 
+            "micropython/py/objfilter.c", 
+            "micropython/py/objfloat.c", 
+            "micropython/py/objfun.c", 
+            "micropython/py/objgenerator.c", 
+            "micropython/py/objgetitemiter.c", 
+            "micropython/py/objint.c", 
+            "micropython/py/objint_longlong.c", 
+            "micropython/py/objint_mpz.c", 
+            "micropython/py/objlist.c", 
+            "micropython/py/objmap.c", 
+            "micropython/py/objmodule.c", 
+            "micropython/py/objnamedtuple.c", 
+            "micropython/py/objnone.c", 
+            "micropython/py/objobject.c", 
+            "micropython/py/objpolyiter.c", 
+            "micropython/py/objproperty.c", 
+            "micropython/py/objrange.c", 
+            "micropython/py/objreversed.c", 
+            "micropython/py/objset.c", 
+            "micropython/py/objsingleton.c", 
+            "micropython/py/objslice.c", 
+            "micropython/py/objstr.c", 
+            "micropython/py/objstringio.c", 
+            "micropython/py/objstrunicode.c", 
+            "micropython/py/objtuple.c", 
+            "micropython/py/objtype.c", 
+            "micropython/py/objzip.c", 
+            "micropython/py/opmethods.c", 
+            "micropython/py/parse.c", 
+            "micropython/py/parsenumbase.c", 
+            "micropython/py/parsenum.c", 
+            "micropython/py/qstr.c", 
+            "micropython/py/repl.c", 
+            "micropython/py/runtime.c", 
+            "micropython/py/runtime_utils.c", 
+            "micropython/py/scope.c", 
+            "micropython/py/sequence.c", 
+            "micropython/py/showbc.c", 
+            "micropython/py/smallint.c", 
+            "micropython/py/stackctrl.c", 
+            "micropython/py/stream.c", 
+            "micropython/py/unicode.c", 
+            "micropython/py/vm.c", 
+            "micropython/py/vstr.c", 
+            "micropython/py/warning.c", 
+            "src/main.c", 
+            "simba/src/settings_default.c", 
+            "simba/src/boards/arduino_due/board.c", 
+            "simba/src/mcus/sam/sam3.c", 
+            "simba/src/mcus/sam/mcu.c", 
+            "simba/src/alloc/circular_heap.c", 
+            "simba/src/alloc/heap.c", 
+            "simba/src/collections/binary_tree.c", 
+            "simba/src/collections/hash_map.c", 
+            "simba/src/debug/log.c", 
+            "simba/src/debug/harness.c", 
+            "simba/src/drivers/adc.c", 
+            "simba/src/drivers/analog_input_pin.c", 
+            "simba/src/drivers/can.c", 
+            "simba/src/drivers/chipid.c", 
+            "simba/src/drivers/dac.c", 
+            "simba/src/drivers/ds18b20.c", 
+            "simba/src/drivers/exti.c", 
+            "simba/src/drivers/flash.c", 
+            "simba/src/drivers/mcp2515.c", 
+            "simba/src/drivers/owi.c", 
+            "simba/src/drivers/pin.c", 
+            "simba/src/drivers/i2c_soft.c", 
+            "simba/src/drivers/sd.c", 
+            "simba/src/drivers/spi.c", 
+            "simba/src/drivers/uart.c", 
+            "simba/src/drivers/usb.c", 
+            "simba/src/drivers/usb_host.c", 
+            "simba/src/drivers/usb/host/class/hid.c", 
+            "simba/src/drivers/usb/host/class/mass_storage.c", 
+            "simba/src/encode/base64.c", 
+            "simba/src/encode/json.c", 
+            "simba/src/hash/crc.c", 
+            "simba/src/hash/sha1.c", 
+            "simba/3pp/lwip-1.4.1/src/core/stats.c", 
+            "simba/3pp/lwip-1.4.1/src/core/tcp_out.c", 
+            "simba/3pp/lwip-1.4.1/src/core/udp.c", 
+            "simba/3pp/lwip-1.4.1/src/core/timers.c", 
+            "simba/3pp/lwip-1.4.1/src/core/netif.c", 
+            "simba/3pp/lwip-1.4.1/src/core/def.c", 
+            "simba/3pp/lwip-1.4.1/src/core/raw.c", 
+            "simba/3pp/lwip-1.4.1/src/core/dns.c", 
+            "simba/3pp/lwip-1.4.1/src/core/tcp_in.c", 
+            "simba/3pp/lwip-1.4.1/src/core/memp.c", 
+            "simba/3pp/lwip-1.4.1/src/core/pbuf.c", 
+            "simba/3pp/lwip-1.4.1/src/core/tcp.c", 
+            "simba/3pp/lwip-1.4.1/src/core/init.c", 
+            "simba/3pp/lwip-1.4.1/src/core/dhcp.c", 
+            "simba/3pp/lwip-1.4.1/src/core/ipv4/ip_frag.c", 
+            "simba/3pp/lwip-1.4.1/src/core/ipv4/ip.c", 
+            "simba/3pp/lwip-1.4.1/src/core/ipv4/ip_addr.c", 
+            "simba/3pp/lwip-1.4.1/src/core/ipv4/icmp.c", 
+            "simba/3pp/lwip-1.4.1/src/core/ipv4/igmp.c", 
+            "simba/3pp/lwip-1.4.1/src/core/ipv4/inet.c", 
+            "simba/3pp/lwip-1.4.1/src/core/ipv4/inet_chksum.c", 
+            "simba/3pp/lwip-1.4.1/src/core/mem.c", 
+            "simba/3pp/lwip-1.4.1/src/netif/etharp.c", 
+            "simba/3pp/lwip-1.4.1/src/netif/ethernetif.c", 
+            "simba/3pp/lwip-1.4.1/src/api/tcpip.c", 
+            "simba/src/inet/arch/sys_arch.c", 
+            "simba/src/inet/http_server.c", 
+            "simba/src/inet/http_websocket_server.c", 
+            "simba/src/inet/http_websocket_client.c", 
+            "simba/src/inet/inet.c", 
+            "simba/src/inet/mqtt_client.c", 
+            "simba/src/inet/network_interface.c", 
+            "simba/src/inet/network_interface/slip.c", 
+            "simba/src/inet/network_interface/wifi.c", 
+            "simba/src/inet/socket.c", 
+            "simba/src/inet/ssl.c", 
+            "simba/src/inet/ping.c", 
+            "simba/src/kernel/sys.c", 
+            "simba/src/kernel/thrd.c", 
+            "simba/src/kernel/time.c", 
+            "simba/src/kernel/timer.c", 
+            "simba/src/multimedia/midi.c", 
+            "simba/src/oam/console.c", 
+            "simba/src/oam/service.c", 
+            "simba/src/oam/settings.c", 
+            "simba/src/oam/shell.c", 
+            "simba/src/filesystems/fat16.c", 
+            "simba/src/filesystems/fs.c", 
+            "simba/src/filesystems/spiffs.c", 
+            "simba/3pp/spiffs-0.3.5/src/spiffs_nucleus.c", 
+            "simba/3pp/spiffs-0.3.5/src/spiffs_gc.c", 
+            "simba/3pp/spiffs-0.3.5/src/spiffs_hydrogen.c", 
+            "simba/3pp/spiffs-0.3.5/src/spiffs_cache.c", 
+            "simba/3pp/spiffs-0.3.5/src/spiffs_check.c", 
+            "simba/src/sync/bus.c", 
+            "simba/src/sync/chan.c", 
+            "simba/src/sync/event.c", 
+            "simba/src/sync/queue.c", 
+            "simba/src/sync/rwlock.c", 
+            "simba/src/sync/sem.c", 
+            "simba/src/text/configfile.c", 
+            "simba/src/text/std.c", 
+            "simba/src/text/re.c", 
+            "micropython/extmod/re1.5/dumpcode.c", 
+            "micropython/extmod/re1.5/recursiveloop.c", 
+            "micropython/extmod/re1.5/compilecode.c", 
+            "micropython/extmod/re1.5/charclass.c"
+        ]
+    }, 
+    "nano32": {
+        "board_desc": "Nano32", 
+        "cdefs": [
+            "ARCH_ESP32", 
+            "FAMILY_ESP32", 
+            "MCU_ESP32", 
+            "BOARD_NANO32", 
+            "VERSION=master", 
+            "MICROPY_EMIT_X86=0", 
+            "MICROPY_NLR_SETJMP"
+        ], 
+        "cflags": [
+            "-Os", 
+            "-Werror", 
+            "-nostdlib", 
+            "-mlongcalls", 
+            "-ffunction-sections", 
+            "-fdata-sections", 
+            "-c", 
+            "-Wall", 
+            "-funsigned-bitfields", 
+            "-std=gnu99", 
+            "-Wno-error=unused-variable"
+        ], 
+        "cxxflags": [
+            "-Os", 
+            "-Werror", 
+            "-nostdlib", 
+            "-mlongcalls", 
+            "-ffunction-sections", 
+            "-fdata-sections", 
+            "-c", 
+            "-Wall", 
+            "-funsigned-bitfields", 
+            "-std=c++11", 
+            "-Wno-error=unused-variable"
+        ], 
+        "inc": [
+            "src", 
+            "src/port", 
+            "src/boards/nano32", 
+            "micropython", 
+            "simba/src", 
+            "build/nano32", 
+            "simba/src/boards/nano32", 
+            "simba/src/mcus/esp32", 
+            "simba/3pp/esp32/inc/driver/include", 
+            "simba/3pp/esp32/inc/esp32/include", 
+            "simba/3pp/esp32/inc/newlib/include", 
+            "simba/3pp/esp32/inc/freertos/include", 
+            "simba/3pp/esp32/inc/nvs_flash/include", 
+            "simba/3pp/esp32/inc/spi_flash/include", 
+            "simba/3pp/esp32/inc/tcpip_adapter/include", 
+            "simba/3pp/esp32/inc/lwip/include/lwip", 
+            "simba/3pp/esp32/inc/lwip/include/lwip/port", 
+            "simba/src", 
+            "simba/src/drivers/ports/esp32", 
+            "simba/3pp/mbedtls/include", 
+            "simba/src/kernel/ports/esp32/gnu", 
+            "simba/3pp/spiffs-0.3.5/src"
+        ], 
+        "ldflags": [
+            "-Wl,-Tsimba.flash.ld", 
+            "-Wl,-static", 
+            "-nostdlib", 
+            "-Wl,-EL", 
+            "-Wl,--gc-sections", 
+            "-Wl,-Map=build/nano32/default_configuration.map", 
+            "-Wl,--gc-sections"
+        ], 
+        "lib": [
+            "hal", 
+            "core", 
+            "net80211", 
+            "phy", 
+            "pp", 
+            "coexist", 
+            "rtc", 
+            "smartconfig", 
+            "wpa", 
+            "bt", 
+            "driver", 
+            "esp32", 
+            "expat", 
+            "freertos", 
+            "log", 
+            "lwip", 
+            "mbedtls", 
+            "newlib", 
+            "nghttp", 
+            "openssl", 
+            "nvs_flash", 
+            "spi_flash", 
+            "tcpip_adapter", 
+            "vfs", 
+            "wpa_supplicant", 
+            "ethernet", 
+            "ulp", 
+            "gcc", 
+            "c", 
+            "m", 
+            "xtensa-debug-module", 
+            "m"
+        ], 
+        "libpath": [
+            "simba/src/mcus/esp32/ld", 
+            "simba/3pp/esp32/esp-idf/components/esp32/ld", 
+            "simba/3pp/esp32/lib"
+        ], 
+        "linker_script": "simba.flash.ld", 
+        "mcu_desc": "Espressif ESP32 @ 240 MHz, 512 kB sram, 4 MB flash", 
+        "src": [
+            "src/boards/nano32/module_board.c", 
+            "src/builtin_help.c", 
+            "src/builtin_input.c", 
+            "src/port/port.c", 
+            "src/module_io.c", 
+            "src/module_os.c", 
+            "src/module_kernel.c", 
+            "src/module_drivers.c", 
+            "src/module_drivers/class_pin.c", 
+            "src/module_kernel/class_timer.c", 
+            "src/module_inet.c", 
+            "src/module_select.c", 
+            "src/module_socket.c", 
+            "src/module_sync.c", 
+            "src/module_sync/class_event.c", 
+            "src/module_sync/class_queue.c", 
+            "src/module_sys.c", 
+            "src/module_time.c", 
+            "src/mcus/esp32/gccollect.c", 
+            "src/mcus/esp32/gchelper.S", 
+            "src/module_drivers/class_adc.c", 
+            "src/module_drivers/class_can.c", 
+            "src/module_drivers/class_dac.c", 
+            "src/module_drivers/class_spi.c", 
+            "src/module_drivers/class_ds18b20.c", 
+            "src/module_drivers/class_esp_wifi.c", 
+            "src/module_drivers/class_owi.c", 
+            "src/port/lexer_port.c", 
+            "micropython/extmod/modubinascii.c", 
+            "micropython/extmod/moduhashlib.c", 
+            "micropython/extmod/modujson.c", 
+            "micropython/extmod/modurandom.c", 
+            "micropython/extmod/moduzlib.c", 
+            "micropython/lib/utils/pyhelp.c", 
+            "micropython/lib/utils/pyexec.c", 
+            "micropython/lib/mp-readline/readline.c", 
+            "micropython/py/argcheck.c", 
+            "micropython/py/asmarm.c", 
+            "micropython/py/asmthumb.c", 
+            "micropython/py/asmx64.c", 
+            "micropython/py/asmx86.c", 
+            "micropython/py/bc.c", 
+            "micropython/py/binary.c", 
+            "micropython/py/builtinevex.c", 
+            "micropython/py/builtinimport.c", 
+            "micropython/py/compile.c", 
+            "micropython/py/emitbc.c", 
+            "micropython/py/emitcommon.c", 
+            "micropython/py/emitglue.c", 
+            "micropython/py/emitinlinethumb.c", 
+            "micropython/py/emitnative.c", 
+            "micropython/py/formatfloat.c", 
+            "micropython/py/frozenmod.c", 
+            "micropython/py/gc.c", 
+            "micropython/py/lexer.c", 
+            "micropython/py/lexerstr.c", 
+            "micropython/py/lexerunix.c", 
+            "micropython/py/malloc.c", 
+            "micropython/py/map.c", 
+            "micropython/py/mkenv.mk", 
+            "micropython/py/mkrules.mk", 
+            "micropython/py/modarray.c", 
+            "micropython/py/modbuiltins.c", 
+            "micropython/py/modcmath.c", 
+            "micropython/py/modcollections.c", 
+            "micropython/py/modgc.c", 
+            "micropython/py/modio.c", 
+            "micropython/py/modmath.c", 
+            "micropython/py/modmicropython.c", 
+            "micropython/py/modstruct.c", 
+            "micropython/py/modsys.c", 
+            "micropython/py/modthread.c", 
+            "micropython/py/moduerrno.c", 
+            "micropython/py/mpprint.c", 
+            "micropython/py/mpstate.c", 
+            "micropython/py/mpz.c", 
+            "micropython/py/nativeglue.c", 
+            "micropython/py/nlrsetjmp.c", 
+            "micropython/py/nlrthumb.c", 
+            "micropython/py/nlrxtensa.S", 
+            "micropython/py/objarray.c", 
+            "micropython/py/objattrtuple.c", 
+            "micropython/py/objbool.c", 
+            "micropython/py/objboundmeth.c", 
+            "micropython/py/obj.c", 
+            "micropython/py/objcell.c", 
+            "micropython/py/objclosure.c", 
+            "micropython/py/objcomplex.c", 
+            "micropython/py/objdict.c", 
+            "micropython/py/objenumerate.c", 
+            "micropython/py/objexcept.c", 
+            "micropython/py/objfilter.c", 
+            "micropython/py/objfloat.c", 
+            "micropython/py/objfun.c", 
+            "micropython/py/objgenerator.c", 
+            "micropython/py/objgetitemiter.c", 
+            "micropython/py/objint.c", 
+            "micropython/py/objint_longlong.c", 
+            "micropython/py/objint_mpz.c", 
+            "micropython/py/objlist.c", 
+            "micropython/py/objmap.c", 
+            "micropython/py/objmodule.c", 
+            "micropython/py/objnamedtuple.c", 
+            "micropython/py/objnone.c", 
+            "micropython/py/objobject.c", 
+            "micropython/py/objpolyiter.c", 
+            "micropython/py/objproperty.c", 
+            "micropython/py/objrange.c", 
+            "micropython/py/objreversed.c", 
+            "micropython/py/objset.c", 
+            "micropython/py/objsingleton.c", 
+            "micropython/py/objslice.c", 
+            "micropython/py/objstr.c", 
+            "micropython/py/objstringio.c", 
+            "micropython/py/objstrunicode.c", 
+            "micropython/py/objtuple.c", 
+            "micropython/py/objtype.c", 
+            "micropython/py/objzip.c", 
+            "micropython/py/opmethods.c", 
+            "micropython/py/parse.c", 
+            "micropython/py/parsenumbase.c", 
+            "micropython/py/parsenum.c", 
+            "micropython/py/qstr.c", 
+            "micropython/py/repl.c", 
+            "micropython/py/runtime.c", 
+            "micropython/py/runtime_utils.c", 
+            "micropython/py/scope.c", 
+            "micropython/py/sequence.c", 
+            "micropython/py/showbc.c", 
+            "micropython/py/smallint.c", 
+            "micropython/py/stackctrl.c", 
+            "micropython/py/stream.c", 
+            "micropython/py/unicode.c", 
+            "micropython/py/vm.c", 
+            "micropython/py/vstr.c", 
+            "micropython/py/warning.c", 
+            "micropython/lib/libm/acoshf.c", 
+            "micropython/lib/libm/asinfacosf.c", 
+            "micropython/lib/libm/asinhf.c", 
+            "micropython/lib/libm/atan2f.c", 
+            "micropython/lib/libm/atanf.c", 
+            "micropython/lib/libm/atanhf.c", 
+            "micropython/lib/libm/ef_rem_pio2.c", 
+            "micropython/lib/libm/ef_sqrt.c", 
+            "micropython/lib/libm/erf_lgamma.c", 
+            "micropython/lib/libm/fdlibm.h", 
+            "micropython/lib/libm/fmodf.c", 
+            "micropython/lib/libm/kf_cos.c", 
+            "micropython/lib/libm/kf_rem_pio2.c", 
+            "micropython/lib/libm/kf_sin.c", 
+            "micropython/lib/libm/kf_tan.c", 
+            "micropython/lib/libm/libm.h", 
+            "micropython/lib/libm/log1pf.c", 
+            "micropython/lib/libm/math.c", 
+            "micropython/lib/libm/roundf.c", 
+            "micropython/lib/libm/sf_cos.c", 
+            "micropython/lib/libm/sf_erf.c", 
+            "micropython/lib/libm/sf_frexp.c", 
+            "micropython/lib/libm/sf_ldexp.c", 
+            "micropython/lib/libm/sf_modf.c", 
+            "micropython/lib/libm/sf_sin.c", 
+            "micropython/lib/libm/sf_tan.c", 
+            "micropython/lib/libm/wf_lgamma.c", 
+            "micropython/lib/libm/wf_tgamma.c", 
+            "src/main.c", 
+            "simba/src/settings_default.c", 
+            "simba/src/boards/nano32/board.c", 
+            "simba/src/mcus/esp32/mcu.c", 
+            "simba/src/mcus/esp32/esp32.c", 
+            "simba/src/alloc/circular_heap.c", 
+            "simba/src/alloc/heap.c", 
+            "simba/src/collections/binary_tree.c", 
+            "simba/src/collections/hash_map.c", 
+            "simba/src/debug/log.c", 
+            "simba/src/debug/harness.c", 
+            "simba/src/drivers/adc.c", 
+            "simba/src/drivers/can.c", 
+            "simba/src/drivers/dac.c", 
+            "simba/src/drivers/ds18b20.c", 
+            "simba/src/drivers/flash.c", 
+            "simba/src/drivers/esp_wifi.c", 
+            "simba/src/drivers/esp_wifi/station.c", 
+            "simba/src/drivers/esp_wifi/softap.c", 
+            "simba/src/drivers/owi.c", 
+            "simba/src/drivers/pin.c", 
+            "simba/src/drivers/spi.c", 
+            "simba/src/drivers/uart.c", 
+            "simba/src/encode/base64.c", 
+            "simba/src/encode/json.c", 
+            "simba/src/hash/crc.c", 
+            "simba/src/hash/sha1.c", 
+            "simba/src/inet/http_server.c", 
+            "simba/src/inet/http_websocket_server.c", 
+            "simba/src/inet/http_websocket_client.c", 
+            "simba/src/inet/inet.c", 
+            "simba/src/inet/mqtt_client.c", 
+            "simba/src/inet/network_interface.c", 
+            "simba/src/inet/network_interface/slip.c", 
+            "simba/src/inet/network_interface/wifi.c", 
+            "simba/src/inet/socket.c", 
+            "simba/src/inet/ssl.c", 
+            "simba/src/inet/ping.c", 
+            "simba/src/inet/network_interface/driver/esp.c", 
+            "simba/src/kernel/sys.c", 
+            "simba/src/kernel/thrd.c", 
+            "simba/src/kernel/time.c", 
+            "simba/src/kernel/timer.c", 
+            "simba/src/kernel/ports/esp32/gnu/thrd_port.S", 
+            "simba/src/multimedia/midi.c", 
+            "simba/src/oam/console.c", 
+            "simba/src/oam/service.c", 
+            "simba/src/oam/settings.c", 
+            "simba/src/oam/shell.c", 
+            "simba/src/filesystems/fat16.c", 
+            "simba/src/filesystems/fs.c", 
+            "simba/src/filesystems/spiffs.c", 
+            "simba/3pp/spiffs-0.3.5/src/spiffs_nucleus.c", 
+            "simba/3pp/spiffs-0.3.5/src/spiffs_gc.c", 
+            "simba/3pp/spiffs-0.3.5/src/spiffs_hydrogen.c", 
+            "simba/3pp/spiffs-0.3.5/src/spiffs_cache.c", 
+            "simba/3pp/spiffs-0.3.5/src/spiffs_check.c", 
+            "simba/src/sync/bus.c", 
+            "simba/src/sync/chan.c", 
+            "simba/src/sync/event.c", 
+            "simba/src/sync/queue.c", 
+            "simba/src/sync/rwlock.c", 
+            "simba/src/sync/sem.c", 
+            "simba/src/text/configfile.c", 
+            "simba/src/text/std.c", 
+            "simba/src/text/re.c", 
+            "micropython/extmod/re1.5/dumpcode.c", 
+            "micropython/extmod/re1.5/recursiveloop.c", 
+            "micropython/extmod/re1.5/compilecode.c", 
+            "micropython/extmod/re1.5/charclass.c"
+        ]
+    }
+}
+
+
+def add_include_paths(env, paths, board):
+    """Add given list of include paths.
+
+    """
+
+    env.Append(CPPPATH=["$PROJECTSRC_DIR"])
+
+    paths += [join("make", "platformio", board)]
+
+    for path in paths:
+        env.VariantDirWrap(
+            join("$BUILD_DIR", "PumbaaFramework", path),
+            join("$PLATFORMFW_DIR", path)
+        )
+        env.Append(CPPPATH=[join("$BUILD_DIR", "PumbaaFramework", path)])
+
+
+def set_default_values(env):
+    """Set default values in the environment.
+
+    """
+
+    if "VERSION" not in env:
+        with open(env.subst(join("$PLATFORMFW_DIR", "VERSION.txt"))) as f:
+            env.Append(VERSION=f.read().strip())
+
+    if "NAME" not in env:
+        env.Append(NAME="app_name")
+
+
+def create_src_filter(srcs):
+    """Create the source filter string.
+    """
+
+    src_filter = [
+        "-<3pp/>",
+        "-<micropython/>",
+        "-<simba/>",
+        "-<src/>",
+        "-<tst/>"
+    ]
+
+    for src in srcs:
+        src_filter.append("+<{}>".format(src))
+
+    return SRC_DEFAULT_FILTER + " " + " ".join(src_filter)
+
+
+def setup_board_nano32(env):
+    """Setup the Nano32 environment.
+
+    """
+
+    ccflags = []
+
+    for flag in env["CCFLAGS"]:
+        if "-Wpointer-arith" in flag:
+            continue
+        ccflags.append(flag)
+    env.Replace(CCFLAGS=ccflags)
+
+
+env = DefaultEnvironment()
+
+set_default_values(env)
+
+# Rename the name of boards that have different name in PlatformIO and
+# Simba.
+if env["BOARD"] in BOARD_MAP:
+    board = BOARD_MAP[env["BOARD"]]
+else:
+    board = env.subst(env["BOARD"])
+
+if board not in SUPPORTED_BOARDS:
+   raise ValueError("BOARD {} is not supported by Simba.".format(board))
+
+# Add the default configuration for the board.
+add_include_paths(env, BOARDS[board]["inc"], board)
+env.Append(CPPDEFINES=BOARDS[board]["cdefs"])
+src_filter = create_src_filter(BOARDS[board]["src"])
+env.Replace(CFLAGS=BOARDS[board]["cflags"])
+env.Replace(CXXFLAGS=BOARDS[board]["cxxflags"])
+env.Replace(LINKFLAGS=BOARDS[board]["ldflags"])
+env.Replace(LIBPATH=[os.path.join("$PLATFORMFW_DIR", path)
+                     for path in BOARDS[board]["libpath"]])
+env.Replace(MCU_DESC=BOARDS[board]["mcu_desc"])
+env.Replace(BOARD_DESC=BOARDS[board]["board_desc"])
+env.Append(LIBS=BOARDS[board]["lib"])
+
+# Always replace the map file path.
+linkflags = []
+
+for flag in env["LINKFLAGS"]:
+    if flag.startswith("-Wl,-Map="):
+        flag = "-Wl,-Map=$BUILD_DIR/firmware.map"
+    linkflags.append(flag)
+env.Replace(LINKFLAGS=linkflags)
+
+# For some boards the configuration has to be modified.
+if board == "arduino_due":
+    linkflags = []
+
+    for flag in env["LINKFLAGS"]:
+        if flag.startswith("-T"):
+            continue
+        linkflags.append(flag)
+    env.Replace(LINKFLAGS=linkflags)
+    env.Replace(LDSCRIPT_PATH="script.ld")
+elif board == "nano32":
+    setup_board_nano32(env)
+
+# generated files
+SIMBA_GEN_C = "$BUILD_DIR/SimbaFramework/simba_gen.c"
+FROZEN_C = "$BUILD_DIR/SimbaFramework/frozen.c"
+
+# create a list of all sources
+variant_dir = join("$BUILD_DIR", "PumbaaFramework")
+src_dir = join("$PLATFORMFW_DIR")
+
+source_files = []
+
+for src in env.LookupSources(variant_dir, src_dir, True, src_filter):
+    source_files.append(env.Object(src))
+
+# Command to generate simba_gen.c
+env.Command(SIMBA_GEN_C,
+            source_files,
+            ('"$PYTHONEXE" "$PLATFORMFW_DIR/simba/src/kernel/tools/gen.py" "$NAME" "$VERSION" '
+             '"$BOARD_DESC" "$MCU_DESC" "$TARGET"'))
+source_files.append(SIMBA_GEN_C)
+
+# Command to generate frozen.c
+env.Command(FROZEN_C,
+            [],
+            '"$PYTHONEXE" "$PLATFORMFW_DIR/bin/make_frozen.py" --output-file "$TARGET"')
+source_files.append(FROZEN_C)
+
+lib = env.Library(target=join("$BUILD_DIR", "PumbaaFramework"), source=source_files)
+
+env.Append(LIBS=[lib])

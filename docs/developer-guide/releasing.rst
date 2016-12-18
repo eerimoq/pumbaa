@@ -12,57 +12,60 @@ Follow these steps to create a new release:
 
    Increment ``<revision>`` for bug fixes.
 
-2. Run the test suites and generate the documentation.
+2. Write the new version in ``package.json``. This file is used by
+   `PlatformIO 3` to find the current `Pumbaa` release.
+
+3. Run the test suites and generate the documentation and other files.
 
    .. code:: text
 
-      make test
+      make -s -j8 test-all-boards
+      make -s -j8 release-test
 
-3. Generate files for Arduino.
+4. Commit the generated files and tag the commit with
+   ``<major>.<minor>.<revision>``.
 
-   .. code:: text
-
-      make arduino
-
-4. Add the new releases to
-   ``make/arduino/<family>/package_pumbaa_<family>_index.json``. The
-   sha256 sums of the zip-archives are calculated by ``make arduino``
-   and written to ``pumbaa-arduino/*.sha256``.
-
-5. Copy the Pumbaa Arduino releases to the release repository, add,
-   commit and push in the release repository.
+5. Generate files for Arduino and PlatformIO releases. The generated
+   archives and Arduino manifests are copied to the release
+   repository.
 
    .. code:: text
 
-      cp pumbaa-arduino/pumbaa-arduino-sam-*.zip ../pumbaa-releases/arduino/sam
-      cp pumbaa-arduino/pumbaa-arduino-esp32-*.zip ../pumbaa-releases/arduino/esp32
+      make -s release
 
-6. Start a http server used to download package manifests in the Arduino IDE.
+6. Add, commit and push the Pumbaa Arduino releases in the release
+   repository.
+
+   .. code:: text
+
+      (cd ../pumbaa-releases && \
+       git add arduino/*/*.zip platformio/*.zip && \
+       git commit && \
+       git push origin master)
+
+7. Start a http server used to download package manifests in the Arduino IDE.
 
    .. code:: text
 
       (cd make/arduino && python -m SimpleHTTPServer)
 
-7. Start the Arduino IDE and add these URL:s in Preferences.
+8. Start the Arduino IDE and add these URL:s in Preferences.
 
    .. code:: text
 
       http://localhost:8000/esp32/package_pumbaa_esp32_index.json
       http://localhost:8000/sam/package_pumbaa_sam_index.json
 
-8. Install all packages and run the blink example for each one of
-   them.
+9. Commit and push.
 
-9. Commit the changes, and tag the commit with the new version.
-
-10. Push the new commit and tag.
-
-11. Copy the Pumbaa Arduino package manifests to the release
-    repository, add, commit and push in the release repository.
+10. Add, commit and push the Pumbaa Arduino package manifests in the
+    release repository.
 
    .. code:: text
 
-      cp make/arduino/sam/package_pumbaa_sam_index.json ../pumbaa-releases/arduino/sam
-      cp make/arduino/esp32/package_pumbaa_esp32_index.json ../pumbaa-releases/arduino/esp32
+      (cd ../pumbaa-releases && \
+       git add arduino/*/*.json && \
+       git commit && \
+       git push origin master)
 
-12. Done.
+11. Done.

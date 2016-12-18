@@ -119,6 +119,12 @@ test: run
 travis:
 	$(MAKE) test
 
+release-test:
+	+bin/release.py --test --version $(PUMBAA_VERSION)
+
+release:
+	+bin/release.py --package --version $(PUMBAA_VERSION)
+
 clean-arduino-due:
 	$(MAKE) BOARD=arduino_due SERIAL_PORT=/dev/simba-arduino_due clean
 
@@ -172,6 +178,9 @@ tags:
 
 arduino:
 	+make/arduino/arduino.py --remove-outdir --version $(PUMBAA_VERSION)
+
+platformio:
+	+make/platformio/platformio.py --version $(PUMBAA_VERSION)
 
 help:
 	@echo "--------------------------------------------------------------------------------"
