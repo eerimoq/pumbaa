@@ -31,7 +31,7 @@ Follow these steps to create a new release:
 
    .. code:: text
 
-      make -s release
+      make -s -j8 release
 
 6. Add, commit and push the Pumbaa Arduino releases in the release
    repository.

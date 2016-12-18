@@ -218,6 +218,7 @@ def package(version):
     platformio_release_dir = '../pumbaa-releases/platformio'
     print('Copying {} to {}'.format(package_name, platformio_release_dir))
     shutil.copy(package_name, platformio_release_dir)
+    os.remove(package_name)
 
     # Create the arduino IDE release
     subprocess.check_call([
