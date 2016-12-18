@@ -188,6 +188,36 @@
                             "version": "1.6.1-arduino"
                         }
                     ]
+                },
+                {
+                    "name": "Pumbaa",
+                    "architecture": "sam",
+                    "version": "2.2.2",
+                    "category": "Pumbaa",
+                    "help": {
+                        "online": "https://pumbaa.readthedocs.org"
+                    },
+                    "url": "https://github.com/eerimoq/pumbaa-releases/raw/master/arduino/sam/pumbaa-arduino-sam-2.2.2.zip",
+                    "archiveFileName": "pumbaa-arduino-sam-2.2.2.zip",
+                    "checksum": "SHA-256:a83510b61636cae9f5ef59dc4eaa01a6b065ec4f1af1f7c0c7bfe9e46339306c",
+                    "size": "5135114",
+                    "boards": [
+                        {
+                            "name": "Arduino Due"
+                        }
+                    ],
+                    "toolsDependencies": [
+                        {
+                            "packager": "arduino",
+                            "name": "arm-none-eabi-gcc",
+                            "version": "4.8.3-2014q1"
+                        },
+                        {
+                            "packager": "arduino",
+                            "name": "bossac",
+                            "version": "1.6.1-arduino"
+                        }
+                    ]
                 }
             ],
             "tools": []
