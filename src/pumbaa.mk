@@ -53,6 +53,7 @@ PUMBAA_SRC += \
 	module_sync/class_event.c \
 	module_sync/class_queue.c \
 	module_sys.c \
+	module_text.c \
 	module_time.c
 
 ifeq ($(BOARD),arduino_due)
