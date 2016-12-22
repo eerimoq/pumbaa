@@ -2,9 +2,9 @@
  * @section License
  *
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016, Erik Moqvist
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -65,7 +65,7 @@ int main()
 #if MICROPY_PY_THREAD == 1
     module_thread_init();
 #endif
-    
+
     stack_top_p = (char*)&stack_dummy;
     mp_stack_set_limit(40000 * (BYTES_PER_WORD / 4));
     gc_init(heap, heap + sizeof(heap));
@@ -93,6 +93,10 @@ int main()
     /* 3. Execute the interactive shell. */
     res = pyexec_friendly_repl();
     print_exit_message(res, "Interactive shell");
+#endif
+
+#if CONFIG_PUMBAA_MAIN_REBOOT_AT_EXIT == 1
+    sys_reboot();
 #endif
 
     return (res != 1);

@@ -39,7 +39,9 @@ SRC += ds18b20_stub.c \
 SRC_IGNORE += $(SIMBA_ROOT)/src/drivers/ds18b20.c \
 	      $(SIMBA_ROOT)/src/drivers/owi.c
 
-CDEFS += CONFIG_PUMBAA_MAIN_FRIENDLY_REPL=0
+CDEFS += \
+	CONFIG_PUMBAA_MAIN_REBOOT_AT_EXIT=0 \
+	CONFIG_PUMBAA_MAIN_FRIENDLY_REPL=0
 
 PUMBAA_ROOT ?= ../..
 include $(PUMBAA_ROOT)/make/app.mk

@@ -179,6 +179,10 @@
 #    define CONFIG_PUMBAA_MAIN_FRIENDLY_REPL                1
 #endif
 
+#ifndef CONFIG_PUMBAA_MAIN_REBOOT_AT_EXIT
+#    define CONFIG_PUMBAA_MAIN_REBOOT_AT_EXIT               1
+#endif
+
 #ifndef CONFIG_PUMBAA_HEAP_SIZE
 #    if defined(ARCH_ESP)
 #        define CONFIG_PUMBAA_HEAP_SIZE                 24576
