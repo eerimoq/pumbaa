@@ -12,7 +12,7 @@ code coverage, profiling and more. Still, if you are familiar with
 troublesome.
 
 |platformio| PlatformIO
------------------------
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Install `Pumbaa` in `PlatformIO`_.
 
