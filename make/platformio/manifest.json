@@ -1,6 +1,11 @@
 {
     "framework-pumbaa": [
         {
+            "url": "https://github.com/eerimoq/pumbaa-releases/raw/master/platformio/2.3.1.zip",
+            "sha1": "65f43c559f35b3f33703a23613b3ae372e20dc85",
+            "version": "2.3.1"
+        },
+        {
             "url": "https://github.com/eerimoq/pumbaa-releases/raw/master/platformio/2.3.0.zip",
             "sha1": "da13fef2bd5e347485d273c7860a80ccd6bd6a80",
             "version": "2.3.0"
