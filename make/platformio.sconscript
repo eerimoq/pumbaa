@@ -987,7 +987,7 @@ source_files.append(SIMBA_GEN_C)
 py_source = glob.glob(join(env.subst('$PROJECTSRC_DIR'), '*.py'))
 env.Command(FROZEN_C,
             py_source,
-            '"$PYTHONEXE" "$PLATFORMFW_DIR/bin/make_frozen.py" "$SOURCES" --output-file "$TARGET"')
+            '"$PYTHONEXE" "$PLATFORMFW_DIR/bin/make_frozen.py" $SOURCES --output-file "$TARGET"')
 source_files.append(FROZEN_C)
 
 lib = env.Library(target=join("$BUILD_DIR", "PumbaaFramework"), source=source_files)
