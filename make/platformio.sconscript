@@ -3,9 +3,9 @@
 # @section License
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (c) 2014-2016, Erik Moqvist
-# 
+#
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
 # files (the "Software"), to deal in the Software without
@@ -106,7 +106,9 @@ BOARDS = {
             "simba/3pp/lwip-1.4.1/src/include/ipv4", 
             "simba/3pp/mbedtls/include", 
             "simba/src/kernel/ports/arm/gnu", 
-            "simba/3pp/spiffs-0.3.5/src"
+            "simba/3pp/spiffs-0.3.5/src", 
+            "simba/3pp/atto", 
+            "simba/3pp/atto/curses"
         ], 
         "ldflags": [
             "-mcpu=cortex-m3", 
@@ -142,6 +144,7 @@ BOARDS = {
             "src/module_sync/class_event.c", 
             "src/module_sync/class_queue.c", 
             "src/module_sys.c", 
+            "src/module_text.c", 
             "src/module_time.c", 
             "src/module_drivers/class_adc.c", 
             "src/module_drivers/class_can.c", 
@@ -356,7 +359,19 @@ BOARDS = {
             "simba/src/sync/queue.c", 
             "simba/src/sync/rwlock.c", 
             "simba/src/sync/sem.c", 
+            "simba/3pp/atto/buffer.c", 
+            "simba/3pp/atto/command.c", 
+            "simba/3pp/atto/complete.c", 
+            "simba/3pp/atto/display.c", 
+            "simba/3pp/atto/gap.c", 
+            "simba/3pp/atto/key.c", 
+            "simba/3pp/atto/main.c", 
+            "simba/3pp/atto/replace.c", 
+            "simba/3pp/atto/search.c", 
+            "simba/3pp/atto/window.c", 
+            "simba/3pp/atto/curses/curses.c", 
             "simba/src/text/configfile.c", 
+            "simba/src/text/emacs.c", 
             "simba/src/text/std.c", 
             "simba/src/text/re.c", 
             "micropython/extmod/re1.5/dumpcode.c", 
@@ -426,7 +441,9 @@ BOARDS = {
             "simba/src/drivers/ports/esp32", 
             "simba/3pp/mbedtls/include", 
             "simba/src/kernel/ports/esp32/gnu", 
-            "simba/3pp/spiffs-0.3.5/src"
+            "simba/3pp/spiffs-0.3.5/src", 
+            "simba/3pp/atto", 
+            "simba/3pp/atto/curses"
         ], 
         "ldflags": [
             "-Wl,-Tsimba.flash.ld", 
@@ -496,6 +513,7 @@ BOARDS = {
             "src/module_sync/class_event.c", 
             "src/module_sync/class_queue.c", 
             "src/module_sys.c", 
+            "src/module_text.c", 
             "src/module_time.c", 
             "src/mcus/esp32/gccollect.c", 
             "src/mcus/esp32/gchelper.S", 
@@ -778,7 +796,19 @@ BOARDS = {
             "simba/src/sync/queue.c", 
             "simba/src/sync/rwlock.c", 
             "simba/src/sync/sem.c", 
+            "simba/3pp/atto/buffer.c", 
+            "simba/3pp/atto/command.c", 
+            "simba/3pp/atto/complete.c", 
+            "simba/3pp/atto/display.c", 
+            "simba/3pp/atto/gap.c", 
+            "simba/3pp/atto/key.c", 
+            "simba/3pp/atto/main.c", 
+            "simba/3pp/atto/replace.c", 
+            "simba/3pp/atto/search.c", 
+            "simba/3pp/atto/window.c", 
+            "simba/3pp/atto/curses/curses.c", 
             "simba/src/text/configfile.c", 
+            "simba/src/text/emacs.c", 
             "simba/src/text/std.c", 
             "simba/src/text/re.c", 
             "micropython/extmod/re1.5/dumpcode.c", 
@@ -862,6 +892,26 @@ def setup_board_nano32(env):
         cppdefines.append(cppdefine)
     env.Replace(CPPDEFINES=cppdefines)
 
+    # Backwards compatibility for uploader flags still in platformio
+    # repository.
+    uploaderflags = []
+
+    for value in env["UPLOADERFLAGS"]:
+        if value.startswith('0x'):
+            break
+        uploaderflags.append(value)
+    env.Replace(UPLOADERFLAGS=uploaderflags)
+
+    env.Append(
+        UPLOADERFLAGS=[
+            "0x1000", join("$PLATFORMFW_DIR", "simba", "3pp", "esp32",
+                           "bin", "bootloader.bin"),
+            "0x8000", join("$PLATFORMFW_DIR", "simba", "3pp", "esp32",
+                           "bin", "partitions_singleapp.bin"),
+            "0x10000"
+        ]
+    )
+
 
 env = DefaultEnvironment()
 
@@ -933,9 +983,10 @@ env.Command(SIMBA_GEN_C,
 source_files.append(SIMBA_GEN_C)
 
 # Command to generate frozen.c
+py_source = glob.glob(join(env.subst('$PROJECTSRC_DIR'), '*.py'))
 env.Command(FROZEN_C,
-            [],
-            '"$PYTHONEXE" "$PLATFORMFW_DIR/bin/make_frozen.py" --output-file "$TARGET"')
+            py_source,
+            '"$PYTHONEXE" "$PLATFORMFW_DIR/bin/make_frozen.py" "$SOURCES" --output-file "$TARGET"')
 source_files.append(FROZEN_C)
 
 lib = env.Library(target=join("$BUILD_DIR", "PumbaaFramework"), source=source_files)

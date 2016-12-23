@@ -23,9 +23,9 @@ PLATFORMIO_SCONSSCRIPT_FMT = """#
 # @section License
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (c) 2014-2016, Erik Moqvist
-# 
+#
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
 # files (the "Software"), to deal in the Software without
@@ -144,6 +144,26 @@ def setup_board_nano32(env):
         cppdefines.append(cppdefine)
     env.Replace(CPPDEFINES=cppdefines)
 
+    # Backwards compatibility for uploader flags still in platformio
+    # repository.
+    uploaderflags = []
+
+    for value in env["UPLOADERFLAGS"]:
+        if value.startswith('0x'):
+            break
+        uploaderflags.append(value)
+    env.Replace(UPLOADERFLAGS=uploaderflags)
+
+    env.Append(
+        UPLOADERFLAGS=[
+            "0x1000", join("$PLATFORMFW_DIR", "simba", "3pp", "esp32",
+                           "bin", "bootloader.bin"),
+            "0x8000", join("$PLATFORMFW_DIR", "simba", "3pp", "esp32",
+                           "bin", "partitions_singleapp.bin"),
+            "0x10000"
+        ]
+    )
+
 
 env = DefaultEnvironment()
 
@@ -215,9 +235,10 @@ env.Command(SIMBA_GEN_C,
 source_files.append(SIMBA_GEN_C)
 
 # Command to generate frozen.c
+py_source = glob.glob(join(env.subst('$PROJECTSRC_DIR'), '*.py'))
 env.Command(FROZEN_C,
-            [],
-            '"$PYTHONEXE" "$PLATFORMFW_DIR/bin/make_frozen.py" --output-file "$TARGET"')
+            py_source,
+            '"$PYTHONEXE" "$PLATFORMFW_DIR/bin/make_frozen.py" "$SOURCES" --output-file "$TARGET"')
 source_files.append(FROZEN_C)
 
 lib = env.Library(target=join("$BUILD_DIR", "PumbaaFramework"), source=source_files)
