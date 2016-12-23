@@ -5,7 +5,7 @@ This guide is intended for users of the Pumbaa Embedded Programming
 Platform.
 
 The `Pumbaa` installation guide can be found on the
-:doc:`installation` page.
+:doc:`getting-started` page.
 
 Software architecture
 ---------------------
@@ -30,7 +30,7 @@ application is implemnted in Python.
    :glob:
    :maxdepth: 1
 
+   user-guide/build-system
+   user-guide/configuration
    user-guide/environment-setup
    user-guide/hello-world-application
-   user-guide/configuration
-   user-guide/build-system

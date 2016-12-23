@@ -33,4 +33,4 @@ See the `Pumbaa documentation`_ for detailed step-by-step instructions.
 .. _codecov: https://codecov.io/gh/eerimoq/pumbaa
 
 .. _Arduino IDE: https://www.arduino.cc/en/Main/Software
-.. _Pumbaa documentation: http://pumbaa.readthedocs.io/en/latest/installation.html#arduino-arduino-ide
+.. _Pumbaa documentation: http://pumbaa.readthedocs.io/en/latest/getting-started.html#arduino-arduino-ide
