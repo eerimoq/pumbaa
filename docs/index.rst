@@ -14,12 +14,12 @@ Project homepage: https://github.com/eerimoq/pumbaa
 Videos
 ------
 
-Read and print the room temperature measured with a DS18B20
-sensor. More videos are available on the :doc:`videos` page.
+Measure the DAC output voltage on a Nano32 (ESP32). More videos are
+available on the :doc:`videos` page.
 
 .. raw:: html
 
-   <iframe width="560" height="315" src="https://www.youtube.com/embed/M65enXPkcnQ" frameborder="0" allowfullscreen></iframe>
+   <iframe width="560" height="315" src="https://www.youtube.com/embed/R4SLIyBysfg" frameborder="0" allowfullscreen></iframe>
    </br>
    </br>
 

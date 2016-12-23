@@ -1,6 +1,28 @@
 Videos
 ======
 
+#7 Pumbaa: Emacs text editor on Nano32 (ESP32)!
+------------------------------------------------
+
+Write a Python script in Emacs on a Nano32 (ESP32) and import it.
+
+.. raw:: html
+
+   <iframe width="560" height="315" src="https://www.youtube.com/embed/pEYwn7Ddjjo" frameborder="0" allowfullscreen></iframe>
+   </br>
+   </br>
+
+#6 Pumbaa: DAC ramp on Nano32 (ESP32)!
+---------------------------------------
+
+Measure the DAC output voltage on a Nano32 (ESP32).
+
+.. raw:: html
+
+   <iframe width="560" height="315" src="https://www.youtube.com/embed/R4SLIyBysfg" frameborder="0" allowfullscreen></iframe>
+   </br>
+   </br>
+
 #5 Pumbaa: Dual board CAN blink on Nano32 (ESP32) and Arduino Due.
 ------------------------------------------------------------------
 
