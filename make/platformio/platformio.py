@@ -53,6 +53,7 @@ import os
 from os.path import join
 import subprocess
 import shutil
+import glob
 
 from SCons.Script import DefaultEnvironment
 from platformio.builder.tools.platformio import SRC_DEFAULT_FILTER

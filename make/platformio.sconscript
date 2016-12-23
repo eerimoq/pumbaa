@@ -33,6 +33,7 @@ import os
 from os.path import join
 import subprocess
 import shutil
+import glob
 
 from SCons.Script import DefaultEnvironment
 from platformio.builder.tools.platformio import SRC_DEFAULT_FILTER
@@ -365,7 +366,7 @@ BOARDS = {
             "simba/3pp/atto/display.c", 
             "simba/3pp/atto/gap.c", 
             "simba/3pp/atto/key.c", 
-            "simba/3pp/atto/main.c", 
+            "simba/3pp/atto/atto_main.c", 
             "simba/3pp/atto/replace.c", 
             "simba/3pp/atto/search.c", 
             "simba/3pp/atto/window.c", 
@@ -802,7 +803,7 @@ BOARDS = {
             "simba/3pp/atto/display.c", 
             "simba/3pp/atto/gap.c", 
             "simba/3pp/atto/key.c", 
-            "simba/3pp/atto/main.c", 
+            "simba/3pp/atto/atto_main.c", 
             "simba/3pp/atto/replace.c", 
             "simba/3pp/atto/search.c", 
             "simba/3pp/atto/window.c", 
