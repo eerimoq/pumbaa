@@ -182,6 +182,9 @@ arduino:
 platformio:
 	+make/platformio/platformio.py --version $(PUMBAA_VERSION)
 
+mpy-cross:
+	cd bin && ./build.sh
+
 help:
 	@echo "--------------------------------------------------------------------------------"
 	@echo "  target                      description"

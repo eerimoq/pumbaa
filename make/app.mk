@@ -35,12 +35,15 @@ MAIN_PY ?= main.py
 PYSRC += $(MAIN_PY)
 
 MAIN_C ?= $(PUMBAA_ROOT)/src/main.c
-FROZEN_C = $(BUILDDIR)/frozen.c
+FROZEN_C = $(GENDIR)/frozen.c
+FROZEN_MPY_C = $(GENDIR)/frozen_mpy.c
 
 SRC += $(FROZEN_C)
 
 include $(PUMBAA_ROOT)/src/pumbaa.mk
 include $(SIMBA_ROOT)/make/app.mk
+
+MPYSRC = $(patsubst %,$(GENDIR)%,$(abspath $(PYSRC:%.py=%.mpy)))
 
 SED ?= sed
 PYTHON ?= python
@@ -57,7 +60,8 @@ QSTR_DEFS_PY_CORE_H = $(MICROPYTHON_ROOT)/py/qstrdefs.h
 
 MAKEQSTRDATA_PY = $(MICROPYTHON_ROOT)/py/makeqstrdata.py
 MAKEQSTRDEFS_PY = $(MICROPYTHON_ROOT)/py/makeqstrdefs.py
-MAKE_FROZEN_PY = $(PUMBAA_ROOT)/bin/make_frozen.py
+MPY_CROSS = $(PUMBAA_ROOT)/bin/mpy-cross-$(shell uname -m)-linux
+MPY_TOOL_PY = $(MICROPYTHON_ROOT)/tools/mpy-tool.py
 
 ifneq ($(ARCH),esp)
 LIB += m
@@ -68,7 +72,7 @@ endif
 
 CDEFS_QSTR = $(CDEFS) NO_QSTR
 
-$(QSTR_I_LAST): $(CSRC)
+$(QSTR_I_LAST): $(filter-out $(FROZEN_C),$(CSRC))
 	echo "Generating $@"
 	mkdir -p $(GENHDR_DIR)
 	$(CC) $(INC:%=-I%) $(CDEFS_QSTR:%=-D%) $(CFLAGS) -E $? > $@
@@ -83,10 +87,18 @@ $(QSTR_DEFS_GENERATED_H): $(QSTR_DEFS_PY_CORE_H) $(QSTR_DEFS_COLLECTED_H)
 	cat $^ | $(SED) 's/^Q(.*)/"&"/' | $(CC) $(INC:%=-I%) $(CDEFS:%=-D%) $(CFLAGS) -E - | sed 's/^"\(Q(.*)\)"/\1/' > $(QSTR_DEFS_PREPROCESSED_H)
 	$(PYTHON) $(MAKEQSTRDATA_PY) $(QSTR_DEFS_PREPROCESSED_H) > $@
 
-$(FROZEN_C): $(PYSRC)
+define MPY_GEN_template
+$(patsubst %.py,$(GENDIR)%.mpy,$(abspath $1)): $1
+	@echo "MPY $1"
+	mkdir -p $(GENDIR)$(abspath $(dir $1))
+	$$(MPY_CROSS) -s $(notdir $1) -o $$@ $$<
+endef
+$(foreach name,$(PYSRC),$(eval $(call MPY_GEN_template,$(name))))
+
+$(FROZEN_C): $(MPYSRC) | $(QSTR_DEFS_GENERATED_H)
 	echo "Generating $@"
 	mkdir -p $(BUILDDIR)
-	$(PYTHON) $(MAKE_FROZEN_PY) $^ > $@
+	PYTHONPATH=$(MICROPYTHON_ROOT)/py $(PYTHON) $(MPY_TOOL_PY) -f -q $(QSTR_DEFS_PREPROCESSED_H) $^ > $@
 
 generate: $(QSTR_DEFS_GENERATED_H) $(FROZEN_C)
 

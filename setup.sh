@@ -20,3 +20,6 @@ export PATH=$PATH:$(readlink -f ../xtensa-esp32-elf/bin)
 # ARM toolchain for Cygwin.
 export PATH=$PATH:$(readlink -f ../arm-toolchain-windows/arm-none-eabi-gcc/4.8.3-2014q1/bin)
 export PATH=$PATH:$(readlink -f ../arm-toolchain-windows/bossac/1.3a-arduino)
+
+# MINGW toolchain for mpy-cross for windows.
+export PATH=$PATH:$(readlink -f ../mingw32/bin)

@@ -167,12 +167,20 @@
 #    define MICROPY_PY_UZLIB                              (1)
 #endif
 
-#ifndef MICROPY_MODULE_FROZEN_STR
-#    define MICROPY_MODULE_FROZEN_STR                     (1)
+#ifndef MICROPY_MODULE_FROZEN_MPY
+#    define MICROPY_MODULE_FROZEN_MPY                     (1)
+#endif
+
+#ifndef MICROPY_QSTR_EXTRA_POOL
+#    define MICROPY_QSTR_EXTRA_POOL mp_qstr_frozen_const_pool
 #endif
 
 #ifndef MICROPY_MODULE_BUILTIN_INIT
 #    define MICROPY_MODULE_BUILTIN_INIT                   (1)
+#endif
+
+#ifndef MPZ_DIG_SIZE
+#    define MPZ_DIG_SIZE                                 (16)
 #endif
 
 #ifndef CONFIG_PUMBAA_MAIN_FRIENDLY_REPL
