@@ -27,12 +27,3 @@
 #
 # This file is part of the Pumbaa project.
 #
-
-
-NAME = interactive
-BOARD ?= linux
-
-CDEFS += CONFIG_START_SHELL=0
-
-PUMBAA_ROOT ?= ../..
-include $(PUMBAA_ROOT)/make/app.mk

@@ -31,8 +31,7 @@
 
 SIMBA_ROOT ?= $(PUMBAA_ROOT)/simba
 
-MAIN_PY ?= main.py
-PYSRC += $(MAIN_PY)
+PYSRC += main.py
 
 MAIN_C ?= $(PUMBAA_ROOT)/src/main.c
 FROZEN_C = $(GENDIR)/frozen.c
