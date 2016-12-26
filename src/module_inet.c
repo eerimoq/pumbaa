@@ -87,6 +87,14 @@ static const mp_rom_map_elem_t module_inet_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR___init__), MP_ROM_PTR(&module_init_obj) },
 
     /* Module classes. */
+#if CONFIG_PUMBAA_HTTP_SERVER == 1
+    { MP_ROM_QSTR(MP_QSTR_HttpServer), MP_ROM_PTR(&module_inet_class_http_server) },
+#endif
+#if CONFIG_PUMBAA_HTTP_WEBSOCKET_SERVER == 1
+    { MP_ROM_QSTR(MP_QSTR_HttpWebSocketServer), MP_ROM_PTR(&module_inet_class_http_websocket_server) },
+#endif
+
+    /* Module functions. */
 #if CONFIG_PUMBAA_PING == 1
     { MP_ROM_QSTR(MP_QSTR_ping_host_by_ip_address), MP_ROM_PTR(&module_ping_host_by_ip_address_obj) },
 #endif

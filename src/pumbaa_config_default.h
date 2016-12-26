@@ -64,7 +64,7 @@
 #endif
 
 #ifndef MICROPY_DEBUG_PRINTERS
-#    define MICROPY_DEBUG_PRINTERS                        (1)
+#    define MICROPY_DEBUG_PRINTERS                        (0)
 #endif
 
 #ifndef MICROPY_HELPER_REPL
@@ -337,6 +337,14 @@
 
 #ifndef CONFIG_PUMBAA_PING
 #    define CONFIG_PUMBAA_PING                              1
+#endif
+
+#ifndef CONFIG_PUMBAA_HTTP_SERVER
+#    define CONFIG_PUMBAA_HTTP_SERVER                       1
+#endif
+
+#ifndef CONFIG_PUMBAA_HTTP_WEBSOCKET_SERVER
+#    define CONFIG_PUMBAA_HTTP_WEBSOCKET_SERVER             1
 #endif
 
 #ifndef CONFIG_PUMBAA_EMACS

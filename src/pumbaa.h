@@ -54,6 +54,8 @@
 #include "module_sync/class_event.h"
 #include "module_sync/class_queue.h"
 #include "module_drivers/class_pin.h"
+#include "module_inet/class_http_server.h"
+#include "module_inet/class_http_websocket_server.h"
 
 #if defined(FAMILY_SAM)
 #    include "module_drivers/class_adc.h"
