@@ -216,8 +216,8 @@ elif board == "nano32":
     setup_board_nano32(env)
 
 # generated files
-SIMBA_GEN_C = "$BUILD_DIR/SimbaFramework/simba_gen.c"
-FROZEN_C = "$BUILD_DIR/SimbaFramework/frozen.c"
+SIMBA_GEN_C = "$BUILD_DIR/PumbaaFramework/simba_gen.c"
+FROZEN_C = "$BUILD_DIR/PumbaaFramework/frozen.c"
 
 # create a list of all sources
 variant_dir = join("$BUILD_DIR", "PumbaaFramework")
@@ -235,11 +235,44 @@ env.Command(SIMBA_GEN_C,
              '"$BOARD_DESC" "$MCU_DESC" "$TARGET"'))
 source_files.append(SIMBA_GEN_C)
 
-# Command to generate frozen.c
+# Command to generate *.mpy
 py_source = glob.glob(join(env.subst('$PROJECTSRC_DIR'), '*.py'))
+mpy_source = []
+mpy_cross_names = {{
+    'Linux':   {{32: 'mpy-cross-i686-linux',  64: 'mpy-cross-x86_64-linux' }},
+    'Windows': {{32: 'mpy-cross-i686.exe',    64: 'mpy-cross-i686.exe'     }},
+    'Darwin':  {{32: 'mpy-cross-i686-darwin', 64: 'mpy-cross-x86_64-darwin'}}
+}}
+bits = 32
+if sys.maxsize > 2**32:
+    bits = 64
+sys_name = platform.system()
+if 'CYGWIN_NT' in sys_name:
+    sys_name = 'Windows'
+try:
+    mpy_cross = mpy_cross_names[sys_name][bits]
+except:
+    raise ValueError("Unsupported system {{}} {{}}".format(sys_name, bits))
+
+for name in py_source:
+    mpy_name = join("$BUILD_DIR", os.path.basename(os.path.splitext(name)[0] + '.mpy'))
+    env.Command(mpy_name,
+                name,
+                '"$PLATFORMFW_DIR/bin/{{mpy_cross}}" -s {{short_name}} -o "$TARGET" "$SOURCE"'.format(
+                    mpy_cross=mpy_cross,
+                    short_name=os.path.basename(name)))
+    mpy_source.append(mpy_name)
+
+# Command to generate frozen.c
+qstr_pre_processed = '$PLATFORMFW_DIR/make/platformio/{{board}}/genhdr/qstrdefs.preprocessed.h'.format(
+    board=board)
 env.Command(FROZEN_C,
-            py_source,
-            '"$PYTHONEXE" "$PLATFORMFW_DIR/bin/make_frozen.py" $SOURCES --output-file "$TARGET"')
+            mpy_source,
+            '"$PYTHONEXE" "$PLATFORMFW_DIR/bin/mpy-tool-wrapper.py" "$TARGET" '
+            '"$PLATFORMFW_DIR/micropython/py" '
+            '"$PLATFORMFW_DIR/micropython/tools/mpy-tool.py" -f '
+            '-q {{qstr_pre_processed}} $SOURCES'.format(
+                qstr_pre_processed=qstr_pre_processed))
 source_files.append(FROZEN_C)
 
 lib = env.Library(target=join("$BUILD_DIR", "PumbaaFramework"), source=source_files)
@@ -295,12 +328,17 @@ def generate_platformio_sconsscript(database, version):
                                "-s",
                                "BOARD=" + board],
                               cwd=default_configuration_dir)
+        genhdr_dir = os.path.join(pumbaa_root, "make", "platformio", board, "genhdr")
         qstr_file = os.path.join(default_configuration_dir,
                                  "build",
                                  board,
                                  "genhdr",
                                  "qstrdefs.generated.h")
-        genhdr_dir = os.path.join(pumbaa_root, "make", "platformio", board, "genhdr")
+        qstr_file = os.path.join(default_configuration_dir,
+                                 "build",
+                                 board,
+                                 "genhdr",
+                                 "qstrdefs.preprocessed.h")
         shutil.copy(qstr_file, genhdr_dir)
 
     outfile = os.path.join(pumbaa_root, "make", "platformio.sconscript")

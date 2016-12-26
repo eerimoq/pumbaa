@@ -27,10 +27,3 @@
 #
 # This file is part of the Pumbaa project.
 #
-
-
-NAME = minimal_configuration
-BOARD = arduino_due
-
-PUMBAA_ROOT ?= ../..
-include $(PUMBAA_ROOT)/make/app.mk

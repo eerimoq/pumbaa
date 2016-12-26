@@ -23,3 +23,6 @@ export PATH=$PATH:$(readlink -f ../arm-toolchain-windows/bossac/1.3a-arduino)
 
 # MINGW toolchain for mpy-cross for windows.
 export PATH=$PATH:$(readlink -f ../mingw32/bin)
+
+# OSX toolchain for mpy-cross for OSX (Darwin).
+export PATH=$PATH:$(readlink -f ../osxcross/target/bin)

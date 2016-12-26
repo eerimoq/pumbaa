@@ -2,9 +2,9 @@
  * @section License
  *
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016, Erik Moqvist
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -56,64 +56,71 @@
 
 #include "pumbaa.h"
 
-struct mp_lexer_file_buf_t {
+struct lexer_file_t {
     struct fs_file_t file;
     byte buf[20];
     mp_uint_t len;
     mp_uint_t pos;
 };
 
-static mp_uint_t file_buf_next_byte(struct mp_lexer_file_buf_t *fb_p)
+static mp_uint_t lexer_file_readbyte(void *lexer_file_p)
 {
+    struct lexer_file_t *lf_p;
     int n;
 
-    if (fb_p->pos >= fb_p->len) {
-        if (fb_p->len == 0) {
-            return (MP_LEXER_EOF);
+    lf_p = (struct lexer_file_t *)lexer_file_p;
+
+    if (lf_p->pos >= lf_p->len) {
+        if (lf_p->len == 0) {
+            return (MP_READER_EOF);
         } else {
-            n = fs_read(&fb_p->file, fb_p->buf, sizeof(fb_p->buf));
+            n = fs_read(&lf_p->file, lf_p->buf, sizeof(lf_p->buf));
 
             if (n <= 0) {
-                fb_p->len = 0;
-                return (MP_LEXER_EOF);
+                lf_p->len = 0;
+                return (MP_READER_EOF);
             }
 
-            fb_p->len = n;
-            fb_p->pos = 0;
+            lf_p->len = n;
+            lf_p->pos = 0;
         }
     }
 
-    return (fb_p->buf[fb_p->pos++]);
+    return (lf_p->buf[lf_p->pos++]);
 }
 
-static void file_buf_close(struct mp_lexer_file_buf_t *fb_p)
+static void lexer_file_close(void *lexer_file_p)
 {
-    fs_close(&fb_p->file);
-    m_del_obj(struct mp_lexer_file_buf_t, fb_p);
+    struct lexer_file_t *lf_p;
+
+    lf_p = (struct lexer_file_t *)lexer_file_p;
+    fs_close(&lf_p->file);
+    m_del_obj(struct lexer_file_t, lf_p);
 }
 
 mp_lexer_t *mp_lexer_new_from_file(const char *filename_p)
 {
-    struct mp_lexer_file_buf_t *fb_p;
+    mp_reader_t reader;
+    struct lexer_file_t *lf_p;
     int n;
 
-    fb_p = m_new_obj_maybe(struct mp_lexer_file_buf_t);
+    lf_p = m_new_obj_maybe(struct lexer_file_t);
 
-    if (fb_p == NULL) {
+    if (lf_p == NULL) {
         return (NULL);
     }
 
-    if (fs_open(&fb_p->file, filename_p, FS_READ) != 0) {
-        m_del_obj(struct mp_lexer_file_buf_t, fb_p);
+    if (fs_open(&lf_p->file, filename_p, FS_READ) != 0) {
+        m_del_obj(struct lexer_file_t, lf_p);
         return (NULL);
     }
 
-    n = fs_read(&fb_p->file, fb_p->buf, sizeof(fb_p->buf));
-    fb_p->len = n;
-    fb_p->pos = 0;
+    n = fs_read(&lf_p->file, lf_p->buf, sizeof(lf_p->buf));
+    lf_p->len = n;
+    lf_p->pos = 0;
+    reader.data = lf_p;
+    reader.readbyte = lexer_file_readbyte;
+    reader.close = lexer_file_close;
 
-    return (mp_lexer_new(0,
-                         fb_p,
-                         (mp_lexer_stream_next_byte_t)file_buf_next_byte,
-                         (mp_lexer_stream_close_t)file_buf_close));
+    return (mp_lexer_new(qstr_from_str(filename_p), reader));
 }

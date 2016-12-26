@@ -54,7 +54,8 @@ PUMBAA_SRC += \
 	module_sync/class_queue.c \
 	module_sys.c \
 	module_text.c \
-	module_time.c
+	module_time.c \
+	port/lexer_port.c
 
 ifeq ($(BOARD),arduino_due)
 PUMBAA_SRC += \
@@ -68,8 +69,7 @@ PUMBAA_SRC += \
 	module_drivers/class_sd.c \
 	boards/arduino_due/gccollect.c \
 	boards/arduino_due/gchelper.S \
-	module_thread.c \
-	port/lexer_port.c
+	module_thread.c
 endif
 
 ifeq ($(BOARD),linux)
@@ -93,8 +93,7 @@ PUMBAA_SRC += \
 	mcus/esp8266/gchelper.S \
 	module_drivers/class_exti.c \
 	module_drivers/class_spi.c \
-	module_drivers/class_esp_wifi.c \
-	port/lexer_port.c
+	module_drivers/class_esp_wifi.c
 endif
 
 ifeq ($(BOARD),$(filter $(BOARD), nano32))
@@ -107,16 +106,14 @@ PUMBAA_SRC += \
 	module_drivers/class_spi.c \
 	module_drivers/class_ds18b20.c \
 	module_drivers/class_esp_wifi.c \
-	module_drivers/class_owi.c \
-	port/lexer_port.c
+	module_drivers/class_owi.c
 endif
 
 ifeq ($(BOARD),photon)
 PUMBAA_SRC += \
 	boards/photon/gccollect.c \
 	boards/photon/gchelper.S \
-	module_thread.c \
-	port/lexer_port.c
+	module_thread.c
 endif
 
 SRC += $(PUMBAA_SRC:%=$(PUMBAA_ROOT)/src/%)
@@ -153,8 +150,6 @@ MICROPYTHON_SRC += \
 	py/frozenmod.c \
 	py/gc.c \
 	py/lexer.c \
-	py/lexerstr.c \
-	py/lexerunix.c \
 	py/malloc.c \
 	py/map.c \
 	py/mkenv.mk \
@@ -221,6 +216,7 @@ MICROPYTHON_SRC += \
 	py/parsenumbase.c \
 	py/parsenum.c \
 	py/qstr.c \
+	py/reader.c \
 	py/repl.c \
 	py/runtime.c \
 	py/runtime_utils.c \
