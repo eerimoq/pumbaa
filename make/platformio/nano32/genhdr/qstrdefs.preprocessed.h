@@ -10,7 +10,7 @@
 # 1 "/home/erik/workspace/pumbaa/src/boards/nano32/simba_board.h" 1
 # 35 "/home/erik/workspace/pumbaa/src/port/mpconfigport.h" 2
 # 1 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h" 1
-# 340 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
+# 344 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
 extern const struct _mp_obj_module_t mp_module_uos;
 extern const struct _mp_obj_module_t mp_module_utime;
 extern const struct _mp_obj_module_t mp_module_usocket;
@@ -21,10 +21,10 @@ extern const struct _mp_obj_module_t module_drivers;
 extern const struct _mp_obj_module_t module_inet;
 extern const struct _mp_obj_module_t module_text;
 extern const struct _mp_obj_module_t module_board;
-# 409 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
+# 413 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
 typedef int mp_int_t;
 typedef unsigned int mp_uint_t;
-# 419 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
+# 423 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
 typedef long mp_off_t;
 
 
@@ -426,10 +426,10 @@ void _reclaim_reent (struct _reent *);
 
   struct _reent * __getreent (void);
 # 12 "/home/erik/workspace/pumbaa/simba/3pp/esp32/inc/newlib/include/alloca.h" 2
-# 426 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h" 2
+# 430 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h" 2
 # 36 "/home/erik/workspace/pumbaa/src/port/mpconfigport.h" 2
 # 46 "/home/erik/workspace/pumbaa/micropython/py/mpconfig.h" 2
-# 508 "/home/erik/workspace/pumbaa/micropython/py/mpconfig.h"
+# 537 "/home/erik/workspace/pumbaa/micropython/py/mpconfig.h"
 typedef float mp_float_t;
 # 28 "<stdin>" 2
 
@@ -1023,6 +1023,8 @@ Q(__str__)
 
 Q(__sub__)
 
+Q(__traceback__)
+
 Q(_brace_open__colon__hash_b_brace_close_)
 
 Q(_lt_dictcomp_gt_)
@@ -1233,6 +1235,8 @@ Q(default)
 
 Q(degrees)
 
+Q(delattr)
+
 Q(deleter)
 
 Q(deselect)
@@ -1358,6 +1362,14 @@ Q(fromkeys)
 Q(frozenset)
 
 Q(frozenset)
+
+Q(function)
+
+Q(function)
+
+Q(function)
+
+Q(function)
 
 Q(function)
 
@@ -1526,6 +1538,10 @@ Q(list)
 Q(listdir)
 
 Q(listen)
+
+Q(little)
+
+Q(little)
 
 Q(little)
 
@@ -1721,12 +1737,6 @@ Q(read)
 
 Q(read_into)
 
-Q(readall)
-
-Q(readall)
-
-Q(readall)
-
 Q(readinto)
 
 Q(readinto)
@@ -1866,6 +1876,8 @@ Q(sleep)
 Q(sleep_ms)
 
 Q(sleep_us)
+
+Q(slice)
 
 Q(slice)
 

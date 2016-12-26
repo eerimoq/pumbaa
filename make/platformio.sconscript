@@ -29,11 +29,13 @@
 # This file is part of the Pumbaa project.
 #
 
+import sys
 import os
 from os.path import join
 import subprocess
 import shutil
 import glob
+import platform
 
 from SCons.Script import DefaultEnvironment
 from platformio.builder.tools.platformio import SRC_DEFAULT_FILTER
@@ -148,6 +150,7 @@ BOARDS = {
             "src/module_sys.c", 
             "src/module_text.c", 
             "src/module_time.c", 
+            "src/port/lexer_port.c", 
             "src/module_drivers/class_adc.c", 
             "src/module_drivers/class_can.c", 
             "src/module_drivers/class_dac.c", 
@@ -159,7 +162,6 @@ BOARDS = {
             "src/boards/arduino_due/gccollect.c", 
             "src/boards/arduino_due/gchelper.S", 
             "src/module_thread.c", 
-            "src/port/lexer_port.c", 
             "micropython/extmod/modubinascii.c", 
             "micropython/extmod/moduhashlib.c", 
             "micropython/extmod/modujson.c", 
@@ -187,8 +189,6 @@ BOARDS = {
             "micropython/py/frozenmod.c", 
             "micropython/py/gc.c", 
             "micropython/py/lexer.c", 
-            "micropython/py/lexerstr.c", 
-            "micropython/py/lexerunix.c", 
             "micropython/py/malloc.c", 
             "micropython/py/map.c", 
             "micropython/py/mkenv.mk", 
@@ -255,6 +255,7 @@ BOARDS = {
             "micropython/py/parsenumbase.c", 
             "micropython/py/parsenum.c", 
             "micropython/py/qstr.c", 
+            "micropython/py/reader.c", 
             "micropython/py/repl.c", 
             "micropython/py/runtime.c", 
             "micropython/py/runtime_utils.c", 
@@ -518,6 +519,7 @@ BOARDS = {
             "src/module_sys.c", 
             "src/module_text.c", 
             "src/module_time.c", 
+            "src/port/lexer_port.c", 
             "src/mcus/esp32/gccollect.c", 
             "src/mcus/esp32/gchelper.S", 
             "src/module_drivers/class_adc.c", 
@@ -527,7 +529,6 @@ BOARDS = {
             "src/module_drivers/class_ds18b20.c", 
             "src/module_drivers/class_esp_wifi.c", 
             "src/module_drivers/class_owi.c", 
-            "src/port/lexer_port.c", 
             "micropython/extmod/modubinascii.c", 
             "micropython/extmod/moduhashlib.c", 
             "micropython/extmod/modujson.c", 
@@ -555,8 +556,6 @@ BOARDS = {
             "micropython/py/frozenmod.c", 
             "micropython/py/gc.c", 
             "micropython/py/lexer.c", 
-            "micropython/py/lexerstr.c", 
-            "micropython/py/lexerunix.c", 
             "micropython/py/malloc.c", 
             "micropython/py/map.c", 
             "micropython/py/mkenv.mk", 
@@ -623,6 +622,7 @@ BOARDS = {
             "micropython/py/parsenumbase.c", 
             "micropython/py/parsenum.c", 
             "micropython/py/qstr.c", 
+            "micropython/py/reader.c", 
             "micropython/py/repl.c", 
             "micropython/py/runtime.c", 
             "micropython/py/runtime_utils.c", 

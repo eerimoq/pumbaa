@@ -49,11 +49,13 @@ PLATFORMIO_SCONSSCRIPT_FMT = """#
 # This file is part of the Pumbaa project.
 #
 
+import sys
 import os
 from os.path import join
 import subprocess
 import shutil
 import glob
+import platform
 
 from SCons.Script import DefaultEnvironment
 from platformio.builder.tools.platformio import SRC_DEFAULT_FILTER
@@ -334,6 +336,7 @@ def generate_platformio_sconsscript(database, version):
                                  board,
                                  "genhdr",
                                  "qstrdefs.generated.h")
+        shutil.copy(qstr_file, genhdr_dir)
         qstr_file = os.path.join(default_configuration_dir,
                                  "build",
                                  board,

@@ -35,6 +35,10 @@
  * This is the default configuration of Pumbaa.
  */
 
+#ifndef MICROPY_CPYTHON_COMPAT
+#    define MICROPY_CPYTHON_COMPAT                        (1)
+#endif
+
 #ifndef MICROPY_OBJ_REPR
 #    define MICROPY_OBJ_REPR             (MICROPY_OBJ_REPR_C)
 #endif
