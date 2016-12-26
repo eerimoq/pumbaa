@@ -29,6 +29,7 @@
 #
 
 from inet import HttpServer, WebSocketServer
+import kernel
 from drivers import esp_wifi
 
 
@@ -37,44 +38,32 @@ PASSWORD = 'maxierik'
 IP = '192.168.0.7'
 PORT = 8000
 
-# The index page.
-INDEX_HTML = """<!DOCTYPE HTML>
-<html>
-  <body>
-    Hello from Pumbaa!
-  </body>
-</html>
-"""
-
 
 def on_no_route(client, request):
-    print('on_no_route:', request)
+    print('on_no_route:', client, request)
 
-    client.response_write(HttpServer.RESPONSE_CODE_404_NOT_FOUND,
-                          HttpServer.CONTENT_TYPE_TEXT_HTML)
+    return None, HttpServer.RESPONSE_CODE_404_NOT_FOUND
 
 
 def on_request_index(client, request):
-    print('on_request_index:', request)
+    print('on_request_index:', client, request)
 
-    client.response_write(HttpServer.RESPONSE_CODE_200_OK,
-                          HttpServer.CONTENT_TYPE_TEXT_HTML,
-                          INDEX_HTML)
+    return "<html><body>Hello from Pumbaa!</body></html>"
 
 
 def on_request_websocket_echo(client, request):
-    print('on_request_websocket_echo:', request)
+    print('on_request_websocket_echo:', client, request)
 
-    websocket = WebSocketServer(client.socket)
-    websocket.handshake(request)
+    ws = WebSocketServer(client.socket)
+    ws.handshake(request)
 
     while True:
-        buf = websocket.read(1)
+        message = ws.read()
 
-        if len(buf) == 0:
+        if not message:
             break
 
-        websocket.write(buf)
+        ws.write(message)
 
 
 def main():
@@ -88,8 +77,8 @@ def main():
     ]
 
     http_server = HttpServer(IP, PORT, routes, on_no_route)
-    http_server.run()
-
+    http_server.start()
+    kernel.thrd_suspend()
 
 
 if __name__ == '__main__':

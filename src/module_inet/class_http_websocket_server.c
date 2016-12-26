@@ -89,35 +89,133 @@ static mp_obj_t class_http_websocket_server_make_new(const mp_obj_type_t *type_p
 /**
  * def handshake(self, request)
  */
-static mp_obj_t class_http_websocket_server_handshake(mp_obj_t self_in)
+static mp_obj_t class_http_websocket_server_handshake(mp_obj_t self_in,
+                                                      mp_obj_t request_in)
 {
     return (mp_const_none);
 }
 
 /**
- * def read(self, size)
+ * def read(self[, size])
  */
-static mp_obj_t class_http_websocket_server_read(mp_obj_t self_in)
+static mp_obj_t class_http_websocket_server_read(mp_uint_t n_args,
+                                                 const mp_obj_t *args_p)
 {
-    return (mp_const_none);
+    struct class_http_websocket_server_t *self_p;
+    vstr_t vstr;
+    size_t size;
+    ssize_t res;
+    int type;
+
+    self_p = MP_OBJ_TO_PTR(args_p[0]);
+
+    /* Size arguement. */
+    if (n_args < 2) {
+        size = 512;
+    } else {
+        size = mp_obj_get_int(args_p[1]);
+    }
+
+    vstr_init_len(&vstr, size);
+    res = http_websocket_server_read(&self_p->http_websocket_server,
+                                     &type,
+                                     vstr.buf,
+                                     size);
+
+    if (res > 0) {
+        vstr.len = res;
+
+        return (mp_obj_new_str_from_vstr(&mp_type_bytes, &vstr));
+    } else {
+        return (mp_const_none);
+    }
+}
+
+/**
+ * def read_into(self, buffer[, size])
+ */
+static mp_obj_t class_http_websocket_server_read_into(mp_uint_t n_args,
+                                                      const mp_obj_t *args_p)
+{
+    struct class_http_websocket_server_t *self_p;
+    mp_buffer_info_t buffer_info;
+    size_t size;
+    ssize_t res;
+    int type;
+
+    self_p = MP_OBJ_TO_PTR(args_p[0]);
+    mp_get_buffer_raise(MP_OBJ_TO_PTR(args_p[1]),
+                        &buffer_info,
+                        MP_BUFFER_WRITE);
+
+    /* Get the size. */
+    if (n_args == 3) {
+        size = mp_obj_get_int(args_p[2]);
+
+        if (buffer_info.len < size) {
+            nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                               "bad buffer length"));
+        }
+    } else {
+        size = buffer_info.len;
+    }
+
+    res = http_websocket_server_read(&self_p->http_websocket_server,
+                                     &type,
+                                     buffer_info.buf,
+                                     size);
+
+    return (MP_OBJ_NEW_SMALL_INT(res));
 }
 
 /**
  * def write(self, buffer[, size])
  */
-static mp_obj_t class_http_websocket_server_write(mp_obj_t self_in)
+static mp_obj_t class_http_websocket_server_write(mp_uint_t n_args,
+                                                  const mp_obj_t *args_p)
 {
-    return (mp_const_none);
+    struct class_http_websocket_server_t *self_p;
+    mp_buffer_info_t buffer_info;
+    size_t size;
+    ssize_t res;
+    int type;
+
+    self_p = MP_OBJ_TO_PTR(args_p[0]);
+    mp_get_buffer_raise(MP_OBJ_TO_PTR(args_p[1]),
+                        &buffer_info,
+                        MP_BUFFER_READ);
+
+    /* Get the size. */
+    if (n_args == 3) {
+        size = mp_obj_get_int(args_p[2]);
+
+        if (buffer_info.len < size) {
+            nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                               "bad buffer length"));
+        }
+    } else {
+        size = buffer_info.len;
+    }
+
+    type = 0;
+    res = http_websocket_server_write(&self_p->http_websocket_server,
+                                      type,
+                                      buffer_info.buf,
+                                      size);
+
+    return (MP_OBJ_NEW_SMALL_INT(res));
 }
 
-static MP_DEFINE_CONST_FUN_OBJ_1(class_http_websocket_server_handshake_obj, class_http_websocket_server_handshake);
-static MP_DEFINE_CONST_FUN_OBJ_1(class_http_websocket_server_read_obj, class_http_websocket_server_read);
-static MP_DEFINE_CONST_FUN_OBJ_1(class_http_websocket_server_write_obj, class_http_websocket_server_write);
+static MP_DEFINE_CONST_FUN_OBJ_2(class_http_websocket_server_handshake_obj, class_http_websocket_server_handshake);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_http_websocket_server_read_obj, 1, 2, class_http_websocket_server_read);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_http_websocket_server_read_into_obj, 2, 3, class_http_websocket_server_read_into);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_http_websocket_server_write_obj, 2, 3, class_http_websocket_server_write);
 
 static const mp_rom_map_elem_t class_http_websocket_server_locals_dict_table[] = {
     /* Instance methods. */
     { MP_ROM_QSTR(MP_QSTR_handshake), MP_ROM_PTR(&class_http_websocket_server_handshake_obj) },
     { MP_ROM_QSTR(MP_QSTR_read), MP_ROM_PTR(&class_http_websocket_server_read_obj) },
+    { MP_ROM_QSTR(MP_QSTR_read_into), MP_ROM_PTR(&class_http_websocket_server_read_into_obj) },
     { MP_ROM_QSTR(MP_QSTR_write), MP_ROM_PTR(&class_http_websocket_server_write_obj) },
 };
 
