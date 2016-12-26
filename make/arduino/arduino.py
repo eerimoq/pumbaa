@@ -261,7 +261,9 @@ def get_c_extra_flags(board, database):
     """
 
     incs = database["boards"][board]["inc"]
-    cdefs = database["boards"][board]["cdefs"]
+    cdefs = (database["boards"][board]["cdefs"] +
+             ['MICROPY_MODULE_FROZEN_STR=1'] +
+             ['MICROPY_MODULE_FROZEN_MPY=0'])
     cflags = []
 
     for flag in database["boards"][board]["cflags"]:
@@ -281,7 +283,9 @@ def get_cxx_extra_flags(board, database):
     """
 
     incs = database["boards"][board]["inc"]
-    cdefs = database["boards"][board]["cdefs"]
+    cdefs = (database["boards"][board]["cdefs"] +
+             ['MICROPY_MODULE_FROZEN_STR=1'] +
+             ['MICROPY_MODULE_FROZEN_MPY=0'])
     cxxflags = database["boards"][board]["cxxflags"]
 
     return " ".join(cxxflags

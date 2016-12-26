@@ -171,12 +171,18 @@
 #    define MICROPY_PY_UZLIB                              (1)
 #endif
 
+#ifndef MICROPY_MODULE_FROZEN_STR
+#    define MICROPY_MODULE_FROZEN_STR                     (0)
+#endif
+
 #ifndef MICROPY_MODULE_FROZEN_MPY
 #    define MICROPY_MODULE_FROZEN_MPY                     (1)
 #endif
 
 #ifndef MICROPY_QSTR_EXTRA_POOL
-#    define MICROPY_QSTR_EXTRA_POOL mp_qstr_frozen_const_pool
+#    if MICROPY_MODULE_FROZEN_MPY == 1
+#        define MICROPY_QSTR_EXTRA_POOL mp_qstr_frozen_const_pool
+#    endif
 #endif
 
 #ifndef MICROPY_MODULE_BUILTIN_INIT

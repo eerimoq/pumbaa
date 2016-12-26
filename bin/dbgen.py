@@ -111,7 +111,7 @@ def main():
         src = [s
                for s in src
                if s not in ["main.c",
-                            os.path.join("build", board, "frozen.c"),
+                            os.path.join("build", board, "gen", "frozen.c"),
                             os.path.join("build", board, "settings.c")]]
         src = [s.replace(pumbaa_root, "") for s in src]
         database["boards"][board]["src"] = src
