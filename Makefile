@@ -65,6 +65,7 @@ endif
 
 ifeq ($(BOARD), nano32)
 TESTS = \
+	tst/thread \
 	tst/drivers/pin \
 	tst/kernel/timer \
 	tst/sync/event \

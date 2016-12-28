@@ -47,7 +47,7 @@ def test_print():
 def test_start():
     mask = 0x1
     _thread.start_new_thread(thread_main, (mask, ))
-    EVENT.read(mask)
+    assert EVENT.read(mask) == mask
 
 
 def main():

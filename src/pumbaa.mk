@@ -108,7 +108,8 @@ PUMBAA_SRC += \
 	module_drivers/class_spi.c \
 	module_drivers/class_ds18b20.c \
 	module_drivers/class_esp_wifi.c \
-	module_drivers/class_owi.c
+	module_drivers/class_owi.c \
+	module_thread.c
 endif
 
 ifeq ($(BOARD),photon)

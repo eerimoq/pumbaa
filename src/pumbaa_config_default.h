@@ -152,7 +152,7 @@
 #endif
 
 #ifndef MICROPY_PY_THREAD
-#    if defined(ARCH_ESP) || defined(ARCH_ESP32)
+#    if defined(ARCH_ESP)
 #        define MICROPY_PY_THREAD                         (0)
 #    else
 #        define MICROPY_PY_THREAD                         (1)
@@ -340,7 +340,7 @@
 #endif
 
 #ifndef CONFIG_PUMBAA_HTTP_SERVER
-#    if defined(ARCH_ESP) || defined(ARCH_ESP32)
+#    if defined(ARCH_ESP)
 #        define CONFIG_PUMBAA_HTTP_SERVER                   0
 #    else
 #        define CONFIG_PUMBAA_HTTP_SERVER                   1
@@ -348,7 +348,7 @@
 #endif
 
 #ifndef CONFIG_PUMBAA_HTTP_WEBSOCKET_SERVER
-#    if defined(ARCH_ESP) || defined(ARCH_ESP32)
+#    if defined(ARCH_ESP)
 #        define CONFIG_PUMBAA_HTTP_WEBSOCKET_SERVER         0
 #    else
 #        define CONFIG_PUMBAA_HTTP_WEBSOCKET_SERVER         1
