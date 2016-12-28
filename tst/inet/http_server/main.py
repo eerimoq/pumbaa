@@ -187,6 +187,7 @@ def test_websocket_echo():
               "Sec-WebSocket-Version: 13\r\n" \
               "\r\n"
     response = "HTTP/1.1 101 Switching Protocols\r\n" \
+               "Upgrade: websocket\r\n" \
                "Connection: Upgrade\r\n" \
                "Sec-WebSocket-Accept: HSmrc0sMlYUkAGmm5OPpG2HaGWk=\r\n" \
                "\r\n"
@@ -196,7 +197,7 @@ def test_websocket_echo():
 
     # Message.
     request = b'\x81\x84\x00\x00\x00\x00123\x00'
-    response = b'\x80\x84\x00\x00\x00\x00123\x00'
+    response = b'\x81\x84\x00\x00\x00\x00123\x00'
 
     socket_stub.input(request)
     read_response = socket_stub.output(len(response))

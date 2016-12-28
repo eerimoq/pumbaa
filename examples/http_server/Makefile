@@ -32,5 +32,7 @@
 NAME = http_server
 BOARD ?= linux
 
+TIMEOUT ?= 20
+
 PUMBAA_ROOT ?= ../..
 include $(PUMBAA_ROOT)/make/app.mk

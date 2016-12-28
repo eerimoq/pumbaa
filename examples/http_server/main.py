@@ -75,6 +75,10 @@ def main():
     esp_wifi.station_init(SSID, PASSWORD)
     esp_wifi.station_connect()
 
+    while esp_wifi.station_get_ip_info().address == '0.0.0.0':
+        print('Waiting for WiFi connection...')
+        time.sleep(2)
+
     routes = [
         ('/index.html', on_index),
         ('/websocket/echo', on_websocket_echo)

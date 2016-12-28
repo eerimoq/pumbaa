@@ -198,7 +198,7 @@ static mp_obj_t class_http_websocket_server_write(mp_uint_t n_args,
         size = buffer_info.len;
     }
 
-    type = 0;
+    type = HTTP_TYPE_TEXT;
     res = http_websocket_server_write(&self_p->http_websocket_server,
                                       type,
                                       buffer_info.buf,
