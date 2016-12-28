@@ -104,4 +104,5 @@ Simba documentation: `inet`_
 
 
 .. _inet: http://simba-os.readthedocs.io/en/latest/library-reference/inet.html
+.. _inet/http_server: http://simba-os.readthedocs.io/en/latest/library-reference/inet/http_server.html
 .. _inet/ping: http://simba-os.readthedocs.io/en/latest/library-reference/inet/ping.html
