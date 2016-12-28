@@ -25,6 +25,7 @@ Simba documentation: `inet`_
 
    .. code-block:: python
 
+      >>> from inet import HttpServer
       >>> def on_no_route(_, request):
       >>>     return (request.path + ' not found.',
       >>>             HttpServer.RESPONSE_CODE_404_NOT_FOUND,
@@ -60,6 +61,7 @@ Simba documentation: `inet`_
 
    .. code-block:: python
 
+      >>> from inet import HttpWebSocketServer
       >>> def on_websocket_echo(connection, request):
       >>>     ws = HttpWebSocketServer(connection, request)
       >>>     while True:
