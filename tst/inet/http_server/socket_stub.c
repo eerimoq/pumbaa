@@ -35,6 +35,8 @@ static struct queue_t qoutput;
 static char qinputbuf[256];
 static char qoutputbuf[256];
 static struct event_t accept_events;
+static struct event_t accept_called_events;
+static struct event_t closed_events;
 
 static ssize_t read(void *self_p,
                     void *buf_p,
@@ -77,6 +79,11 @@ int socket_open_raw(struct socket_t *self_p)
 
 int socket_close(struct socket_t *self_p)
 {
+    uint32_t mask;
+
+    mask = 0x1;
+    event_write(&closed_events, &mask, sizeof(mask));
+
     return (0);
 }
 
@@ -109,6 +116,7 @@ int socket_accept(struct socket_t *self_p,
 
     mask = 0x1;
     event_read(&accept_events, &mask, sizeof(mask));
+    event_write(&accept_called_events, &mask, sizeof(mask));
 
     return (0);
 }
@@ -150,14 +158,17 @@ void socket_stub_init()
     queue_init(&qinput, qinputbuf, sizeof(qinputbuf));
     queue_init(&qoutput, qoutputbuf, sizeof(qoutputbuf));
     event_init(&accept_events);
+    event_init(&accept_called_events);
+    event_init(&closed_events);
 }
 
 void socket_stub_accept()
 {
     uint32_t mask;
-    
+
     mask = 0x1;
     event_write(&accept_events, &mask, sizeof(mask));
+    event_read(&accept_called_events, &mask, sizeof(mask));
 }
 
 void socket_stub_input(void *buf_p, size_t size)
@@ -212,10 +223,21 @@ static mp_obj_t module_output(mp_obj_t size_in)
     return (mp_obj_new_str_from_vstr(&mp_type_bytes, &vstr));
 }
 
+static mp_obj_t module_wait_closed(void)
+{
+    uint32_t mask;
+
+    mask = 0x1;
+    event_read(&closed_events, &mask, sizeof(mask));
+
+    return (mp_const_none);
+}
+
 static MP_DEFINE_CONST_FUN_OBJ_0(module_init_obj, module_init);
 static MP_DEFINE_CONST_FUN_OBJ_0(module_accept_obj, module_accept);
 static MP_DEFINE_CONST_FUN_OBJ_1(module_input_obj, module_input);
 static MP_DEFINE_CONST_FUN_OBJ_1(module_output_obj, module_output);
+static MP_DEFINE_CONST_FUN_OBJ_0(module_wait_closed_obj, module_wait_closed);
 
 /**
  * The module globals table.
@@ -228,6 +250,7 @@ static const mp_rom_map_elem_t module_socket_stub_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR_accept), MP_ROM_PTR(&module_accept_obj) },
     { MP_ROM_QSTR(MP_QSTR_input), MP_ROM_PTR(&module_input_obj) },
     { MP_ROM_QSTR(MP_QSTR_output), MP_ROM_PTR(&module_output_obj) },
+    { MP_ROM_QSTR(MP_QSTR_wait_closed), MP_ROM_PTR(&module_wait_closed_obj) },
 };
 
 static MP_DEFINE_CONST_DICT(module_socket_stub_globals, module_socket_stub_globals_table);

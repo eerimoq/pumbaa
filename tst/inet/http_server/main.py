@@ -33,7 +33,6 @@ from inet import HttpServer, HttpWebSocketServer
 from harness import assert_raises
 import socket_stub
 
-
 HTTP_SERVER = None
 
 
@@ -57,18 +56,34 @@ def on_request_split(connection, request):
     connection.socket_write(text)
 
 
+def on_request_bad_arguments(connection, request):
+    print('on_request_bad_arguments({}, {})'.format(connection, request))
+    return ()
+
+
 def on_request_websocket_echo(connection, request):
     print('on_request_websocket_echo({}, {})'.format(connection, request))
     ws = HttpWebSocketServer(connection, request)
+    print(ws)
     message = ws.read()
     ws.write(message)
+    message = bytearray(16)
+    assert ws.read_into(message) == 4
+    ws.write(message[:4])
+
+
+def test_print():
+    print(HttpServer)
+    print(HttpServer("127.0.0.1", 80, [], on_request_404_not_found))
+    print(HttpWebSocketServer)
 
 
 def test_start():
     routes = [
         ('/index.html', on_request_index),
         ('/split.html', on_request_split),
-        ('/websocket/echo', on_request_websocket_echo)
+        ('/websocket/echo', on_request_websocket_echo),
+        ('/bad_arguments.html', on_request_bad_arguments)
     ]
 
     global HTTP_SERVER
@@ -90,11 +105,12 @@ def test_index():
 
     # Accept.
     socket_stub.accept()
-    
+
     # Get.
     socket_stub.input(request)
     read_response = socket_stub.output(len(response))
     assert read_response.decode('uft-8') == response
+    socket_stub.wait_closed()
 
 
 def test_split():
@@ -111,17 +127,18 @@ def test_split():
 
     # Accept.
     socket_stub.accept()
-    
+
     # Get.
     socket_stub.input(request)
     read_response = socket_stub.output(len(response))
     assert read_response.decode('uft-8') == response
+    socket_stub.wait_closed()
 
 
 def test_no_route():
     # Accept.
     socket_stub.accept()
-    
+
     # Get.
     request = "GET /missing.html HTTP/1.1\r\n" \
               "User-Agent: TestcaseRequestIndex\r\n" \
@@ -135,6 +152,22 @@ def test_no_route():
     socket_stub.input(request)
     read_response = socket_stub.output(len(response))
     assert read_response.decode('uft-8') == response
+    socket_stub.wait_closed()
+
+
+def test_bad_arguments():
+    # Test data.
+    request = "GET /bad_arguments.html HTTP/1.1\r\n" \
+              "User-Agent: TestcaseRequestIndex\r\n" \
+              "Connection: keep-alive\r\n" \
+              "\r\n"
+
+    # Accept.
+    socket_stub.accept()
+
+    # Get.
+    socket_stub.input(request)
+    socket_stub.wait_closed()
 
 
 def test_websocket_echo():
@@ -164,7 +197,12 @@ def test_websocket_echo():
     socket_stub.input(request)
     read_response = socket_stub.output(len(response))
     assert read_response == response
-    
+
+    socket_stub.input(request)
+    read_response = socket_stub.output(len(response))
+    assert read_response == response
+    socket_stub.wait_closed()
+
 
 def test_stop():
     HTTP_SERVER.stop()
@@ -172,10 +210,12 @@ def test_stop():
 
 def main():
     testcases = [
+        (test_print, "test_print"),
         (test_start, "test_start"),
         (test_index, "test_index"),
         (test_split, "test_split"),
         (test_no_route, "test_no_route"),
+        (test_bad_arguments, "test_bad_arguments"),
         (test_websocket_echo, "test_websocket_echo"),
         (test_stop, "test_stop")
     ]

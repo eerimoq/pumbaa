@@ -75,7 +75,7 @@ static mp_obj_t class_http_websocket_server_make_new(const mp_obj_type_t *type_p
 
     /* Parse the arguments. */
     connection_p = args[0].u_obj;
-        
+
     /* Create a new HttpWebsocketServer object. */
     self_p = m_new_obj(struct class_http_websocket_server_t);
     self_p->base.type = &module_inet_class_http_websocket_server;

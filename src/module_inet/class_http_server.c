@@ -100,14 +100,14 @@ static mp_obj_t class_http_server_connection_socket_write(mp_obj_t self_in,
     struct class_http_server_connection_t *self_p;
     mp_buffer_info_t buffer_info;
     ssize_t size;
-    
+
     self_p = MP_OBJ_TO_PTR(self_in);
     mp_get_buffer_raise(buffer_in, &buffer_info, MP_BUFFER_READ);
 
     size = socket_write(&self_p->connection_p->socket,
                         buffer_info.buf,
                         buffer_info.len);
-        
+
     return (mp_obj_new_int(size));
 }
 
