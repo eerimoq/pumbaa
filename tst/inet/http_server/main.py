@@ -36,37 +36,41 @@ import socket_stub
 HTTP_SERVER = None
 
 
-def on_request_404_not_found(connection, request):
-    print('on_request_404_not_found({}, {})'.format(connection, request))
+def on_404_not_found(connection, request):
+    print('on_404_not_found({}, {})'.format(connection, request))
     text = "The requested page '{}' could not be found.".format(request.path)
     return (text,
             HttpServer.RESPONSE_CODE_404_NOT_FOUND,
             HttpServer.CONTENT_TYPE_TEXT_PLAIN)
 
 
-def on_request_index(connection, request):
-    print('on_request_index({}, {})'.format(connection, request))
+def on_index(connection, request):
+    print('on_index({}, {})'.format(connection, request))
     return ('Welcome!', )
 
 
-def on_request_split(connection, request):
-    print('on_request_split({}, {})'.format(connection, request))
+def on_split(connection, request):
+    print('on_split({}, {})'.format(connection, request))
     text = 'Welcome split!'
     connection.response_write((len(text), ))
     connection.socket_write(text)
 
 
-def on_request_bad_arguments(connection, request):
-    print('on_request_bad_arguments({}, {})'.format(connection, request))
+def on_bad_arguments(connection, request):
+    print('on_bad_arguments({}, {})'.format(connection, request))
     return ()
 
 
-def on_request_websocket_echo(connection, request):
-    print('on_request_websocket_echo({}, {})'.format(connection, request))
+def on_websocket_echo(connection, request):
+    print('on_websocket_echo({}, {})'.format(connection, request))
     ws = HttpWebSocketServer(connection, request)
     print(ws)
+
+    # Websocket read() and write().
     message = ws.read()
     ws.write(message)
+
+    # Websocket read_into() and write().
     message = bytearray(16)
     assert ws.read_into(message) == 4
     ws.write(message[:4])
@@ -74,20 +78,20 @@ def on_request_websocket_echo(connection, request):
 
 def test_print():
     print(HttpServer)
-    print(HttpServer("127.0.0.1", 80, [], on_request_404_not_found))
+    print(HttpServer("127.0.0.1", 80, [], on_404_not_found))
     print(HttpWebSocketServer)
 
 
 def test_start():
     routes = [
-        ('/index.html', on_request_index),
-        ('/split.html', on_request_split),
-        ('/websocket/echo', on_request_websocket_echo),
-        ('/bad_arguments.html', on_request_bad_arguments)
+        ('/index.html', on_index),
+        ('/split.html', on_split),
+        ('/websocket/echo', on_websocket_echo),
+        ('/bad_arguments.html', on_bad_arguments)
     ]
 
     global HTTP_SERVER
-    HTTP_SERVER = HttpServer("127.0.0.1", 80, routes, on_request_404_not_found)
+    HTTP_SERVER = HttpServer("127.0.0.1", 80, routes, on_404_not_found)
     HTTP_SERVER.start()
 
 

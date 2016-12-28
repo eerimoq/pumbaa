@@ -41,22 +41,14 @@ IP = '192.168.0.7'
 PORT = 8000
 
 
-def on_no_route(_, request):
-    print('on_no_route:', request)
-
-    return (request.path + ' not found.',
-            HttpServer.RESPONSE_CODE_404_NOT_FOUND,
-            HttpServer.CONTENT_TYPE_TEXT_PLAIN)
-
-
-def on_request_index(_, request):
-    print('on_request_index:', request)
+def on_index(_, request):
+    print('on_index:', request)
 
     return ('<html><body>Hello from Pumbaa!</body></html>', )
 
 
-def on_request_websocket_echo(connection, request):
-    print('on_request_websocket_echo:', request)
+def on_websocket_echo(connection, request):
+    print('on_websocket_echo:', request)
 
     ws = HttpWebSocketServer(connection, request)
 
@@ -70,14 +62,22 @@ def on_request_websocket_echo(connection, request):
         ws.write(message)
 
 
+def on_no_route(_, request):
+    print('on_no_route:', request)
+
+    return (request.path + ' not found.',
+            HttpServer.RESPONSE_CODE_404_NOT_FOUND,
+            HttpServer.CONTENT_TYPE_TEXT_PLAIN)
+
+
 def main():
     esp_wifi.set_op_mode(esp_wifi.OP_MODE_STATION)
     esp_wifi.station_init(SSID, PASSWORD)
     esp_wifi.station_connect()
 
     routes = [
-        ('/index.html', on_request_index),
-        ('/websocket/echo', on_request_websocket_echo)
+        ('/index.html', on_index),
+        ('/websocket/echo', on_websocket_echo)
     ]
 
     http_server = HttpServer(IP, PORT, routes, on_no_route)
