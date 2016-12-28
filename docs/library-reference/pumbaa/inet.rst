@@ -11,6 +11,76 @@ Simba documentation: `inet`_
 ----------------------------------------------
 
 
+.. class:: inet.HttpServer(ip_address, port, routes, on_no_route)
+
+   Create a HTTP server object. The HTTP server opens a socket and
+   binds to given `ip_address` and `port`. `routes` is a list of route
+   tuples, where each route tuple contains a path and a callback
+   function. `on_no_route` is called when a request is received for a
+   path that is not found in `routes`.
+
+   Here is an example of a HTTP server with one route,
+   ``'/index.html'``. Enter ``http://192.168.0.7:8000/index.html`` in
+   your webbrowser to get the index page.
+
+   .. code-block:: python
+
+      >>> def on_no_route(_, request):
+      >>>     return (request.path + ' not found.',
+      >>>             HttpServer.RESPONSE_CODE_404_NOT_FOUND,
+      >>>             HttpServer.CONTENT_TYPE_TEXT_PLAIN)
+
+      >>> def on_request_index(_, request):
+      >>>     return ('<html><body>Hello from Pumbaa!</body></html>', )
+
+      >>> routes = [('/index.html', on_request_index)]
+      >>> http_server = HttpServer('192.168.0.7', 80, routes, on_no_route)
+      >>> http_server.start()
+
+   Simba documentation: `inet/http_server`_
+
+
+   .. method:: start()
+
+      Start the HTTP server.
+
+
+   .. method:: stop()
+
+      Stop the HTTP server.
+
+
+.. class:: inet.HttpWebSocketServer(connection, request)
+
+   Create a HTTP WebSocket server object with given `connection` and
+   `request`.
+
+   An example of how to use the HTTP WebSocket server class in a HTTP
+   server route callback.
+
+   .. code-block:: python
+
+      >>> def on_websocket_echo(connection, request):
+      >>>     ws = HttpWebSocketServer(connection, request)
+      >>>     while True:
+      >>>         message = ws.read()
+      >>>         print('Message:', message)
+      >>>         if not message:
+      >>>             break
+      >>>         ws.write(message)
+
+
+   .. method:: read()
+
+      Read a message from the remote endpoint.
+
+
+   .. method:: write(buffer)
+
+      Write `buffer` to the remote endpoint.
+
+
+
 .. function:: inet.ping_host_by_ip_address(address, timeout)
 
    Ping host by IPv4 address `address`. Send an echo request packet to
