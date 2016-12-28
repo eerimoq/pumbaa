@@ -97,7 +97,14 @@ mp_state_thread_t *mp_thread_get_state(void)
 
     mp_thread_mutex_unlock(&thread_mutex);
 
-    return (thread_p->state_p);
+    /* ToDo: Non-native micropython threads needs to register
+       themselves to the list of threads so this, possibly invalid,
+       workaround can be removed. */
+    if (thread_p != NULL) {
+        return (thread_p->state_p);
+    } else {
+        return (thread_entry0.state_p);
+    }
 }
 
 void mp_thread_set_state(void *state_p)

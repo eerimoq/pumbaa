@@ -54,7 +54,8 @@ TESTS = \
 	tst/drivers/sd \
 	tst/kernel/timer \
 	tst/sync/event \
-	tst/sync/queue
+	tst/sync/queue \
+	tst/inet/http_server
 endif
 
 ifeq ($(BOARD), esp12e)

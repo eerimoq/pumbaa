@@ -54,13 +54,15 @@ static mp_obj_t class_http_websocket_server_make_new(const mp_obj_type_t *type_p
                                                      const mp_obj_t *args_p)
 {
     struct class_http_websocket_server_t *self_p;
+    struct class_http_server_connection_t *connection_p;
     mp_map_t kwargs;
     static const mp_arg_t allowed_args[] = {
-        { MP_QSTR_socket, MP_ARG_REQUIRED | MP_ARG_OBJ }
+        { MP_QSTR_connection, MP_ARG_REQUIRED | MP_ARG_OBJ },
+        { MP_QSTR_request, MP_ARG_REQUIRED | MP_ARG_OBJ }
     };
     mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];
 
-    mp_arg_check_num(n_args, n_kw, 0, 1, true);
+    mp_arg_check_num(n_args, n_kw, 0, 2, true);
 
     /* Parse args. */
     mp_map_init_fixed_table(&kwargs, n_kw, args_p + n_args);
@@ -72,27 +74,26 @@ static mp_obj_t class_http_websocket_server_make_new(const mp_obj_type_t *type_p
                      args);
 
     /* Parse the arguments. */
-
-    /* Create a new Http_Websocket_Server object. */
+    connection_p = args[0].u_obj;
+        
+    /* Create a new HttpWebsocketServer object. */
     self_p = m_new_obj(struct class_http_websocket_server_t);
     self_p->base.type = &module_inet_class_http_websocket_server;
 
     if (http_websocket_server_init(&self_p->http_websocket_server,
-                                   NULL) != 0) {
+                                   &connection_p->connection_p->socket) != 0) {
         nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
                                            "http_websocket_server_init() failed"));
     }
 
-    return (self_p);
-}
+    /* Perform the handshake. */
+    if (http_websocket_server_handshake(&self_p->http_websocket_server,
+                                        connection_p->request_p) != 0) {
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "handshake failed"));
+    }
 
-/**
- * def handshake(self, request)
- */
-static mp_obj_t class_http_websocket_server_handshake(mp_obj_t self_in,
-                                                      mp_obj_t request_in)
-{
-    return (mp_const_none);
+    return (self_p);
 }
 
 /**
@@ -206,14 +207,12 @@ static mp_obj_t class_http_websocket_server_write(mp_uint_t n_args,
     return (MP_OBJ_NEW_SMALL_INT(res));
 }
 
-static MP_DEFINE_CONST_FUN_OBJ_2(class_http_websocket_server_handshake_obj, class_http_websocket_server_handshake);
 static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_http_websocket_server_read_obj, 1, 2, class_http_websocket_server_read);
 static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_http_websocket_server_read_into_obj, 2, 3, class_http_websocket_server_read_into);
 static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_http_websocket_server_write_obj, 2, 3, class_http_websocket_server_write);
 
 static const mp_rom_map_elem_t class_http_websocket_server_locals_dict_table[] = {
     /* Instance methods. */
-    { MP_ROM_QSTR(MP_QSTR_handshake), MP_ROM_PTR(&class_http_websocket_server_handshake_obj) },
     { MP_ROM_QSTR(MP_QSTR_read), MP_ROM_PTR(&class_http_websocket_server_read_obj) },
     { MP_ROM_QSTR(MP_QSTR_read_into), MP_ROM_PTR(&class_http_websocket_server_read_into_obj) },
     { MP_ROM_QSTR(MP_QSTR_write), MP_ROM_PTR(&class_http_websocket_server_write_obj) },

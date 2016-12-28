@@ -32,6 +32,7 @@
 #define __MPCONFIGPORT_H__
 
 #include "simba_board.h"
+#include "config.h"
 #include "pumbaa_config_default.h"
 
 #endif

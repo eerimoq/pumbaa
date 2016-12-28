@@ -340,11 +340,19 @@
 #endif
 
 #ifndef CONFIG_PUMBAA_HTTP_SERVER
-#    define CONFIG_PUMBAA_HTTP_SERVER                       1
+#    if defined(ARCH_ESP) || defined(ARCH_ESP32)
+#        define CONFIG_PUMBAA_HTTP_SERVER                   0
+#    else
+#        define CONFIG_PUMBAA_HTTP_SERVER                   1
+#    endif
 #endif
 
 #ifndef CONFIG_PUMBAA_HTTP_WEBSOCKET_SERVER
-#    define CONFIG_PUMBAA_HTTP_WEBSOCKET_SERVER             1
+#    if defined(ARCH_ESP) || defined(ARCH_ESP32)
+#        define CONFIG_PUMBAA_HTTP_WEBSOCKET_SERVER         0
+#    else
+#        define CONFIG_PUMBAA_HTTP_WEBSOCKET_SERVER         1
+#    endif
 #endif
 
 #ifndef CONFIG_PUMBAA_EMACS
@@ -353,6 +361,22 @@
 #    else
 #        define CONFIG_PUMBAA_EMACS                         0
 #    endif
+#endif
+
+/**
+ * Validate the configuration.
+ */
+
+#if CONFIG_PUMBAA_THRD == 1 && MICROPY_PY_THREAD == 0
+#    error "MICROPY_PY_THREAD must be 1 when CONFIG_PUMBAA_THRD is 1."
+#endif
+
+#if CONFIG_PUMBAA_HTTP_SERVER == 1 && MICROPY_PY_THREAD == 0
+#    error "MICROPY_PY_THREAD must be 1 when CONFIG_PUMBAA_HTTP_SERVER is 1."
+#endif
+
+#if CONFIG_PUMBAA_HTTP_WEBSOCKET_SERVER == 1 && CONFIG_PUMBAA_HTTP_SERVER == 0
+#    error "CONFIG_PUMBAA_HTTP_SERVER must be 1 when CONFIG_PUMBAA_HTTP_WEBSOCKET_SERVER is 1."
 #endif
 
 extern const struct _mp_obj_module_t mp_module_uos;
@@ -366,6 +390,14 @@ extern const struct _mp_obj_module_t module_inet;
 extern const struct _mp_obj_module_t module_text;
 extern const struct _mp_obj_module_t module_board;
 
+#ifndef MICROPY_PORT_BUILTIN_MODULES_EXTRA
+#    define MICROPY_PORT_BUILTIN_MODULES_EXTRA
+#endif
+
+#ifndef MICROPY_PORT_BUILTIN_MODULE_WEAK_LINKS_EXTRA
+#    define MICROPY_PORT_BUILTIN_MODULE_WEAK_LINKS_EXTRA
+#endif
+
 #define MICROPY_PORT_BUILTIN_MODULES                                    \
     { MP_ROM_QSTR(MP_QSTR_uos), MP_ROM_PTR(&mp_module_uos) },           \
     { MP_ROM_QSTR(MP_QSTR_uselect), MP_ROM_PTR(&mp_module_uselect) },   \
@@ -376,7 +408,8 @@ extern const struct _mp_obj_module_t module_board;
     { MP_ROM_QSTR(MP_QSTR_inet), MP_ROM_PTR(&module_inet) },            \
     { MP_ROM_QSTR(MP_QSTR_text), MP_ROM_PTR(&module_text) },            \
     { MP_ROM_QSTR(MP_QSTR_board), MP_ROM_PTR(&module_board) },          \
-    { MP_ROM_QSTR(MP_QSTR_utime), MP_ROM_PTR(&mp_module_utime) },
+    { MP_ROM_QSTR(MP_QSTR_utime), MP_ROM_PTR(&mp_module_utime) },       \
+        MICROPY_PORT_BUILTIN_MODULES_EXTRA
 
 #define MICROPY_PORT_BUILTIN_MODULE_WEAK_LINKS                          \
     { MP_OBJ_NEW_QSTR(MP_QSTR_binascii), (mp_obj_t)&mp_module_ubinascii }, \
@@ -390,7 +423,8 @@ extern const struct _mp_obj_module_t module_board;
     { MP_OBJ_NEW_QSTR(MP_QSTR_socket), (mp_obj_t)&mp_module_usocket },  \
     { MP_OBJ_NEW_QSTR(MP_QSTR_struct), (mp_obj_t)&mp_module_ustruct },  \
     { MP_OBJ_NEW_QSTR(MP_QSTR_time), (mp_obj_t)&mp_module_utime },      \
-    { MP_OBJ_NEW_QSTR(MP_QSTR_zlib), (mp_obj_t)&mp_module_uzlib },
+    { MP_OBJ_NEW_QSTR(MP_QSTR_zlib), (mp_obj_t)&mp_module_uzlib },      \
+        MICROPY_PORT_BUILTIN_MODULE_WEAK_LINKS_EXTRA
 
 /* Extra built in names to add to the global namespace. */
 #define MICROPY_PORT_BUILTINS                                           \

@@ -28,37 +28,41 @@
 # This file is part of the Pumbaa project.
 #
 
-from inet import HttpServer, WebSocketServer
+import time
+from inet import HttpServer, HttpWebSocketServer
 import kernel
 from drivers import esp_wifi
 
 
+# Configuration.
 SSID = 'Qvist2'
 PASSWORD = 'maxierik'
 IP = '192.168.0.7'
 PORT = 8000
 
 
-def on_no_route(client, request):
-    print('on_no_route:', client, request)
+def on_no_route(_, request):
+    print('on_no_route:', request)
 
-    return None, HttpServer.RESPONSE_CODE_404_NOT_FOUND
-
-
-def on_request_index(client, request):
-    print('on_request_index:', client, request)
-
-    return "<html><body>Hello from Pumbaa!</body></html>"
+    return (request.path + ' not found.',
+            HttpServer.RESPONSE_CODE_404_NOT_FOUND,
+            HttpServer.CONTENT_TYPE_TEXT_PLAIN)
 
 
-def on_request_websocket_echo(client, request):
-    print('on_request_websocket_echo:', client, request)
+def on_request_index(_, request):
+    print('on_request_index:', request)
 
-    ws = WebSocketServer(client.socket)
-    ws.handshake(request)
+    return ('<html><body>Hello from Pumbaa!</body></html>', )
+
+
+def on_request_websocket_echo(connection, request):
+    print('on_request_websocket_echo:', request)
+
+    ws = HttpWebSocketServer(connection, request)
 
     while True:
         message = ws.read()
+        print('Message:', message)
 
         if not message:
             break
@@ -72,13 +76,16 @@ def main():
     esp_wifi.station_connect()
 
     routes = [
-        ("/index.html", on_request_index),
-        ("/websocket_echo.html", on_request_websocket_echo)
+        ('/index.html', on_request_index),
+        ('/websocket/echo', on_request_websocket_echo)
     ]
 
     http_server = HttpServer(IP, PORT, routes, on_no_route)
     http_server.start()
-    kernel.thrd_suspend()
+
+    while True:
+        print('running')
+        time.sleep(5)
 
 
 if __name__ == '__main__':

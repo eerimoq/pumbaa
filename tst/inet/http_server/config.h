@@ -28,28 +28,15 @@
  * This file is part of the Pumbaa project.
  */
 
-#ifndef __MODULE_INET_CLASS_HTTP_SERVER_H__
-#define __MODULE_INET_CLASS_HTTP_SERVER_H__
+#ifndef __CONFIG_H__
+#define __CONFIG_H__
 
-#include "pumbaa.h"
+extern const struct _mp_obj_module_t module_socket_stub;
 
-struct class_http_server_t {
-    mp_obj_base_t base;
-    struct http_server_t http_server;
-    struct http_server_listener_t listener;
-    struct http_server_connection_t connections[2];
-    struct http_server_route_t empty_routes[1];
-    mp_obj_t routes;
-    mp_obj_t no_route;
-};
+#define MICROPY_PORT_BUILTIN_MODULES_EXTRA                              \
+    { MP_ROM_QSTR(MP_QSTR_socket_stub), MP_ROM_PTR(&module_socket_stub) },
 
-struct class_http_server_connection_t {
-    mp_obj_base_t base;
-    struct http_server_connection_t *connection_p;
-    struct http_server_request_t *request_p;
-};
-
-extern const mp_obj_type_t module_inet_class_http_server;
-extern const mp_obj_type_t module_inet_class_http_server_connection;
+/* Changes of the default Simba configuration. */
+#include "simba_config.h"
 
 #endif
