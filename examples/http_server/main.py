@@ -29,7 +29,7 @@
 #
 
 import time
-from inet import HttpServer, HttpWebSocketServer
+from inet import HttpServer, HttpServerWebSocket
 import kernel
 from drivers import esp_wifi
 
@@ -50,7 +50,7 @@ def on_index(_, request):
 def on_websocket_echo(connection, request):
     print('on_websocket_echo:', request)
 
-    ws = HttpWebSocketServer(connection, request)
+    ws = HttpServerWebSocket(connection, request)
 
     while True:
         message = ws.read()

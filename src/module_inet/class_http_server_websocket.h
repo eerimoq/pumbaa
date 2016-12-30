@@ -2,9 +2,9 @@
  * @section License
  *
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016, Erik Moqvist
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -28,16 +28,16 @@
  * This file is part of the Pumbaa project.
  */
 
-#ifndef __MODULE_INET_CLASS_HTTP_WEBSOCKET_SERVER_H__
-#define __MODULE_INET_CLASS_HTTP_WEBSOCKET_SERVER_H__
+#ifndef __MODULE_INET_CLASS_HTTP_SERVER_WEBSOCKET_H__
+#define __MODULE_INET_CLASS_HTTP_SERVER_WEBSOCKET_H__
 
 #include "pumbaa.h"
 
-struct class_http_websocket_server_t {
+struct class_http_server_websocket_t {
     mp_obj_base_t base;
-    struct http_websocket_server_t http_websocket_server;
+    struct http_websocket_server_t http_server_websocket;
 };
 
-extern const mp_obj_type_t module_inet_class_http_websocket_server;
+extern const mp_obj_type_t module_inet_class_http_server_websocket;
 
 #endif

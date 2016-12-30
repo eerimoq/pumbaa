@@ -347,11 +347,11 @@
 #    endif
 #endif
 
-#ifndef CONFIG_PUMBAA_HTTP_WEBSOCKET_SERVER
+#ifndef CONFIG_PUMBAA_HTTP_SERVER_WEBSOCKET
 #    if defined(ARCH_ESP)
-#        define CONFIG_PUMBAA_HTTP_WEBSOCKET_SERVER         0
+#        define CONFIG_PUMBAA_HTTP_SERVER_WEBSOCKET         0
 #    else
-#        define CONFIG_PUMBAA_HTTP_WEBSOCKET_SERVER         1
+#        define CONFIG_PUMBAA_HTTP_SERVER_WEBSOCKET         1
 #    endif
 #endif
 
@@ -375,8 +375,8 @@
 #    error "MICROPY_PY_THREAD must be 1 when CONFIG_PUMBAA_HTTP_SERVER is 1."
 #endif
 
-#if CONFIG_PUMBAA_HTTP_WEBSOCKET_SERVER == 1 && CONFIG_PUMBAA_HTTP_SERVER == 0
-#    error "CONFIG_PUMBAA_HTTP_SERVER must be 1 when CONFIG_PUMBAA_HTTP_WEBSOCKET_SERVER is 1."
+#if CONFIG_PUMBAA_HTTP_SERVER_WEBSOCKET == 1 && CONFIG_PUMBAA_HTTP_SERVER == 0
+#    error "CONFIG_PUMBAA_HTTP_SERVER must be 1 when CONFIG_PUMBAA_HTTP_SERVER_WEBSOCKET is 1."
 #endif
 
 extern const struct _mp_obj_module_t mp_module_uos;

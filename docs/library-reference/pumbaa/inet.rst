@@ -51,19 +51,19 @@ Simba documentation: `inet`_
       Stop the HTTP server.
 
 
-.. class:: inet.HttpWebSocketServer(connection, request)
+.. class:: inet.HttpServerWebSocket(connection, request)
 
-   Create a HTTP WebSocket server object with given `connection` and
+   Create a HTTP server WebSocket object with given `connection` and
    `request`.
 
-   An example of how to use the HTTP WebSocket server class in a HTTP
+   An example of how to use the HTTP server WebSocket class in a HTTP
    server route callback.
 
    .. code-block:: python
 
-      >>> from inet import HttpWebSocketServer
+      >>> from inet import HttpServerWebSocket
       >>> def on_websocket_echo(connection, request):
-      >>>     ws = HttpWebSocketServer(connection, request)
+      >>>     ws = HttpServerWebSocket(connection, request)
       >>>     while True:
       >>>         message = ws.read()
       >>>         print('Message:', message)

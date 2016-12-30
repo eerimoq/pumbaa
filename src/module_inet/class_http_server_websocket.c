@@ -31,13 +31,13 @@
 #include "pumbaa.h"
 
 /**
- * Print the http_websocket_server object.
+ * Print the http_server_websocket object.
  */
-static void class_http_websocket_server_print(const mp_print_t *print_p,
+static void class_http_server_websocket_print(const mp_print_t *print_p,
                                               mp_obj_t self_in,
                                               mp_print_kind_t kind)
 {
-    struct class_http_websocket_server_t *self_p;
+    struct class_http_server_websocket_t *self_p;
 
     self_p = MP_OBJ_TO_PTR(self_in);
     mp_printf(print_p, "<0x%p>", self_p);
@@ -46,14 +46,14 @@ static void class_http_websocket_server_print(const mp_print_t *print_p,
 /**
  * Create a new HttpWebsocketServer object associated with the id. If
  * additional arguments are given, they are used to initialise the
- * http_websocket_server. See `init`.
+ * http_server_websocket. See `init`.
  */
-static mp_obj_t class_http_websocket_server_make_new(const mp_obj_type_t *type_p,
+static mp_obj_t class_http_server_websocket_make_new(const mp_obj_type_t *type_p,
                                                      mp_uint_t n_args,
                                                      mp_uint_t n_kw,
                                                      const mp_obj_t *args_p)
 {
-    struct class_http_websocket_server_t *self_p;
+    struct class_http_server_websocket_t *self_p;
     struct class_http_server_connection_t *connection_p;
     mp_map_t kwargs;
     static const mp_arg_t allowed_args[] = {
@@ -77,17 +77,17 @@ static mp_obj_t class_http_websocket_server_make_new(const mp_obj_type_t *type_p
     connection_p = args[0].u_obj;
 
     /* Create a new HttpWebsocketServer object. */
-    self_p = m_new_obj(struct class_http_websocket_server_t);
-    self_p->base.type = &module_inet_class_http_websocket_server;
+    self_p = m_new_obj(struct class_http_server_websocket_t);
+    self_p->base.type = &module_inet_class_http_server_websocket;
 
-    if (http_websocket_server_init(&self_p->http_websocket_server,
+    if (http_websocket_server_init(&self_p->http_server_websocket,
                                    &connection_p->connection_p->socket) != 0) {
         nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
                                            "http_websocket_server_init() failed"));
     }
 
     /* Perform the handshake. */
-    if (http_websocket_server_handshake(&self_p->http_websocket_server,
+    if (http_websocket_server_handshake(&self_p->http_server_websocket,
                                         connection_p->request_p) != 0) {
         nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
                                            "handshake failed"));
@@ -99,10 +99,10 @@ static mp_obj_t class_http_websocket_server_make_new(const mp_obj_type_t *type_p
 /**
  * def read(self[, size])
  */
-static mp_obj_t class_http_websocket_server_read(mp_uint_t n_args,
+static mp_obj_t class_http_server_websocket_read(mp_uint_t n_args,
                                                  const mp_obj_t *args_p)
 {
-    struct class_http_websocket_server_t *self_p;
+    struct class_http_server_websocket_t *self_p;
     vstr_t vstr;
     size_t size;
     ssize_t res;
@@ -118,7 +118,7 @@ static mp_obj_t class_http_websocket_server_read(mp_uint_t n_args,
     }
 
     vstr_init_len(&vstr, size);
-    res = http_websocket_server_read(&self_p->http_websocket_server,
+    res = http_websocket_server_read(&self_p->http_server_websocket,
                                      &type,
                                      vstr.buf,
                                      size);
@@ -135,10 +135,10 @@ static mp_obj_t class_http_websocket_server_read(mp_uint_t n_args,
 /**
  * def read_into(self, buffer[, size])
  */
-static mp_obj_t class_http_websocket_server_read_into(mp_uint_t n_args,
+static mp_obj_t class_http_server_websocket_read_into(mp_uint_t n_args,
                                                       const mp_obj_t *args_p)
 {
-    struct class_http_websocket_server_t *self_p;
+    struct class_http_server_websocket_t *self_p;
     mp_buffer_info_t buffer_info;
     size_t size;
     ssize_t res;
@@ -161,7 +161,7 @@ static mp_obj_t class_http_websocket_server_read_into(mp_uint_t n_args,
         size = buffer_info.len;
     }
 
-    res = http_websocket_server_read(&self_p->http_websocket_server,
+    res = http_websocket_server_read(&self_p->http_server_websocket,
                                      &type,
                                      buffer_info.buf,
                                      size);
@@ -172,10 +172,10 @@ static mp_obj_t class_http_websocket_server_read_into(mp_uint_t n_args,
 /**
  * def write(self, buffer[, size])
  */
-static mp_obj_t class_http_websocket_server_write(mp_uint_t n_args,
+static mp_obj_t class_http_server_websocket_write(mp_uint_t n_args,
                                                   const mp_obj_t *args_p)
 {
-    struct class_http_websocket_server_t *self_p;
+    struct class_http_server_websocket_t *self_p;
     mp_buffer_info_t buffer_info;
     size_t size;
     ssize_t res;
@@ -199,7 +199,7 @@ static mp_obj_t class_http_websocket_server_write(mp_uint_t n_args,
     }
 
     type = HTTP_TYPE_TEXT;
-    res = http_websocket_server_write(&self_p->http_websocket_server,
+    res = http_websocket_server_write(&self_p->http_server_websocket,
                                       type,
                                       buffer_info.buf,
                                       size);
@@ -207,26 +207,39 @@ static mp_obj_t class_http_websocket_server_write(mp_uint_t n_args,
     return (MP_OBJ_NEW_SMALL_INT(res));
 }
 
-static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_http_websocket_server_read_obj, 1, 2, class_http_websocket_server_read);
-static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_http_websocket_server_read_into_obj, 2, 3, class_http_websocket_server_read_into);
-static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_http_websocket_server_write_obj, 2, 3, class_http_websocket_server_write);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_http_server_websocket_read_obj,
+                                           1,
+                                           2,
+                                           class_http_server_websocket_read);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_http_server_websocket_read_into_obj,
+                                           2,
+                                           3,
+                                           class_http_server_websocket_read_into);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_http_server_websocket_write_obj,
+                                           2,
+                                           3,
+                                           class_http_server_websocket_write);
 
-static const mp_rom_map_elem_t class_http_websocket_server_locals_dict_table[] = {
+static const mp_rom_map_elem_t class_http_server_websocket_locals_dict_table[] = {
     /* Instance methods. */
-    { MP_ROM_QSTR(MP_QSTR_read), MP_ROM_PTR(&class_http_websocket_server_read_obj) },
-    { MP_ROM_QSTR(MP_QSTR_read_into), MP_ROM_PTR(&class_http_websocket_server_read_into_obj) },
-    { MP_ROM_QSTR(MP_QSTR_write), MP_ROM_PTR(&class_http_websocket_server_write_obj) },
+    { MP_ROM_QSTR(MP_QSTR_read),
+      MP_ROM_PTR(&class_http_server_websocket_read_obj) },
+    { MP_ROM_QSTR(MP_QSTR_read_into),
+      MP_ROM_PTR(&class_http_server_websocket_read_into_obj) },
+    { MP_ROM_QSTR(MP_QSTR_write),
+      MP_ROM_PTR(&class_http_server_websocket_write_obj) },
 };
 
-static MP_DEFINE_CONST_DICT(class_http_websocket_server_locals_dict, class_http_websocket_server_locals_dict_table);
+static MP_DEFINE_CONST_DICT(class_http_server_websocket_locals_dict,
+                            class_http_server_websocket_locals_dict_table);
 
 /**
- * Http_Websocket_Server class type.
+ * Http_Server_Websocket class type.
  */
-const mp_obj_type_t module_inet_class_http_websocket_server = {
+const mp_obj_type_t module_inet_class_http_server_websocket = {
     { &mp_type_type },
-    .name = MP_QSTR_Http_Websocket_Server,
-    .print = class_http_websocket_server_print,
-    .make_new = class_http_websocket_server_make_new,
-    .locals_dict = (mp_obj_t)&class_http_websocket_server_locals_dict,
+    .name = MP_QSTR_HttpServerWebsocket,
+    .print = class_http_server_websocket_print,
+    .make_new = class_http_server_websocket_make_new,
+    .locals_dict = (mp_obj_t)&class_http_server_websocket_locals_dict,
 };

@@ -29,7 +29,7 @@
 #
 
 import harness
-from inet import HttpServer, HttpWebSocketServer
+from inet import HttpServer, HttpServerWebSocket
 from harness import assert_raises
 import socket_stub
 
@@ -63,7 +63,7 @@ def on_bad_arguments(connection, request):
 
 def on_websocket_echo(connection, request):
     print('on_websocket_echo({}, {})'.format(connection, request))
-    ws = HttpWebSocketServer(connection, request)
+    ws = HttpServerWebSocket(connection, request)
     print(ws)
 
     # Websocket read() and write().
@@ -79,7 +79,7 @@ def on_websocket_echo(connection, request):
 def test_print():
     print(HttpServer)
     print(HttpServer("127.0.0.1", 80, [], on_404_not_found))
-    print(HttpWebSocketServer)
+    print(HttpServerWebSocket)
 
 
 def test_start():
