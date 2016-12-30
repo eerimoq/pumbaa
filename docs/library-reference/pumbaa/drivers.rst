@@ -617,6 +617,8 @@ Simba documentation: `drivers`_
 
       >>> esp_wifi.set_op_mode(esp_wifi.OP_MODE_STATION)
       >>> esp_wifi.station_init('ssid', 'password')
+      >>> esp_wifi.station_get_status()
+      'got-ip'
       >>> esp_wifi.station_get_ip_info()
       (address='192.168.0.5', netmask='255.255.255.0', gateway='192.168.0.1')
 
@@ -709,7 +711,11 @@ Simba documentation: `drivers`_
 
    .. method:: station_connect()
 
-      Connect the WiFi station to the Access Point (AP).
+      Connect the WiFi station to the Access Point (AP). This function
+      returns before a connection has been established. Call
+      `station_get_status()` periodically until it retuns ``got-ip``
+      to ensure the WiFi station has been assigned an IP the the WiFi
+      Access Point DHCP server.
 
 
    .. method:: station_disconnect()
@@ -742,7 +748,7 @@ Simba documentation: `drivers`_
       disconnection.
 
 
-   .. method:: station_get_connect_status()
+   .. method:: station_get_status()
 
       Get the connection status of the WiFi station.
 

@@ -30,6 +30,11 @@
 
 #include "simba.h"
 
+int can_module_init()
+{
+    return (0);
+}
+
 int can_init(struct can_driver_t *self_p,
              struct can_device_t *dev_p,
              uint32_t speed,

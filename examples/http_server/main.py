@@ -38,7 +38,7 @@ from drivers import esp_wifi
 SSID = 'Qvist2'
 PASSWORD = 'maxierik'
 IP = '192.168.0.7'
-PORT = 8000
+PORT = 80
 
 
 def on_index(_, request):
@@ -75,7 +75,7 @@ def main():
     esp_wifi.station_init(SSID, PASSWORD)
     esp_wifi.station_connect()
 
-    while esp_wifi.station_get_ip_info().address == '0.0.0.0':
+    while esp_wifi.station_get_status() != 'got-ip':
         print('Waiting for WiFi connection...')
         time.sleep(2)
 

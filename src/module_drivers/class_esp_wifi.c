@@ -2,9 +2,9 @@
  * @section License
  *
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016, Erik Moqvist
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -64,7 +64,7 @@ static mp_obj_t class_esp_wifi_set_op_mode(mp_obj_t self_in,
 {
     int mode;
     int res;
-    
+
     mode = mp_obj_get_int(mode_in);
 
     if ((mode < esp_wifi_op_mode_null_t)
@@ -75,7 +75,7 @@ static mp_obj_t class_esp_wifi_set_op_mode(mp_obj_t self_in,
     }
 
     res = esp_wifi_set_op_mode(mode);
-    
+
     if (res != 0) {
         nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_OSError,
                                                 "esp_wifi_set_op_mode() failed with %d",
@@ -432,11 +432,17 @@ static mp_obj_t class_esp_wifi_station_get_reconnect_policy(mp_obj_t self_in)
 }
 
 /**
- * def station_get_connect_status(self)
+ * def station_get_status(self)
  */
-static mp_obj_t class_esp_wifi_station_get_connect_status(mp_obj_t self_in)
+static mp_obj_t class_esp_wifi_station_get_status(mp_obj_t self_in)
 {
-    return (MP_OBJ_NEW_SMALL_INT(esp_wifi_station_get_connect_status()));
+    enum esp_wifi_station_status_t status;
+    const char *status_p;
+
+    status = esp_wifi_station_get_status();
+    status_p = esp_wifi_station_status_as_string(status);
+
+    return (mp_obj_new_str(status_p, strlen(status_p), false));
 }
 
 /**
@@ -513,8 +519,8 @@ static MP_DEFINE_CONST_FUN_OBJ_2(class_esp_wifi_station_set_reconnect_policy_obj
                                  class_esp_wifi_station_set_reconnect_policy);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_esp_wifi_station_get_reconnect_policy_obj,
                                  class_esp_wifi_station_get_reconnect_policy);
-static MP_DEFINE_CONST_FUN_OBJ_1(class_esp_wifi_station_get_connect_status_obj,
-                                 class_esp_wifi_station_get_connect_status);
+static MP_DEFINE_CONST_FUN_OBJ_1(class_esp_wifi_station_get_status_obj,
+                                 class_esp_wifi_station_get_status);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_esp_wifi_station_dhcp_client_start_obj,
                                  class_esp_wifi_station_dhcp_client_start);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_esp_wifi_station_dhcp_client_stop_obj,
@@ -562,8 +568,8 @@ static const mp_rom_map_elem_t class_esp_wifi_locals_dict_table[] = {
       MP_ROM_PTR(&class_esp_wifi_station_set_reconnect_policy_obj) },
     { MP_ROM_QSTR(MP_QSTR_station_get_reconnect_policy),
       MP_ROM_PTR(&class_esp_wifi_station_get_reconnect_policy_obj) },
-    { MP_ROM_QSTR(MP_QSTR_station_get_connect_status),
-      MP_ROM_PTR(&class_esp_wifi_station_get_connect_status_obj) },
+    { MP_ROM_QSTR(MP_QSTR_station_get_status),
+      MP_ROM_PTR(&class_esp_wifi_station_get_status_obj) },
     { MP_ROM_QSTR(MP_QSTR_station_dhcp_client_start),
       MP_ROM_PTR(&class_esp_wifi_station_dhcp_client_start_obj) },
     { MP_ROM_QSTR(MP_QSTR_station_dhcp_client_stop),
