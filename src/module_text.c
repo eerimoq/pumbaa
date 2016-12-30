@@ -44,7 +44,7 @@ static mp_obj_t module_emacs(mp_uint_t n_args, const mp_obj_t *args_p)
     }
     
     mp_hal_set_interrupt_char(-1);
-    res = emacs(path_p);
+    res = emacs(path_p, sys_get_stdin(), sys_get_stdout());
     mp_hal_set_interrupt_char(CHAR_CTRL_C);
 
     if (res != 0) {
