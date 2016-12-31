@@ -30,6 +30,8 @@
 
 #include "pumbaa.h"
 
+#if CONFIG_PUMBAA_CLASS_HTTP_SERVER == 1
+
 static void response_write(struct class_http_server_connection_t *connection_obj_p,
                            mp_obj_t response_obj)
 {
@@ -383,3 +385,5 @@ const mp_obj_type_t module_inet_class_http_server = {
     .make_new = class_http_server_make_new,
     .locals_dict = (mp_obj_t)&class_http_server_locals_dict,
 };
+
+#endif

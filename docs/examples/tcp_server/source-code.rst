@@ -30,6 +30,7 @@
    # This file is part of the Pumbaa project.
    #
    
+   import time
    import socket
    from drivers import esp_wifi
    
@@ -41,6 +42,10 @@
    esp_wifi.set_op_mode(esp_wifi.OP_MODE_STATION)
    esp_wifi.station_init(SSID, PASSWORD)
    esp_wifi.station_connect()
+   
+   while esp_wifi.station_get_status() != 'got-ip':
+       print('Waiting for WiFi connection...')
+       time.sleep(2)
    
    listener = socket.socket()
    listener.bind((IP, PORT))

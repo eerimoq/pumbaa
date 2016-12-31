@@ -33,6 +33,8 @@
 
 #include "pumbaa.h"
 
+#if CONFIG_PUMBAA_CLASS_SD == 1
+
 struct class_sd_t {
     mp_obj_base_t base;
     struct sd_driver_t drv;
@@ -40,5 +42,7 @@ struct class_sd_t {
 };
 
 extern const mp_obj_type_t module_drivers_class_sd;
+
+#endif
 
 #endif

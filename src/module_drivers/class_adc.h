@@ -33,6 +33,8 @@
 
 #include "pumbaa.h"
 
+#if CONFIG_PUMBAA_CLASS_ADC == 1
+
 struct class_adc_t {
     mp_obj_base_t base;
     struct adc_driver_t drv;
@@ -40,5 +42,7 @@ struct class_adc_t {
 };
 
 extern const mp_obj_type_t module_drivers_class_adc;
+
+#endif
 
 #endif

@@ -33,6 +33,8 @@
 
 #include "pumbaa.h"
 
+#if CONFIG_PUMBAA_CLASS_OWI == 1
+
 struct class_owi_t {
     mp_obj_base_t base;
     struct owi_driver_t drv;
@@ -40,5 +42,7 @@ struct class_owi_t {
 };
 
 extern const mp_obj_type_t module_drivers_class_owi;
+
+#endif
 
 #endif

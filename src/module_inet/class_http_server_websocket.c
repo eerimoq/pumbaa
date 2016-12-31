@@ -30,6 +30,8 @@
 
 #include "pumbaa.h"
 
+#if CONFIG_PUMBAA_CLASS_HTTP_SERVER_WEBSOCKET == 1
+
 /**
  * Print the http_server_websocket object.
  */
@@ -243,3 +245,5 @@ const mp_obj_type_t module_inet_class_http_server_websocket = {
     .make_new = class_http_server_websocket_make_new,
     .locals_dict = (mp_obj_t)&class_http_server_websocket_locals_dict,
 };
+
+#endif

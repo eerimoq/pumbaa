@@ -30,6 +30,8 @@
 
 #include "pumbaa.h"
 
+#if CONFIG_PUMBAA_CLASS_SD == 1
+
 /**
  * CID named tuple fields.
  */
@@ -425,3 +427,5 @@ const mp_obj_type_t module_drivers_class_sd = {
     .make_new = class_sd_make_new,
     .locals_dict = (mp_obj_t)&class_sd_locals_dict,
 };
+
+#endif

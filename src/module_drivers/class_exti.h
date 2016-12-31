@@ -2,9 +2,9 @@
  * @section License
  *
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016, Erik Moqvist
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -33,6 +33,8 @@
 
 #include "pumbaa.h"
 
+#if CONFIG_PUMBAA_CLASS_EXTI == 1
+
 enum class_exti_chan_type_t {
     class_exti_chan_type_none_t = 0,
     class_exti_chan_type_event_t,
@@ -59,5 +61,7 @@ struct class_exti_t {
 };
 
 extern const mp_obj_type_t module_drivers_class_exti;
+
+#endif
 
 #endif

@@ -32,5 +32,8 @@
 NAME = minimal_configuration
 BOARD = arduino_due
 
+CDEFS += \
+	CONFIG_MINIMAL_SYSTEM=1
+
 PUMBAA_ROOT ?= ../..
 include $(PUMBAA_ROOT)/make/app.mk

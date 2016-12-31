@@ -30,6 +30,8 @@
 
 #include "pumbaa.h"
 
+#if CONFIG_PUMBAA_CLASS_ADC == 1
+
 /**
  * Print the adc object.
  */
@@ -211,3 +213,5 @@ const mp_obj_type_t module_drivers_class_adc = {
     .make_new = class_adc_make_new,
     .locals_dict = (mp_obj_t)&class_adc_locals_dict,
 };
+
+#endif

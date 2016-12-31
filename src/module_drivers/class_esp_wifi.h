@@ -33,10 +33,14 @@
 
 #include "pumbaa.h"
 
+#if CONFIG_PUMBAA_CLASS_ESP_WIFI == 1
+
 struct class_esp_wifi_t {
     mp_obj_base_t base;
 };
 
 extern const struct class_esp_wifi_t module_drivers_esp_wifi_obj;
+
+#endif
 
 #endif

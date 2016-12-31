@@ -30,7 +30,7 @@
 
 
 NAME = default_configuration
-BOARD = arduino_due
+BOARD ?= linux
 
 PUMBAA_ROOT ?= ../..
 include $(PUMBAA_ROOT)/make/app.mk

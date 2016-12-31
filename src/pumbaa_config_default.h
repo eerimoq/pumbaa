@@ -2,9 +2,9 @@
  * @section License
  *
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016, Erik Moqvist
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -212,30 +212,34 @@
 #endif
 
 #ifndef CONFIG_PUMBAA_CLASS_BOARD
-#    define CONFIG_PUMBAA_CLASS_BOARD                       1
+#    if defined(CONFIG_MINIMAL_SYSTEM)
+#        define CONFIG_PUMBAA_CLASS_BOARD                   0
+#    else
+#        define CONFIG_PUMBAA_CLASS_BOARD                   1
+#    endif
 #endif
 
 #ifndef CONFIG_PUMBAA_CLASS_DAC
-#    if defined(FAMILY_SAM) || defined(FAMILY_LINUX) || defined(ARCH_ESP32)
-#        define CONFIG_PUMBAA_CLASS_DAC                     1
-#    else
+#    if defined(CONFIG_MINIMAL_SYSTEM) || !defined(PORT_HAS_DAC) || defined(ARCH_ESP)
 #        define CONFIG_PUMBAA_CLASS_DAC                     0
+#    else
+#        define CONFIG_PUMBAA_CLASS_DAC                     1
 #    endif
 #endif
 
 #ifndef CONFIG_PUMBAA_CLASS_ADC
-#    if defined(FAMILY_SAM) || defined(FAMILY_LINUX) || defined(ARCH_ESP32)
-#        define CONFIG_PUMBAA_CLASS_ADC                     1
-#    else
+#    if defined(CONFIG_MINIMAL_SYSTEM) || !defined(PORT_HAS_ADC) || defined(ARCH_ESP)
 #        define CONFIG_PUMBAA_CLASS_ADC                     0
+#    else
+#        define CONFIG_PUMBAA_CLASS_ADC                     1
 #    endif
 #endif
 
 #ifndef CONFIG_PUMBAA_CLASS_EXTI
-#    if defined(FAMILY_SAM) || defined(ARCH_ESP) || defined(FAMILY_LINUX)
-#        define CONFIG_PUMBAA_CLASS_EXTI                    1
-#    else
+#    if defined(CONFIG_MINIMAL_SYSTEM) || !defined(PORT_HAS_EXTI)
 #        define CONFIG_PUMBAA_CLASS_EXTI                    0
+#    else
+#        define CONFIG_PUMBAA_CLASS_EXTI                    1
 #    endif
 #endif
 
@@ -244,62 +248,66 @@
 #endif
 
 #ifndef CONFIG_PUMBAA_CLASS_PIN
-#    define CONFIG_PUMBAA_CLASS_PIN                         1
+#    if defined(CONFIG_MINIMAL_SYSTEM) || !defined(PORT_HAS_PIN)
+#        define CONFIG_PUMBAA_CLASS_PIN                     0
+#    else
+#        define CONFIG_PUMBAA_CLASS_PIN                     1
+#    endif
 #endif
 
 #ifndef CONFIG_PUMBAA_CLASS_SPI
-#    if defined(FAMILY_SAM) || defined(FAMILY_LINUX) || defined(ARCH_ESP) || defined(ARCH_ESP32)
-#        define CONFIG_PUMBAA_CLASS_SPI                     1
-#    else
+#    if defined(CONFIG_MINIMAL_SYSTEM) || !defined(PORT_HAS_SPI)
 #        define CONFIG_PUMBAA_CLASS_SPI                     0
+#    else
+#        define CONFIG_PUMBAA_CLASS_SPI                     1
 #    endif
 #endif
 
 #ifndef CONFIG_PUMBAA_CLASS_SD
-#    if defined(FAMILY_SAM) || defined(FAMILY_LINUX)
-#        define CONFIG_PUMBAA_CLASS_SD                      1
-#    else
+#    if defined(CONFIG_MINIMAL_SYSTEM) || !defined(PORT_HAS_SD)
 #        define CONFIG_PUMBAA_CLASS_SD                      0
+#    else
+#        define CONFIG_PUMBAA_CLASS_SD                      1
 #    endif
 #endif
 
 #ifndef CONFIG_PUMBAA_CLASS_I2C_SOFT
-#    if defined(FAMILY_LINUX)
-#        define CONFIG_PUMBAA_CLASS_I2C_SOFT                1
-#    else
+#    if defined(CONFIG_MINIMAL_SYSTEM) || !defined(PORT_HAS_I2C_SOFT) || defined(ARCH_LINUX) || defined(ARCH_ARM) || defined(ARCH_ESP)
 #        define CONFIG_PUMBAA_CLASS_I2C_SOFT                0
+#    else
+#        define CONFIG_PUMBAA_CLASS_I2C_SOFT                1
 #    endif
 #endif
 
 #ifndef CONFIG_PUMBAA_CLASS_ESP_WIFI
-#    if defined(ARCH_ESP) || defined(ARCH_ESP32)
-#        define CONFIG_PUMBAA_CLASS_ESP_WIFI                1
-#    else
+#    if defined(CONFIG_MINIMAL_SYSTEM) || !defined(PORT_HAS_ESP_WIFI)
 #        define CONFIG_PUMBAA_CLASS_ESP_WIFI                0
+#    else
+#        define CONFIG_PUMBAA_CLASS_ESP_WIFI                1
 #    endif
 #endif
 
 #ifndef CONFIG_PUMBAA_CLASS_OWI
-#    if defined(FAMILY_SAM) || defined(ARCH_ESP32) || defined(ARCH_LINUX)
-#        define CONFIG_PUMBAA_CLASS_OWI                     1
-#    else
+#    if defined(CONFIG_MINIMAL_SYSTEM) || !defined(PORT_HAS_OWI)
 #        define CONFIG_PUMBAA_CLASS_OWI                     0
+#    else
+#        define CONFIG_PUMBAA_CLASS_OWI                     1
 #    endif
 #endif
 
 #ifndef CONFIG_PUMBAA_CLASS_DS18B20
-#    if defined(FAMILY_SAM) || defined(ARCH_ESP32) || defined(ARCH_LINUX)
-#        define CONFIG_PUMBAA_CLASS_DS18B20                 1
-#    else
+#    if defined(CONFIG_MINIMAL_SYSTEM) || !defined(PORT_HAS_DS18B20)
 #        define CONFIG_PUMBAA_CLASS_DS18B20                 0
+#    else
+#        define CONFIG_PUMBAA_CLASS_DS18B20                 1
 #    endif
 #endif
 
 #ifndef CONFIG_PUMBAA_CLASS_CAN
-#    if defined(ARCH_ESP32) || defined(FAMILY_SAM) || defined(FAMILY_LINUX)
-#        define CONFIG_PUMBAA_CLASS_CAN                     1
-#    else
+#    if defined(CONFIG_MINIMAL_SYSTEM) || !defined(PORT_HAS_CAN)
 #        define CONFIG_PUMBAA_CLASS_CAN                     0
+#    else
+#        define CONFIG_PUMBAA_CLASS_CAN                     1
 #    endif
 #endif
 
@@ -336,27 +344,51 @@
 #endif
 
 #ifndef CONFIG_PUMBAA_PING
-#    define CONFIG_PUMBAA_PING                              1
-#endif
-
-#ifndef CONFIG_PUMBAA_HTTP_SERVER
-#    if CONFIG_PUMBAA_THRD == 1 && !defined(ARCH_ARM)
-#        define CONFIG_PUMBAA_HTTP_SERVER                   1
+#    if defined(CONFIG_MINIMAL_SYSTEM)
+#        define CONFIG_PUMBAA_PING                          0
 #    else
-#        define CONFIG_PUMBAA_HTTP_SERVER                   0
+#        define CONFIG_PUMBAA_PING                          1
 #    endif
 #endif
 
-#ifndef CONFIG_PUMBAA_HTTP_SERVER_WEBSOCKET
-#    if CONFIG_PUMBAA_HTTP_SERVER == 1
-#        define CONFIG_PUMBAA_HTTP_SERVER_WEBSOCKET         1
+#ifndef CONFIG_PUMBAA_CLASS_HTTP_SERVER
+#    if defined(CONFIG_MINIMAL_SYSTEM) || defined(ARCH_ARM)
+#        define CONFIG_PUMBAA_CLASS_HTTP_SERVER             0
+#    elif CONFIG_PUMBAA_THRD == 1
+#        define CONFIG_PUMBAA_CLASS_HTTP_SERVER             1
 #    else
-#        define CONFIG_PUMBAA_HTTP_SERVER_WEBSOCKET         0
+#        define CONFIG_PUMBAA_CLASS_HTTP_SERVER             0
+#    endif
+#endif
+
+#ifndef CONFIG_PUMBAA_CLASS_HTTP_SERVER_WEBSOCKET
+#    if CONFIG_PUMBAA_CLASS_HTTP_SERVER == 1
+#        define CONFIG_PUMBAA_CLASS_HTTP_SERVER_WEBSOCKET   1
+#    else
+#        define CONFIG_PUMBAA_CLASS_HTTP_SERVER_WEBSOCKET   0
+#    endif
+#endif
+
+#ifndef CONFIG_PUMBAA_MODULE_SOCKET
+#    if defined(CONFIG_MINIMAL_SYSTEM) || defined(ARCH_ARM)
+#        define CONFIG_PUMBAA_MODULE_SOCKET                 0
+#    else
+#        define CONFIG_PUMBAA_MODULE_SOCKET                 1
+#    endif
+#endif
+
+#ifndef CONFIG_PUMBAA_MODULE_SELECT
+#    if defined(CONFIG_MINIMAL_SYSTEM)
+#        define CONFIG_PUMBAA_MODULE_SELECT                 0
+#    else
+#        define CONFIG_PUMBAA_MODULE_SELECT                 1
 #    endif
 #endif
 
 #ifndef CONFIG_PUMBAA_EMACS
-#    if defined(ARCH_LINUX) || defined(ARCH_ESP32)
+#    if defined(CONFIG_MINIMAL_SYSTEM)
+#        define CONFIG_PUMBAA_EMACS                         0
+#    elif defined(ARCH_LINUX) || defined(ARCH_ESP32)
 #        define CONFIG_PUMBAA_EMACS                         1
 #    else
 #        define CONFIG_PUMBAA_EMACS                         0
@@ -398,10 +430,30 @@ extern const struct _mp_obj_module_t module_board;
 #    define MICROPY_PORT_BUILTIN_MODULE_WEAK_LINKS_EXTRA
 #endif
 
+#if CONFIG_PUMBAA_MODULE_SOCKET == 1
+#    define PORT_BUILTIN_MODULE_SOCKET                                  \
+    { MP_ROM_QSTR(MP_QSTR_usocket), MP_ROM_PTR(&mp_module_usocket) },
+#    define PORT_BUILTIN_MODULE_WEAK_LINKS_SOCKET                       \
+    { MP_OBJ_NEW_QSTR(MP_QSTR_socket), (mp_obj_t)&mp_module_usocket },
+#else
+#    define PORT_BUILTIN_MODULE_SOCKET
+#    define PORT_BUILTIN_MODULE_WEAK_LINKS_SOCKET
+#endif
+
+#if CONFIG_PUMBAA_MODULE_SELECT == 1
+#    define PORT_BUILTIN_MODULE_SELECT                                  \
+    { MP_ROM_QSTR(MP_QSTR_uselect), MP_ROM_PTR(&mp_module_uselect) },
+#    define PORT_BUILTIN_MODULE_WEAK_LINKS_SELECT                       \
+    { MP_OBJ_NEW_QSTR(MP_QSTR_select), (mp_obj_t)&mp_module_uselect },
+#else
+#    define PORT_BUILTIN_MODULE_SELECT
+#    define PORT_BUILTIN_MODULE_WEAK_LINKS_SELECT
+#endif
+
 #define MICROPY_PORT_BUILTIN_MODULES                                    \
     { MP_ROM_QSTR(MP_QSTR_uos), MP_ROM_PTR(&mp_module_uos) },           \
-    { MP_ROM_QSTR(MP_QSTR_uselect), MP_ROM_PTR(&mp_module_uselect) },   \
-    { MP_ROM_QSTR(MP_QSTR_uselect), MP_ROM_PTR(&mp_module_usocket) },   \
+        PORT_BUILTIN_MODULE_SELECT                                      \
+        PORT_BUILTIN_MODULE_SOCKET                                      \
     { MP_ROM_QSTR(MP_QSTR_kernel), MP_ROM_PTR(&module_kernel) },        \
     { MP_ROM_QSTR(MP_QSTR_sync), MP_ROM_PTR(&module_sync) },            \
     { MP_ROM_QSTR(MP_QSTR_drivers), MP_ROM_PTR(&module_drivers) },      \
@@ -419,8 +471,8 @@ extern const struct _mp_obj_module_t module_board;
     { MP_OBJ_NEW_QSTR(MP_QSTR_json), (mp_obj_t)&mp_module_ujson },      \
     { MP_OBJ_NEW_QSTR(MP_QSTR_os), (mp_obj_t)&mp_module_uos },          \
     { MP_OBJ_NEW_QSTR(MP_QSTR_random), (mp_obj_t)&mp_module_urandom },  \
-    { MP_OBJ_NEW_QSTR(MP_QSTR_select), (mp_obj_t)&mp_module_uselect },  \
-    { MP_OBJ_NEW_QSTR(MP_QSTR_socket), (mp_obj_t)&mp_module_usocket },  \
+        PORT_BUILTIN_MODULE_WEAK_LINKS_SELECT                           \
+        PORT_BUILTIN_MODULE_WEAK_LINKS_SOCKET                           \
     { MP_OBJ_NEW_QSTR(MP_QSTR_struct), (mp_obj_t)&mp_module_ustruct },  \
     { MP_OBJ_NEW_QSTR(MP_QSTR_time), (mp_obj_t)&mp_module_utime },      \
     { MP_OBJ_NEW_QSTR(MP_QSTR_zlib), (mp_obj_t)&mp_module_uzlib },      \

@@ -137,7 +137,7 @@ def test():
         # in src/ compiles.
         command = [
             "make",
-            "TESTS=tst/kernel/timer",
+            "TESTS=examples/default-configuration",
             "BOARD=" + os.path.basename(board),
             "all"
         ]

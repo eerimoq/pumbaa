@@ -30,16 +30,25 @@
 
 
 NAME = sd_suite
+TYPE = suite
 BOARD ?= linux
 
 SRC += sd_stub.c
-SRC_IGNORE += $(SIMBA_ROOT)/src/drivers/sd.c
 PYSRC += \
 	$(PUMBAA_ROOT)/src/py/harness.py
 
 CDEFS += \
+	CONFIG_MINIMAL_SYSTEM=1 \
+	CONFIG_FS_CMD_THRD_LIST=1 \
+	CONFIG_PIN=1 \
+	CONFIG_SPI=1 \
+	CONFIG_PUMBAA_CLASS_SD=1 \
+	CONFIG_PUMBAA_CLASS_SPI=1 \
 	CONFIG_PUMBAA_MAIN_REBOOT_AT_EXIT=0 \
 	CONFIG_PUMBAA_MAIN_FRIENDLY_REPL=0
+
+SYNC_SRC = event.c
+DRIVERS_SRC = spi.c pin.c
 
 PUMBAA_ROOT ?= ../..
 include $(PUMBAA_ROOT)/make/app.mk

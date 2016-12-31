@@ -30,6 +30,8 @@
 
 #include "pumbaa.h"
 
+#if CONFIG_PUMBAA_CLASS_ESP_WIFI == 1
+
 static const mp_obj_type_t class_esp_wifi;
 
 /**
@@ -606,3 +608,5 @@ static const mp_obj_type_t class_esp_wifi = {
     .name = MP_QSTR_esp_wifi,
     .locals_dict = (mp_obj_t)&class_esp_wifi_locals_dict,
 };
+
+#endif

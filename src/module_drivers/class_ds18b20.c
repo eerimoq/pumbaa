@@ -30,6 +30,8 @@
 
 #include "pumbaa.h"
 
+#if CONFIG_PUMBAA_CLASS_DS18B20 == 1
+
 /**
  * Print the ds18b20 object.
  */
@@ -193,3 +195,5 @@ const mp_obj_type_t module_drivers_class_ds18b20 = {
     .make_new = class_ds18b20_make_new,
     .locals_dict = (mp_obj_t)&class_ds18b20_locals_dict,
 };
+
+#endif

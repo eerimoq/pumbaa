@@ -30,6 +30,8 @@
 
 #include "pumbaa.h"
 
+#if CONFIG_PUMBAA_CLASS_OWI == 1
+
 /**
  * Print the owi object.
  */
@@ -117,15 +119,15 @@ static mp_obj_t class_owi_search(mp_obj_t self_in)
 {
     struct class_owi_t *self_p;
     int number_of_devices;
-    
+
     self_p = MP_OBJ_TO_PTR(self_in);
     number_of_devices = owi_search(&self_p->drv);
-    
+
     if (number_of_devices < 0) {
         nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
                                            "owi_search() failed"));
     }
-    
+
     return (mp_obj_new_int(number_of_devices));
 }
 
@@ -236,3 +238,5 @@ const mp_obj_type_t module_drivers_class_owi = {
     .make_new = class_owi_make_new,
     .locals_dict = (mp_obj_t)&class_owi_locals_dict,
 };
+
+#endif

@@ -2,9 +2,9 @@
  * @section License
  *
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016, Erik Moqvist
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -33,11 +33,15 @@
 
 #include "pumbaa.h"
 
+#if CONFIG_PUMBAA_CLASS_DAC == 1
+
 struct class_dac_t {
     mp_obj_base_t base;
     struct dac_driver_t drv;
 };
 
 extern const mp_obj_type_t module_drivers_class_dac;
+
+#endif
 
 #endif

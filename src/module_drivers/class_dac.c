@@ -2,9 +2,9 @@
  * @section License
  *
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016, Erik Moqvist
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -29,6 +29,8 @@
  */
 
 #include "pumbaa.h"
+
+#if CONFIG_PUMBAA_CLASS_DAC == 1
 
 /**
  * Print the dac object.
@@ -126,7 +128,7 @@ static mp_obj_t class_dac_convert(mp_obj_t self_in, mp_obj_t samples_in)
 {
     struct class_dac_t *self_p;
     mp_buffer_info_t buffer_info;
-    
+
     self_p = MP_OBJ_TO_PTR(self_in);
     mp_get_buffer_raise(MP_OBJ_TO_PTR(samples_in),
                         &buffer_info,
@@ -203,3 +205,5 @@ const mp_obj_type_t module_drivers_class_dac = {
     .make_new = class_dac_make_new,
     .locals_dict = (mp_obj_t)&class_dac_locals_dict,
 };
+
+#endif

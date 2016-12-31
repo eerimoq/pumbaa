@@ -102,6 +102,6 @@ $(FROZEN_C): $(MPYSRC) | $(QSTR_DEFS_GENERATED_H)
 generate: $(QSTR_DEFS_GENERATED_H) $(FROZEN_C)
 
 pumbaa-default-configuration:
-	gcc -E -dM $(CDEFS:%=-D%) $(PUMBAA_ROOT)/src/pumbaa_config_default.h \
-		| grep "#define CONFIG"_ \
+	gcc -E -dM $(CDEFS:%=-D%) $(INC:%=-I%) $(PUMBAA_ROOT)/src/pumbaa.h \
+		| grep "#define CONFIG_PUMBAA_" \
 		| grep -v "#define __CONFIG"

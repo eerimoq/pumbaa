@@ -30,6 +30,8 @@
 
 #include "pumbaa.h"
 
+#if CONFIG_PUMBAA_MODULE_SOCKET == 1
+
 #define AF_INET     0
 
 #define SOCK_STREAM 0
@@ -441,3 +443,5 @@ const mp_obj_module_t mp_module_usocket = {
     .base = { &mp_type_module },
     .globals = (mp_obj_dict_t*)&mp_module_socket_globals,
 };
+
+#endif

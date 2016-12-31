@@ -33,11 +33,15 @@
 
 #include "pumbaa.h"
 
+#if CONFIG_PUMBAA_CLASS_SPI == 1
+
 struct class_spi_t {
     mp_obj_base_t base;
     struct spi_driver_t drv;
 };
 
 extern const mp_obj_type_t module_drivers_class_spi;
+
+#endif
 
 #endif

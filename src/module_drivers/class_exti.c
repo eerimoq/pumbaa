@@ -30,6 +30,8 @@
 
 #include "pumbaa.h"
 
+#if CONFIG_PUMBAA_CLASS_EXTI == 1
+
 /**
  * Enternal interrupt callback. Called from an interrupt.
  */
@@ -220,3 +222,5 @@ const mp_obj_type_t module_drivers_class_exti = {
     .make_new = class_exti_make_new,
     .locals_dict = (mp_obj_t)&class_exti_locals_dict,
 };
+
+#endif

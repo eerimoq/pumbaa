@@ -30,6 +30,8 @@
 
 #include "pumbaa.h"
 
+#if CONFIG_PUMBAA_CLASS_CAN == 1
+
 #define FLAGS_EXTENDED_FRAME                    0x1
 
 /**
@@ -265,3 +267,5 @@ const mp_obj_type_t module_drivers_class_can = {
     .make_new = class_can_make_new,
     .locals_dict = (mp_obj_t)&class_can_locals_dict,
 };
+
+#endif

@@ -33,11 +33,15 @@
 
 #include "pumbaa.h"
 
+#if CONFIG_PUMBAA_CLASS_PIN == 1
+
 struct class_pin_t {
     mp_obj_base_t base;
     struct pin_driver_t drv;
 };
 
 extern const mp_obj_type_t module_drivers_class_pin;
+
+#endif
 
 #endif

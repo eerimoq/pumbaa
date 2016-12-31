@@ -2,9 +2,9 @@
  * @section License
  *
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016, Erik Moqvist
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -29,6 +29,8 @@
  */
 
 #include "pumbaa.h"
+
+#if CONFIG_PUMBAA_CLASS_I2C_SOFT == 1
 
 /**
  * Print the i2c soft object.
@@ -299,3 +301,5 @@ const mp_obj_type_t module_drivers_class_i2c_soft = {
     .make_new = class_i2c_soft_make_new,
     .locals_dict = (mp_obj_t)&class_i2c_soft_locals_dict,
 };
+
+#endif

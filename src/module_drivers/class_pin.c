@@ -2,9 +2,9 @@
  * @section License
  *
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016, Erik Moqvist
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -29,6 +29,8 @@
  */
 
 #include "pumbaa.h"
+
+#if CONFIG_PUMBAA_CLASS_PIN == 1
 
 /**
  * Print the pin object.
@@ -201,3 +203,5 @@ const mp_obj_type_t module_drivers_class_pin = {
     .make_new = class_pin_make_new,
     .locals_dict = (mp_obj_t)&class_pin_locals_dict,
 };
+
+#endif
