@@ -29,32 +29,11 @@
 #
 
 
-NAME = os_suite
-TYPE = suite
-BOARD ?= linux
-TIMEOUT ?= 120
+LINKER_SCRIPT ?= pumbaa.flash.4m.ld
 
-PYSRC += \
-	$(PUMBAA_ROOT)/src/py/harness.py
+LIBPATH += $(PUMBAA_ROOT)/src/mcus/esp8266/ld
 
-CDEFS += \
-	CONFIG_MINIMAL_SYSTEM=1 \
-	CONFIG_START_FILESYSTEM=1 \
-	CONFIG_FAT16=1 \
-	CONFIG_SPIFFS=1 \
-	CONFIG_THRD_ENV=1 \
-	CONFIG_FS_CMD_THRD_LIST=1 \
-	CONFIG_PUMBAA_MAIN_REBOOT_AT_EXIT=0 \
-	CONFIG_PUMBAA_MAIN_FRIENDLY_REPL=0
-
-SYNC_SRC = event.c
-FILESYSTEMS_SRC = fat16.c spiffs.c
-SPIFFS_SRC = \
-	3pp/spiffs-0.3.5/src/spiffs_nucleus.c \
-	3pp/spiffs-0.3.5/src/spiffs_gc.c \
-	3pp/spiffs-0.3.5/src/spiffs_hydrogen.c \
-	3pp/spiffs-0.3.5/src/spiffs_cache.c \
-	3pp/spiffs-0.3.5/src/spiffs_check.c
-
-PUMBAA_ROOT ?= ../..
-include $(PUMBAA_ROOT)/make/app.mk
+LIB_MINIC =
+SRC += $(SIMBA_ROOT)/3pp/libc/string0.c
+CFLAGS += -mforce-l32
+CXXFLAGS += -mforce-l32

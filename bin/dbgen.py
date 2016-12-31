@@ -85,7 +85,8 @@ def main():
         default_config = []
         for line in get_default_configuration(board).splitlines():
             mo = re_default_config.match(line)
-            default_config.append((mo.group(1), mo.group(2)))
+            if mo:
+                default_config.append((mo.group(1), mo.group(2)))
         default_config.sort()
         database["boards"][board]["default-configuration"] = default_config
         

@@ -89,7 +89,7 @@ PUMBAA_SRC += \
 	module_thread.c
 endif
 
-ifeq ($(BOARD),$(filter $(BOARD), esp12e esp01))
+ifeq ($(BOARD),$(filter $(BOARD), esp12e esp01 nodemcu))
 PUMBAA_SRC += \
 	mcus/esp8266/gccollect.c \
 	mcus/esp8266/gchelper.S \
@@ -233,7 +233,7 @@ MICROPYTHON_SRC += \
 	py/vstr.c \
 	py/warning.c
 
-ifeq ($(BOARD),$(filter $(BOARD), esp12e esp01 nano32))
+ifeq ($(BOARD),$(filter $(BOARD), esp12e esp01 nano32 nodemcu))
 MICROPYTHON_SRC += \
 	lib/libm/acoshf.c \
 	lib/libm/asinfacosf.c \

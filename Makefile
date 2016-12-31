@@ -58,7 +58,7 @@ TESTS = \
 	tst/inet/http_server
 endif
 
-ifeq ($(BOARD), esp12e)
+ifeq ($(BOARD), nodemcu)
 TESTS = \
 	tst/kernel/timer
 endif
@@ -130,8 +130,8 @@ release:
 clean-arduino-due:
 	$(MAKE) BOARD=arduino_due SERIAL_PORT=/dev/simba-arduino_due clean
 
-clean-esp12e:
-	$(MAKE) BOARD=esp12e SERIAL_PORT=/dev/simba-esp12e clean
+clean-nodemcu:
+	$(MAKE) BOARD=nodemcu SERIAL_PORT=/dev/simba-nodemcuv3 clean
 
 clean-nano32:
 	$(MAKE) BOARD=nano32 SERIAL_PORT=/dev/simba-nano32 clean
@@ -140,9 +140,9 @@ test-arduino-due:
 	@echo "Arduino Due"
 	$(MAKE) BOARD=arduino_due SERIAL_PORT=/dev/simba-arduino_due test
 
-test-esp12e:
-	@echo "ESP12-E"
-	$(MAKE) BOARD=esp12e SERIAL_PORT=/dev/simba-esp12e test
+test-nodemcu:
+	@echo "NodeMCU"
+	$(MAKE) BOARD=nodemcu SERIAL_PORT=/dev/simba-nodemcuv3 test
 
 test-nano32:
 	@echo "Nano32"
@@ -150,12 +150,12 @@ test-nano32:
 
 test-all-boards:
 	$(MAKE) test-arduino-due
-	$(MAKE) test-esp12e
+	$(MAKE) test-nodemcu
 	$(MAKE) test-nano32
 
 clean-all-boards:
 	$(MAKE) clean-arduino-due
-	$(MAKE) clean-esp12e
+	$(MAKE) clean-nodemcu
 	$(MAKE) clean-nano32
 
 codecov-coverage: $(TESTS:%=%.ccc)
