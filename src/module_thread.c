@@ -83,7 +83,7 @@ void mp_thread_gc_others(void)
         if (thread_p->stack_top != -1) {
             stack_bottom = (intptr_t)thrd_get_bottom_of_stack(thread_p->thrd_p);
             stack_size = (thread_p->stack_top - stack_bottom);
-            gc_collect_root((void **)&stack_bottom,
+            gc_collect_root((void **)stack_bottom,
                             stack_size / sizeof(mp_int_t));
         }
 
