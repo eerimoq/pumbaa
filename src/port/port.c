@@ -30,7 +30,7 @@
 
 #include "pumbaa.h"
 
-char *stack_top_p;
+intptr_t *stack_top;
 
 /* The character that raises a keyboard exception. */
 static char interrupt_char = -1;

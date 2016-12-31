@@ -96,4 +96,7 @@
 #    include "module_drivers/class_can.h"
 #endif
 
+extern void *mp_thread_add_begin(void);
+extern void mp_thread_add_end(void *thread_p, struct thrd_t *thrd_p);
+
 #endif

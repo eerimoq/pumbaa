@@ -2,9 +2,9 @@
 # @section License
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (c) 2016, Erik Moqvist
-# 
+#
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
 # files (the "Software"), to deal in the Software without
@@ -29,9 +29,11 @@
 #
 
 
+import os
 import _thread
 from sync import Event
 import harness
+import gc
 
 EVENT = Event()
 
@@ -50,10 +52,18 @@ def test_start():
     assert EVENT.read(mask) == mask
 
 
+def test_gc():
+    if os.uname().machine != "Linux with Linux":
+        print('Free memory before gc:', gc.mem_free())
+        gc.collect()
+        print('Free memory after gc:', gc.mem_free())
+
+
 def main():
     testcases = [
         (test_print, "test_print"),
-        (test_start, "test_start")
+        (test_start, "test_start"),
+        (test_gc, "test_gc")
     ]
     harness.run(testcases)
 

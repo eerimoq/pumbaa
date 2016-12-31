@@ -30,7 +30,7 @@
 
 #include "pumbaa.h"
 
-extern char *stack_top_p;
+extern intptr_t stack_top;
 static char heap[CONFIG_PUMBAA_HEAP_SIZE];
 
 /**
@@ -61,14 +61,15 @@ int main()
     std_printf(sys_get_info());
     std_printf(FSTR("\r\n"));
 
+    stack_top = (intptr_t)&stack_dummy;
+    mp_stack_set_limit(40000 * (BYTES_PER_WORD / 4));
+    gc_init(heap, heap + sizeof(heap));
+
     /* Initialize the thread module. */
 #if MICROPY_PY_THREAD == 1
     module_thread_init();
 #endif
 
-    stack_top_p = (char*)&stack_dummy;
-    mp_stack_set_limit(40000 * (BYTES_PER_WORD / 4));
-    gc_init(heap, heap + sizeof(heap));
     mp_init();
 
     /* Initialize the keyboard interrupt object. */

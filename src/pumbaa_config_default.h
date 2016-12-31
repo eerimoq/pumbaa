@@ -152,10 +152,10 @@
 #endif
 
 #ifndef MICROPY_PY_THREAD
-#    if defined(ARCH_ESP)
-#        define MICROPY_PY_THREAD                         (0)
-#    else
+#    if defined(ARCH_ESP32) || defined(ARCH_ARM) || defined(ARCH_LINUX)
 #        define MICROPY_PY_THREAD                         (1)
+#    else
+#        define MICROPY_PY_THREAD                         (0)
 #    endif
 #endif
 
@@ -205,7 +205,7 @@
 #    if defined(ARCH_ESP)
 #        define CONFIG_PUMBAA_HEAP_SIZE                 24576
 #    elif defined(ARCH_ESP32)
-#        define CONFIG_PUMBAA_HEAP_SIZE                 65536
+#        define CONFIG_PUMBAA_HEAP_SIZE                 48000
 #    else
 #        define CONFIG_PUMBAA_HEAP_SIZE                 32768
 #    endif
@@ -328,10 +328,10 @@
 #endif
 
 #ifndef CONFIG_PUMBAA_THRD
-#    if defined(ARCH_ESP) || defined(ARCH_ESP32)
-#        define CONFIG_PUMBAA_THRD                          0
-#    else
+#    if MICROPY_PY_THREAD == 1
 #        define CONFIG_PUMBAA_THRD                          1
+#    else
+#        define CONFIG_PUMBAA_THRD                          0
 #    endif
 #endif
 
@@ -340,18 +340,18 @@
 #endif
 
 #ifndef CONFIG_PUMBAA_HTTP_SERVER
-#    if defined(ARCH_ESP)
-#        define CONFIG_PUMBAA_HTTP_SERVER                   0
-#    else
+#    if CONFIG_PUMBAA_THRD == 1 && !defined(ARCH_ARM)
 #        define CONFIG_PUMBAA_HTTP_SERVER                   1
+#    else
+#        define CONFIG_PUMBAA_HTTP_SERVER                   0
 #    endif
 #endif
 
 #ifndef CONFIG_PUMBAA_HTTP_SERVER_WEBSOCKET
-#    if defined(ARCH_ESP)
-#        define CONFIG_PUMBAA_HTTP_SERVER_WEBSOCKET         0
-#    else
+#    if CONFIG_PUMBAA_HTTP_SERVER == 1
 #        define CONFIG_PUMBAA_HTTP_SERVER_WEBSOCKET         1
+#    else
+#        define CONFIG_PUMBAA_HTTP_SERVER_WEBSOCKET         0
 #    endif
 #endif
 

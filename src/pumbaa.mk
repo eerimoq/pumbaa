@@ -101,7 +101,6 @@ endif
 ifeq ($(BOARD),$(filter $(BOARD), nano32))
 PUMBAA_SRC += \
 	mcus/esp32/gccollect.c \
-	mcus/esp32/gchelper.S \
 	module_drivers/class_adc.c \
 	module_drivers/class_can.c \
 	module_drivers/class_dac.c \

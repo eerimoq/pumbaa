@@ -2,9 +2,9 @@
 # @section License
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (c) 2016, Erik Moqvist
-# 
+#
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
 # files (the "Software"), to deal in the Software without
@@ -182,8 +182,17 @@ def test_smoke():
     kernel.sys_unlock()
 
     if os.uname().machine != "Linux with Linux":
-        print('Collecting the garbage...')
+        print('Free memory before gc:', gc.mem_free())
         gc.collect()
+        print('Free memory after gc:', gc.mem_free())
+
+        print('Free memory before allocations:', gc.mem_free())
+        for i in range(899):
+            buf = bytearray(599+i)
+        print('Free memory after allocations:', gc.mem_free())
+        del buf
+        gc.collect()
+        print('Free memory after gc:', gc.mem_free())
 
     if hasattr(kernel, 'thrd_yield'):
         kernel.thrd_yield()

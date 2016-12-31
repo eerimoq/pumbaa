@@ -258,6 +258,7 @@ static mp_obj_t class_http_server_make_new(const mp_obj_type_t *type_p,
     mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];
     const char *address_p;
     int port;
+    void *stack_p;
 
     mp_arg_check_num(n_args, n_kw, 0, 5, true);
 
@@ -274,19 +275,34 @@ static mp_obj_t class_http_server_make_new(const mp_obj_type_t *type_p,
     address_p = mp_obj_str_get_str(args[0].u_obj);
     port = args[1].u_int;
 
-    /* Create a new HttpServer object. */
+    /* Initiate a new HttpServer object. */
     self_p = m_new_obj(struct class_http_server_t);
     self_p->base.type = &module_inet_class_http_server;
+
+    stack_p = thrd_stack_alloc(1024);
+
+    if (stack_p == NULL) {
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "out of thread memory"));
+    }
 
     self_p->listener.address_p = address_p;
     self_p->listener.port = port;
     self_p->listener.thrd.name_p = "http_listener";
-    self_p->listener.thrd.stack.buf_p = m_new(uint64_t, 2048 / sizeof(uint64_t));
-    self_p->listener.thrd.stack.size = 2048;
+    self_p->listener.thrd.stack.buf_p = stack_p;
+    self_p->listener.thrd.stack.size = 1024;
+
+    stack_p = thrd_stack_alloc(4096);
+
+    if (stack_p == NULL) {
+        thrd_stack_free(self_p->listener.thrd.stack.buf_p);
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "out of thread memory"));
+    }
 
     self_p->connections[0].thrd.name_p = "http_conn_0";
-    self_p->connections[0].thrd.stack.buf_p = m_new(uint64_t, 2048 / sizeof(uint64_t));
-    self_p->connections[0].thrd.stack.size = 2048;
+    self_p->connections[0].thrd.stack.buf_p = stack_p;
+    self_p->connections[0].thrd.stack.size = 4096;
 
     self_p->connections[1].thrd.name_p = NULL;
 
@@ -294,15 +310,14 @@ static mp_obj_t class_http_server_make_new(const mp_obj_type_t *type_p,
     self_p->routes = args[2].u_obj;
     self_p->no_route = args[3].u_obj;
 
-    /* mp_thread_set_state_other(&ts); */
-    /* mp_thread_start_other(); */
-
     if (http_server_init(&self_p->http_server,
                          &self_p->listener,
                          &self_p->connections[0],
                          NULL,
                          &self_p->empty_routes[0],
                          on_no_route) != 0) {
+        thrd_stack_free(stack_p);
+        thrd_stack_free(self_p->listener.thrd.stack.buf_p);
         nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
                                            "http_server_init() failed"));
     }
@@ -316,9 +331,13 @@ static mp_obj_t class_http_server_make_new(const mp_obj_type_t *type_p,
 static mp_obj_t class_http_server_start(mp_obj_t self_in)
 {
     struct class_http_server_t *self_p;
+    void *thread_p;
 
     self_p = MP_OBJ_TO_PTR(self_in);
+
+    thread_p = mp_thread_add_begin();
     http_server_start(&self_p->http_server);
+    mp_thread_add_end(thread_p, self_p->connections[0].thrd.id_p);
 
     return (mp_const_none);
 }

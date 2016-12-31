@@ -30,28 +30,32 @@
 
 #include "pumbaa.h"
 
-char *stack_top_p;
+/**
+ * Copies all registers to the function save areas on the stack.
+ */
+extern void esp_xthal_window_spill(void);
 
-extern void esp_xthal_window_spill( void );
-
-extern mp_uint_t gc_helper_get_regs_and_sp();
-
+/**
+ * Trace the stacks, including the registers (since they live on the
+ * stack in this function).
+ */
 void gc_collect(void)
 {
-    mp_uint_t sp;
-
-    /* Start the GC. */
     gc_collect_start();
-
-    /* Get the registers and the sp. */
     esp_xthal_window_spill();
-    sp = gc_helper_get_regs_and_sp();
 
-    /* Trace the stack, including the registers (since they live on
-       the stack in this function). */
-    gc_collect_root((void**)sp,
-                    ((uint32_t)stack_top_p - sp) / sizeof(uint32_t));
+#if MICROPY_PY_THREAD == 1
+    mp_thread_gc_others();
+#else
+    uintptr_t stack_top;
+    uintptr_t stack_bottom;
+    size_t stack_size;
 
-    /* End the GC. */
+    stack_top = (uintptr_t)thrd_get_top_of_stack(thrd_self());
+    stack_bottom = (uintptr_t)thrd_get_bottom_of_stack(thrd_self());
+    stack_size = (stack_top - stack_bottom);
+    gc_collect_root((void**)stack_bottom, stack_size / sizeof(mp_uint_t));
+#endif
+
     gc_collect_end();
 }

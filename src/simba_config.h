@@ -49,6 +49,18 @@
 #    endif
 #endif
 
+#ifndef CONFIG_THRD_STACK_HEAP
+#    if defined(ARCH_ESP32) || defined(ARCH_LINUX) || defined(ARCH_ARM)
+#        define CONFIG_THRD_STACK_HEAP                      1
+#    else
+#        define CONFIG_THRD_STACK_HEAP                      0
+#    endif
+#endif
+
+#ifndef CONFIG_THRD_STACK_HEAP_SIZE
+#    define CONFIG_THRD_STACK_HEAP_SIZE                 16384
+#endif
+
 #ifndef CONFIG_START_FILESYSTEM_ADDRESS
 #    if defined(BOARD_ARDUINO_DUE)
 #        define CONFIG_START_FILESYSTEM_ADDRESS    0x000f8000

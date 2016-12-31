@@ -2,9 +2,9 @@
 # @section License
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (c) 2016, Erik Moqvist
-# 
+#
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
 # files (the "Software"), to deal in the Software without
@@ -30,7 +30,7 @@
 
 
 import os
-import io
+import gc
 import sys
 
 class TestCaseSkippedError(Exception):
@@ -81,6 +81,7 @@ def run(testcases):
     # Print a header.
     print()
     print("================================== TEST BEGIN ==================================\n")
+    print('Free memory on the heap: ', gc.mem_free())
     print()
 
     passed = 0
@@ -108,10 +109,17 @@ def run(testcases):
     print("harness report: total({}), passed({}), failed({}), skipped({})\n".format(
         total, passed, failed, skipped))
 
+    print(os.system("kernel/thrd/list"))
+    print('Free memory before gc: ', gc.mem_free())
+    if os.uname().machine != "Linux with Linux":
+        gc.collect()
+    else:
+        print('Skipping gc on Linux.')
+    print('Free memory after gc: ', gc.mem_free())
+    print()
+
     print("=============================== TEST END ({}) ==============================\n".format(
         "PASSED" if ok else "FAILED"))
 
-    print(os.system("kernel/thrd/list"))
-    
     if not ok:
         raise SuiteError(total, passed, skipped, failed)

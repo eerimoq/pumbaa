@@ -2,9 +2,9 @@
  * @section License
  *
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016, Erik Moqvist
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -30,27 +30,27 @@
 
 #include "pumbaa.h"
 
-char *stack_top_p;
-
 extern mp_uint_t gc_helper_get_regs_and_sp(mp_uint_t *regs);
 
 void gc_collect(void)
 {
-    /* Start the GC. */
-    gc_collect_start();
-    
-    /* Get the registers and the sp */
     mp_uint_t regs[10];
-    mp_uint_t sp = gc_helper_get_regs_and_sp(regs);
-    
-    /* Trace the stack, including the registers (since they live on
-       the stack in this function). */
-    gc_collect_root((void**)sp,
-                    ((uint32_t)stack_top_p - sp) / sizeof(uint32_t));
 
-    /* Garbage collect other threads. */
+    gc_collect_start();
+    gc_helper_get_regs_and_sp(regs);
+
+#if MICROPY_PY_THREAD == 1
     mp_thread_gc_others();
+#else
+    uintptr_t stack_top;
+    uintptr_t stack_bottom;
+    size_t stack_size;
 
-    /* End the GC. */
+    stack_top = (uintptr_t)thrd_get_top_of_stack(thrd_self());
+    stack_bottom = (uintptr_t)thrd_get_bottom_of_stack(thrd_self());
+    stack_size = (stack_top - stack_bottom);
+    gc_collect_root((void**)stack_bottom, stack_size / sizeof(mp_uint_t));
+#endif
+
     gc_collect_end();
 }
