@@ -154,6 +154,11 @@ void mp_thread_create(void *(*entry)(void*),
     thread_p = m_new_obj(struct thread_t);
     thread_p->stack_p = thrd_stack_alloc(*stack_size_p);
 
+    if (thread_p->stack_p == NULL) {
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "out of thread memory"));
+    }
+
     mp_thread_mutex_lock(&thread_mutex, 1);
 
     /* Create thread. */

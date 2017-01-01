@@ -52,15 +52,13 @@
 #ifndef CONFIG_THRD_STACK_HEAP
 #    if defined(CONFIG_MINIMAL_SYSTEM)
 #        define CONFIG_THRD_STACK_HEAP                      0
-#    elif defined(ARCH_ESP32) || defined(ARCH_LINUX) || defined(ARCH_ARM)
-#        define CONFIG_THRD_STACK_HEAP                      1
 #    else
-#        define CONFIG_THRD_STACK_HEAP                      0
+#        define CONFIG_THRD_STACK_HEAP                      1
 #    endif
 #endif
 
 #ifndef CONFIG_THRD_STACK_HEAP_SIZE
-#    define CONFIG_THRD_STACK_HEAP_SIZE                 16384
+#    define CONFIG_THRD_STACK_HEAP_SIZE                  6000
 #endif
 
 #ifndef CONFIG_START_FILESYSTEM_ADDRESS

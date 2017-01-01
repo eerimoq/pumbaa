@@ -57,6 +57,7 @@ PUMBAA_SRC += \
 	module_sys.c \
 	module_text.c \
 	module_time.c \
+	module_thread.c \
 	port/lexer_port.c
 
 ifeq ($(BOARD),arduino_due)
@@ -70,8 +71,7 @@ PUMBAA_SRC += \
 	module_drivers/class_spi.c \
 	module_drivers/class_sd.c \
 	boards/arduino_due/gccollect.c \
-	boards/arduino_due/gchelper.S \
-	module_thread.c
+	boards/arduino_due/gchelper.S
 endif
 
 ifeq ($(BOARD),linux)
@@ -85,8 +85,7 @@ PUMBAA_SRC += \
 	module_drivers/class_owi.c \
 	module_drivers/class_spi.c \
 	module_drivers/class_sd.c \
-	module_drivers/class_i2c_soft.c \
-	module_thread.c
+	module_drivers/class_i2c_soft.c
 endif
 
 ifeq ($(BOARD),$(filter $(BOARD), esp12e esp01 nodemcu))
@@ -107,15 +106,13 @@ PUMBAA_SRC += \
 	module_drivers/class_spi.c \
 	module_drivers/class_ds18b20.c \
 	module_drivers/class_esp_wifi.c \
-	module_drivers/class_owi.c \
-	module_thread.c
+	module_drivers/class_owi.c
 endif
 
 ifeq ($(BOARD),photon)
 PUMBAA_SRC += \
 	boards/photon/gccollect.c \
-	boards/photon/gchelper.S \
-	module_thread.c
+	boards/photon/gchelper.S
 endif
 
 SRC += $(PUMBAA_SRC:%=$(PUMBAA_ROOT)/src/%)

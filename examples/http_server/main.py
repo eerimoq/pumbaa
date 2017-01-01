@@ -28,6 +28,7 @@
 # This file is part of the Pumbaa project.
 #
 
+import os
 import time
 from inet import HttpServer, HttpServerWebSocket
 import kernel
@@ -88,7 +89,7 @@ def main():
     http_server.start()
 
     while True:
-        print('running')
+        print(os.system('kernel/thrd/list'))
         time.sleep(5)
 
 
