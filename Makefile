@@ -41,6 +41,7 @@ TESTS = \
 	tst/os \
 	tst/select \
 	tst/socket \
+	tst/inet/ssl \
 	tst/thread \
 	tst/debug/harness \
 	tst/drivers/adc \
@@ -68,6 +69,7 @@ TESTS = \
 	tst/thread \
 	tst/drivers/pin \
 	tst/kernel/timer \
+	tst/inet/ssl \
 	tst/sync/event \
 	tst/sync/queue \
 	tst/os

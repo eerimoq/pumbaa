@@ -114,6 +114,8 @@ int socket_accept(struct socket_t *self_p,
 {
     uint32_t mask;
 
+    chan_init(&accepted_p->base, read, write, size);
+    
     mask = 0x1;
     event_read(&accept_events, &mask, sizeof(mask));
     event_write(&accept_called_events, &mask, sizeof(mask));
@@ -127,7 +129,7 @@ ssize_t socket_sendto(struct socket_t *self_p,
                       int flags,
                       const struct inet_addr_t *remote_addr_p)
 {
-    return (write(NULL, buf_p, size));
+    return (write(self_p, buf_p, size));
 }
 
 ssize_t socket_recvfrom(struct socket_t *self_p,
@@ -136,21 +138,21 @@ ssize_t socket_recvfrom(struct socket_t *self_p,
                         int flags,
                         struct inet_addr_t *remote_addr)
 {
-    return (read(NULL, buf_p, size));
+    return (read(self_p, buf_p, size));
 }
 
 ssize_t socket_write(struct socket_t *self_p,
                      const void *buf_p,
                      size_t size)
 {
-    return (write(NULL, buf_p, size));
+    return (write(self_p, buf_p, size));
 }
 
 ssize_t socket_read(struct socket_t *self_p,
                     void *buf_p,
                     size_t size)
 {
-    return (read(NULL, buf_p, size));
+    return (read(self_p, buf_p, size));
 }
 
 void socket_stub_init()

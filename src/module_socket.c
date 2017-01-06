@@ -38,11 +38,6 @@
 #define SOCK_DGRAM  1
 #define SOCK_RAW    2
 
-struct class_socket_t {
-    mp_obj_base_t base;
-    struct socket_t socket;
-};
-
 extern const mp_obj_type_t module_socket_class_socket;
 
 static mp_obj_t socket_make_new(const mp_obj_type_t *type_p,
@@ -209,7 +204,7 @@ static mp_obj_t class_socket_recv(mp_obj_t self_in,
 {
     struct class_socket_t *self_p;
     vstr_t vstr;
-    size_t size;
+    ssize_t size;
 
     self_p = MP_OBJ_TO_PTR(self_in);
     size = mp_obj_get_int(bufsize_in);

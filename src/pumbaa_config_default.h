@@ -381,6 +381,16 @@
 #    endif
 #endif
 
+#ifndef CONFIG_PUMBAA_MODULE_SSL
+#    if defined(CONFIG_MINIMAL_SYSTEM)
+#        define CONFIG_PUMBAA_MODULE_SSL                    0
+#    elif defined(ARCH_ESP32) || defined(ARCH_LINUX)
+#        define CONFIG_PUMBAA_MODULE_SSL                    1
+#    else
+#        define CONFIG_PUMBAA_MODULE_SSL                    0
+#    endif
+#endif
+
 #ifndef CONFIG_PUMBAA_EMACS
 #    if defined(CONFIG_MINIMAL_SYSTEM)
 #        define CONFIG_PUMBAA_EMACS                         0
@@ -446,10 +456,21 @@ extern const struct _mp_obj_module_t module_board;
 #    define PORT_BUILTIN_MODULE_WEAK_LINKS_SELECT
 #endif
 
+#if CONFIG_PUMBAA_MODULE_SSL == 1
+#    define PORT_BUILTIN_MODULE_SSL                             \
+    { MP_ROM_QSTR(MP_QSTR_ussl), MP_ROM_PTR(&mp_module_ussl) },
+#    define PORT_BUILTIN_MODULE_WEAK_LINKS_SSL                          \
+    { MP_OBJ_NEW_QSTR(MP_QSTR_ssl), (mp_obj_t)&mp_module_ussl },
+#else
+#    define PORT_BUILTIN_MODULE_SSL
+#    define PORT_BUILTIN_MODULE_WEAK_LINKS_SSL
+#endif
+
 #define MICROPY_PORT_BUILTIN_MODULES                                    \
     { MP_ROM_QSTR(MP_QSTR_uos), MP_ROM_PTR(&mp_module_uos) },           \
         PORT_BUILTIN_MODULE_SELECT                                      \
         PORT_BUILTIN_MODULE_SOCKET                                      \
+        PORT_BUILTIN_MODULE_SSL                                         \
     { MP_ROM_QSTR(MP_QSTR_kernel), MP_ROM_PTR(&module_kernel) },        \
     { MP_ROM_QSTR(MP_QSTR_sync), MP_ROM_PTR(&module_sync) },            \
     { MP_ROM_QSTR(MP_QSTR_drivers), MP_ROM_PTR(&module_drivers) },      \
@@ -469,6 +490,7 @@ extern const struct _mp_obj_module_t module_board;
     { MP_OBJ_NEW_QSTR(MP_QSTR_random), (mp_obj_t)&mp_module_urandom },  \
         PORT_BUILTIN_MODULE_WEAK_LINKS_SELECT                           \
         PORT_BUILTIN_MODULE_WEAK_LINKS_SOCKET                           \
+        PORT_BUILTIN_MODULE_WEAK_LINKS_SSL                              \
     { MP_OBJ_NEW_QSTR(MP_QSTR_struct), (mp_obj_t)&mp_module_ustruct },  \
     { MP_OBJ_NEW_QSTR(MP_QSTR_time), (mp_obj_t)&mp_module_utime },      \
     { MP_OBJ_NEW_QSTR(MP_QSTR_zlib), (mp_obj_t)&mp_module_uzlib },      \

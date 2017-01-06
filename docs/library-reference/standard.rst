@@ -20,6 +20,7 @@ functionality is implemented in MicroPython.
    standard/random
    standard/select
    standard/socket
+   standard/ssl
    standard/struct
    standard/sys
    standard/_thread

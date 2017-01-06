@@ -58,7 +58,11 @@
 #endif
 
 #ifndef CONFIG_THRD_STACK_HEAP_SIZE
-#    define CONFIG_THRD_STACK_HEAP_SIZE                  6000
+#    if defined(ARCH_LINUX)
+#        define CONFIG_THRD_STACK_HEAP_SIZE             32000
+#    else
+#        define CONFIG_THRD_STACK_HEAP_SIZE              6000
+#    endif
 #endif
 
 #ifndef CONFIG_START_FILESYSTEM_ADDRESS

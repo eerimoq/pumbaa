@@ -99,4 +99,9 @@
 extern void *mp_thread_add_begin(void);
 extern void mp_thread_add_end(void *thread_p, struct thrd_t *thrd_p);
 
+struct class_socket_t {
+    mp_obj_base_t base;
+    struct socket_t socket;
+};
+
 #endif

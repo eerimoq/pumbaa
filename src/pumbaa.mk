@@ -51,6 +51,7 @@ PUMBAA_SRC += \
 	module_inet/class_http_server_websocket.c \
 	module_select.c \
 	module_socket.c \
+	module_ssl.c \
 	module_sync.c \
 	module_sync/class_event.c \
 	module_sync/class_queue.c \
