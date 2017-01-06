@@ -8,6 +8,8 @@ Wrap sockets in TLS/SSL to encrypt the transport channel.
 
 Server side example:
 
+.. code-block:: python
+
    >>> context = ssl.SSLContext(ssl.PROTOCOL_TLS)
    >>> context.load_cert_chain("server.crt", keyfile="server.key")
 
@@ -55,14 +57,14 @@ Client side example:
 
       Load a set of "certification authority" (CA) certificates used
       to validate other peers’ certificates when `verify_mode` is
-      other than `CERT_NONE`.
+      other than :data:`CERT_NONE`.
 
 
    .. method:: set_verify_mode(mode)
 
-      Whether to try to verify other peers’ certificates. Set to
-      `CERT_NONE` to skip the verification, and `CERT_REQUIRED` to
-      enable verification.
+      Whether to try to verify other peers’ certificates. Set `mode`
+      to :data:`CERT_NONE` to skip the verification, and
+      :data:`CERT_REQUIRED` to enable verification.
 
       By default, server side sockets does not verify the client's
       certificate, while client side sockets do verify the server's
@@ -99,8 +101,8 @@ Client side example:
 
    .. method:: send(string)
 
-      Send data to the socket. The socket must be connected to a
-      remote socket. Returns the number of bytes sent. Applications
-      are responsible for checking that all data has been sent; if
-      only some of the data was transmitted, the application needs to
-      attempt delivery of the remaining data.
+      Send data `string` to the socket. The socket must be connected
+      to a remote socket. Returns the number of bytes
+      sent. Applications are responsible for checking that all data
+      has been sent; if only some of the data was transmitted, the
+      application needs to attempt delivery of the remaining data.

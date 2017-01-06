@@ -29,7 +29,7 @@
 #
 
 
-NAME = http_server_suite
+NAME = ssl_suite
 TYPE = suite
 BOARD ?= linux
 
