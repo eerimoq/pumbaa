@@ -254,7 +254,8 @@ static mp_obj_t class_ssl_context_wrap_socket(size_t n_args,
     if (ssl_socket_open(&ssl_sock_p->socket,
                         &self_p->context,
                         &sock_p->socket,
-                        server_side) != 0) {
+                        (server_side == 1 ? SSL_SOCKET_SERVER_SIDE : 0),
+                        NULL) != 0) {
         nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
                                            "failed to open SSL socket"));
     }
@@ -359,14 +360,65 @@ static mp_obj_t class_ssl_socket_close(mp_obj_t self_in)
     return (mp_const_none);
 }
 
+static mp_obj_t class_ssl_socket_cipher(mp_obj_t self_in)
+{
+    struct class_ssl_socket_t *self_p;
+    const char *cipher_p;
+    const char *protocol_p;
+    int number_of_secret_bits;   
+    mp_obj_tuple_t *tuple_p;
+
+    self_p = MP_OBJ_TO_PTR(self_in);
+
+    if (ssl_socket_get_cipher(&self_p->socket,
+                              &cipher_p,
+                              &protocol_p,
+                              &number_of_secret_bits) != 0) {
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+                                           "get cipher"));
+    }
+
+    /* Create the three-tuple. */
+    tuple_p = MP_OBJ_TO_PTR(mp_obj_new_tuple(3, NULL));
+    tuple_p->items[0] = mp_obj_new_str(cipher_p, strlen(cipher_p), false);
+    tuple_p->items[1] = mp_obj_new_str(protocol_p, strlen(protocol_p), false);
+    tuple_p->items[2] = mp_obj_new_int(number_of_secret_bits);
+
+    return (MP_OBJ_FROM_PTR(tuple_p));
+}
+
+static mp_obj_t class_ssl_socket_get_server_hostname(mp_obj_t self_in)
+{
+    struct class_ssl_socket_t *self_p;
+    const char *server_hostname_p;
+
+    self_p = MP_OBJ_TO_PTR(self_in);
+
+    server_hostname_p = ssl_socket_get_server_hostname(&self_p->socket);
+
+    if (server_hostname_p != NULL) {
+        return (mp_obj_new_str(server_hostname_p,
+                               strlen(server_hostname_p),
+                               false));
+    } else {
+        return (mp_const_none);
+    }
+}
+
 static MP_DEFINE_CONST_FUN_OBJ_2(class_ssl_socket_recv_obj, class_ssl_socket_recv);
 static MP_DEFINE_CONST_FUN_OBJ_2(class_ssl_socket_send_obj, class_ssl_socket_send);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_ssl_socket_close_obj, class_ssl_socket_close);
+static MP_DEFINE_CONST_FUN_OBJ_1(class_ssl_socket_cipher_obj, class_ssl_socket_cipher);
+static MP_DEFINE_CONST_FUN_OBJ_1(class_ssl_socket_get_server_hostname_obj,
+                                 class_ssl_socket_get_server_hostname);
 
 static const mp_rom_map_elem_t class_ssl_socket_locals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_recv), MP_ROM_PTR(&class_ssl_socket_recv_obj) },
     { MP_ROM_QSTR(MP_QSTR_send), MP_ROM_PTR(&class_ssl_socket_send_obj) },
-    { MP_ROM_QSTR(MP_QSTR_close), MP_ROM_PTR(&class_ssl_socket_close_obj) }
+    { MP_ROM_QSTR(MP_QSTR_close), MP_ROM_PTR(&class_ssl_socket_close_obj) },
+    { MP_ROM_QSTR(MP_QSTR_cipher), MP_ROM_PTR(&class_ssl_socket_cipher_obj) },
+    { MP_ROM_QSTR(MP_QSTR_get_server_hostname),
+      MP_ROM_PTR(&class_ssl_socket_get_server_hostname_obj) }
 };
 
 static MP_DEFINE_CONST_DICT(class_ssl_socket_locals_dict,

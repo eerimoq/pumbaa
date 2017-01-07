@@ -44,6 +44,9 @@ context.load_verify_locations("server.crt")
 
 ssl_sock = context.wrap_socket(sock)
 
+print('Server hostname:', ssl_sock.get_server_hostname())
+print('Cipher:', ssl_sock.cipher())
+
 print('write: Hello!')
 ssl_sock.send(b"Hello!")
 print('read:', ssl_sock.recv(8))

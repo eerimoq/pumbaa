@@ -29,7 +29,7 @@
 #
 
 NAME = ssl_client
-BOARD ?= linux
+BOARD ?= nano32
 
 TIMEOUT ?= 20
 

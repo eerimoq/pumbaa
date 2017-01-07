@@ -6,6 +6,9 @@
 
 Wrap sockets in TLS/SSL to encrypt the transport channel.
 
+.. warning:: This module may lead to a false sense of security, as it
+             is implemented by a TLS/SSL novice, me. Use with care!
+
 Server side example:
 
 .. code-block:: python
@@ -23,6 +26,8 @@ Server side example:
    >>> ssl_client_sock.recv(5)
    b'hello'
    >>> ssl_client_sock.send(b'goodbye')
+   >>> ssl_client_sock.close()
+   >>> client_sock.close()
 
 Client side example:
 
@@ -38,6 +43,7 @@ Client side example:
    >>> ssl_server_sock.send(b'hello')
    >>> ssl_server_sock.recv(7)
    'goodbye'
+   >>> ssl_server_sock.close()
    >>> server_sock.close()
 
 ----------------------------------------------
@@ -73,14 +79,17 @@ Client side example:
       Load CA certificates with `load_verify_location()`.
 
 
-   .. method:: wrap_socket(sock)
+   .. method:: wrap_socket(sock, server_side=False)
 
       Wrap a normal TCP socket `sock` in this SSL context.
+
+      Performs the SSL handshake.
 
 
    .. data:: CERT_NONE
 
       Do not verify the peer certificate.
+
 
    .. data:: CERT_REQUIRED
 
@@ -90,6 +99,11 @@ Client side example:
 .. class:: ssl.SSLSocket
 
    This is a Python type object that represents the SSL socket.
+
+
+   .. method:: close()
+
+      Close the SSL socket.
 
 
    .. method:: recv(bufsize)
@@ -106,3 +120,14 @@ Client side example:
       sent. Applications are responsible for checking that all data
       has been sent; if only some of the data was transmitted, the
       application needs to attempt delivery of the remaining data.
+
+
+   .. method:: get_server_hostname()
+
+      Returns the hostname of the server as a string.
+
+
+   .. method:: cipher()
+
+      Returns the three-tuple with connection cipher information. For
+      example ``('TLS-RSA-WITH-AES-256-GCM-SHA384', 'TLSv1.1', -1)``

@@ -87,7 +87,8 @@ int ssl_context_set_verify_mode(struct ssl_context_t *self_p,
 int ssl_socket_open(struct ssl_socket_t *self_p,
                     struct ssl_context_t *context_p,
                     void *socket_p,
-                    int server_side)
+                    int flags,
+                    const char *server_hostname_p)
 {
     BTASSERT(self_p != NULL);
     BTASSERT(context_p != NULL);
@@ -151,5 +152,30 @@ ssize_t ssl_socket_size(struct ssl_socket_t *self_p)
     BTASSERT(self_p != NULL);
     PRINT_FILE_LINE();
 
+    return (0);
+}
+
+const char *ssl_socket_get_server_hostname(struct ssl_socket_t *self_p)
+{
+    static int counter = 0;
+
+    counter++;
+
+    if (counter == 1) {
+        return ("test_server");
+    }
+
+    return (NULL);
+}
+
+int ssl_socket_get_cipher(struct ssl_socket_t *self_p,
+                          const char **cipher_pp,
+                          const char **protocol_pp,
+                          int *number_of_secret_bits_p)
+{
+    *cipher_pp = "TLS-RSA-WITH-AES-256-GCM-SHA384";
+    *protocol_pp = "TLSv1.1";
+    *number_of_secret_bits_p = -1;
+    
     return (0);
 }

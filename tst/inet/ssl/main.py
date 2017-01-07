@@ -29,6 +29,7 @@
 #
 
 import harness
+from harness import assert_raises
 import ssl
 import socket
 
@@ -50,12 +51,17 @@ def test_client():
     context.load_verify_locations(cafile="server.crt")
     context.set_verify_mode(ssl.CERT_REQUIRED)
 
-    server_sock = socket.socket()
-    server_sock.connect(('127.0.0.1', 10023))
-    ssl_server_sock = context.wrap_socket(server_sock)
+    sock = socket.socket()
+    sock.connect(('127.0.0.1', 10023))
+    ssl_sock = context.wrap_socket(sock)
 
-    assert ssl_server_sock.send(b'hello') == 5
-    assert ssl_server_sock.recv(7) == b'goodbye'
+    assert ssl_sock.get_server_hostname() == 'test_server'
+    assert ssl_sock.cipher() == ('TLS-RSA-WITH-AES-256-GCM-SHA384',
+                                 'TLSv1.1',
+                                 -1)
+    
+    assert ssl_sock.send(b'hello') == 5
+    assert ssl_sock.recv(7) == b'goodbye'
 
 
 def test_server():
@@ -66,11 +72,16 @@ def test_server():
     listener_sock.bind(('127.0.0.1', 10023))
     listener_sock.listen(5)
 
-    client_sock, _ = listener_sock.accept()
-    ssl_client_sock = context.wrap_socket(client_sock, server_side=True)
+    sock, _ = listener_sock.accept()
+    ssl_sock = context.wrap_socket(sock, server_side=True)
 
-    assert ssl_client_sock.recv(5) == b'hello'
-    assert ssl_client_sock.send(b'goodbye') == 7
+    assert ssl_sock.get_server_hostname() is None
+    assert ssl_sock.cipher() == ('TLS-RSA-WITH-AES-256-GCM-SHA384',
+                                 'TLSv1.1',
+                                 -1)
+
+    assert ssl_sock.recv(5) == b'hello'
+    assert ssl_sock.send(b'goodbye') == 7
 
 
 def main():
