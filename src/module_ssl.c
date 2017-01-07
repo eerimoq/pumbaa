@@ -325,8 +325,7 @@ static mp_obj_t class_ssl_socket_recv(mp_obj_t self_in,
     size = ssl_socket_read(&self_p->socket, vstr.buf, size);
 
     if (size < 0) {
-        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
-                                           "SSL socket recv failed"));
+        size = 0;
     }
 
     vstr.len = size;
