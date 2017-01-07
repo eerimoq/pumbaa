@@ -222,12 +222,16 @@ static mp_obj_t class_ssl_context_wrap_socket(size_t n_args,
     struct class_ssl_socket_t *ssl_sock_p;
     struct class_socket_t *sock_p;
     static const mp_arg_t allowed_args[] = {
-        { MP_QSTR_server_side, MP_ARG_BOOL, { .u_bool = false } }
+        { MP_QSTR_server_side, MP_ARG_BOOL, { .u_bool = false } },
+        { MP_QSTR_server_hostname,
+          MP_ARG_OBJ | MP_ARG_KW_ONLY, { .u_obj = mp_const_none } }
     };
     mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];
     int server_side;
+    const char *server_hostname_p;
     mp_obj_t sock_in;
 
+    /* Parse input arguments. */
     self_p = MP_OBJ_TO_PTR(pos_args_p[0]);
     sock_in = pos_args_p[1];
 
@@ -247,6 +251,13 @@ static mp_obj_t class_ssl_context_wrap_socket(size_t n_args,
 
     server_side = args[0].u_bool;
 
+    if (args[1].u_obj == mp_const_none) {
+        server_hostname_p = NULL;
+    } else {
+        server_hostname_p = mp_obj_str_get_str(args[1].u_obj);
+    }
+
+    /* Create the socket. */
     ssl_sock_p = m_new_obj(struct class_ssl_socket_t);
     ssl_sock_p->base.type = &module_ssl_class_ssl_socket;
     ssl_sock_p->sock_obj = pos_args_p[1];
@@ -255,7 +266,7 @@ static mp_obj_t class_ssl_context_wrap_socket(size_t n_args,
                         &self_p->context,
                         &sock_p->socket,
                         (server_side == 1 ? SSL_SOCKET_SERVER_SIDE : 0),
-                        NULL) != 0) {
+                        server_hostname_p) != 0) {
         nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
                                            "failed to open SSL socket"));
     }
