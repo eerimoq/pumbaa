@@ -2,9 +2,9 @@
 # @section License
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (c) 2016, Erik Moqvist
-# 
+#
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
 # files (the "Software"), to deal in the Software without
@@ -43,6 +43,7 @@ def test_tcp_client():
     client = socket.socket()
     client.connect(("192.168.1.101", 80))
     assert client.send(b'foo') == 3
+    assert client.sendall(b'foo') == 3
     assert client.recv(3) == b'bar'
     client.close()
 
@@ -51,12 +52,20 @@ def test_tcp_server():
     listener = socket.socket()
     listener.bind(("192.168.1.102", 8080))
     listener.listen(5)
-    listener.accept()
+    client, fromaddr = listener.accept()
+    assert client is not None
+    assert fromaddr is None
     listener.close()
 
 
 def test_udp():
-    socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    buf, fromaddr = sock.recvfrom(3)
+    assert buf == b'foo'
+    assert fromaddr == (b'1.2.3.4', 30)
+    assert sock.sendto(b'bar', fromaddr) == 3
+    assert sock.sendto(b'bar', fromaddr) == 0
+    assert sock.sendto(b'bar', fromaddr) == 0
 
 
 def test_select():
@@ -72,12 +81,59 @@ def test_select():
     tcp.close()
 
 
+def test_errors():
+    # Failed accept.
+    listener = socket.socket()
+    listener.bind(("192.168.1.102", 8080))
+    listener.listen(5)
+
+    with assert_raises(OSError, 'socket accept failed'):
+        listener.accept()
+
+    listener.close()
+
+    # Failed bind and close.
+    listener = socket.socket()
+
+    with assert_raises(OSError, 'socket bind failed'):
+        listener.bind(("192.168.1.102", 8080))
+
+    with assert_raises(OSError, 'socket close failed'):
+        listener.close()
+
+    # Failed listen.
+    listener = socket.socket()
+    listener.bind(("192.168.1.102", 8080))
+
+    with assert_raises(OSError, 'socket listen failed'):
+        listener.listen(5)
+
+    listener.close()
+
+    # Failed connect.
+    client = socket.socket()
+
+    with assert_raises(OSError, 'socket connect failed'):
+        client.connect(("192.168.1.101", 80))
+
+    client.close()
+
+    # Failed send and recv.
+    client = socket.socket()
+    client.connect(("192.168.1.101", 80))
+    assert client.send(b'bar') == 0
+    assert client.recv(5) == b''
+    assert client.send(b'bar') == 0
+    assert client.recv(5) == b''
+    client.close()
+
+    
 def test_bad_arguments():
     # Bad socket family.
     with assert_raises(OSError):
         socket.socket(-1)
 
-        # Bad socket type.
+    # Bad socket type.
     with assert_raises(OSError):
         socket.socket(socket.AF_INET, -1)
 
@@ -89,6 +145,7 @@ def main():
         (test_tcp_server, "test_tcp_server"),
         (test_udp, "test_udp"),
         (test_select, "test_select"),
+        (test_errors, "test_errors"),
         (test_bad_arguments, "test_bad_arguments")
     ]
     harness.run(testcases)

@@ -213,8 +213,7 @@ static mp_obj_t class_socket_recv(mp_obj_t self_in,
     size = socket_read(&self_p->socket, vstr.buf, size);
 
     if (size < 0) {
-        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
-                                           "socket recv failed"));
+        size = 0;
     }
 
     vstr.len = size;
@@ -304,8 +303,7 @@ static mp_obj_t class_socket_send(mp_obj_t self_in, mp_obj_t string_in)
     size = socket_write(&self_p->socket, buffer_info.buf, buffer_info.len);
 
     if (size < 0) {
-        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
-                                           "socket send failed"));
+        size = 0;
     }
 
     return (mp_obj_new_int(size));
@@ -346,8 +344,7 @@ static mp_obj_t class_socket_sendto(mp_obj_t self_in,
                          &address);
 
     if (size < 0) {
-        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
-                                           "socket send failed"));
+        size = 0;
     }
 
     return (mp_obj_new_int(size));
