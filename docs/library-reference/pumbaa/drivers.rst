@@ -400,7 +400,8 @@ Simba documentation: `drivers`_
 
    Create a I2CSoft object.
 
-   Here is an example of how to create a SD and read the CID.
+   Here is an example of how to create a I2CSoft obeject and scan the
+   bus to find conected devices.
 
    .. code-block:: python
 
@@ -415,12 +416,12 @@ Simba documentation: `drivers`_
 
    .. method:: start()
 
-      Start the i2c soft driver.
+      Start the i2c soft driver. Configures the hardware.
 
 
    .. method:: stop()
 
-      Stop the i2c soft driver.
+      Stop the i2c soft driver. Resets the hardware.
 
 
    .. method:: read(address, size)
@@ -447,7 +448,7 @@ Simba documentation: `drivers`_
 
 .. class:: drivers.Owi(pin_device)
 
-   Create an Owi object with `pin_device` as the one wire bus pin.
+   Create an Owi object with `pin_device` as the One Wire bus pin.
 
    Here is an example of how to use the Owi class.
 
@@ -469,12 +470,12 @@ Simba documentation: `drivers`_
 
    .. method:: reset()
 
-      Send reset on one wire bus.
+      Send reset on One Wire bus.
 
 
    .. method:: search()
 
-      Search for devices on the one wire bus. The device id of all
+      Search for devices on the One Wire bus. The device id of all
       found devices are stored and returned by :meth:`.get_devices`.
 
 
@@ -517,19 +518,20 @@ Simba documentation: `drivers`_
 
    .. method:: convert()
 
-      Start temperature convertion on all sensors.
+      Start temperature convertion on all sensors. A convertion takes
+      about one second to finish.
 
 
    .. method:: get_devices()
 
-      Returns a list of all DS18B20 devices found in the latest call
+      Returns a list of all DS18B20 devices found by the latest call
       to :meth:`.Owi.search`.
 
 
    .. method:: get_temperature(device_id)
 
       Get the temperature for given device identity. Reads the latest
-      converted sample in the device with id `device_id`. Call
+      converted sample for the device with id `device_id`. Call
       :meth:`.convert` before calling this function to get the current
       temperature.
 
@@ -617,6 +619,7 @@ Simba documentation: `drivers`_
 
       >>> esp_wifi.set_op_mode(esp_wifi.OP_MODE_STATION)
       >>> esp_wifi.station_init('ssid', 'password')
+      >>> esp_wifi.station_connect()
       >>> esp_wifi.station_get_status()
       'got-ip'
       >>> esp_wifi.station_get_ip_info()
