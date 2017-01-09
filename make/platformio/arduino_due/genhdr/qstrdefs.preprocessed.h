@@ -10,8 +10,13 @@
 # 34 "/home/erik/workspace/pumbaa/src/port/mpconfigport.h"
 # 1 "/home/erik/workspace/pumbaa/src/boards/arduino_due/simba_board.h" 1
 # 35 "/home/erik/workspace/pumbaa/src/port/mpconfigport.h" 2
+# 1 "/home/erik/workspace/pumbaa/src/config.h" 1
+# 35 "/home/erik/workspace/pumbaa/src/config.h"
+# 1 "/home/erik/workspace/pumbaa/src/simba_config.h" 1
+# 36 "/home/erik/workspace/pumbaa/src/config.h" 2
+# 36 "/home/erik/workspace/pumbaa/src/port/mpconfigport.h" 2
 # 1 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h" 1
-# 344 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
+# 420 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
 extern const struct _mp_obj_module_t mp_module_uos;
 extern const struct _mp_obj_module_t mp_module_utime;
 extern const struct _mp_obj_module_t mp_module_usocket;
@@ -22,10 +27,10 @@ extern const struct _mp_obj_module_t module_drivers;
 extern const struct _mp_obj_module_t module_inet;
 extern const struct _mp_obj_module_t module_text;
 extern const struct _mp_obj_module_t module_board;
-# 413 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
+# 531 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
 typedef int mp_int_t;
 typedef unsigned int mp_uint_t;
-# 423 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
+# 541 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
 typedef long mp_off_t;
 
 
@@ -394,8 +399,8 @@ extern struct _reent *const _global_impure_ptr ;
 
 void _reclaim_reent (struct _reent *);
 # 12 "/usr/include/newlib/alloca.h" 2 3
-# 430 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h" 2
-# 36 "/home/erik/workspace/pumbaa/src/port/mpconfigport.h" 2
+# 548 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h" 2
+# 37 "/home/erik/workspace/pumbaa/src/port/mpconfigport.h" 2
 # 46 "/home/erik/workspace/pumbaa/micropython/py/mpconfig.h" 2
 # 537 "/home/erik/workspace/pumbaa/micropython/py/mpconfig.h"
 typedef float mp_float_t;
@@ -434,8 +439,6 @@ Q(FileNotFoundError)
 Q(FloatingPointError)
 Q(UnboundLocalError)
 Q(ADC_0)
-
-Q(AF_INET)
 
 Q(Adc)
 
@@ -903,12 +906,6 @@ Q(RuntimeError)
 
 Q(RuntimeError)
 
-Q(SOCK_DGRAM)
-
-Q(SOCK_RAW)
-
-Q(SOCK_STREAM)
-
 Q(SPEED_125KBPS)
 
 Q(SPEED_1MBPS)
@@ -930,8 +927,6 @@ Q(SPI_0)
 Q(Sd)
 
 Q(Sd)
-
-Q(SocketType)
 
 Q(Spi)
 
@@ -1097,8 +1092,6 @@ Q(__init__)
 
 Q(__init__)
 
-Q(__init__)
-
 Q(__iter__)
 
 Q(__le__)
@@ -1122,8 +1115,6 @@ Q(__main__)
 Q(__main__)
 
 Q(__module__)
-
-Q(__name__)
 
 Q(__name__)
 
@@ -1269,8 +1260,6 @@ Q(a2b_base64)
 
 Q(abs)
 
-Q(accept)
-
 Q(acos)
 
 Q(acquire)
@@ -1318,8 +1307,6 @@ Q(b2a_base64)
 Q(bin)
 
 Q(binascii)
-
-Q(bind)
 
 Q(board)
 
@@ -1399,8 +1386,6 @@ Q(close)
 
 Q(close)
 
-Q(close)
-
 Q(closure)
 
 Q(closure)
@@ -1416,8 +1401,6 @@ Q(collections)
 Q(complex)
 
 Q(complex)
-
-Q(connect)
 
 Q(const)
 
@@ -1566,8 +1549,6 @@ Q(extend)
 Q(extend)
 
 Q(fabs)
-
-Q(family)
 
 Q(file)
 
@@ -1787,8 +1768,6 @@ Q(list)
 
 Q(listdir)
 
-Q(listen)
-
 Q(little)
 
 Q(little)
@@ -1961,8 +1940,6 @@ Q(property)
 
 Q(property)
 
-Q(proto)
-
 Q(prv)
 
 Q(psn)
@@ -2057,14 +2034,6 @@ Q(real)
 
 Q(rect)
 
-Q(recv)
-
-Q(recv_into)
-
-Q(recvfrom)
-
-Q(recvfrom_into)
-
 Q(reference)
 
 Q(register)
@@ -2131,12 +2100,6 @@ Q(send)
 
 Q(send)
 
-Q(send)
-
-Q(sendall)
-
-Q(sendto)
-
 Q(sep)
 
 Q(set)
@@ -2154,8 +2117,6 @@ Q(setter)
 Q(sha256)
 
 Q(sha256)
-
-Q(shutdown)
 
 Q(sin)
 
@@ -2178,10 +2139,6 @@ Q(sleep_us)
 Q(slice)
 
 Q(slice)
-
-Q(socket)
-
-Q(socket)
 
 Q(sort)
 
@@ -2385,8 +2342,6 @@ Q(type)
 
 Q(type)
 
-Q(type)
-
 Q(ubinascii)
 
 Q(ubinascii)
@@ -2440,10 +2395,6 @@ Q(urandom)
 Q(uselect)
 
 Q(uselect)
-
-Q(uselect)
-
-Q(usocket)
 
 Q(ustruct)
 

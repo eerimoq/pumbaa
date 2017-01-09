@@ -9,8 +9,13 @@
 # 34 "/home/erik/workspace/pumbaa/src/port/mpconfigport.h"
 # 1 "/home/erik/workspace/pumbaa/src/boards/nano32/simba_board.h" 1
 # 35 "/home/erik/workspace/pumbaa/src/port/mpconfigport.h" 2
+# 1 "/home/erik/workspace/pumbaa/src/config.h" 1
+# 35 "/home/erik/workspace/pumbaa/src/config.h"
+# 1 "/home/erik/workspace/pumbaa/src/simba_config.h" 1
+# 36 "/home/erik/workspace/pumbaa/src/config.h" 2
+# 36 "/home/erik/workspace/pumbaa/src/port/mpconfigport.h" 2
 # 1 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h" 1
-# 344 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
+# 420 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
 extern const struct _mp_obj_module_t mp_module_uos;
 extern const struct _mp_obj_module_t mp_module_utime;
 extern const struct _mp_obj_module_t mp_module_usocket;
@@ -21,10 +26,10 @@ extern const struct _mp_obj_module_t module_drivers;
 extern const struct _mp_obj_module_t module_inet;
 extern const struct _mp_obj_module_t module_text;
 extern const struct _mp_obj_module_t module_board;
-# 413 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
+# 531 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
 typedef int mp_int_t;
 typedef unsigned int mp_uint_t;
-# 423 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
+# 541 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
 typedef long mp_off_t;
 
 
@@ -426,8 +431,8 @@ void _reclaim_reent (struct _reent *);
 
   struct _reent * __getreent (void);
 # 12 "/home/erik/workspace/pumbaa/simba/3pp/esp32/inc/newlib/include/alloca.h" 2
-# 430 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h" 2
-# 36 "/home/erik/workspace/pumbaa/src/port/mpconfigport.h" 2
+# 548 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h" 2
+# 37 "/home/erik/workspace/pumbaa/src/port/mpconfigport.h" 2
 # 46 "/home/erik/workspace/pumbaa/micropython/py/mpconfig.h" 2
 # 537 "/home/erik/workspace/pumbaa/micropython/py/mpconfig.h"
 typedef float mp_float_t;
@@ -497,6 +502,14 @@ Q(BytesIO)
 
 Q(CAN_0)
 
+Q(CERT_NONE)
+
+Q(CERT_REQUIRED)
+
+Q(CONTENT_TYPE_TEXT_HTML)
+
+Q(CONTENT_TYPE_TEXT_PLAIN)
+
 Q(Can)
 
 Q(Can)
@@ -535,6 +548,16 @@ Q(GeneratorExit)
 
 Q(GeneratorExit)
 
+Q(HttpServer)
+
+Q(HttpServer)
+
+Q(HttpServerConnection)
+
+Q(HttpServerWebSocket)
+
+Q(HttpServerWebsocket)
+
 Q(INPUT)
 
 Q(ImportError)
@@ -558,6 +581,8 @@ Q(KeyError)
 Q(KeyboardInterrupt)
 
 Q(KeyboardInterrupt)
+
+Q(LockType)
 
 Q(LookupError)
 
@@ -687,6 +712,8 @@ Q(POLLHUP)
 
 Q(POLLIN)
 
+Q(PROTOCOL_TLS)
+
 Q(Pin)
 
 Q(Pin)
@@ -696,6 +723,10 @@ Q(Queue)
 Q(Queue)
 
 Q(REFERENCE_VCC)
+
+Q(RESPONSE_CODE_200_OK)
+
+Q(RESPONSE_CODE_404_NOT_FOUND)
 
 Q(RuntimeError)
 
@@ -728,6 +759,14 @@ Q(SPI_0)
 Q(SPI_1)
 
 Q(SPI_2)
+
+Q(SSLContext)
+
+Q(SSLContext)
+
+Q(SSLSocket)
+
+Q(SSLSocket)
 
 Q(SocketType)
 
@@ -833,9 +872,13 @@ Q(__enter__)
 
 Q(__enter__)
 
+Q(__enter__)
+
 Q(__eq__)
 
 Q(__eq__)
+
+Q(__exit__)
 
 Q(__exit__)
 
@@ -893,6 +936,8 @@ Q(__init__)
 
 Q(__init__)
 
+Q(__init__)
+
 Q(__iter__)
 
 Q(__le__)
@@ -916,6 +961,10 @@ Q(__main__)
 Q(__main__)
 
 Q(__module__)
+
+Q(__name__)
+
+Q(__name__)
 
 Q(__name__)
 
@@ -1053,6 +1102,10 @@ Q(_star_)
 
 Q(_star_)
 
+Q(_thread)
+
+Q(_thread)
+
 Q(a2b_base64)
 
 Q(abs)
@@ -1061,6 +1114,8 @@ Q(accept)
 
 Q(acos)
 
+Q(acquire)
+
 Q(add)
 
 Q(address)
@@ -1068,6 +1123,8 @@ Q(address)
 Q(address)
 
 Q(all)
+
+Q(allocate_lock)
 
 Q(any)
 
@@ -1137,6 +1194,8 @@ Q(bytes)
 
 Q(bytes)
 
+Q(cafile)
+
 Q(calcsize)
 
 Q(callable)
@@ -1151,15 +1210,21 @@ Q(choice)
 
 Q(chr)
 
-Q(classmethod)
+Q(cipher)
 
 Q(classmethod)
 
-Q(clear)
+Q(classmethod)
 
 Q(clear)
 
 Q(clear)
+
+Q(clear)
+
+Q(clients_max)
+
+Q(close)
 
 Q(close)
 
@@ -1194,6 +1259,8 @@ Q(complex)
 Q(complex)
 
 Q(connect)
+
+Q(connection)
 
 Q(const)
 
@@ -1311,6 +1378,8 @@ Q(exec)
 
 Q(exit)
 
+Q(exit)
+
 Q(exp)
 
 Q(exp)
@@ -1399,9 +1468,13 @@ Q(get_devices)
 
 Q(get_devices)
 
+Q(get_ident)
+
 Q(get_op_mode)
 
 Q(get_phy_mode)
+
+Q(get_server_hostname)
 
 Q(get_temperature)
 
@@ -1467,6 +1540,8 @@ Q(intersection_update)
 
 Q(io)
 
+Q(ip_address)
+
 Q(isalpha)
 
 Q(isdigit)
@@ -1523,6 +1598,8 @@ Q(key)
 
 Q(key)
 
+Q(keyfile)
+
 Q(keys)
 
 Q(keys)
@@ -1547,11 +1624,19 @@ Q(little)
 
 Q(load)
 
+Q(load_cert_chain)
+
+Q(load_verify_locations)
+
 Q(loads)
 
 Q(locals)
 
 Q(localtime)
+
+Q(lock)
+
+Q(locked)
 
 Q(log)
 
@@ -1621,6 +1706,8 @@ Q(netmask)
 
 Q(next)
 
+Q(no_route)
+
 Q(nodename)
 
 Q(object)
@@ -1644,6 +1731,8 @@ Q(owi)
 Q(pack)
 
 Q(pack_into)
+
+Q(path)
 
 Q(path)
 
@@ -1680,6 +1769,8 @@ Q(pop)
 Q(pop)
 
 Q(popitem)
+
+Q(port)
 
 Q(pow)
 
@@ -1735,6 +1826,10 @@ Q(read)
 
 Q(read)
 
+Q(read)
+
+Q(read_into)
+
 Q(read_into)
 
 Q(readinto)
@@ -1763,6 +1858,8 @@ Q(rect)
 
 Q(recv)
 
+Q(recv)
+
 Q(recv_into)
 
 Q(recvfrom)
@@ -1772,6 +1869,8 @@ Q(recvfrom_into)
 Q(reference)
 
 Q(register)
+
+Q(release)
 
 Q(release)
 
@@ -1787,7 +1886,11 @@ Q(replace)
 
 Q(repr)
 
+Q(request)
+
 Q(reset)
+
+Q(response_write)
 
 Q(reverse)
 
@@ -1804,6 +1907,8 @@ Q(rindex)
 Q(rmdir)
 
 Q(round)
+
+Q(routes)
 
 Q(rsplit)
 
@@ -1831,11 +1936,17 @@ Q(send)
 
 Q(send)
 
+Q(send)
+
 Q(sendall)
 
 Q(sendto)
 
 Q(sep)
+
+Q(server_hostname)
+
+Q(server_side)
 
 Q(set)
 
@@ -1846,6 +1957,8 @@ Q(set_mode)
 Q(set_op_mode)
 
 Q(set_phy_mode)
+
+Q(set_verify_mode)
 
 Q(setattr)
 
@@ -1885,6 +1998,8 @@ Q(socket)
 
 Q(socket)
 
+Q(socket_write)
+
 Q(softap_dhcp_server_start)
 
 Q(softap_dhcp_server_status)
@@ -1915,7 +2030,9 @@ Q(sqrt)
 
 Q(sqrt)
 
-Q(start)
+Q(ssl)
+
+Q(stack_size)
 
 Q(start)
 
@@ -1924,6 +2041,12 @@ Q(start)
 Q(start)
 
 Q(start)
+
+Q(start)
+
+Q(start)
+
+Q(start_new_thread)
 
 Q(startswith)
 
@@ -1943,11 +2066,11 @@ Q(station_dhcp_client_stop)
 
 Q(station_disconnect)
 
-Q(station_get_connect_status)
-
 Q(station_get_ip_info)
 
 Q(station_get_reconnect_policy)
+
+Q(station_get_status)
 
 Q(station_init)
 
@@ -1962,6 +2085,8 @@ Q(stdin)
 Q(stdout)
 
 Q(step)
+
+Q(stop)
 
 Q(stop)
 
@@ -2018,6 +2143,34 @@ Q(tell)
 Q(text)
 
 Q(text)
+
+Q(thrd_get_by_name)
+
+Q(thrd_get_env)
+
+Q(thrd_get_global_env)
+
+Q(thrd_get_log_mask)
+
+Q(thrd_get_name)
+
+Q(thrd_get_prio)
+
+Q(thrd_join)
+
+Q(thrd_self)
+
+Q(thrd_set_env)
+
+Q(thrd_set_global_env)
+
+Q(thrd_set_log_mask)
+
+Q(thrd_set_name)
+
+Q(thrd_set_prio)
+
+Q(thrd_yield)
 
 Q(threshold)
 
@@ -2125,9 +2278,13 @@ Q(uselect)
 
 Q(uselect)
 
-Q(uselect)
+Q(usocket)
 
 Q(usocket)
+
+Q(ussl)
+
+Q(ussl)
 
 Q(ustruct)
 
@@ -2156,6 +2313,10 @@ Q(version)
 Q(version)
 
 Q(version_info)
+
+Q(wrap_socket)
+
+Q(write)
 
 Q(write)
 
