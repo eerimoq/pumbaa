@@ -74,10 +74,9 @@ operating systems. It only works for the Simba channels;
       the descriptors that have events or errors to report. An empty
       list indicates that the call timed out and no channel had any
       events to report. If `timeout` is given, it specifies the length
-      of time in milliseconds which the system will wait for events
-      before returning. If `timeout` is omitted, negative, or
-      ``None``, the call will block until there is an event for this
-      poll object.
+      of time in seconds which the system will wait for events before
+      returning. If `timeout` is omitted, negative, or ``None``, the
+      call will block until there is an event for this poll object.
 
 
 .. data:: select.POLLIN
