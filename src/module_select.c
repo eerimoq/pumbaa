@@ -34,6 +34,7 @@
 #define CHAN_POLLHUP  2
 
 extern const mp_obj_type_t module_socket_class_socket;
+extern const mp_obj_type_t module_ssl_class_ssl_socket;
 
 struct class_chan_t {
     mp_obj_base_t base;
@@ -56,6 +57,9 @@ static int is_channel(mp_obj_t obj)
             || MP_OBJ_IS_TYPE(obj, &module_sync_class_queue)
 #if CONFIG_PUMBAA_MODULE_SOCKET == 1
             || MP_OBJ_IS_TYPE(obj, &module_socket_class_socket)
+#endif
+#if CONFIG_PUMBAA_MODULE_SSL == 1
+            || MP_OBJ_IS_TYPE(obj, &module_ssl_class_ssl_socket)
 #endif
 #if CONFIG_PUMBAA_CLASS_CAN == 1
             || MP_OBJ_IS_TYPE(obj, &module_drivers_class_can)
