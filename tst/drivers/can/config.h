@@ -33,11 +33,13 @@
 
 #include "stubs.h"
 
-#define CONFIG_START_FILESYSTEM 1
-#define CONFIG_FAT16 1
-#define CONFIG_SPIFFS 1
-#define CONFIG_THRD_ENV 1
-#define CONFIG_FS_CMD_THRD_LIST 1
+#define CONFIG_PUMBAA_CLASS_CAN 1
+
+#define MICROPY_PORT_BUILTIN_MODULES_EXTRA                              \
+    { MP_ROM_QSTR(MP_QSTR_can_stub), MP_ROM_PTR(&module_can_stub) },
+
+#define MICROPY_PORT_ROOT_POINTERS_EXTRA        \
+    CAN_STUB_ROOT_POINTERS
 
 /* Changes of the default Simba configuration. */
 #include "simba_config.h"

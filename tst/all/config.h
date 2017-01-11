@@ -33,11 +33,31 @@
 
 #include "stubs.h"
 
-#define CONFIG_START_FILESYSTEM 1
-#define CONFIG_FAT16 1
-#define CONFIG_SPIFFS 1
-#define CONFIG_THRD_ENV 1
-#define CONFIG_FS_CMD_THRD_LIST 1
+#define CONFIG_PUMBAA_MAIN_REBOOT_AT_EXIT                   0
+#define CONFIG_PUMBAA_MAIN_FRIENDLY_REPL                    0
+
+#if defined(ARCH_LINUX)
+#    define BUILTIN_MODULE_SD \
+    { MP_ROM_QSTR(MP_QSTR_sd_stub), MP_ROM_PTR(&module_sd_stub) },
+#else
+#    define BUILTIN_MODULE_SD
+#endif
+
+#define MICROPY_PORT_BUILTIN_MODULES_EXTRA                              \
+    { MP_ROM_QSTR(MP_QSTR_can_stub), MP_ROM_PTR(&module_can_stub) },    \
+    { MP_ROM_QSTR(MP_QSTR_ds18b20_stub), MP_ROM_PTR(&module_ds18b20_stub) }, \
+    { MP_ROM_QSTR(MP_QSTR_owi_stub), MP_ROM_PTR(&module_owi_stub) },    \
+    BUILTIN_MODULE_SD \
+    { MP_ROM_QSTR(MP_QSTR_socket_stub), MP_ROM_PTR(&module_socket_stub) }, \
+    { MP_ROM_QSTR(MP_QSTR_ssl_stub), MP_ROM_PTR(&module_ssl_stub) },
+
+#define MICROPY_PORT_ROOT_POINTERS_EXTRA        \
+    CAN_STUB_ROOT_POINTERS                      \
+    DS18B20_STUB_ROOT_POINTERS                  \
+    OWI_STUB_ROOT_POINTERS                      \
+    SD_STUB_ROOT_POINTERS                       \
+    SOCKET_STUB_ROOT_POINTERS                   \
+    SSL_STUB_ROOT_POINTERS
 
 /* Changes of the default Simba configuration. */
 #include "simba_config.h"

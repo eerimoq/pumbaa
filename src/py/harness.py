@@ -84,10 +84,10 @@ def run(testcases):
     print('Free memory on the heap: ', gc.mem_free())
     print()
 
+    total = len(testcases)
     passed = 0
     skipped = 0
     failed = 0
-    total = len(testcases)
 
     for callback, name in testcases:
         print("enter:", name)
@@ -123,3 +123,5 @@ def run(testcases):
 
     if not ok:
         raise SuiteError(total, passed, skipped, failed)
+
+    return total, passed, skipped, failed

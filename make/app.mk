@@ -31,7 +31,21 @@
 
 SIMBA_ROOT ?= $(PUMBAA_ROOT)/simba
 
+ifneq ($(TYPE), suite)
 PYSRC += main.py
+else
+PYSRC += \
+	$(GENDIR)/main.py \
+	$(NAME).py \
+	$(PUMBAA_ROOT)/src/py/harness.py
+INC += \
+	$(PUMBAA_ROOT)/tst/stubs
+CDEFS += \
+	CONFIG_MINIMAL_SYSTEM=1 \
+	CONFIG_PUMBAA_MAIN_REBOOT_AT_EXIT=0 \
+	CONFIG_PUMBAA_MAIN_FRIENDLY_REPL=0 \
+	CONFIG_FS_CMD_THRD_LIST=1
+endif
 
 MAIN_C ?= $(PUMBAA_ROOT)/src/main.c
 FROZEN_C = $(GENDIR)/frozen.c
@@ -93,6 +107,13 @@ $(patsubst %.py,$(GENDIR)%.mpy,$(abspath $1)): $1
 	$$(MPY_CROSS) -s $(notdir $1) -o $$@ $$<
 endef
 $(foreach name,$(PYSRC),$(eval $(call MPY_GEN_template,$(name))))
+
+$(GENDIR)/main.py:
+	@echo "GEN $@"
+	mkdir -p $(GENDIR)
+	echo "import harness" > $@
+	echo "from $(NAME) import TESTCASES" >> $@
+	echo "harness.run(TESTCASES)" >> $@
 
 $(FROZEN_C): $(MPYSRC) | $(QSTR_DEFS_GENERATED_H)
 	echo "Generating $@"

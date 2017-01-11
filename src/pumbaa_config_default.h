@@ -202,6 +202,8 @@
 #        define CONFIG_PUMBAA_HEAP_SIZE                 24576
 #    elif defined(ARCH_ESP32)
 #        define CONFIG_PUMBAA_HEAP_SIZE                 65536
+#    elif defined(ARCH_LINUX)
+#        define CONFIG_PUMBAA_HEAP_SIZE         (1024 * 1024)
 #    else
 #        define CONFIG_PUMBAA_HEAP_SIZE                 32768
 #    endif
@@ -436,6 +438,10 @@ extern const struct _mp_obj_module_t module_board;
 #    define MICROPY_PORT_BUILTIN_MODULE_WEAK_LINKS_EXTRA
 #endif
 
+#ifndef MICROPY_PORT_ROOT_POINTERS_EXTRA
+#    define MICROPY_PORT_ROOT_POINTERS_EXTRA
+#endif
+
 #if CONFIG_PUMBAA_MODULE_SOCKET == 1
 #    define PORT_BUILTIN_MODULE_SOCKET                                  \
     { MP_ROM_QSTR(MP_QSTR_usocket), MP_ROM_PTR(&mp_module_usocket) },
@@ -504,7 +510,8 @@ extern const struct _mp_obj_module_t module_board;
 
 #define MICROPY_PORT_ROOT_POINTERS \
     mp_obj_t keyboard_interrupt_obj; \
-    const char *readline_hist[8];
+    const char *readline_hist[8]; \
+    MICROPY_PORT_ROOT_POINTERS_EXTRA
 
 //////////////////////////////////////////
 // Do not change anything beyond this line

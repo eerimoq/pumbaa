@@ -33,10 +33,10 @@ NAME = socket_suite
 TYPE = suite
 BOARD ?= linux
 
-PYSRC += \
-	$(PUMBAA_ROOT)/src/py/harness.py
-
-SRC += socket_stub.c
+INC += \
+	$(PUMBAA_ROOT)/tst/stubs
+SRC += \
+	$(PUMBAA_ROOT)/tst/stubs/socket_stub.c
 
 CDEFS += \
 	CONFIG_MINIMAL_SYSTEM=1 \

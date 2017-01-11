@@ -2,9 +2,9 @@
 # @section License
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (c) 2016, Erik Moqvist
-# 
+#
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
 # files (the "Software"), to deal in the Software without
@@ -29,19 +29,38 @@
 #
 
 
-NAME = ds18b20_suite
-TYPE = suite
-BOARD ?= linux
+import os
+import _thread
+from sync import Event
+import harness
+import gc
 
-SRC += \
-	$(PUMBAA_ROOT)/tst/stubs/ds18b20_stub.c \
-	$(PUMBAA_ROOT)/tst/stubs/owi_stub.c
+EVENT = Event()
 
-CDEFS += \
-	CONFIG_PUMBAA_CLASS_DS18B20=1 \
-	CONFIG_PUMBAA_CLASS_OWI=1
 
-SYNC_SRC = event.c
+def thread_main(mask):
+    EVENT.write(mask)
 
-PUMBAA_ROOT ?= ../..
-include $(PUMBAA_ROOT)/make/app.mk
+
+def test_print():
+    help(_thread)
+
+
+def test_start():
+    mask = 0x1
+    _thread.start_new_thread(thread_main, (mask, ))
+    assert EVENT.read(mask) == mask
+
+
+def test_gc():
+    if os.uname().machine != "Linux with Linux":
+        print('Free memory before gc:', gc.mem_free())
+        gc.collect()
+        print('Free memory after gc:', gc.mem_free())
+
+
+TESTCASES = [
+    (test_print, "test_print"),
+    (test_start, "test_start"),
+    (test_gc, "test_gc")
+]

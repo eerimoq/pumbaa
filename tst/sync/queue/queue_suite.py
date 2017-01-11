@@ -29,19 +29,37 @@
 #
 
 
-NAME = ds18b20_suite
-TYPE = suite
-BOARD ?= linux
+from sync import Queue
+import harness
+from harness import assert_raises
 
-SRC += \
-	$(PUMBAA_ROOT)/tst/stubs/ds18b20_stub.c \
-	$(PUMBAA_ROOT)/tst/stubs/owi_stub.c
 
-CDEFS += \
-	CONFIG_PUMBAA_CLASS_DS18B20=1 \
-	CONFIG_PUMBAA_CLASS_OWI=1
+def test_help():
+    queue = Queue()
+    help(Queue)
+    help(queue)
 
-SYNC_SRC = event.c
 
-PUMBAA_ROOT ?= ../..
-include $(PUMBAA_ROOT)/make/app.mk
+def test_read_write():
+    queue = Queue()
+
+    queue.write(b'foo')
+    assert queue.size() == 3
+    assert queue.read(3) == b'foo'
+
+
+def test_bad_arguments():
+    queue = Queue()
+
+    with assert_raises(TypeError, "can't convert NoneType to int"):
+        queue.read(None)
+
+    with assert_raises(TypeError, "object with buffer protocol required"):
+        queue.write(None)
+
+
+TESTCASES = [
+    (test_help, "test_help"),
+    (test_read_write, "test_read_write"),
+    (test_bad_arguments, "test_bad_arguments")
+]

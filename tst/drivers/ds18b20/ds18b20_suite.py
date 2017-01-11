@@ -2,9 +2,9 @@
 # @section License
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (c) 2016, Erik Moqvist
-# 
+#
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
 # files (the "Software"), to deal in the Software without
@@ -29,19 +29,45 @@
 #
 
 
-NAME = ds18b20_suite
-TYPE = suite
-BOARD ?= linux
+import struct
+from drivers import Owi, Ds18b20
+import board
+import harness
+from harness import assert_raises
 
-SRC += \
-	$(PUMBAA_ROOT)/tst/stubs/ds18b20_stub.c \
-	$(PUMBAA_ROOT)/tst/stubs/owi_stub.c
 
-CDEFS += \
-	CONFIG_PUMBAA_CLASS_DS18B20=1 \
-	CONFIG_PUMBAA_CLASS_OWI=1
+def test_print():
+    print(Ds18b20)
+    help(Ds18b20)
+    ds18b20 = Ds18b20(Owi(board.PIN_LED))
+    print(ds18b20)
 
-SYNC_SRC = event.c
 
-PUMBAA_ROOT ?= ../..
-include $(PUMBAA_ROOT)/make/app.mk
+def test_convert():
+    ds18b20 = Ds18b20(Owi(board.PIN_LED))
+    assert ds18b20.convert() == None
+
+
+def test_get_devices():
+    ds18b20 = Ds18b20(Owi(board.PIN_LED))
+    assert ds18b20.get_devices() == [b'\x282345678', b'\x282345679']
+
+
+def test_get_temperature():
+    ds18b20 = Ds18b20(Owi(board.PIN_LED))
+    assert ds18b20.get_temperature(b'\x282345678') == 22.0
+
+
+def test_bad_arguments():
+    # Owi object expected.
+    with assert_raises(TypeError, "Owi object expected"):
+        Ds18b20(None)
+
+
+TESTCASES = [
+    (test_print, "test_print"),
+    (test_convert, "test_convert"),
+    (test_get_devices, "test_get_devices"),
+    (test_get_temperature, "test_get_temperature"),
+    (test_bad_arguments, "test_bad_arguments")
+]

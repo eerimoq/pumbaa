@@ -37,26 +37,7 @@ BOARD ?= linux
 
 ifeq ($(BOARD), linux)
 TESTS = \
-	tst/smoke \
-	tst/os \
-	tst/select \
-	tst/socket \
-	tst/inet/ssl \
-	tst/thread \
-	tst/debug/harness \
-	tst/drivers/adc \
-	tst/drivers/can \
-	tst/drivers/dac \
-	tst/drivers/ds18b20 \
-	tst/drivers/exti \
-	tst/drivers/pin \
-	tst/drivers/owi \
-	tst/drivers/spi \
-	tst/drivers/sd \
-	tst/kernel/timer \
-	tst/sync/event \
-	tst/sync/queue \
-	tst/inet/http_server
+	tst/all
 endif
 
 ifeq ($(BOARD), nodemcu)
@@ -66,13 +47,7 @@ endif
 
 ifeq ($(BOARD), nano32)
 TESTS = \
-	tst/thread \
-	tst/drivers/pin \
-	tst/kernel/timer \
-	tst/inet/ssl \
-	tst/sync/event \
-	tst/sync/queue \
-	tst/os
+	tst/all
 endif
 
 ifeq ($(BOARD), arduino_due)

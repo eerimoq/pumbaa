@@ -29,19 +29,38 @@
 #
 
 
-NAME = ds18b20_suite
-TYPE = suite
-BOARD ?= linux
+from sync import Event
+import harness
+from harness import assert_raises
 
-SRC += \
-	$(PUMBAA_ROOT)/tst/stubs/ds18b20_stub.c \
-	$(PUMBAA_ROOT)/tst/stubs/owi_stub.c
 
-CDEFS += \
-	CONFIG_PUMBAA_CLASS_DS18B20=1 \
-	CONFIG_PUMBAA_CLASS_OWI=1
+def test_help():
+    event = Event()
+    help(Event)
+    help(event)
 
-SYNC_SRC = event.c
 
-PUMBAA_ROOT ?= ../..
-include $(PUMBAA_ROOT)/make/app.mk
+def test_read_write():
+    event = Event()
+
+    event.write(0x6)
+    assert event.size() == 1
+    assert event.read(0x2) == 0x2
+    assert event.read(0x4) == 0x4
+
+
+def test_bad_arguments():
+    event = Event()
+
+    with assert_raises(TypeError, "can't convert NoneType to int"):
+        event.read(None)
+
+    with assert_raises(TypeError, "can't convert NoneType to int"):
+        event.write(None)
+
+
+TESTCASES = [
+    (test_help, "test_help"),
+    (test_read_write, "test_read_write"),
+    (test_bad_arguments, "test_bad_arguments")
+]

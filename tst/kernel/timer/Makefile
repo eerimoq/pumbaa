@@ -35,8 +35,6 @@ BOARD ?= linux
 
 TIMEOUT ?= 20
 
-PYSRC += $(PUMBAA_ROOT)/src/py/harness.py
-
 CDEFS += \
 	CONFIG_MINIMAL_SYSTEM=1 \
 	CONFIG_FS_CMD_THRD_LIST=1 \

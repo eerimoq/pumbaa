@@ -34,29 +34,21 @@ TYPE = suite
 BOARD ?= linux
 
 SRC += \
-	socket_stub.c \
-	ssl_stub.c \
-	fs_stub.c
-
-SRC_IGNORE += $(SIMBA_ROOT)/src/filesystems/fs.c
-
-PYSRC += \
-	$(PUMBAA_ROOT)/src/py/harness.py
-
-CDEFS += \
-	CONFIG_MINIMAL_SYSTEM=1 \
-	CONFIG_FS_CMD_THRD_LIST=1 \
-	CONFIG_THRD_STACK_HEAP=1 \
-	CONFIG_PUMBAA_MODULE_SOCKET=1 \
-	CONFIG_PUMBAA_MODULE_SSL=1 \
-	CONFIG_PUMBAA_MAIN_REBOOT_AT_EXIT=0 \
-	CONFIG_PUMBAA_MAIN_FRIENDLY_REPL=0
+	$(PUMBAA_ROOT)/tst/stubs/socket_stub.c \
+	$(PUMBAA_ROOT)/tst/stubs/ssl_stub.c
 
 SYNC_SRC = event.c
 INET_SRC = http_server.c http_websocket_server.c inet.c
 HASH_SRC = sha1.c
 ENCODE_SRC = base64.c
 ALLOC_SRC = heap.c
+FILESYSTEMS_SRC = fat16.c spiffs.c
+SPIFFS_SRC = \
+	3pp/spiffs-0.3.5/src/spiffs_nucleus.c \
+	3pp/spiffs-0.3.5/src/spiffs_gc.c \
+	3pp/spiffs-0.3.5/src/spiffs_hydrogen.c \
+	3pp/spiffs-0.3.5/src/spiffs_cache.c \
+	3pp/spiffs-0.3.5/src/spiffs_check.c
 
 PUMBAA_ROOT ?= ../..
 include $(PUMBAA_ROOT)/make/app.mk

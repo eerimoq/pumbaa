@@ -33,16 +33,11 @@ NAME = owi_suite
 TYPE = suite
 BOARD ?= linux
 
-PYSRC += \
-	$(PUMBAA_ROOT)/src/py/harness.py
-SRC += owi_stub.c
+SRC += \
+	$(PUMBAA_ROOT)/tst/stubs/owi_stub.c
 
 CDEFS += \
-	CONFIG_MINIMAL_SYSTEM=1 \
-	CONFIG_FS_CMD_THRD_LIST=1 \
-	CONFIG_PUMBAA_CLASS_OWI=1 \
-	CONFIG_PUMBAA_MAIN_REBOOT_AT_EXIT=0 \
-	CONFIG_PUMBAA_MAIN_FRIENDLY_REPL=0
+	CONFIG_PUMBAA_CLASS_OWI=1
 
 SYNC_SRC = event.c
 

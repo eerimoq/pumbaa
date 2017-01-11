@@ -2,9 +2,9 @@
  * @section License
  *
  * The MIT License (MIT)
- *
+ * 
  * Copyright (c) 2016, Erik Moqvist
- *
+ * 
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -33,11 +33,11 @@
 
 #include "stubs.h"
 
-#define CONFIG_START_FILESYSTEM 1
-#define CONFIG_FAT16 1
-#define CONFIG_SPIFFS 1
-#define CONFIG_THRD_ENV 1
-#define CONFIG_FS_CMD_THRD_LIST 1
+#define MICROPY_PORT_BUILTIN_MODULES_EXTRA      \
+    OWI_STUB_BUILTIN_MODULE
+
+#define MICROPY_PORT_ROOT_POINTERS_EXTRA        \
+    OWI_STUB_ROOT_POINTERS
 
 /* Changes of the default Simba configuration. */
 #include "simba_config.h"

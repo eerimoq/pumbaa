@@ -31,10 +31,16 @@
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
 
-extern const struct _mp_obj_module_t module_socket_stub;
+#include "stubs.h"
+
+#define CONFIG_THRD_STACK_HEAP                      1
+#define CONFIG_PUMBAA_CLASS_HTTP_SERVER             1
 
 #define MICROPY_PORT_BUILTIN_MODULES_EXTRA                              \
     { MP_ROM_QSTR(MP_QSTR_socket_stub), MP_ROM_PTR(&module_socket_stub) },
+
+#define MICROPY_PORT_ROOT_POINTERS_EXTRA        \
+    SOCKET_STUB_ROOT_POINTERS
 
 /* Changes of the default Simba configuration. */
 #include "simba_config.h"

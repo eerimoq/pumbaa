@@ -93,10 +93,10 @@ static mp_uint_t file_obj_write(mp_obj_t self_in,
 {
     struct file_obj_t *self_p;
     ssize_t res;
-
+    
     self_p = MP_OBJ_TO_PTR(self_in);
     res = fs_write(&self_p->file, buf_p, size);
-
+    
     if (res < 0) {
         *errcode_p = res;
 

@@ -29,19 +29,44 @@
 #
 
 
-NAME = ds18b20_suite
-TYPE = suite
-BOARD ?= linux
+import os
+from drivers import Dac
+import board
+import harness
+from harness import assert_raises
 
-SRC += \
-	$(PUMBAA_ROOT)/tst/stubs/ds18b20_stub.c \
-	$(PUMBAA_ROOT)/tst/stubs/owi_stub.c
 
-CDEFS += \
-	CONFIG_PUMBAA_CLASS_DS18B20=1 \
-	CONFIG_PUMBAA_CLASS_OWI=1
+def test_print():
+    print(Dac)
+    dac = Dac(board.PIN_DAC0)
+    print(dac)
 
-SYNC_SRC = event.c
 
-PUMBAA_ROOT ?= ../..
-include $(PUMBAA_ROOT)/make/app.mk
+def test_output():
+    # Single pin.
+    dac = Dac(board.PIN_DAC0)
+    dac.convert("\x03\xff")
+
+    # List of pins.
+    dac = Dac([board.PIN_DAC0, board.PIN_DAC1], 11025)
+    dac.convert(bytearray(16 * "\x03\xff"))
+    dac.convert(16 * "\x03\xff")
+    dac.async_convert(16 * "\x03\xff")
+    dac.async_wait()
+
+
+def test_bad_arguments():
+    # Too many devices.
+    with assert_raises(ValueError, "too many devices"):
+        Dac([0, 1, 2])
+        
+    # Bad devices type.
+    with assert_raises(TypeError, "bad devices"):
+        Dac(None)
+
+
+TESTCASES = [
+    (test_print, "test_print"),
+    (test_output, "test_output"),
+    (test_bad_arguments, "test_bad_arguments")
+]
