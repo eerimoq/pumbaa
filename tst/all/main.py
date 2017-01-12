@@ -50,7 +50,8 @@ if 'Linux' in os.uname().machine:
         "timer_suite",
         "event_suite",
         "queue_suite",
-        "http_server_suite"
+        "http_server_suite",
+        "smoke_suite"
     ]
 
 elif 'ESP32' in os.uname().machine:
@@ -61,7 +62,8 @@ elif 'ESP32' in os.uname().machine:
         "ssl_suite",
         "event_suite",
         "queue_suite",
-        "os_suite"
+        "os_suite",
+        "smoke_suite"
     ]
 
 else:

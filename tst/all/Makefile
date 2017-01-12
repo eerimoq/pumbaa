@@ -58,6 +58,8 @@ SRC_IGNORE += \
 
 PYSRC += \
 	$(PUMBAA_ROOT)/src/py/harness.py \
+	$(PUMBAA_ROOT)/tst/smoke/smoke_suite.py \
+	$(PUMBAA_ROOT)/tst/smoke/other.py \
 	$(PUMBAA_ROOT)/tst/kernel/timer/timer_suite.py \
 	$(PUMBAA_ROOT)/tst/os/os_suite.py \
 	$(PUMBAA_ROOT)/tst/sync/event/event_suite.py \

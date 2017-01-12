@@ -32,7 +32,8 @@
 SIMBA_ROOT ?= $(PUMBAA_ROOT)/simba
 
 ifneq ($(TYPE), suite)
-PYSRC += main.py
+MAIN_PY ?= main.py
+PYSRC += $(MAIN_PY)
 else
 PYSRC += \
 	$(GENDIR)/main.py \
