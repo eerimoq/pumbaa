@@ -19,6 +19,7 @@ The following classes are defined:
 - :class:`class Ds18b20<.Ds18b20>` -- DS18B20 temperature
 - :class:`class Sd<.Sd>` -- Secure Digital memory
 - :class:`class esp_wifi<.esp_wifi>` -- Espressif WiFi
+- :class:`class Uart<.Uart>` -- Universal Asynchronous Receiver/Transmitter
 
 Simba documentation: `drivers`_
 
@@ -786,6 +787,66 @@ Simba documentation: `drivers`_
       WiFi physical modes.
 
 
+.. class:: drivers.Uart(device, baudrate=115200)
+
+   Create a Uart object. Select UART device and baudrate with `device`
+   and `baudrate`.
+
+   Here is an example of how to create a UART driver, write data and
+   then read data.
+
+   Instances of this class can be polled by the select module.
+
+   .. code-block:: python
+
+      >>> uart = Uart(1)
+      >>> uart.start()
+      >>> uart.write(b'1234')
+      >>> uart.read(4)
+      b'5678'
+      >>> buf = bytearray(4)
+      >>> uart.read_into(buf, 3)
+      3
+      >>> buf
+      bytearray(b'901\x00')
+      >>> uart.stop()
+
+   Simba documentation: `drivers/uart`_
+
+
+   .. method:: start()
+
+      Starts the UART device. Configures the hardware.
+
+
+   .. method:: stop()
+
+      Stops the UART device.
+
+
+   .. method:: read(size)
+
+      Read `size` bytes from the UART. Returns the read data.
+
+
+   .. method:: read_into(buffer[, size])
+
+      Read `size` bytes from the UART into given buffer
+      `buffer`. Returns number of bytes read.
+
+
+   .. method:: write(buffer[, size])
+
+      Write data in `buffer` to the UART. `size` may be used to send
+      fewer bytes than the size of `buffer`. Returns number of bytes
+      written.
+
+
+   .. method:: size()
+
+      Returns the number of bytes in the input buffer.
+
+
 .. _drivers: http://simba-os.readthedocs.io/en/latest/library-reference/drivers.html
 .. _drivers/pin: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/pin.html
 .. _drivers/exti: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/exti.html
@@ -798,3 +859,4 @@ Simba documentation: `drivers`_
 .. _drivers/owi: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/owi.html
 .. _drivers/ds18b20: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/ds18b20.html
 .. _drivers/esp_wifi: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/esp_wifi.html
+.. _drivers/uart: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/uart.html

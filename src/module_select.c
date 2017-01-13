@@ -64,6 +64,9 @@ static int is_channel(mp_obj_t obj)
 #if CONFIG_PUMBAA_CLASS_CAN == 1
             || MP_OBJ_IS_TYPE(obj, &module_drivers_class_can)
 #endif
+#if CONFIG_PUMBAA_CLASS_UART == 1
+            || MP_OBJ_IS_TYPE(obj, &module_drivers_class_uart)
+#endif
             );
 }
 

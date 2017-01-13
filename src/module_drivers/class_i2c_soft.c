@@ -87,7 +87,7 @@ static mp_obj_t class_i2c_soft_make_new(const mp_obj_type_t *type_p,
     /* SCL argument. */
     scl = args[0].u_int;
 
-    if ((scl < 0) || (scl > PIN_DEVICE_MAX)) {
+    if ((scl < 0) || (scl >= PIN_DEVICE_MAX)) {
         nlr_raise(mp_obj_new_exception_msg(&mp_type_ValueError,
                                            "bad pin"));
     }
@@ -95,7 +95,7 @@ static mp_obj_t class_i2c_soft_make_new(const mp_obj_type_t *type_p,
     /* SDA argument. */
     sda = args[1].u_int;
 
-    if ((sda < 0) || (sda > PIN_DEVICE_MAX)) {
+    if ((sda < 0) || (sda >= PIN_DEVICE_MAX)) {
         nlr_raise(mp_obj_new_exception_msg(&mp_type_ValueError,
                                            "bad sda"));
     }

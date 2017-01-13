@@ -32,7 +32,7 @@
 import select
 import board
 from sync import Event, Queue
-from drivers import Can
+from drivers import Can, Uart
 import harness
 from harness import assert_raises
 
@@ -48,14 +48,17 @@ def test_register_unregister():
     queue = Queue()
     event = Event()
     can = Can(board.CAN_0)
+    uart = Uart(1)
 
     poll.register(queue)
     poll.register(event)
     poll.register(can)
+    poll.register(uart)
 
     poll.unregister(queue)
     poll.unregister(event)
     poll.unregister(can)
+    poll.unregister(uart)
 
     with assert_raises(OSError):
         poll.unregister(queue)
@@ -66,11 +69,13 @@ def test_poll():
     queue = Queue()
     event = Event()
     can = Can(board.CAN_0)
+    uart = Uart(1)
 
     # Register both event channels.
     poll.register(queue)
     poll.register(event)
     poll.register(can)
+    poll.register(uart)
 
     # Timeout waiting for event.
     assert poll.poll(0.01) == []

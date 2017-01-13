@@ -97,6 +97,9 @@ static const mp_rom_map_elem_t module_drivers_globals_table[] = {
 #if CONFIG_PUMBAA_CLASS_DS18B20 == 1
     { MP_ROM_QSTR(MP_QSTR_Ds18b20), MP_ROM_PTR(&module_drivers_class_ds18b20) },
 #endif
+#if CONFIG_PUMBAA_CLASS_UART == 1
+    { MP_ROM_QSTR(MP_QSTR_Uart), MP_ROM_PTR(&module_drivers_class_uart) },
+#endif
 };
 
 static MP_DEFINE_CONST_DICT(module_drivers_globals, module_drivers_globals_table);

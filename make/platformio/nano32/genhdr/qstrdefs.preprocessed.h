@@ -15,7 +15,7 @@
 # 36 "/home/erik/workspace/pumbaa/src/config.h" 2
 # 36 "/home/erik/workspace/pumbaa/src/port/mpconfigport.h" 2
 # 1 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h" 1
-# 422 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
+# 430 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
 extern const struct _mp_obj_module_t mp_module_uos;
 extern const struct _mp_obj_module_t mp_module_utime;
 extern const struct _mp_obj_module_t mp_module_usocket;
@@ -26,10 +26,10 @@ extern const struct _mp_obj_module_t module_drivers;
 extern const struct _mp_obj_module_t module_inet;
 extern const struct _mp_obj_module_t module_text;
 extern const struct _mp_obj_module_t module_board;
-# 538 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
+# 546 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
 typedef int mp_int_t;
 typedef unsigned int mp_uint_t;
-# 548 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
+# 556 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
 typedef long mp_off_t;
 
 
@@ -431,7 +431,7 @@ void _reclaim_reent (struct _reent *);
 
   struct _reent * __getreent (void);
 # 12 "/home/erik/workspace/pumbaa/simba/3pp/esp32/inc/newlib/include/alloca.h" 2
-# 555 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h" 2
+# 563 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h" 2
 # 37 "/home/erik/workspace/pumbaa/src/port/mpconfigport.h" 2
 # 46 "/home/erik/workspace/pumbaa/micropython/py/mpconfig.h" 2
 # 537 "/home/erik/workspace/pumbaa/micropython/py/mpconfig.h"
@@ -806,6 +806,10 @@ Q(TypeError)
 
 Q(TypeError)
 
+Q(Uart)
+
+Q(Uart)
+
 Q(ValueError)
 
 Q(ValueError)
@@ -1160,6 +1164,8 @@ Q(atan2)
 
 Q(b2a_base64)
 
+Q(baudrate)
+
 Q(bin)
 
 Q(binascii)
@@ -1307,6 +1313,8 @@ Q(delattr)
 Q(deleter)
 
 Q(deselect)
+
+Q(device)
 
 Q(device)
 
@@ -1828,6 +1836,10 @@ Q(read)
 
 Q(read)
 
+Q(read)
+
+Q(read_into)
+
 Q(read_into)
 
 Q(read_into)
@@ -1982,6 +1994,8 @@ Q(size)
 
 Q(size)
 
+Q(size)
+
 Q(slave_select)
 
 Q(sleep)
@@ -2046,6 +2060,8 @@ Q(start)
 
 Q(start)
 
+Q(start)
+
 Q(start_new_thread)
 
 Q(startswith)
@@ -2085,6 +2101,8 @@ Q(stdin)
 Q(stdout)
 
 Q(step)
+
+Q(stop)
 
 Q(stop)
 
@@ -2315,6 +2333,8 @@ Q(version)
 Q(version_info)
 
 Q(wrap_socket)
+
+Q(write)
 
 Q(write)
 

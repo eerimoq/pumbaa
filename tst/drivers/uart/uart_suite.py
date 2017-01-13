@@ -2,9 +2,9 @@
 # @section License
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (c) 2016, Erik Moqvist
-# 
+#
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
 # files (the "Software"), to deal in the Software without
@@ -29,19 +29,37 @@
 #
 
 
-NAME = select_suite
-TYPE = suite
-BOARD ?= linux
+from drivers import Uart
 
-CDEFS += \
-	CONFIG_CAN=1 \
-	CONFIG_UART=1 \
-	CONFIG_PUMBAA_CLASS_CAN=1 \
-	CONFIG_PUMBAA_CLASS_UART=1 \
-	CONFIG_PUMBAA_MODULE_SELECT=1
 
-SYNC_SRC = event.c
-DRIVERS_SRC = can.c
+def test_print():
+    print(Uart)
+    uart = Uart(1)
+    print(uart)
 
-PUMBAA_ROOT ?= ../..
-include $(PUMBAA_ROOT)/make/app.mk
+
+def test_write():
+    uart = Uart(1)
+    uart.start()
+    assert uart.write(b'1234') == 4
+    assert uart.write(b'5678', 1) == 1
+    uart.stop()
+
+
+def test_read():
+    uart = Uart(1)
+    uart.start()
+    buf = uart.read(1)
+    assert len(buf) == 1
+    print(buf)
+    buf = bytearray(8)
+    assert uart.read_into(buf, 1) == 1
+    print(buf)
+    uart.stop()
+
+
+TESTCASES = [
+    (test_print, "test_print"),
+    (test_write, "test_write"),
+    (test_read, "test_read")
+]

@@ -91,7 +91,7 @@ static mp_obj_t class_spi_make_new(const mp_obj_type_t *type_p,
     /* Device argument. */
     device = args[0].u_int;
 
-    if ((device < 0) || (device > SPI_DEVICE_MAX)) {
+    if ((device < 0) || (device >= SPI_DEVICE_MAX)) {
         nlr_raise(mp_obj_new_exception_msg(&mp_type_ValueError,
                                            "bad device"));
     }
@@ -99,7 +99,7 @@ static mp_obj_t class_spi_make_new(const mp_obj_type_t *type_p,
     /* Slave select argument. */
     slave_select = args[1].u_int;
 
-    if ((slave_select < 0) || (slave_select > PIN_DEVICE_MAX)) {
+    if ((slave_select < 0) || (slave_select >= PIN_DEVICE_MAX)) {
         nlr_raise(mp_obj_new_exception_msg(&mp_type_ValueError,
                                            "bad slave select"));
     }

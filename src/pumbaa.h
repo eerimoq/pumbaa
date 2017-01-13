@@ -54,6 +54,7 @@
 #include "module_sync/class_event.h"
 #include "module_sync/class_queue.h"
 #include "module_drivers/class_pin.h"
+#include "module_drivers/class_uart.h"
 #include "module_inet/class_http_server.h"
 #include "module_inet/class_http_server_websocket.h"
 

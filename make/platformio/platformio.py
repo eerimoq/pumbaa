@@ -272,7 +272,7 @@ env.Command(FROZEN_C,
             mpy_source,
             '"$PYTHONEXE" "$PLATFORMFW_DIR/bin/mpy-tool-wrapper.py" "$TARGET" '
             '"$PLATFORMFW_DIR/micropython/py" '
-            '"$PLATFORMFW_DIR/micropython/tools/mpy-tool.py" -f '
+            '"$PYTHONEXE" "$PLATFORMFW_DIR/micropython/tools/mpy-tool.py" -f '
             '-q {{qstr_pre_processed}} $SOURCES'.format(
                 qstr_pre_processed=qstr_pre_processed))
 source_files.append(FROZEN_C)

@@ -29,19 +29,17 @@
 #
 
 
-NAME = select_suite
+NAME = uart_suite
 TYPE = suite
 BOARD ?= linux
 
 CDEFS += \
-	CONFIG_CAN=1 \
+	CONFIG_PIN=1 \
 	CONFIG_UART=1 \
-	CONFIG_PUMBAA_CLASS_CAN=1 \
-	CONFIG_PUMBAA_CLASS_UART=1 \
-	CONFIG_PUMBAA_MODULE_SELECT=1
+	CONFIG_PUMBAA_CLASS_UART=1
 
 SYNC_SRC = event.c
-DRIVERS_SRC = can.c
+DRIVERS_SRC = pin.c
 
 PUMBAA_ROOT ?= ../..
 include $(PUMBAA_ROOT)/make/app.mk

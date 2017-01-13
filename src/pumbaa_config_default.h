@@ -309,6 +309,14 @@
 #    endif
 #endif
 
+#ifndef CONFIG_PUMBAA_CLASS_UART
+#    if defined(CONFIG_MINIMAL_SYSTEM) || !defined(PORT_HAS_UART)
+#        define CONFIG_PUMBAA_CLASS_UART                    0
+#    else
+#        define CONFIG_PUMBAA_CLASS_UART                    1
+#    endif
+#endif
+
 #ifndef CONFIG_PUMBAA_CLASS_QUEUE
 #    define CONFIG_PUMBAA_CLASS_QUEUE                       1
 #endif

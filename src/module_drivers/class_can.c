@@ -94,7 +94,7 @@ static mp_obj_t class_can_make_new(const mp_obj_type_t *type_p,
     /* Device argument. */
     device = args[0].u_int;
 
-    if ((device < 0) || (device > CAN_DEVICE_MAX)) {
+    if ((device < 0) || (device >= CAN_DEVICE_MAX)) {
         nlr_raise(mp_obj_new_exception_msg(&mp_type_ValueError,
                                            "bad device"));
     }

@@ -139,6 +139,7 @@ BOARDS = {
             "src/module_kernel.c", 
             "src/module_drivers.c", 
             "src/module_drivers/class_pin.c", 
+            "src/module_drivers/class_uart.c", 
             "src/module_kernel/class_timer.c", 
             "src/module_inet.c", 
             "src/module_inet/class_http_server.c", 
@@ -506,6 +507,7 @@ BOARDS = {
             "src/module_kernel.c", 
             "src/module_drivers.c", 
             "src/module_drivers/class_pin.c", 
+            "src/module_drivers/class_uart.c", 
             "src/module_kernel/class_timer.c", 
             "src/module_inet.c", 
             "src/module_inet/class_http_server.c", 
@@ -1017,7 +1019,7 @@ env.Command(FROZEN_C,
             mpy_source,
             '"$PYTHONEXE" "$PLATFORMFW_DIR/bin/mpy-tool-wrapper.py" "$TARGET" '
             '"$PLATFORMFW_DIR/micropython/py" '
-            '"$PLATFORMFW_DIR/micropython/tools/mpy-tool.py" -f '
+            '"$PYTHONEXE" "$PLATFORMFW_DIR/micropython/tools/mpy-tool.py" -f '
             '-q {qstr_pre_processed} $SOURCES'.format(
                 qstr_pre_processed=qstr_pre_processed))
 source_files.append(FROZEN_C)
