@@ -2,6 +2,7 @@
 
 import socket
 import ssl
+import select
 
 
 SERVER_IP = '192.168.0.7'
@@ -86,16 +87,24 @@ listener_sock = socket.socket()
 listener_sock.bind((SERVER_IP, SERVER_PORT))
 listener_sock.listen(1)
 
+# To give an example of how to use the select module.
+poll = select.poll()
+
 while True:
     print('Waiting for a client to connect to {}:{}.'.format(
         SERVER_IP, SERVER_PORT))
     client_sock, fromaddr = listener_sock.accept()
     print('Client connected.')
     ssl_client_sock = context.wrap_socket(client_sock, server_side=True)
+    poll.register(client_sock)
     try:
+        print('polling')
+        poll.poll()
+        print('poll returned')
         print('read:', recvall(ssl_client_sock, 6))
         print('write: Goodbye!')
         ssl_client_sock.send(b'Goodbye!')
     finally:
+        poll.unregister(client_sock)
         ssl_client_sock.close()
         client_sock.close()
