@@ -169,7 +169,7 @@ static mp_obj_t class_uart_read_into(mp_uint_t n_args,
 
     /* Get the size. */
     if (n_args == 3) {
-        size = mp_obj_get_int(args_p[3]);
+        size = mp_obj_get_int(args_p[2]);
 
         if (buffer_info.len < size) {
             nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
@@ -196,6 +196,7 @@ static mp_obj_t class_uart_write(mp_uint_t n_args,
     struct class_uart_t *self_p;
     mp_buffer_info_t buffer_info;
     size_t size;
+    void *buf_p;
 
     self_p = MP_OBJ_TO_PTR(args_p[0]);
     mp_get_buffer_raise(MP_OBJ_TO_PTR(args_p[1]),
@@ -214,7 +215,16 @@ static mp_obj_t class_uart_write(mp_uint_t n_args,
         size = buffer_info.len;
     }
 
-    if (uart_write(&self_p->drv, buffer_info.buf, size) != size) {
+#if defined(FAMILY_SAM)
+    /* The data must be in RAM for the SAM UART driver DMA
+       implementation. */
+    buf_p = m_malloc(size);
+    memcpy(buf_p, buffer_info.buf, size);
+#else
+    buf_p = buffer_info.buf;
+#endif
+
+    if (uart_write(&self_p->drv, buf_p, size) != size) {
         nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
                                            "uart_write() failed"));
     }

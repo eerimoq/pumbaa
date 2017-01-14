@@ -2,9 +2,9 @@
  * @section License
  *
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016, Erik Moqvist
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -44,7 +44,7 @@ struct class_chan_t {
 struct class_poll_t {
     mp_obj_base_t base;
     struct chan_list_t list;
-    int workspace[32];
+    void *workspace[32];
 };
 
 /**
@@ -191,6 +191,7 @@ static const mp_obj_type_t class_poll = {
 static mp_obj_t select_poll(void)
 {
     struct class_poll_t *poll_p;
+
     poll_p = m_new_obj(struct class_poll_t);
     poll_p->base.type = &class_poll;
 

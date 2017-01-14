@@ -30,6 +30,7 @@
 
 
 from drivers import Uart
+import select
 
 
 def test_print():
@@ -49,12 +50,24 @@ def test_write():
 def test_read():
     uart = Uart(1)
     uart.start()
-    buf = uart.read(1)
-    assert len(buf) == 1
-    print(buf)
+
+    poll = select.poll()
+    poll.register(uart)
+
+    print('polling with 5 seconds timeout')
+
+    if poll.poll(5) == []:
+        print('poll timeout')
+
     buf = bytearray(8)
     assert uart.read_into(buf, 1) == 1
-    print(buf)
+    print('read:', buf)
+
+    print('reading one byte from UART 1')
+    buf = uart.read(1)
+    assert len(buf) == 1
+    print('read:', buf)
+
     uart.stop()
 
 
