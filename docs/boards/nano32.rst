@@ -19,6 +19,7 @@ Supported drivers for this board.
 - :class:`Owi<drivers.drivers.Owi>`
 - :class:`Pin<drivers.drivers.Pin>`
 - :class:`Spi<drivers.drivers.Spi>`
+- :class:`Uart<drivers.drivers.Uart>`
 
 Memory usage
 ------------
@@ -37,9 +38,9 @@ Below is the memory usage of two applications:
 +--------------------------+-----------+-----------+
 | Application              | Flash     | RAM       |
 +==========================+===========+===========+
-| minimal-configuration    |    329691 |     87024 |
+| minimal-configuration    |    329875 |     87320 |
 +--------------------------+-----------+-----------+
-| default-configuration    |    673265 |    188672 |
+| default-configuration    |    674489 |    188680 |
 +--------------------------+-----------+-----------+
 
 Default configuration
@@ -83,6 +84,8 @@ Default Standard Library configuration.
 |  CONFIG_PUMBAA_CLASS_SPI                               |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_TIMER                             |  1                                                  |
++--------------------------------------------------------+-----------------------------------------------------+
+|  CONFIG_PUMBAA_CLASS_UART                              |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_EMACS                                   |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+

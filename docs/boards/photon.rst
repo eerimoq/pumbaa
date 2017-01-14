@@ -12,6 +12,7 @@ Drivers
 Supported drivers for this board.
 
 - :class:`Pin<drivers.drivers.Pin>`
+- :class:`Uart<drivers.drivers.Uart>`
 
 Memory usage
 ------------
@@ -30,9 +31,9 @@ Below is the memory usage of two applications:
 +--------------------------+-----------+-----------+
 | Application              | Flash     | RAM       |
 +==========================+===========+===========+
-| minimal-configuration    |    301920 |     37748 |
+| minimal-configuration    |    301920 |     37712 |
 +--------------------------+-----------+-----------+
-| default-configuration    |    372064 |     72488 |
+| default-configuration    |    373600 |     72452 |
 +--------------------------+-----------+-----------+
 
 Default configuration
@@ -76,6 +77,8 @@ Default Standard Library configuration.
 |  CONFIG_PUMBAA_CLASS_SPI                               |  0                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_TIMER                             |  1                                                  |
++--------------------------------------------------------+-----------------------------------------------------+
+|  CONFIG_PUMBAA_CLASS_UART                              |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_EMACS                                   |  0                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
