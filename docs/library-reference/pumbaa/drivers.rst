@@ -20,6 +20,7 @@ The following classes are defined:
 - :class:`class Sd<.Sd>` -- Secure Digital memory
 - :class:`class esp_wifi<.esp_wifi>` -- Espressif WiFi
 - :class:`class Uart<.Uart>` -- Universal Asynchronous Receiver/Transmitter
+- :class:`class Flash<.Flash>` -- Flash memory
 
 Simba documentation: `drivers`_
 
@@ -847,6 +848,55 @@ Simba documentation: `drivers`_
       Returns the number of bytes in the input buffer.
 
 
+.. class:: drivers.Flash(device)
+
+   Create a Flash object. Select flash device index with `device`. It
+   is normally given as 0.
+
+   Here is an example of how to create a flash driver and use the
+   erase, read and write methods.
+
+   .. code-block:: python
+
+      >>> flash = Flash(0)
+      >>> flash.read(0x300000, 4)
+      b'5678'
+      >>> flash.erase(0x300000, 4)
+      >>> flash.write(0x300000, b'1234')
+      4
+      >>> buf = bytearray(8)
+      >>> flash.read_into(0x300000, buf, 4)
+      4
+      >>> buf
+      bytearray(b'1234\x00\x00\x00\x00')
+
+   Simba documentation: `drivers/flash`_
+
+
+   .. method:: read(address, size)
+
+      Read `size` bytes from given address `address` in the
+      flash. Returns the read data.
+
+
+   .. method:: read_into(address, buffer[, size])
+
+      Read `size` bytes from given address `address` in flash into given
+      buffer `buffer`. Returns number of bytes read.
+
+
+   .. method:: write(address, buffer[, size])
+
+      Write data in `buffer` to given address `address` in
+      flash. `size` may be used to write fewer bytes than the size of
+      `buffer`. Returns number of bytes written.
+
+
+   .. method:: erase(address, size)
+
+      Erase `size` bytes in flash starting at given addess `address`.
+
+
 .. _drivers: http://simba-os.readthedocs.io/en/latest/library-reference/drivers.html
 .. _drivers/pin: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/pin.html
 .. _drivers/exti: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/exti.html
@@ -860,3 +910,4 @@ Simba documentation: `drivers`_
 .. _drivers/ds18b20: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/ds18b20.html
 .. _drivers/esp_wifi: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/esp_wifi.html
 .. _drivers/uart: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/uart.html
+.. _drivers/flash: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/flash.html
