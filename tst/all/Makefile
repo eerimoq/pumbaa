@@ -28,7 +28,6 @@
 # This file is part of the Pumbaa project.
 #
 
-
 NAME = all_suite
 BOARD ?= linux
 
@@ -38,11 +37,14 @@ INC += \
 ifeq ($(BOARD), linux)
 SRC_SD = $(PUMBAA_ROOT)/tst/stubs/sd_stub.c
 SRC_IGNORE_SD = $(SIMBA_ROOT)/src/drivers/sd.c
+SRC_FLASH = $(PUMBAA_ROOT)/tst/stubs/flash_stub.c
+SRC_IGNORE_FLASH = $(SIMBA_ROOT)/src/drivers/flash.c
 endif
 
 SRC += \
 	$(PUMBAA_ROOT)/tst/stubs/can_stub.c \
 	$(PUMBAA_ROOT)/tst/stubs/ds18b20_stub.c \
+	$(SRC_FLASH) \
 	$(SRC_SD) \
 	$(PUMBAA_ROOT)/tst/stubs/owi_stub.c \
 	$(PUMBAA_ROOT)/tst/stubs/socket_stub.c \
@@ -51,6 +53,7 @@ SRC += \
 SRC_IGNORE += \
 	$(SIMBA_ROOT)/src/drivers/can.c \
 	$(SIMBA_ROOT)/src/drivers/ds18b20.c \
+	$(SRC_IGNORE_FLASH) \
 	$(SRC_IGNORE_SD) \
 	$(SIMBA_ROOT)/src/drivers/owi.c \
 	$(SIMBA_ROOT)/src/inet/socket.c \
@@ -71,6 +74,7 @@ PYSRC += \
 	$(PUMBAA_ROOT)/tst/drivers/sd/sd_suite.py \
 	$(PUMBAA_ROOT)/tst/drivers/owi/owi_suite.py \
 	$(PUMBAA_ROOT)/tst/drivers/exti/exti_suite.py \
+	$(PUMBAA_ROOT)/tst/drivers/flash/flash_suite.py \
 	$(PUMBAA_ROOT)/tst/drivers/dac/dac_suite.py \
 	$(PUMBAA_ROOT)/tst/drivers/can/can_suite.py \
 	$(PUMBAA_ROOT)/tst/drivers/ds18b20/ds18b20_suite.py \

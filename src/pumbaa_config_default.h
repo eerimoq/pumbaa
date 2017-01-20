@@ -317,6 +317,14 @@
 #    endif
 #endif
 
+#ifndef CONFIG_PUMBAA_CLASS_FLASH
+#    if defined(CONFIG_MINIMAL_SYSTEM) || !defined(PORT_HAS_FLASH)
+#        define CONFIG_PUMBAA_CLASS_FLASH                   0
+#    else
+#        define CONFIG_PUMBAA_CLASS_FLASH                   1
+#    endif
+#endif
+
 #ifndef CONFIG_PUMBAA_CLASS_QUEUE
 #    define CONFIG_PUMBAA_CLASS_QUEUE                       1
 #endif

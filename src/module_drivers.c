@@ -50,6 +50,9 @@ static mp_obj_t module_init(void)
 #if CONFIG_PUMBAA_CLASS_DS18B20 == 1
     ds18b20_module_init();
 #endif
+#if CONFIG_PUMBAA_CLASS_FLASH == 1
+    flash_module_init();
+#endif
 
     return (mp_const_none);
 }
@@ -99,6 +102,9 @@ static const mp_rom_map_elem_t module_drivers_globals_table[] = {
 #endif
 #if CONFIG_PUMBAA_CLASS_UART == 1
     { MP_ROM_QSTR(MP_QSTR_Uart), MP_ROM_PTR(&module_drivers_class_uart) },
+#endif
+#if CONFIG_PUMBAA_CLASS_FLASH == 1
+    { MP_ROM_QSTR(MP_QSTR_Flash), MP_ROM_PTR(&module_drivers_class_flash) },
 #endif
 };
 

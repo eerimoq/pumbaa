@@ -43,6 +43,7 @@ if 'Linux' in os.uname().machine:
         "dac_suite",
         "ds18b20_suite",
         "exti_suite",
+        "flash_suite",
         "pin_suite",
         "owi_suite",
         "spi_suite",

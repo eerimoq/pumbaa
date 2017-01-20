@@ -46,6 +46,7 @@ PUMBAA_SRC += \
 	module_drivers.c \
 	module_drivers/class_pin.c \
 	module_drivers/class_uart.c \
+	module_drivers/class_flash.c \
 	module_kernel/class_timer.c \
 	module_inet.c \
 	module_inet/class_http_server.c \
