@@ -853,6 +853,11 @@ Simba documentation: `drivers`_
    Create a Flash object. Select flash device index with `device`. It
    is normally given as 0.
 
+   The flash address given to the instance methods is either relative
+   to the flash start address or an absolute physical address in the
+   CPU memory map. This is board dependent and it is not documented
+   anywhere.
+   
    Here is an example of how to create a flash driver and use the
    erase, read and write methods.
 
