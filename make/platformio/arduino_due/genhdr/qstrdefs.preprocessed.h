@@ -16,7 +16,7 @@
 # 36 "/home/erik/workspace/pumbaa/src/config.h" 2
 # 36 "/home/erik/workspace/pumbaa/src/port/mpconfigport.h" 2
 # 1 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h" 1
-# 430 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
+# 438 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
 extern const struct _mp_obj_module_t mp_module_uos;
 extern const struct _mp_obj_module_t mp_module_utime;
 extern const struct _mp_obj_module_t mp_module_usocket;
@@ -27,10 +27,10 @@ extern const struct _mp_obj_module_t module_drivers;
 extern const struct _mp_obj_module_t module_inet;
 extern const struct _mp_obj_module_t module_text;
 extern const struct _mp_obj_module_t module_board;
-# 546 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
+# 554 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
 typedef int mp_int_t;
 typedef unsigned int mp_uint_t;
-# 556 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
+# 564 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
 typedef long mp_off_t;
 
 
@@ -399,7 +399,7 @@ extern struct _reent *const _global_impure_ptr ;
 
 void _reclaim_reent (struct _reent *);
 # 12 "/usr/include/newlib/alloca.h" 2 3
-# 563 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h" 2
+# 571 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h" 2
 # 37 "/home/erik/workspace/pumbaa/src/port/mpconfigport.h" 2
 # 46 "/home/erik/workspace/pumbaa/micropython/py/mpconfig.h" 2
 # 537 "/home/erik/workspace/pumbaa/micropython/py/mpconfig.h"
@@ -653,6 +653,10 @@ Q(FALLING)
 Q(FLAGS_EXTENDED_FRAME)
 
 Q(FLASH_0)
+
+Q(Flash)
+
+Q(Flash)
 
 Q(GeneratorExit)
 
@@ -1482,6 +1486,8 @@ Q(device)
 
 Q(device)
 
+Q(device)
+
 Q(devices)
 
 Q(dict)
@@ -1533,6 +1539,8 @@ Q(endswith)
 Q(enumerate)
 
 Q(enumerate)
+
+Q(erase)
 
 Q(erase_blk_en)
 
@@ -1998,6 +2006,8 @@ Q(read)
 
 Q(read)
 
+Q(read)
+
 Q(read_bl_len)
 
 Q(read_bl_len)
@@ -2017,6 +2027,8 @@ Q(read_block_into)
 Q(read_cid)
 
 Q(read_csd)
+
+Q(read_into)
 
 Q(read_into)
 
@@ -2457,6 +2469,8 @@ Q(wp_grp_enable)
 Q(wp_grp_size)
 
 Q(wp_grp_size)
+
+Q(write)
 
 Q(write)
 
