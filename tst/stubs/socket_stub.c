@@ -383,7 +383,7 @@ ssize_t socket_sendto(struct socket_t *self_p,
                       const struct inet_addr_t *remote_addr_p)
 {
     mp_buffer_info_t buffer_info;
-    mp_uint_t len;
+    mp_uint_t len, len2;
     mp_obj_t *items_p;
     mp_obj_t item;
     ssize_t res;
@@ -399,8 +399,8 @@ ssize_t socket_sendto(struct socket_t *self_p,
     if (MP_STATE_VM(socket_stub_sendto_obj) != mp_const_none) {
         /* Compare with the first element in the list. */
         mp_obj_list_get(MP_STATE_VM(socket_stub_sendto_obj), &len, &items_p);
-        BTASSERT(len > 0);
 
+        BTASSERT(len > 0);
         item = items_p[0];
 
         /* Items may be:
@@ -419,8 +419,8 @@ ssize_t socket_sendto(struct socket_t *self_p,
             expected_size = 0;
             res = mp_obj_get_int(item);
         } else {
-            mp_obj_tuple_get(item, &len, &items_p);
-            BTASSERT(len == 2);
+            mp_obj_tuple_get(item, &len2, &items_p);
+            BTASSERT(len2 == 2);
             mp_get_buffer_raise(MP_OBJ_TO_PTR(items_p[0]),
                                 &buffer_info,
                                 MP_BUFFER_READ);
@@ -666,6 +666,51 @@ static mp_obj_t module_reset_failed(void)
 
     res = failed;
     failed = 0;
+
+    if (MP_STATE_VM(socket_stub_close_obj) != mp_const_none) {
+        PRINT_FILE_LINE();
+        res = -1;
+    }
+
+    if (MP_STATE_VM(socket_stub_bind_obj) != mp_const_none) {
+        PRINT_FILE_LINE();
+        res = -1;
+    }
+
+    if (MP_STATE_VM(socket_stub_listen_obj) != mp_const_none) {
+        PRINT_FILE_LINE();
+        res = -1;
+    }
+
+    if (MP_STATE_VM(socket_stub_accept_obj) != mp_const_none) {
+        PRINT_FILE_LINE();
+        res = -1;
+    }
+
+    if (MP_STATE_VM(socket_stub_connect_obj) != mp_const_none) {
+        PRINT_FILE_LINE();
+        res = -1;
+    }
+
+    if (MP_STATE_VM(socket_stub_recv_obj) != mp_const_none) {
+        PRINT_FILE_LINE();
+        res = -1;
+    }
+
+    if (MP_STATE_VM(socket_stub_send_obj) != mp_const_none) {
+        PRINT_FILE_LINE();
+        res = -1;
+    }
+
+    if (MP_STATE_VM(socket_stub_recvfrom_obj) != mp_const_none) {
+        PRINT_FILE_LINE();
+        res = -1;
+    }
+
+    if (MP_STATE_VM(socket_stub_sendto_obj) != mp_const_none) {
+        PRINT_FILE_LINE();
+        res = -1;
+    }
     
     return (mp_obj_new_int(res));
 }

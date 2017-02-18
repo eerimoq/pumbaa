@@ -46,7 +46,26 @@ def on_404_not_found(connection, request):
 
 def on_index(connection, request):
     print('on_index({}, {})'.format(connection, request))
+
+    assert request.action == HttpServer.GET
+    assert request.content_length == 1
+    assert request.content_type == 'text/plain'
+    assert request.authorization == 'foo'
+    assert request.expect == 'CONTINUE'
+
     return ('Welcome!', )
+
+
+def on_form(connection, request):
+    print('on_form({}, {})'.format(connection, request))
+
+    assert request.action == HttpServer.POST
+    assert request.content_length == 9
+    assert request.content_type == 'application/x-www-form-urlencoded'
+    assert connection.socket_read(request.content_length) == b'key=value'
+    assert connection.socket_read(1) == b''
+
+    return ('Form!', )
 
 
 def on_split(connection, request):
@@ -63,6 +82,8 @@ def on_bad_arguments(connection, request):
 
 def on_websocket_echo(connection, request):
     print('on_websocket_echo({}, {})'.format(connection, request))
+    assert request.sec_websocket_key == 'x3JJHMbDL1EzLkh9GBhXDw=='
+    
     ws = HttpServerWebSocket(connection, request)
     print(ws)
 
@@ -92,7 +113,7 @@ def simple_http_request(request,
     # Accept.
     socket_stub.set_accept(0)
 
-    # Wait for the connection to be colsed by the HTTP server.
+    # Wait for the connection to be closed by the HTTP server.
     socket_stub.wait_closed()
     assert socket_stub.reset_failed() == 0
 
@@ -106,6 +127,7 @@ def test_print():
 def test_start():
     routes = [
         ('/index.html', on_index),
+        ('/form.html', on_form),
         ('/split.html', on_split),
         ('/websocket/echo', on_websocket_echo),
         ('/bad_arguments.html', on_bad_arguments)
@@ -121,6 +143,10 @@ def test_index():
     request = "GET /index.html HTTP/1.1\r\n" \
               "User-Agent: TestcaseRequestIndex\r\n" \
               "Connection: keep-alive\r\n" \
+              "Content-Length: 1\r\n" \
+              "Content-Type: text/plain\r\n" \
+              "Authorization: foo\r\n" \
+              "Expect: CONTINUE\r\n" \
               "\r\n"
     response_header = "HTTP/1.1 200 OK\r\n" \
                       "Content-Type: text/html\r\n" \
@@ -129,6 +155,40 @@ def test_index():
     response_body = "Welcome!"
 
     simple_http_request(request, response_header, response_body)
+
+    
+def test_form():
+    # Test data.
+    request_header = "POST /form.html HTTP/1.1\r\n" \
+                     "User-Agent: TestcaseRequestIndex\r\n" \
+                     "Connection: keep-alive\r\n" \
+                     "Content-Type: application/x-www-form-urlencoded\r\n" \
+                     "Content-Length: 9\r\n" \
+                     "\r\n"
+    response_header = "HTTP/1.1 200 OK\r\n" \
+                      "Content-Type: text/html\r\n" \
+                      "Content-Length: 5\r\n" \
+                      "\r\n"
+    response_body = "Form!"
+
+    socket_stub.set_recv(
+        [bytes(char, 'ascii') for char in request_header]
+        + [b'key=value']
+        + [-1]
+    )
+    socket_stub.set_send([
+        bytes(response_header, 'ascii'),
+        bytes(response_body, 'ascii')
+    ])
+    socket_stub.set_close(0)
+
+    # Accept.
+    socket_stub.set_accept(0)
+
+    # Wait for the connection to be colsed by the HTTP server.
+    socket_stub.wait_closed()
+
+    assert socket_stub.reset_failed() == 0
 
 
 def test_split():
@@ -217,6 +277,7 @@ TESTCASES = [
     (test_print, "test_print"),
     (test_start, "test_start"),
     (test_index, "test_index"),
+    (test_form, "test_form"),
     (test_split, "test_split"),
     (test_no_route, "test_no_route"),
     (test_bad_arguments, "test_bad_arguments"),

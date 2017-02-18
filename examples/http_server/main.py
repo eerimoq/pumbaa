@@ -42,10 +42,22 @@ IP = '192.168.0.7'
 PORT = 80
 
 
-def on_index(_, request):
+def on_index(connection, request):
     print('on_index:', request)
 
-    return ('<html><body>Hello from Pumbaa!</body></html>', )
+    if request.action == HttpServer.GET:
+        return ('<html><body>\r\n'
+                '    Hello from Pumbaa!\r\n'
+                '</body></html>\r\n', )
+    elif request.action == HttpServer.POST:
+        if request.content_length is None:
+            post_data = 'Empty POST.'
+        else:
+            post_data = connection.socket_read(request.content_length).decode('ascii')
+        return ('<html><body>\r\n'
+                '    Hello from Pumbaa!\r\n'
+                '    Post data: "{}"\r\n'
+                '</body></html>\r\n'.format(post_data), )
 
 
 def on_websocket_echo(connection, request):

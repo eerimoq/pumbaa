@@ -113,17 +113,47 @@ static mp_obj_t class_http_server_connection_socket_write(mp_obj_t self_in,
     return (mp_obj_new_int(size));
 }
 
+/**
+ * def socket_read(self, buffer)
+ */
+static mp_obj_t class_http_server_connection_socket_read(mp_obj_t self_in,
+                                                         mp_obj_t size_in)
+{
+    struct class_http_server_connection_t *self_p;
+    vstr_t vstr;
+    size_t size;
+    ssize_t res;
+
+    self_p = MP_OBJ_TO_PTR(self_in);
+    size = mp_obj_get_int(size_in);
+
+    vstr_init_len(&vstr, size);
+    res = socket_read(&self_p->connection_p->socket, vstr.buf, size);
+
+    if (res >= 0) {
+        vstr.len = res;
+    } else {
+        vstr.len = 0;
+    }
+
+    return (mp_obj_new_str_from_vstr(&mp_type_bytes, &vstr));
+}
+
 static MP_DEFINE_CONST_FUN_OBJ_2(class_http_server_connection_response_write_obj,
                                  class_http_server_connection_response_write);
 static MP_DEFINE_CONST_FUN_OBJ_2(class_http_server_connection_socket_write_obj,
                                  class_http_server_connection_socket_write);
+static MP_DEFINE_CONST_FUN_OBJ_2(class_http_server_connection_socket_read_obj,
+                                 class_http_server_connection_socket_read);
 
 static const mp_rom_map_elem_t class_http_server_connection_locals_dict_table[] = {
     /* Instance methods. */
     { MP_ROM_QSTR(MP_QSTR_response_write),
       MP_ROM_PTR(&class_http_server_connection_response_write_obj) },
     { MP_ROM_QSTR(MP_QSTR_socket_write),
-      MP_ROM_PTR(&class_http_server_connection_socket_write_obj) }
+      MP_ROM_PTR(&class_http_server_connection_socket_write_obj) },
+    { MP_ROM_QSTR(MP_QSTR_socket_read),
+      MP_ROM_PTR(&class_http_server_connection_socket_read_obj) }
 };
 
 static MP_DEFINE_CONST_DICT(class_http_server_connection_locals_dict, class_http_server_connection_locals_dict_table);
@@ -141,7 +171,13 @@ const mp_obj_type_t module_inet_class_http_server_connection = {
  * Request named tuple fields.
  */
 static const qstr request_fields[] = {
-    MP_QSTR_path
+    MP_QSTR_action,
+    MP_QSTR_path,
+    MP_QSTR_sec_websocket_key,
+    MP_QSTR_content_type,
+    MP_QSTR_content_length,
+    MP_QSTR_authorization,
+    MP_QSTR_expect
 };
 
 /**
@@ -158,7 +194,7 @@ static int on_no_route(struct http_server_connection_t *connection_p,
     mp_obj_t response_obj;
     mp_obj_t *routes_p;
     mp_obj_tuple_t *tuple_p;
-    mp_obj_t tuple[1];
+    mp_obj_t tuple[7];
     mp_buffer_info_t buffer_info;
     mp_uint_t len;
     mp_uint_t i;
@@ -172,11 +208,58 @@ static int on_no_route(struct http_server_connection_t *connection_p,
     MP_THREAD_GIL_ENTER();
 
     /* Create the request object (a named tuple). */
+    tuple[0] = mp_obj_new_int(request_p->action);
+
     size = strlen(&request_p->path[0]);
     vstr_init_fixed_buf(&vstr, size + 1, &request_p->path[0]);
     vstr.len = size;
-    tuple[0] = mp_obj_new_str_from_vstr(&mp_type_str, &vstr);
-    request_obj = mp_obj_new_attrtuple(&request_fields[0], 1, tuple);
+    tuple[1] = mp_obj_new_str_from_vstr(&mp_type_str, &vstr);
+
+    if (request_p->headers.sec_websocket_key.present == 1) {
+        size = strlen(&request_p->headers.sec_websocket_key.value[0]);
+        vstr_init_fixed_buf(&vstr, size + 1, &request_p->headers.sec_websocket_key.value[0]);
+        vstr.len = size;
+        tuple[2] = mp_obj_new_str_from_vstr(&mp_type_str, &vstr);
+    } else {
+        tuple[2] = mp_const_none;
+    }
+
+    if (request_p->headers.content_type.present == 1) {
+        size = strlen(&request_p->headers.content_type.value[0]);
+        vstr_init_fixed_buf(&vstr, size + 1, &request_p->headers.content_type.value[0]);
+        vstr.len = size;
+        tuple[3] = mp_obj_new_str_from_vstr(&mp_type_str, &vstr);
+    } else {
+        tuple[3] = mp_const_none;
+    }
+
+    if (request_p->headers.content_length.present == 1) {
+        tuple[4] = mp_obj_new_int(request_p->headers.content_length.value);
+    } else {
+        tuple[4] = mp_const_none;
+    }
+
+    if (request_p->headers.authorization.present == 1) {
+        size = strlen(&request_p->headers.authorization.value[0]);
+        vstr_init_fixed_buf(&vstr, size + 1, &request_p->headers.authorization.value[0]);
+        vstr.len = size;
+        tuple[5] = mp_obj_new_str_from_vstr(&mp_type_str, &vstr);
+    } else {
+        tuple[5] = mp_const_none;
+    }
+
+    if (request_p->headers.expect.present == 1) {
+        size = strlen(&request_p->headers.expect.value[0]);
+        vstr_init_fixed_buf(&vstr, size + 1, &request_p->headers.expect.value[0]);
+        vstr.len = size;
+        tuple[6] = mp_obj_new_str_from_vstr(&mp_type_str, &vstr);
+    } else {
+        tuple[6] = mp_const_none;
+    }
+
+    request_obj = mp_obj_new_attrtuple(&request_fields[0],
+                                       membersof(tuple),
+                                       tuple);
 
     /* Create the connection object. */
     connection_obj_p = m_new_obj(struct class_http_server_connection_t);
@@ -366,11 +449,20 @@ static const mp_rom_map_elem_t class_http_server_locals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_stop), MP_ROM_PTR(&class_http_server_stop_obj) },
 
     /* Module constants. */
-    { MP_ROM_QSTR(MP_QSTR_RESPONSE_CODE_200_OK), MP_ROM_INT(http_server_response_code_200_ok_t) },
-    { MP_ROM_QSTR(MP_QSTR_RESPONSE_CODE_404_NOT_FOUND), MP_ROM_INT(http_server_response_code_404_not_found_t) },
+    { MP_ROM_QSTR(MP_QSTR_GET),
+      MP_ROM_INT(http_server_request_action_get_t) },
+    { MP_ROM_QSTR(MP_QSTR_POST),
+      MP_ROM_INT(http_server_request_action_post_t) },
 
-    { MP_ROM_QSTR(MP_QSTR_CONTENT_TYPE_TEXT_HTML), MP_ROM_INT(http_server_content_type_text_html_t) },
-    { MP_ROM_QSTR(MP_QSTR_CONTENT_TYPE_TEXT_PLAIN), MP_ROM_INT(http_server_content_type_text_plain_t) }
+    { MP_ROM_QSTR(MP_QSTR_RESPONSE_CODE_200_OK),
+      MP_ROM_INT(http_server_response_code_200_ok_t) },
+    { MP_ROM_QSTR(MP_QSTR_RESPONSE_CODE_404_NOT_FOUND),
+      MP_ROM_INT(http_server_response_code_404_not_found_t) },
+
+    { MP_ROM_QSTR(MP_QSTR_CONTENT_TYPE_TEXT_HTML),
+      MP_ROM_INT(http_server_content_type_text_html_t) },
+    { MP_ROM_QSTR(MP_QSTR_CONTENT_TYPE_TEXT_PLAIN),
+      MP_ROM_INT(http_server_content_type_text_plain_t) }
 };
 
 static MP_DEFINE_CONST_DICT(class_http_server_locals_dict, class_http_server_locals_dict_table);

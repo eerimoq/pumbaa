@@ -46,6 +46,7 @@ def test_tcp_client():
     assert sock.sendall(b'send()') == 6
     assert sock.recv(6) == b'recv()'
     sock.close()
+    assert socket_stub.reset_failed() == 0
 
 
 def test_tcp_server():
@@ -58,6 +59,7 @@ def test_tcp_server():
     assert client is not None
     assert fromaddr is None
     listener.close()
+    assert socket_stub.reset_failed() == 0
 
 
 def test_udp():
@@ -74,6 +76,7 @@ def test_udp():
     assert sock.sendto(b'123', fromaddr) == 3
     assert sock.sendto(b'456', fromaddr) == 0
     assert sock.sendto(b'789', fromaddr) == 0
+    assert socket_stub.reset_failed() == 0
 
 
 def test_select():
@@ -87,6 +90,7 @@ def test_select():
     assert poll.poll(0.01) == []
 
     tcp.close()
+    assert socket_stub.reset_failed() == 0
 
 
 def test_errors():
@@ -146,6 +150,7 @@ def test_errors():
     assert sock.send(b'bar') == 0
     assert sock.recv(5) == b''
     sock.close()
+    assert socket_stub.reset_failed() == 0
 
     
 def test_bad_arguments():
@@ -156,6 +161,8 @@ def test_bad_arguments():
     # Bad socket type.
     with assert_raises(OSError):
         socket.socket(socket.AF_INET, -1)
+
+    assert socket_stub.reset_failed() == 0
 
 
 TESTCASES = [
