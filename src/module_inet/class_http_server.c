@@ -30,6 +30,8 @@
 
 #include "pumbaa.h"
 
+extern const mp_obj_type_t module_ssl_class_ssl_context;
+
 #if CONFIG_PUMBAA_CLASS_HTTP_SERVER == 1
 
 static void response_write(struct class_http_server_connection_t *connection_obj_p,
@@ -411,6 +413,32 @@ static mp_obj_t class_http_server_make_new(const mp_obj_type_t *type_p,
 }
 
 /**
+ * def wrap_ssl(self, context)
+ */
+static mp_obj_t class_http_server_wrap_ssl(mp_obj_t self_in,
+                                           mp_obj_t context_in)
+{
+    struct class_http_server_t *self_p;
+    struct class_ssl_context_t *context_p;
+
+    if (!MP_OBJ_IS_TYPE(context_in, &module_ssl_class_ssl_context)) {
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_TypeError,
+                                           "SSL Context object required"));        
+    }
+
+    self_p = MP_OBJ_TO_PTR(self_in);
+    context_p = MP_OBJ_TO_PTR(context_in);
+    self_p->ssl_context_obj = context_in;
+
+    if (http_server_wrap_ssl(&self_p->http_server, &context_p->context) != 0) {
+        nlr_raise(mp_obj_new_exception_msg(&mp_type_TypeError,
+                                           "http_server_wrap_ssl() failed"));        
+    }
+
+    return (mp_const_none);
+}
+
+/**
  * def start(self)
  */
 static mp_obj_t class_http_server_start(mp_obj_t self_in)
@@ -440,11 +468,13 @@ static mp_obj_t class_http_server_stop(mp_obj_t self_in)
     return (mp_const_none);
 }
 
+static MP_DEFINE_CONST_FUN_OBJ_2(class_http_server_wrap_ssl_obj, class_http_server_wrap_ssl);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_http_server_start_obj, class_http_server_start);
 static MP_DEFINE_CONST_FUN_OBJ_1(class_http_server_stop_obj, class_http_server_stop);
 
 static const mp_rom_map_elem_t class_http_server_locals_dict_table[] = {
     /* Instance methods. */
+    { MP_ROM_QSTR(MP_QSTR_wrap_ssl), MP_ROM_PTR(&class_http_server_wrap_ssl_obj) },
     { MP_ROM_QSTR(MP_QSTR_start), MP_ROM_PTR(&class_http_server_start_obj) },
     { MP_ROM_QSTR(MP_QSTR_stop), MP_ROM_PTR(&class_http_server_stop_obj) },
 

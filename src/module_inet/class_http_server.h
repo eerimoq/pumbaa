@@ -41,6 +41,7 @@ struct class_http_server_t {
     struct http_server_route_t empty_routes[1];
     mp_obj_t routes;
     mp_obj_t no_route;
+    mp_obj_t ssl_context_obj;
 };
 
 struct class_http_server_connection_t {

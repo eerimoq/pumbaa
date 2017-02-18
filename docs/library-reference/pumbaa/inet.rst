@@ -51,6 +51,15 @@ Simba documentation: `inet`_
       Stop the HTTP server.
 
 
+   .. method:: wrap_ssl(context)
+
+      Wrap given HTTP server in SSL, to make it "secure". `context` is
+      created with the SSL module.
+
+      This function must be called before `start()`.
+
+
+
 .. class:: inet.HttpServerWebSocket(connection, request)
 
    Create a HTTP server WebSocket object with given `connection` and

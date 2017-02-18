@@ -106,4 +106,15 @@ struct class_socket_t {
     struct socket_t socket;
 };
 
+struct class_ssl_context_t {
+    mp_obj_base_t base;
+    struct ssl_context_t context;
+};
+
+struct class_ssl_socket_t {
+    mp_obj_base_t base;
+    struct ssl_socket_t socket;
+    mp_obj_t sock_obj;
+};
+
 #endif

@@ -32,17 +32,6 @@
 
 #if CONFIG_PUMBAA_MODULE_SSL == 1
 
-struct class_ssl_context_t {
-    mp_obj_base_t base;
-    struct ssl_context_t context;
-};
-
-struct class_ssl_socket_t {
-    mp_obj_base_t base;
-    struct ssl_socket_t socket;
-    mp_obj_t sock_obj;
-};
-
 extern const mp_obj_type_t module_socket_class_socket;
 extern const mp_obj_type_t module_ssl_class_ssl_context;
 extern const mp_obj_type_t module_ssl_class_ssl_socket;
