@@ -548,6 +548,8 @@ Q(Flash)
 
 Q(Flash)
 
+Q(GET)
+
 Q(GeneratorExit)
 
 Q(GeneratorExit)
@@ -715,6 +717,8 @@ Q(PIN_LED)
 Q(POLLHUP)
 
 Q(POLLIN)
+
+Q(POST)
 
 Q(PROTOCOL_TLS)
 
@@ -1124,6 +1128,8 @@ Q(acos)
 
 Q(acquire)
 
+Q(action)
+
 Q(add)
 
 Q(address)
@@ -1165,6 +1171,8 @@ Q(async_wait)
 Q(atan)
 
 Q(atan2)
+
+Q(authorization)
 
 Q(b2a_base64)
 
@@ -1275,6 +1283,10 @@ Q(connection)
 Q(const)
 
 Q(const)
+
+Q(content_length)
+
+Q(content_type)
 
 Q(convert)
 
@@ -1399,6 +1411,8 @@ Q(exit)
 Q(exp)
 
 Q(exp)
+
+Q(expect)
 
 Q(extend)
 
@@ -1944,6 +1958,8 @@ Q(sampling_rate)
 
 Q(search)
 
+Q(sec_websocket_key)
+
 Q(seed)
 
 Q(seek)
@@ -2023,6 +2039,8 @@ Q(slice)
 Q(socket)
 
 Q(socket)
+
+Q(socket_read)
 
 Q(socket_write)
 
@@ -2345,6 +2363,8 @@ Q(version)
 Q(version_info)
 
 Q(wrap_socket)
+
+Q(wrap_ssl)
 
 Q(write)
 

@@ -98,6 +98,32 @@ def git_clean_dfx():
     subprocess.check_call(command)
 
 
+def generate_platformio():
+    """Generate the platformio files.
+
+    """
+
+    command = [
+        "make",
+        "platformio"
+    ]
+
+    subprocess.check_call(command)
+
+
+def generate_arduino():
+    """Generate the arduino files.
+
+    """
+
+    command = [
+        "make",
+        "arduino"
+    ]
+
+    subprocess.check_call(command)
+
+    
 def git_check_no_modified_files():
     """Make sure that there are no modified files.
 
@@ -157,6 +183,9 @@ def test():
     print(" ".join(command))
 
     subprocess.check_call(command)
+
+    generate_platformio()
+    generate_arduino()
 
 
 def generate_docs():
