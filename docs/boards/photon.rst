@@ -11,6 +11,7 @@ Drivers
 
 Supported drivers for this board.
 
+- :class:`Flash<drivers.drivers.Flash>`
 - :class:`Pin<drivers.drivers.Pin>`
 - :class:`Uart<drivers.drivers.Uart>`
 
@@ -31,9 +32,9 @@ Below is the memory usage of two applications:
 +--------------------------+-----------+-----------+
 | Application              | Flash     | RAM       |
 +==========================+===========+===========+
-| minimal-configuration    |    301920 |     37712 |
+| minimal-configuration    |    299104 |     37644 |
 +--------------------------+-----------+-----------+
-| default-configuration    |    373600 |     72452 |
+| default-configuration    |    374880 |     72476 |
 +--------------------------+-----------+-----------+
 
 Default configuration
@@ -59,6 +60,8 @@ Default Standard Library configuration.
 |  CONFIG_PUMBAA_CLASS_EVENT                             |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_EXTI                              |  0                                                  |
++--------------------------------------------------------+-----------------------------------------------------+
+|  CONFIG_PUMBAA_CLASS_FLASH                             |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_HTTP_SERVER                       |  0                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+

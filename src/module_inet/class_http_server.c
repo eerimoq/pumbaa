@@ -418,6 +418,7 @@ static mp_obj_t class_http_server_make_new(const mp_obj_type_t *type_p,
 static mp_obj_t class_http_server_wrap_ssl(mp_obj_t self_in,
                                            mp_obj_t context_in)
 {
+#if CONFIG_PUMBAA_MODULE_SSL == 1
     struct class_http_server_t *self_p;
     struct class_ssl_context_t *context_p;
 
@@ -436,6 +437,9 @@ static mp_obj_t class_http_server_wrap_ssl(mp_obj_t self_in,
     }
 
     return (mp_const_none);
+#else
+    mp_not_implemented("class_http_server_wrap_ssl()");
+#endif
 }
 
 /**

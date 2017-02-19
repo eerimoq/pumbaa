@@ -16,6 +16,7 @@ Supported drivers for this board.
 - :class:`Dac<drivers.drivers.Dac>`
 - :class:`Ds18b20<drivers.drivers.Ds18b20>`
 - :class:`esp_wifi<drivers.drivers.esp_wifi>`
+- :class:`Flash<drivers.drivers.Flash>`
 - :class:`Owi<drivers.drivers.Owi>`
 - :class:`Pin<drivers.drivers.Pin>`
 - :class:`Spi<drivers.drivers.Spi>`
@@ -38,9 +39,9 @@ Below is the memory usage of two applications:
 +--------------------------+-----------+-----------+
 | Application              | Flash     | RAM       |
 +==========================+===========+===========+
-| minimal-configuration    |    329875 |     87320 |
+| minimal-configuration    |    327851 |     87700 |
 +--------------------------+-----------+-----------+
-| default-configuration    |    674489 |    188680 |
+| default-configuration    |    677829 |    189636 |
 +--------------------------+-----------+-----------+
 
 Default configuration
@@ -66,6 +67,8 @@ Default Standard Library configuration.
 |  CONFIG_PUMBAA_CLASS_EVENT                             |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_EXTI                              |  0                                                  |
++--------------------------------------------------------+-----------------------------------------------------+
+|  CONFIG_PUMBAA_CLASS_FLASH                             |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_HTTP_SERVER                       |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+

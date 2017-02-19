@@ -101,10 +101,16 @@
 extern void *mp_thread_add_begin(void);
 extern void mp_thread_add_end(void *thread_p, struct thrd_t *thrd_p);
 
+#if CONFIG_PUMBAA_MODULE_SOCKET == 1
+
 struct class_socket_t {
     mp_obj_base_t base;
     struct socket_t socket;
 };
+
+#endif
+
+#if CONFIG_PUMBAA_MODULE_SSL == 1
 
 struct class_ssl_context_t {
     mp_obj_base_t base;
@@ -116,5 +122,7 @@ struct class_ssl_socket_t {
     struct ssl_socket_t socket;
     mp_obj_t sock_obj;
 };
+
+#endif
 
 #endif

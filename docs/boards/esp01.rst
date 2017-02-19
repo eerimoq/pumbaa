@@ -13,6 +13,7 @@ Supported drivers for this board.
 
 - :class:`esp_wifi<drivers.drivers.esp_wifi>`
 - :class:`Exti<drivers.drivers.Exti>`
+- :class:`Flash<drivers.drivers.Flash>`
 - :class:`Pin<drivers.drivers.Pin>`
 - :class:`Spi<drivers.drivers.Spi>`
 - :class:`Uart<drivers.drivers.Uart>`
@@ -34,9 +35,9 @@ Below is the memory usage of two applications:
 +--------------------------+-----------+-----------+
 | Application              | Flash     | RAM       |
 +==========================+===========+===========+
-| minimal-configuration    |    454373 |     62988 |
+| minimal-configuration    |    454141 |     62928 |
 +--------------------------+-----------+-----------+
-| default-configuration    |    518668 |     79496 |
+| default-configuration    |    520448 |     79624 |
 +--------------------------+-----------+-----------+
 
 Default configuration
@@ -62,6 +63,8 @@ Default Standard Library configuration.
 |  CONFIG_PUMBAA_CLASS_EVENT                             |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_EXTI                              |  1                                                  |
++--------------------------------------------------------+-----------------------------------------------------+
+|  CONFIG_PUMBAA_CLASS_FLASH                             |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_HTTP_SERVER                       |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+

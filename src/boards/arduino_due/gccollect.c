@@ -48,6 +48,7 @@ void gc_collect(void)
 
     stack_top = (uintptr_t)thrd_get_top_of_stack(thrd_self());
     stack_bottom = (uintptr_t)thrd_get_bottom_of_stack(thrd_self());
+    stack_bottom &= 0xfffffffc;
     stack_size = (stack_top - stack_bottom);
     gc_collect_root((void**)stack_bottom, stack_size / sizeof(mp_uint_t));
 #endif
