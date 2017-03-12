@@ -100,7 +100,7 @@ PUMBAA_SRC += \
 	module_drivers/class_esp_wifi.c
 endif
 
-ifeq ($(BOARD),$(filter $(BOARD), nano32))
+ifeq ($(BOARD),$(filter $(BOARD), nano32 esp32_devkitc))
 PUMBAA_SRC += \
 	mcus/esp32/gccollect.c \
 	module_drivers/class_adc.c \
@@ -109,7 +109,8 @@ PUMBAA_SRC += \
 	module_drivers/class_spi.c \
 	module_drivers/class_ds18b20.c \
 	module_drivers/class_esp_wifi.c \
-	module_drivers/class_owi.c
+	module_drivers/class_owi.c \
+	module_drivers/class_ws2812.c
 endif
 
 ifeq ($(BOARD),photon)
@@ -233,7 +234,7 @@ MICROPYTHON_SRC += \
 	py/vstr.c \
 	py/warning.c
 
-ifeq ($(BOARD),$(filter $(BOARD), esp12e esp01 nano32 nodemcu))
+ifeq ($(BOARD),$(filter $(BOARD), esp12e esp01 nano32 nodemcu esp32_devkitc))
 MICROPYTHON_SRC += \
 	lib/libm/acoshf.c \
 	lib/libm/asinfacosf.c \

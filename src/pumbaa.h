@@ -96,6 +96,7 @@
 #    include "module_drivers/class_spi.h"
 #    include "module_drivers/class_ds18b20.h"
 #    include "module_drivers/class_can.h"
+#    include "module_drivers/class_ws2812.h"
 #endif
 
 extern void *mp_thread_add_begin(void);

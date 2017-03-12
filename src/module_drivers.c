@@ -106,6 +106,9 @@ static const mp_rom_map_elem_t module_drivers_globals_table[] = {
 #if CONFIG_PUMBAA_CLASS_FLASH == 1
     { MP_ROM_QSTR(MP_QSTR_Flash), MP_ROM_PTR(&module_drivers_class_flash) },
 #endif
+#if CONFIG_PUMBAA_CLASS_WS2812 == 1
+    { MP_ROM_QSTR(MP_QSTR_Ws2812), MP_ROM_PTR(&module_drivers_class_ws2812) },
+#endif
 };
 
 static MP_DEFINE_CONST_DICT(module_drivers_globals, module_drivers_globals_table);

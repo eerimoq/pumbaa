@@ -325,6 +325,14 @@
 #    endif
 #endif
 
+#ifndef CONFIG_PUMBAA_CLASS_WS2812
+#    if defined(CONFIG_MINIMAL_SYSTEM) || !defined(PORT_HAS_WS2812)
+#        define CONFIG_PUMBAA_CLASS_WS2812                  0
+#    else
+#        define CONFIG_PUMBAA_CLASS_WS2812                  1
+#    endif
+#endif
+
 #ifndef CONFIG_PUMBAA_CLASS_QUEUE
 #    define CONFIG_PUMBAA_CLASS_QUEUE                       1
 #endif

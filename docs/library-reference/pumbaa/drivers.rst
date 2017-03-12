@@ -21,6 +21,7 @@ The following classes are defined:
 - :class:`class esp_wifi<.esp_wifi>` -- Espressif WiFi
 - :class:`class Uart<.Uart>` -- Universal Asynchronous Receiver/Transmitter
 - :class:`class Flash<.Flash>` -- Flash memory
+- :class:`class Ws2812<.Ws2812>` -- WS2812 Neo Pixels
 
 Simba documentation: `drivers`_
 
@@ -316,7 +317,7 @@ Simba documentation: `drivers`_
    .. method:: write(buffer[, size])
 
       Write `size` bytes from `buffer` to the SPI bus. Writes all data
-      in `buffer` is `size` is not given.
+      in `buffer` if `size` is not given.
 
 
    .. data:: MODE_MASTER
@@ -902,6 +903,27 @@ Simba documentation: `drivers`_
       Erase `size` bytes in flash starting at given addess `address`.
 
 
+.. class:: drivers.Ws2812(pin_devices)
+
+   Create a Ws2812 object.
+
+   Here is an example of how to create a Ws2812 driver and control a
+   LED strip of 30 pixles.
+
+   .. code-block:: python
+
+      >>> ws2812 = Ws2812(board.PIN_GPIO18)
+      >>> ws2812.write(30 * b'\xff\x00\x00')
+
+   Simba documentation: `drivers/ws2812`_
+
+
+   .. method:: write(buffer[, number_of_pixels])
+
+      Write GRB data from buffer `buffer` to the LED strip. Writes all
+      data in `buffer` if `size` is not given.
+
+
 .. _drivers: http://simba-os.readthedocs.io/en/latest/library-reference/drivers.html
 .. _drivers/pin: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/pin.html
 .. _drivers/exti: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/exti.html
@@ -916,3 +938,4 @@ Simba documentation: `drivers`_
 .. _drivers/esp_wifi: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/esp_wifi.html
 .. _drivers/uart: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/uart.html
 .. _drivers/flash: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/flash.html
+.. _drivers/ws2812: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/ws2812.html

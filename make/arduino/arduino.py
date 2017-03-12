@@ -375,11 +375,19 @@ def generate_boards_txt_esp32(database, boards_txt_fmt):
     nano32_compiler_c_elf_extra_flags += " "
     nano32_compiler_c_elf_extra_flags += libpath
 
+    esp32_devkitc_compiler_c_elf_extra_flags = get_c_elf_extra_flags("esp32_devkitc", database)
+    esp32_devkitc_compiler_c_elf_extra_flags += " "
+    esp32_devkitc_compiler_c_elf_extra_flags += libpath
+
     return boards_txt_fmt.format(
         nano32_compiler_c_extra_flags=get_c_extra_flags("nano32", database),
         nano32_compiler_cxx_extra_flags=get_cxx_extra_flags("nano32", database),
         nano32_compiler_c_elf_extra_flags=nano32_compiler_c_elf_extra_flags,
-        nano32_compiler_c_elf_libs=get_c_elf_libs("nano32", database))
+        nano32_compiler_c_elf_libs=get_c_elf_libs("nano32", database),
+        esp32_devkitc_compiler_c_extra_flags=get_c_extra_flags("esp32_devkitc", database),
+        esp32_devkitc_compiler_cxx_extra_flags=get_cxx_extra_flags("esp32_devkitc", database),
+        esp32_devkitc_compiler_c_elf_extra_flags=esp32_devkitc_compiler_c_elf_extra_flags,
+        esp32_devkitc_compiler_c_elf_libs=get_c_elf_libs("esp32_devkitc", database))
 
 
 def generate_configuration_files(family, database):
