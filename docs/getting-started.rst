@@ -73,12 +73,20 @@ The `Pumbaa` development environment can be installed on `Linux
       $ mkdir pumbaa && \
         cd pumbaa && \
         sudo apt install ckermit valgrind cppcheck cloc python python-pip doxygen git lcov && \
+        sudo apt install avrdude gcc-avr binutils-avr gdb-avr avr-libc && \
         sudo apt install bossa-cli gcc-arm-none-eabi && \
         sudo apt install make unrar autoconf automake libtool gcc g++ gperf \
                              flex bison texinfo gawk ncurses-dev libexpat-dev \
-                             python-serial sed libtool-bin && \
-        sudo pip install pyserial pyelftools xpect sphinx breathe sphinx_rtd_theme && \
-        git clone https://github.com/eerimoq/pumbaa --recursive
+                             python-serial sed libtool-bin pmccabe help2man \
+                             python-pyelftools unzip && \
+        sudo pip install pyserial xpect readchar sphinx breathe sphinx_rtd_theme && \
+        (git clone --recursive https://github.com/pfalcon/esp-open-sdk && \
+         cd esp-open-sdk && \
+         make) && \
+        wget https://github.com/eerimoq/simba-releases/raw/master/arduino/esp32/tools/xtensa-esp32-elf-linux$(getconf LONG_BIT)-1.22.0-59.tar.gz && \
+        tar xf xtensa-esp32-elf-linux$(getconf LONG_BIT)-1.22.0-59.tar.gz && \
+        rm xtensa-esp32-elf-linux$(getconf LONG_BIT)-1.22.0-59.tar.gz && \
+        git clone --recursive https://github.com/eerimoq/pumbaa
 
 2. Setup the environment.
 
