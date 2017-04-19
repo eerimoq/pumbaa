@@ -92,7 +92,7 @@ The `Pumbaa` development environment can be installed on `Linux
    .. code-block:: text
 
       $ cd examples/blink
-      $ make -s BOARD=nano32 upload
+      $ make -s BOARD=nano32 SERIAL_PORT=<my-serial-port> upload
 
 3. The built-in LED blinks!
 
