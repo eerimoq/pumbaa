@@ -95,7 +95,8 @@ The `Pumbaa` development environment can be installed on `Linux
       $ cd pumbaa
       $ source setup.sh
 
-2. Build and upload the blink example to your device.
+2. Build and upload the blink example to your device. Replace
+   ``<my-serial-port>`` with your serial port name.
 
    .. code-block:: text
 
