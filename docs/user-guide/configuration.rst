@@ -14,7 +14,10 @@ The underlying MicroPython source code can also be configured in
 compile time. Often these configuration valiables starts with
 ``MICROPY_``.
 
-Simba can be configured as described in the `Simba documentation`_.
+Simba can be configured as described in the `Simba documentation`_,
+with the only difference that your ``config.h`` must include
+``simba_config.h``, as in :github-blob:`src/config.h`. Put your
+defines before this include.
 
 Search order
 ^^^^^^^^^^^^
