@@ -130,7 +130,7 @@ static mp_obj_t os_listdir(mp_uint_t n_args, const mp_obj_t *args_p)
         path_p = mp_obj_str_get_str(args_p[0]);
     }
 
-    if (fs_dir_open(&dir, path_p, O_READ) != 0) {
+    if (fs_dir_open(&dir, path_p, FS_READ) != 0) {
         nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_OSError,
                                                 "No such file or directory: '%s'",
                                                 path_p));
@@ -335,7 +335,7 @@ static mp_obj_t os_system(mp_obj_t command_in)
 
     res = fs_call(command, sys_get_stdin(), &chout, NULL);
 
-    if (res == -ENOENT) {
+    if (res == -ENOCOMMAND) {
         nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_OSError,
                                                 "Command not found: '%s'",
                                                 mp_obj_str_get_str(command_in)));

@@ -65,7 +65,7 @@ SED ?= sed
 PYTHON ?= python
 
 # Micropython string generation.
-GENHDR_DIR = $(BUILDDIR)/genhdr
+GENHDR_DIR = $(GENDIR)/genhdr
 QSTR_DIR = $(GENHDR_DIR)/qstr
 QSTR_I_LAST = $(GENHDR_DIR)/qstr.i.last
 QSTR_SPLIT = $(GENHDR_DIR)/qstr.split

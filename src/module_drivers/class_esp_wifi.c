@@ -312,7 +312,7 @@ static mp_obj_t class_esp_wifi_station_init(mp_uint_t n_args,
         info_p = NULL;
     }
 
-    if (esp_wifi_station_init(ssid_p, password_p, info_p) != 0) {
+    if (esp_wifi_station_init(ssid_p, password_p, NULL, info_p) != 0) {
         nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
                                            "esp_wifi_station_init() failed"));
     }

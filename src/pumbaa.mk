@@ -95,7 +95,9 @@ ifeq ($(BOARD),$(filter $(BOARD), esp12e esp01 nodemcu))
 PUMBAA_SRC += \
 	mcus/esp8266/gccollect.c \
 	mcus/esp8266/gchelper.S \
+	module_drivers/class_ds18b20.c \
 	module_drivers/class_exti.c \
+	module_drivers/class_owi.c \
 	module_drivers/class_spi.c \
 	module_drivers/class_esp_wifi.c
 endif
@@ -109,6 +111,7 @@ PUMBAA_SRC += \
 	module_drivers/class_spi.c \
 	module_drivers/class_ds18b20.c \
 	module_drivers/class_esp_wifi.c \
+	module_drivers/class_i2c_soft.c \
 	module_drivers/class_owi.c \
 	module_drivers/class_ws2812.c
 endif
