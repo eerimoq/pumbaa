@@ -108,9 +108,9 @@ static mp_obj_t class_http_server_connection_socket_write(mp_obj_t self_in,
     self_p = MP_OBJ_TO_PTR(self_in);
     mp_get_buffer_raise(buffer_in, &buffer_info, MP_BUFFER_READ);
 
-    size = socket_write(&self_p->connection_p->socket,
-                        buffer_info.buf,
-                        buffer_info.len);
+    size = chan_write(self_p->connection_p->chan_p,
+                      buffer_info.buf,
+                      buffer_info.len);
 
     return (mp_obj_new_int(size));
 }
@@ -130,7 +130,7 @@ static mp_obj_t class_http_server_connection_socket_read(mp_obj_t self_in,
     size = mp_obj_get_int(size_in);
 
     vstr_init_len(&vstr, size);
-    res = socket_read(&self_p->connection_p->socket, vstr.buf, size);
+    res = chan_read(self_p->connection_p->chan_p, vstr.buf, size);
 
     if (res >= 0) {
         vstr.len = res;
