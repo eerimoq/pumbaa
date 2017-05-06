@@ -14,6 +14,7 @@ HTTPS GET
 --------
 
 .. code-block:: text
+
    > curl --insecure https://192.168.0.7/index.html
    <html><body>
        Hello from Pumbaa!
@@ -24,6 +25,7 @@ HTTPS POST
 ---------
 
 .. code-block:: text
+
    > curl --insecure --data "My post data." https://192.168.0.7/index.html
    <html><body>
        Hello from Pumbaa!
