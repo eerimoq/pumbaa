@@ -44,6 +44,9 @@ PUMBAA_SRC += \
 	module_os.c \
 	module_kernel.c \
 	module_drivers.c \
+	module_drivers/class_eeprom_i2c.c \
+	module_drivers/class_i2c.c \
+	module_drivers/class_i2c_soft.c \
 	module_drivers/class_pin.c \
 	module_drivers/class_uart.c \
 	module_drivers/class_flash.c \
@@ -87,8 +90,7 @@ PUMBAA_SRC += \
 	module_drivers/class_exti.c \
 	module_drivers/class_owi.c \
 	module_drivers/class_spi.c \
-	module_drivers/class_sd.c \
-	module_drivers/class_i2c_soft.c
+	module_drivers/class_sd.c
 endif
 
 ifeq ($(BOARD),$(filter $(BOARD), esp12e esp01 nodemcu))
@@ -111,7 +113,6 @@ PUMBAA_SRC += \
 	module_drivers/class_spi.c \
 	module_drivers/class_ds18b20.c \
 	module_drivers/class_esp_wifi.c \
-	module_drivers/class_i2c_soft.c \
 	module_drivers/class_owi.c \
 	module_drivers/class_ws2812.c
 endif

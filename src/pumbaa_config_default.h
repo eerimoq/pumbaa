@@ -269,11 +269,27 @@
 #    endif
 #endif
 
+#ifndef CONFIG_PUMBAA_CLASS_I2C
+#    if defined(CONFIG_MINIMAL_SYSTEM) || !defined(PORT_HAS_I2C)
+#        define CONFIG_PUMBAA_CLASS_I2C                     0
+#    else
+#        define CONFIG_PUMBAA_CLASS_I2C                     1
+#    endif
+#endif
+
 #ifndef CONFIG_PUMBAA_CLASS_I2C_SOFT
-#    if defined(CONFIG_MINIMAL_SYSTEM) || !defined(PORT_HAS_I2C_SOFT) || defined(ARCH_LINUX) || defined(ARCH_ARM) || defined(ARCH_ESP)
+#    if defined(CONFIG_MINIMAL_SYSTEM) || !defined(PORT_HAS_I2C_SOFT)
 #        define CONFIG_PUMBAA_CLASS_I2C_SOFT                0
 #    else
 #        define CONFIG_PUMBAA_CLASS_I2C_SOFT                1
+#    endif
+#endif
+
+#ifndef CONFIG_PUMBAA_CLASS_EEPROM_I2C
+#    if defined(CONFIG_MINIMAL_SYSTEM) || !defined(PORT_HAS_EEPROM_I2C)
+#        define CONFIG_PUMBAA_CLASS_EEPROM_I2C              0
+#    else
+#        define CONFIG_PUMBAA_CLASS_EEPROM_I2C              1
 #    endif
 #endif
 

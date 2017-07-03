@@ -14,6 +14,7 @@ The following classes are defined:
 - :class:`class Dac<.Dac>` -- Digital to analog convertion
 - :class:`class Spi<.Spi>` -- Serial peripheral interface
 - :class:`class Can<.Can>` -- Controller Area Network
+- :class:`class I2C<.I2C>` -- I2C
 - :class:`class I2CSoft<.I2CSoft>` -- Software I2C
 - :class:`class Owi<.Owi>` -- Onewire
 - :class:`class Ds18b20<.Ds18b20>` -- DS18B20 temperature
@@ -22,6 +23,7 @@ The following classes are defined:
 - :class:`class Uart<.Uart>` -- Universal Asynchronous Receiver/Transmitter
 - :class:`class Flash<.Flash>` -- Flash memory
 - :class:`class Ws2812<.Ws2812>` -- WS2812 Neo Pixels
+- :class:`class EepromI2C<.EepromI2C>` -- I2C EEPROM
 
 Simba documentation: `drivers`_
 
@@ -397,6 +399,56 @@ Simba documentation: `drivers`_
    .. data:: FLAGS_EXTENDED_FRAME
 
       Extended frame flag. A 29 bits frame id will be sent/received.
+
+
+.. class:: drivers.I2C(device, baudrate=100000, address=-1)
+
+   Create a I2C object.
+
+   Here is an example of how to create a I2C obeject and scan the bus
+   to find conected devices.
+
+   .. code-block:: python
+
+      >>> i2c = I2C(0)
+      >>> i2c.start()
+      >>> i2c.scan()
+      [87, 104]
+      >>> i2c.stop()
+
+   Simba documentation: `drivers/i2c`_
+
+
+   .. method:: start()
+
+      Start the i2c driver. Configures the hardware.
+
+
+   .. method:: stop()
+
+      Stop the i2c driver. Resets the hardware.
+
+
+   .. method:: read(address, size)
+
+      Read `size` bytes from slave with address `address`.
+
+
+   .. method:: read_into(address, buffer[, size])
+
+      Read ``len(buffer)`` bytes from slave with address `address`
+      into `buffer`. Give the argument `size` to read fewer bytes than
+      ``len(buffer)``.
+
+
+   .. method:: write(address, buffer[, size])
+
+      Write the buffer `buffer` to slave with address `address`.
+
+
+   .. method:: scan()
+
+      Scan the bus and return a list of all found slave addresses.
 
 
 .. class:: drivers.I2CSoft(scl, sda, baudrate=50000, max_clock_stretching_sleep_us=1000000, clock_stretching_sleep_us=10000)
@@ -858,7 +910,7 @@ Simba documentation: `drivers`_
    to the flash start address or an absolute physical address in the
    CPU memory map. This is board dependent and it is not documented
    anywhere.
-   
+
    Here is an example of how to create a flash driver and use the
    erase, read and write methods.
 
@@ -924,6 +976,42 @@ Simba documentation: `drivers`_
       data in `buffer` if `size` is not given.
 
 
+.. class:: drivers.EepromI2C(i2c, address, size)
+
+   Create a I2C EEPROM object.
+
+   Here is an example of how to create an I2C EEPROM obeject and
+   transfer data to and from the EEPROM using it.
+
+   .. code-block:: python
+
+      >>> i2c = I2C(0)
+      >>> i2c.start()
+      >>> eeprom = EepromI2C(i2c, 0x57, 32768)
+      >>> eeprom.write(0, b'Hello World!')
+      >>> eeprom.read(0, 12)
+      b'Hello World!'
+
+   Simba documentation: `drivers/eeprom_i2c`_
+
+
+   .. method:: read(address, size)
+
+      Read `size` bytes from EEPROM address `address`.
+
+
+   .. method:: read_into(address, buffer[, size])
+
+      Read ``len(buffer)`` bytes from EEPROM address `address` into
+      `buffer`. Give the argument `size` to read fewer bytes than
+      ``len(buffer)``.
+
+
+   .. method:: write(address, buffer[, size])
+
+      Write the buffer `buffer` to EEPROM address `address`.
+
+
 .. _drivers: http://simba-os.readthedocs.io/en/latest/library-reference/drivers.html
 .. _drivers/pin: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/pin.html
 .. _drivers/exti: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/exti.html
@@ -932,6 +1020,7 @@ Simba documentation: `drivers`_
 .. _drivers/spi: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/spi.html
 .. _drivers/can: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/can.html
 .. _drivers/sd: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/sd.html
+.. _drivers/i2c: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/i2c.html
 .. _drivers/i2c_soft: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/i2c_soft.html
 .. _drivers/owi: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/owi.html
 .. _drivers/ds18b20: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/ds18b20.html
@@ -939,3 +1028,4 @@ Simba documentation: `drivers`_
 .. _drivers/uart: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/uart.html
 .. _drivers/flash: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/flash.html
 .. _drivers/ws2812: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/ws2812.html
+.. _drivers/eeprom_i2c: http://simba-os.readthedocs.io/en/latest/library-reference/drivers/eeprom_i2c.html
