@@ -22,8 +22,7 @@ Follow these steps to create a new release:
       make -s -j8 test-all-boards
       make -s -j8 release-test
 
-4. Commit the generated files and tag the commit with
-   ``<major>.<minor>.<revision>``.
+4. Commit the generated files.
 
 5. Generate files for Arduino and PlatformIO releases. The generated
    archives and Arduino manifests are copied to the release
@@ -31,8 +30,8 @@ Follow these steps to create a new release:
 
    .. code:: text
 
-      make -s -j8 release
-
+      make -s release
+   
 6. Add, commit and push the Pumbaa Arduino releases in the release
    repository.
 
@@ -56,9 +55,19 @@ Follow these steps to create a new release:
       http://localhost:8000/esp32/package_pumbaa_esp32_index.json
       http://localhost:8000/sam/package_pumbaa_sam_index.json
 
-9. Commit and push.
+9. Install all four packages and run the blink example for each one of
+   them.
 
-10. Add, commit and push the Pumbaa Arduino package manifests in the
+10. Commit the manifests, tag the commit with
+    ``<major>.<minor>.<revision>`` and push.
+
+   .. code:: text
+
+      git commit
+      git tag <major>.<minor>.<revision>
+      git push origin master
+
+11. Add, commit and push the Pumbaa Arduino package manifests in the
     release repository.
 
    .. code:: text
@@ -68,4 +77,4 @@ Follow these steps to create a new release:
        git commit && \
        git push origin master)
 
-11. Done.
+12. Done.
