@@ -1022,7 +1022,7 @@ linkflags = []
 
 for flag in env["LINKFLAGS"]:
     if flag.startswith("-Wl,-Map="):
-        flag = "-Wl,-Map=$BUILD_DIR/firmware.map"
+        flag = '-Wl,-Map="$BUILD_DIR/firmware.map"'
     linkflags.append(flag)
 env.Replace(LINKFLAGS=linkflags)
 
@@ -1055,8 +1055,15 @@ for src in env.LookupSources(variant_dir, src_dir, True, src_filter):
 # Command to generate simba_gen.c
 env.Command(SIMBA_GEN_C,
             source_files,
-            ('"$PYTHONEXE" "$PLATFORMFW_DIR/simba/src/kernel/tools/gen.py" "$NAME" "$VERSION" '
-             '"$BOARD_DESC" "$MCU_DESC" "$TARGET"'))
+            ('"$PYTHONEXE" "$PLATFORMFW_DIR/simba/bin/simbagen.py" '
+             '--output-directory "$BUILD_DIR/PumbaaFramework" '
+             'source '
+             '--name "$NAME" '
+             '--version "$VERSION" '
+             '--board "$BOARD_DESC" '
+             '--mcu "$MCU_DESC" '
+             '--endianess little '
+             '--eeprom-soft-chunk-size 2048 '))
 source_files.append(SIMBA_GEN_C)
 
 # Command to generate *.mpy
