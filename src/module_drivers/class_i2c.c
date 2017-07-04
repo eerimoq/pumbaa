@@ -272,6 +272,11 @@ static const mp_rom_map_elem_t class_i2c_locals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_read_into), MP_ROM_PTR(&class_i2c_read_into_obj) },
     { MP_ROM_QSTR(MP_QSTR_write), MP_ROM_PTR(&class_i2c_write_obj) },
     { MP_ROM_QSTR(MP_QSTR_scan), MP_ROM_PTR(&class_i2c_scan_obj) }
+
+    /* Class constants. */
+    { MP_ROM_QSTR(MP_QSTR_BAUDRATE_1MBPS), MP_ROM_INT(I2C_BAUDRATE_1MBPS) },
+    { MP_ROM_QSTR(MP_QSTR_BAUDRATE_400KBPS), MP_ROM_INT(I2C_BAUDRATE_400KBPS) },
+    { MP_ROM_QSTR(MP_QSTR_BAUDRATE_100KBPS), MP_ROM_INT(I2C_BAUDRATE_100KBPS) }
 };
 
 static MP_DEFINE_CONST_DICT(class_i2c_locals_dict, class_i2c_locals_dict_table);

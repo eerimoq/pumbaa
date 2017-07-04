@@ -401,9 +401,13 @@ Simba documentation: `drivers`_
       Extended frame flag. A 29 bits frame id will be sent/received.
 
 
-.. class:: drivers.I2C(device, baudrate=100000, address=-1)
+.. class:: drivers.I2C(device, baudrate=BAUDRATE_100KBPS, address=-1)
 
-   Create a I2C object.
+   Create an I2C object. Select the I2C device with `device`. The bus
+   baudrate `baudrate` is one of :data:`.BAUDRATE_1MBPS`,
+   :data:`.BAUDRATE_400KBPS` and :data:`.BAUDRATE_100KBPS`. `address`
+   is the slave address when this driver is a slave (only master is
+   suported in the current version of the driver).
 
    Here is an example of how to create a I2C obeject and scan the bus
    to find conected devices.
@@ -421,12 +425,12 @@ Simba documentation: `drivers`_
 
    .. method:: start()
 
-      Start the i2c driver. Configures the hardware.
+      Start the I2C driver. Configures the hardware.
 
 
    .. method:: stop()
 
-      Stop the i2c driver. Resets the hardware.
+      Stop the I2C driver. Resets the hardware.
 
 
    .. method:: read(address, size)
@@ -451,9 +455,20 @@ Simba documentation: `drivers`_
       Scan the bus and return a list of all found slave addresses.
 
 
+   .. data:: BAUDRATE_1MBPS
+   .. data:: BAUDRATE_400KBPS
+   .. data:: BAUDRATE_100KBPS
+
+      I2C bus baudrate. Only used if the driver is configured as
+      master.
+
+
 .. class:: drivers.I2CSoft(scl, sda, baudrate=50000, max_clock_stretching_sleep_us=1000000, clock_stretching_sleep_us=10000)
 
-   Create a I2CSoft object.
+   Create an I2CSoft object. Select the I2C SCL and SDA pins with
+   `scl` and `sda`. The bus baudrate is selected using the `baudrate`
+   argument. `max_clock_stretching_sleep_us` and
+   `clock_stretching_sleep_us` are timing configuration parameters.
 
    Here is an example of how to create a I2CSoft obeject and scan the
    bus to find conected devices.
@@ -471,12 +486,12 @@ Simba documentation: `drivers`_
 
    .. method:: start()
 
-      Start the i2c soft driver. Configures the hardware.
+      Start the I2C soft driver. Configures the hardware.
 
 
    .. method:: stop()
 
-      Stop the i2c soft driver. Resets the hardware.
+      Stop the I2C soft driver. Resets the hardware.
 
 
    .. method:: read(address, size)
@@ -978,7 +993,8 @@ Simba documentation: `drivers`_
 
 .. class:: drivers.EepromI2C(i2c, address, size)
 
-   Create a I2C EEPROM object.
+   Create a I2C EEPROM object. `address` is the EEPROM I2C address,
+   and `size` is the EEPROM size in bytes.
 
    Here is an example of how to create an I2C EEPROM obeject and
    transfer data to and from the EEPROM using it.
