@@ -253,9 +253,9 @@ def test_websocket_echo():
     )
     socket_stub.set_send([
         bytes(response, 'ascii'),
-        b'\x81\x84\x00\x00\x00\x00',
+        b'\x81\x04',
         b'123\x00',
-        b'\x81\x84\x00\x00\x00\x00',
+        b'\x81\x04',
         b'123\x00'
     ])
     socket_stub.set_close(0)

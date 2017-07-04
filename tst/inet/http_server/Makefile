@@ -40,7 +40,6 @@ SYNC_SRC = event.c
 INET_SRC = http_server.c http_websocket_server.c inet.c
 HASH_SRC = sha1.c
 ENCODE_SRC = base64.c
-ALLOC_SRC = heap.c
 
 PUMBAA_ROOT ?= ../..
 include $(PUMBAA_ROOT)/make/app.mk
