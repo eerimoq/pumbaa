@@ -40,6 +40,7 @@ if 'Linux' in os.uname().machine:
         "thread_suite",
         "adc_suite",
         "can_suite",
+        "i2c_suite",
         "dac_suite",
         "ds18b20_suite",
         "exti_suite",

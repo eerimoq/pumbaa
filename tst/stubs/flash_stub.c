@@ -25,7 +25,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the Simba project.
+ * This file is part of the Pumbaa project.
  */
 
 #include "simba.h"

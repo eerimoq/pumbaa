@@ -32,6 +32,7 @@
 #define __STUBS_H__
 
 #define CAN_STUB_ROOT_POINTERS
+#define I2C_STUB_ROOT_POINTERS
 #define DS18B20_STUB_ROOT_POINTERS
 
 #define FS_STUB_ROOT_POINTERS                   \
@@ -66,6 +67,8 @@
 
 #define CAN_STUB_BUILTIN_MODULE                                         \
     { MP_ROM_QSTR(MP_QSTR_can_stub), MP_ROM_PTR(&module_can_stub) },
+#define I2C_STUB_BUILTIN_MODULE                                         \
+    { MP_ROM_QSTR(MP_QSTR_i2c_stub), MP_ROM_PTR(&module_i2c_stub) },
 #define DS18B20_STUB_BUILTIN_MODULE                                     \
     { MP_ROM_QSTR(MP_QSTR_ds18b20_stub), MP_ROM_PTR(&module_ds18b20_stub) },
 #define FS_STUB_BUILTIN_MODULE                                          \
@@ -80,6 +83,7 @@
     { MP_ROM_QSTR(MP_QSTR_ssl_stub), MP_ROM_PTR(&module_ssl_stub) },
 
 extern const struct _mp_obj_module_t module_can_stub;
+extern const struct _mp_obj_module_t module_i2c_stub;
 extern const struct _mp_obj_module_t module_ds18b20_stub;
 extern const struct _mp_obj_module_t module_fs_stub;
 extern const struct _mp_obj_module_t module_owi_stub;

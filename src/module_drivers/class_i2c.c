@@ -181,7 +181,7 @@ static mp_obj_t class_i2c_read_into(mp_uint_t n_args, const mp_obj_t *args_p)
         size = mp_obj_get_int(args_p[3]);
 
         if (buffer_info.len < size) {
-            nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+            nlr_raise(mp_obj_new_exception_msg(&mp_type_ValueError,
                                                "bad buffer length"));
         }
     } else {
@@ -219,7 +219,7 @@ static mp_obj_t class_i2c_write(mp_uint_t n_args, const mp_obj_t *args_p)
         size = mp_obj_get_int(args_p[3]);
 
         if (buffer_info.len < size) {
-            nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
+            nlr_raise(mp_obj_new_exception_msg(&mp_type_ValueError,
                                                "bad buffer length"));
         }
     } else {
@@ -271,7 +271,7 @@ static const mp_rom_map_elem_t class_i2c_locals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_read), MP_ROM_PTR(&class_i2c_read_obj) },
     { MP_ROM_QSTR(MP_QSTR_read_into), MP_ROM_PTR(&class_i2c_read_into_obj) },
     { MP_ROM_QSTR(MP_QSTR_write), MP_ROM_PTR(&class_i2c_write_obj) },
-    { MP_ROM_QSTR(MP_QSTR_scan), MP_ROM_PTR(&class_i2c_scan_obj) }
+    { MP_ROM_QSTR(MP_QSTR_scan), MP_ROM_PTR(&class_i2c_scan_obj) },
 
     /* Class constants. */
     { MP_ROM_QSTR(MP_QSTR_BAUDRATE_1MBPS), MP_ROM_INT(I2C_BAUDRATE_1MBPS) },

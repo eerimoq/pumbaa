@@ -43,6 +43,7 @@ endif
 
 SRC += \
 	$(PUMBAA_ROOT)/tst/stubs/can_stub.c \
+	$(PUMBAA_ROOT)/tst/stubs/i2c_stub.c \
 	$(PUMBAA_ROOT)/tst/stubs/ds18b20_stub.c \
 	$(SRC_FLASH) \
 	$(SRC_SD) \
@@ -52,6 +53,7 @@ SRC += \
 
 SRC_IGNORE += \
 	$(SIMBA_ROOT)/src/drivers/can.c \
+	$(SIMBA_ROOT)/src/drivers/i2c.c \
 	$(SIMBA_ROOT)/src/drivers/ds18b20.c \
 	$(SRC_IGNORE_FLASH) \
 	$(SRC_IGNORE_SD) \
@@ -79,6 +81,7 @@ PYSRC += \
 	$(PUMBAA_ROOT)/tst/drivers/can/can_suite.py \
 	$(PUMBAA_ROOT)/tst/drivers/ds18b20/ds18b20_suite.py \
 	$(PUMBAA_ROOT)/tst/drivers/spi/spi_suite.py \
+	$(PUMBAA_ROOT)/tst/drivers/i2c/i2c_suite.py \
 	$(PUMBAA_ROOT)/tst/inet/ssl/ssl_suite.py \
 	$(PUMBAA_ROOT)/tst/inet/http_server/http_server_suite.py \
 	$(PUMBAA_ROOT)/tst/socket/socket_suite.py
