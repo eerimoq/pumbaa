@@ -2,7 +2,7 @@
   "name":"framework-pumbaa",
   "description":"Pumbaa OS",
   "url":"https://github.com/eerimoq/pumbaa",
-  "version":"2.6.1",
+  "version":"3.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/eerimoq/pumbaa.git"

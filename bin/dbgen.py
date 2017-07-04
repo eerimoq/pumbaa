@@ -52,6 +52,18 @@ def get_default_configuration(board):
                                    cwd="examples/default-configuration")
 
 
+def get_port_has(board):
+    """Get the list of PORT_HAS defines for given board.
+
+    """
+
+    return subprocess.check_output(["make",
+                                    "-s",
+                                    "BOARD=" + board,
+                                    "port-has"],
+                                   cwd="examples/default-configuration")
+
+
 def main():
     """Main.
 
@@ -89,13 +101,13 @@ def main():
                 default_config.append((mo.group(1), mo.group(2)))
         default_config.sort()
         database["boards"][board]["default-configuration"] = default_config
-        
+
         # Get board drivers.
-        drivers_src = get_make_variable(board, "DRIVERS_SRC").split()
+        re_port_has = re.compile(r"#define PORT_HAS_(\w+)")
         drivers = []
-        for src in drivers_src:
-            if not os.path.split(src)[0]:
-                drivers.append(os.path.splitext(src)[0])
+        for line in get_port_has(board).splitlines():
+            mo = re_port_has.match(line)
+            drivers.append(mo.group(1).lower())
         database["boards"][board]["drivers"] = drivers
 
         # Get board include paths.

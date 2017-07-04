@@ -15,7 +15,7 @@
 # 36 "/home/erik/workspace/pumbaa/src/config.h" 2
 # 36 "/home/erik/workspace/pumbaa/src/port/mpconfigport.h" 2
 # 1 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h" 1
-# 438 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
+# 462 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
 extern const struct _mp_obj_module_t mp_module_uos;
 extern const struct _mp_obj_module_t mp_module_utime;
 extern const struct _mp_obj_module_t mp_module_usocket;
@@ -26,10 +26,10 @@ extern const struct _mp_obj_module_t module_drivers;
 extern const struct _mp_obj_module_t module_inet;
 extern const struct _mp_obj_module_t module_text;
 extern const struct _mp_obj_module_t module_board;
-# 554 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
+# 578 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
 typedef int mp_int_t;
 typedef unsigned int mp_uint_t;
-# 564 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
+# 588 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
 typedef long mp_off_t;
 
 
@@ -59,12 +59,14 @@ typedef long mp_off_t;
 # 13 "/home/erik/workspace/pumbaa/simba/3pp/esp32/inc/newlib/include/sys/reent.h"
 # 1 "/home/erik/workspace/pumbaa/simba/3pp/esp32/inc/newlib/include/_ansi.h" 1
 # 14 "/home/erik/workspace/pumbaa/simba/3pp/esp32/inc/newlib/include/sys/reent.h" 2
-# 1 "/home/erik/workspace/xtensa-esp32-elf/lib/gcc/xtensa-esp32-elf/4.8.5/include/stddef.h" 1 3 4
-# 147 "/home/erik/workspace/xtensa-esp32-elf/lib/gcc/xtensa-esp32-elf/4.8.5/include/stddef.h" 3 4
+# 1 "/home/erik/workspace/xtensa-esp32-elf/lib/gcc/xtensa-esp32-elf/5.2.0/include/stddef.h" 1 3 4
+# 149 "/home/erik/workspace/xtensa-esp32-elf/lib/gcc/xtensa-esp32-elf/5.2.0/include/stddef.h" 3 4
+
+# 149 "/home/erik/workspace/xtensa-esp32-elf/lib/gcc/xtensa-esp32-elf/5.2.0/include/stddef.h" 3 4
 typedef int ptrdiff_t;
-# 214 "/home/erik/workspace/xtensa-esp32-elf/lib/gcc/xtensa-esp32-elf/4.8.5/include/stddef.h" 3 4
+# 216 "/home/erik/workspace/xtensa-esp32-elf/lib/gcc/xtensa-esp32-elf/5.2.0/include/stddef.h" 3 4
 typedef unsigned int size_t;
-# 327 "/home/erik/workspace/xtensa-esp32-elf/lib/gcc/xtensa-esp32-elf/4.8.5/include/stddef.h" 3 4
+# 328 "/home/erik/workspace/xtensa-esp32-elf/lib/gcc/xtensa-esp32-elf/5.2.0/include/stddef.h" 3 4
 typedef short unsigned int wchar_t;
 # 15 "/home/erik/workspace/pumbaa/simba/3pp/esp32/inc/newlib/include/sys/reent.h" 2
 # 1 "/home/erik/workspace/pumbaa/simba/3pp/esp32/inc/newlib/include/sys/_types.h" 1
@@ -77,6 +79,8 @@ typedef short unsigned int wchar_t;
 
 
 # 1 "/home/erik/workspace/pumbaa/simba/3pp/esp32/inc/newlib/include/machine/_default_types.h" 1
+# 17 "/home/erik/workspace/pumbaa/simba/3pp/esp32/inc/newlib/include/machine/_default_types.h"
+
 # 17 "/home/erik/workspace/pumbaa/simba/3pp/esp32/inc/newlib/include/machine/_default_types.h"
 typedef signed char __int8_t ;
 typedef unsigned char __uint8_t ;
@@ -160,13 +164,17 @@ typedef long _fpos_t;
 # 55 "/home/erik/workspace/pumbaa/simba/3pp/esp32/inc/newlib/include/sys/_types.h"
 typedef signed int _ssize_t;
 # 67 "/home/erik/workspace/pumbaa/simba/3pp/esp32/inc/newlib/include/sys/_types.h"
-# 1 "/home/erik/workspace/xtensa-esp32-elf/lib/gcc/xtensa-esp32-elf/4.8.5/include/stddef.h" 1 3 4
-# 356 "/home/erik/workspace/xtensa-esp32-elf/lib/gcc/xtensa-esp32-elf/4.8.5/include/stddef.h" 3 4
+# 1 "/home/erik/workspace/xtensa-esp32-elf/lib/gcc/xtensa-esp32-elf/5.2.0/include/stddef.h" 1 3 4
+# 357 "/home/erik/workspace/xtensa-esp32-elf/lib/gcc/xtensa-esp32-elf/5.2.0/include/stddef.h" 3 4
+
+# 357 "/home/erik/workspace/xtensa-esp32-elf/lib/gcc/xtensa-esp32-elf/5.2.0/include/stddef.h" 3 4
 typedef unsigned int wint_t;
 # 68 "/home/erik/workspace/pumbaa/simba/3pp/esp32/inc/newlib/include/sys/_types.h" 2
 
 
 
+
+# 71 "/home/erik/workspace/pumbaa/simba/3pp/esp32/inc/newlib/include/sys/_types.h"
 typedef struct
 {
   int __count;
@@ -431,7 +439,7 @@ void _reclaim_reent (struct _reent *);
 
   struct _reent * __getreent (void);
 # 12 "/home/erik/workspace/pumbaa/simba/3pp/esp32/inc/newlib/include/alloca.h" 2
-# 571 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h" 2
+# 595 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h" 2
 # 37 "/home/erik/workspace/pumbaa/src/port/mpconfigport.h" 2
 # 46 "/home/erik/workspace/pumbaa/micropython/py/mpconfig.h" 2
 # 537 "/home/erik/workspace/pumbaa/micropython/py/mpconfig.h"
@@ -492,6 +500,12 @@ Q(AttributeError)
 
 Q(AttributeError)
 
+Q(BAUDRATE_100KBPS)
+
+Q(BAUDRATE_1MBPS)
+
+Q(BAUDRATE_400KBPS)
+
 Q(BaseException)
 
 Q(BaseException)
@@ -530,6 +544,10 @@ Q(EOFError)
 
 Q(EOFError)
 
+Q(EepromI2C)
+
+Q(Eeprom_I2c)
+
 Q(Ellipsis)
 
 Q(Ellipsis)
@@ -563,6 +581,14 @@ Q(HttpServerConnection)
 Q(HttpServerWebSocket)
 
 Q(HttpServerWebsocket)
+
+Q(I2C)
+
+Q(I2C)
+
+Q(I2CSoft)
+
+Q(I2C_Soft)
 
 Q(INPUT)
 
@@ -768,6 +794,10 @@ Q(SPI_1)
 
 Q(SPI_2)
 
+Q(SPI_H)
+
+Q(SPI_V)
+
 Q(SSLContext)
 
 Q(SSLContext)
@@ -821,6 +851,10 @@ Q(Uart)
 Q(ValueError)
 
 Q(ValueError)
+
+Q(Ws2812)
+
+Q(Ws2812)
 
 Q(ZeroDivisionError)
 
@@ -1136,6 +1170,8 @@ Q(address)
 
 Q(address)
 
+Q(address)
+
 Q(all)
 
 Q(allocate_lock)
@@ -1175,6 +1211,10 @@ Q(atan2)
 Q(authorization)
 
 Q(b2a_base64)
+
+Q(baudrate)
+
+Q(baudrate)
 
 Q(baudrate)
 
@@ -1241,6 +1281,8 @@ Q(clear)
 Q(clear)
 
 Q(clients_max)
+
+Q(clock_stretching_sleep_us)
 
 Q(close)
 
@@ -1329,6 +1371,8 @@ Q(delattr)
 Q(deleter)
 
 Q(deselect)
+
+Q(device)
 
 Q(device)
 
@@ -1538,6 +1582,10 @@ Q(hex)
 
 Q(hexlify)
 
+Q(i2c)
+
+Q(i2c_address)
+
 Q(id)
 
 Q(id)
@@ -1690,6 +1738,8 @@ Q(math)
 
 Q(max)
 
+Q(max_clock_stretching_us)
+
 Q(mem_alloc)
 
 Q(mem_current)
@@ -1778,6 +1828,8 @@ Q(pin_device)
 
 Q(pin_device)
 
+Q(pin_devices)
+
 Q(ping_host_by_ip_address)
 
 Q(platform)
@@ -1861,6 +1913,18 @@ Q(read)
 Q(read)
 
 Q(read)
+
+Q(read)
+
+Q(read)
+
+Q(read)
+
+Q(read_into)
+
+Q(read_into)
+
+Q(read_into)
 
 Q(read_into)
 
@@ -1956,6 +2020,14 @@ Q(sample_rate)
 
 Q(sampling_rate)
 
+Q(scan)
+
+Q(scan)
+
+Q(scl)
+
+Q(sda)
+
 Q(search)
 
 Q(sec_websocket_key)
@@ -2015,6 +2087,8 @@ Q(shutdown)
 Q(sin)
 
 Q(sin)
+
+Q(size)
 
 Q(size)
 
@@ -2092,6 +2166,10 @@ Q(start)
 
 Q(start)
 
+Q(start)
+
+Q(start)
+
 Q(start_new_thread)
 
 Q(startswith)
@@ -2131,6 +2209,10 @@ Q(stdin)
 Q(stdout)
 
 Q(step)
+
+Q(stop)
+
+Q(stop)
 
 Q(stop)
 
@@ -2365,6 +2447,14 @@ Q(version_info)
 Q(wrap_socket)
 
 Q(wrap_ssl)
+
+Q(write)
+
+Q(write)
+
+Q(write)
+
+Q(write)
 
 Q(write)
 

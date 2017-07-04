@@ -209,6 +209,7 @@ def generate_variants(family, database, cores_srcs):
         qstr_file = os.path.join(default_configuration_dir,
                                  "build",
                                  board_name,
+                                 "gen",
                                  "genhdr",
                                  "qstrdefs.generated.h")
         genhdr_dir = os.path.join(variant_dir, "genhdr")

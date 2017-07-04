@@ -68,6 +68,8 @@ SOURCE_CODE_FMT = """.. code-block:: python
 
 def driver_file_name_to_class(filename):
     class_map = {
+        'eeprom_i2c': 'EepromI2C',
+        'i2c': 'I2C',
         'i2c_soft': 'I2CSoft',
         'esp_wifi': 'esp_wifi'
     }

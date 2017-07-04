@@ -56,58 +56,43 @@
 #include "module_drivers/class_pin.h"
 #include "module_drivers/class_uart.h"
 #include "module_drivers/class_flash.h"
+#include "module_drivers/class_i2c.h"
+#include "module_drivers/class_i2c_soft.h"
+#include "module_drivers/class_eeprom_i2c.h"
+#include "module_drivers/class_owi.h"
+#include "module_drivers/class_ds18b20.h"
 #include "module_inet/class_http_server.h"
 #include "module_inet/class_http_server_websocket.h"
 
 #if defined(FAMILY_SAM)
 #    include "module_drivers/class_adc.h"
 #    include "module_drivers/class_dac.h"
-#    include "module_drivers/class_eeprom_i2c.h"
 #    include "module_drivers/class_exti.h"
-#    include "module_drivers/class_i2c.h"
-#    include "module_drivers/class_i2c_soft.h"
 #    include "module_drivers/class_spi.h"
 #    include "module_drivers/class_sd.h"
-#    include "module_drivers/class_owi.h"
-#    include "module_drivers/class_ds18b20.h"
 #    include "module_drivers/class_can.h"
 #endif
 
 #if defined(FAMILY_LINUX)
 #    include "module_drivers/class_adc.h"
 #    include "module_drivers/class_dac.h"
-#    include "module_drivers/class_eeprom_i2c.h"
 #    include "module_drivers/class_exti.h"
 #    include "module_drivers/class_spi.h"
 #    include "module_drivers/class_sd.h"
-#    include "module_drivers/class_i2c.h"
-#    include "module_drivers/class_i2c_soft.h"
-#    include "module_drivers/class_owi.h"
-#    include "module_drivers/class_ds18b20.h"
 #    include "module_drivers/class_can.h"
 #endif
 
 #if defined(ARCH_ESP)
-#    include "module_drivers/class_eeprom_i2c.h"
 #    include "module_drivers/class_exti.h"
-#    include "module_drivers/class_i2c.h"
-#    include "module_drivers/class_i2c_soft.h"
-#    include "module_drivers/class_owi.h"
 #    include "module_drivers/class_spi.h"
-#    include "module_drivers/class_ds18b20.h"
 #    include "module_drivers/class_esp_wifi.h"
 #endif
 
 #if defined(ARCH_ESP32)
 #    include "module_drivers/class_adc.h"
 #    include "module_drivers/class_dac.h"
-#    include "module_drivers/class_eeprom_i2c.h"
 #    include "module_drivers/class_esp_wifi.h"
-#    include "module_drivers/class_i2c.h"
-#    include "module_drivers/class_i2c_soft.h"
-#    include "module_drivers/class_owi.h"
 #    include "module_drivers/class_spi.h"
-#    include "module_drivers/class_ds18b20.h"
 #    include "module_drivers/class_can.h"
 #    include "module_drivers/class_ws2812.h"
 #endif

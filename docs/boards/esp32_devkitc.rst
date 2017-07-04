@@ -15,12 +15,16 @@ Supported drivers for this board.
 - :class:`Can<drivers.drivers.Can>`
 - :class:`Dac<drivers.drivers.Dac>`
 - :class:`Ds18b20<drivers.drivers.Ds18b20>`
+- :class:`EepromI2C<drivers.drivers.EepromI2C>`
 - :class:`esp_wifi<drivers.drivers.esp_wifi>`
 - :class:`Flash<drivers.drivers.Flash>`
+- :class:`I2C<drivers.drivers.I2C>`
+- :class:`I2CSoft<drivers.drivers.I2CSoft>`
 - :class:`Owi<drivers.drivers.Owi>`
 - :class:`Pin<drivers.drivers.Pin>`
 - :class:`Spi<drivers.drivers.Spi>`
 - :class:`Uart<drivers.drivers.Uart>`
+- :class:`Ws2812<drivers.drivers.Ws2812>`
 
 Memory usage
 ------------
@@ -39,9 +43,9 @@ Below is the memory usage of two applications:
 +--------------------------+-----------+-----------+
 | Application              | Flash     | RAM       |
 +==========================+===========+===========+
-| minimal-configuration    |    336595 |     87716 |
+| minimal-configuration    |    335864 |     87708 |
 +--------------------------+-----------+-----------+
-| default-configuration    |    697953 |    189696 |
+| default-configuration    |    709124 |    189832 |
 +--------------------------+-----------+-----------+
 
 Default configuration
@@ -62,6 +66,8 @@ Default Standard Library configuration.
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_DS18B20                           |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
+|  CONFIG_PUMBAA_CLASS_EEPROM_I2C                        |  1                                                  |
++--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_ESP_WIFI                          |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_EVENT                             |  1                                                  |
@@ -74,7 +80,9 @@ Default Standard Library configuration.
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_HTTP_SERVER_WEBSOCKET             |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
-|  CONFIG_PUMBAA_CLASS_I2C_SOFT                          |  0                                                  |
+|  CONFIG_PUMBAA_CLASS_I2C                               |  1                                                  |
++--------------------------------------------------------+-----------------------------------------------------+
+|  CONFIG_PUMBAA_CLASS_I2C_SOFT                          |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_OWI                               |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
@@ -89,6 +97,8 @@ Default Standard Library configuration.
 |  CONFIG_PUMBAA_CLASS_TIMER                             |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_CLASS_UART                              |  1                                                  |
++--------------------------------------------------------+-----------------------------------------------------+
+|  CONFIG_PUMBAA_CLASS_WS2812                            |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+
 |  CONFIG_PUMBAA_EMACS                                   |  1                                                  |
 +--------------------------------------------------------+-----------------------------------------------------+

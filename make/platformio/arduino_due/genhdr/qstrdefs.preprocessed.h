@@ -1,5 +1,4 @@
 # 1 "<stdin>"
-# 1 "/home/erik/workspace/pumbaa/examples/default-configuration//"
 # 1 "<built-in>"
 # 1 "<command-line>"
 # 1 "<stdin>"
@@ -16,7 +15,7 @@
 # 36 "/home/erik/workspace/pumbaa/src/config.h" 2
 # 36 "/home/erik/workspace/pumbaa/src/port/mpconfigport.h" 2
 # 1 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h" 1
-# 438 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
+# 462 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
 extern const struct _mp_obj_module_t mp_module_uos;
 extern const struct _mp_obj_module_t mp_module_utime;
 extern const struct _mp_obj_module_t mp_module_usocket;
@@ -27,10 +26,10 @@ extern const struct _mp_obj_module_t module_drivers;
 extern const struct _mp_obj_module_t module_inet;
 extern const struct _mp_obj_module_t module_text;
 extern const struct _mp_obj_module_t module_board;
-# 554 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
+# 578 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
 typedef int mp_int_t;
 typedef unsigned int mp_uint_t;
-# 564 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
+# 588 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h"
 typedef long mp_off_t;
 
 
@@ -399,7 +398,7 @@ extern struct _reent *const _global_impure_ptr ;
 
 void _reclaim_reent (struct _reent *);
 # 12 "/usr/include/newlib/alloca.h" 2 3
-# 571 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h" 2
+# 595 "/home/erik/workspace/pumbaa/src/pumbaa_config_default.h" 2
 # 37 "/home/erik/workspace/pumbaa/src/port/mpconfigport.h" 2
 # 46 "/home/erik/workspace/pumbaa/micropython/py/mpconfig.h" 2
 # 537 "/home/erik/workspace/pumbaa/micropython/py/mpconfig.h"
@@ -457,6 +456,12 @@ Q(AssertionError)
 Q(AttributeError)
 
 Q(AttributeError)
+
+Q(BAUDRATE_100KBPS)
+
+Q(BAUDRATE_1MBPS)
+
+Q(BAUDRATE_400KBPS)
 
 Q(BOTH)
 
@@ -632,6 +637,10 @@ Q(EXTI_DAC1)
 
 Q(EXTI_LED)
 
+Q(EepromI2C)
+
+Q(Eeprom_I2c)
+
 Q(Ellipsis)
 
 Q(Ellipsis)
@@ -661,6 +670,14 @@ Q(Flash)
 Q(GeneratorExit)
 
 Q(GeneratorExit)
+
+Q(I2C)
+
+Q(I2C)
+
+Q(I2CSoft)
+
+Q(I2C_Soft)
 
 Q(INPUT)
 
@@ -1274,6 +1291,8 @@ Q(acquire)
 
 Q(add)
 
+Q(address)
+
 Q(all)
 
 Q(allocate_lock)
@@ -1311,6 +1330,10 @@ Q(atan)
 Q(atan2)
 
 Q(b2a_base64)
+
+Q(baudrate)
+
+Q(baudrate)
 
 Q(baudrate)
 
@@ -1381,6 +1404,8 @@ Q(clear)
 Q(clear)
 
 Q(clear)
+
+Q(clock_stretching_sleep_us)
 
 Q(close)
 
@@ -1473,6 +1498,8 @@ Q(delattr)
 Q(deleter)
 
 Q(deselect)
+
+Q(device)
 
 Q(device)
 
@@ -1682,6 +1709,10 @@ Q(hex)
 
 Q(hexlify)
 
+Q(i2c)
+
+Q(i2c_address)
+
 Q(id)
 
 Q(id)
@@ -1823,6 +1854,8 @@ Q(math)
 Q(math)
 
 Q(max)
+
+Q(max_clock_stretching_us)
 
 Q(mdt)
 
@@ -2008,6 +2041,12 @@ Q(read)
 
 Q(read)
 
+Q(read)
+
+Q(read)
+
+Q(read)
+
 Q(read_bl_len)
 
 Q(read_bl_len)
@@ -2027,6 +2066,12 @@ Q(read_block_into)
 Q(read_cid)
 
 Q(read_csd)
+
+Q(read_into)
+
+Q(read_into)
+
+Q(read_into)
 
 Q(read_into)
 
@@ -2104,6 +2149,14 @@ Q(sample_rate)
 
 Q(sampling_rate)
 
+Q(scan)
+
+Q(scan)
+
+Q(scl)
+
+Q(sda)
+
 Q(search)
 
 Q(sector_size)
@@ -2145,6 +2198,8 @@ Q(sha256)
 Q(sin)
 
 Q(sin)
+
+Q(size)
 
 Q(size)
 
@@ -2200,6 +2255,10 @@ Q(start)
 
 Q(start)
 
+Q(start)
+
+Q(start)
+
 Q(start_new_thread)
 
 Q(startswith)
@@ -2217,6 +2276,10 @@ Q(stdin)
 Q(stdout)
 
 Q(step)
+
+Q(stop)
+
+Q(stop)
 
 Q(stop)
 
@@ -2469,6 +2532,12 @@ Q(wp_grp_enable)
 Q(wp_grp_size)
 
 Q(wp_grp_size)
+
+Q(write)
+
+Q(write)
+
+Q(write)
 
 Q(write)
 

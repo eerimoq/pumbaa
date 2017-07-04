@@ -390,7 +390,7 @@
 #endif
 
 #ifndef CONFIG_PUMBAA_CLASS_HTTP_SERVER
-#    if defined(CONFIG_MINIMAL_SYSTEM) || defined(ARCH_ARM)
+#    if defined(CONFIG_MINIMAL_SYSTEM) || defined(ARCH_ARM) || defined(BOARD_ESP01)
 #        define CONFIG_PUMBAA_CLASS_HTTP_SERVER             0
 #    elif CONFIG_PUMBAA_THRD == 1
 #        define CONFIG_PUMBAA_CLASS_HTTP_SERVER             1

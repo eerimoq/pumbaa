@@ -334,12 +334,14 @@ def generate_platformio_sconsscript(database, version):
         qstr_file = os.path.join(default_configuration_dir,
                                  "build",
                                  board,
+                                 "gen",
                                  "genhdr",
                                  "qstrdefs.generated.h")
         shutil.copy(qstr_file, genhdr_dir)
         qstr_file = os.path.join(default_configuration_dir,
                                  "build",
                                  board,
+                                 "gen",
                                  "genhdr",
                                  "qstrdefs.preprocessed.h")
         shutil.copy(qstr_file, genhdr_dir)

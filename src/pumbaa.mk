@@ -50,6 +50,8 @@ PUMBAA_SRC += \
 	module_drivers/class_pin.c \
 	module_drivers/class_uart.c \
 	module_drivers/class_flash.c \
+	module_drivers/class_ds18b20.c \
+	module_drivers/class_owi.c \
 	module_kernel/class_timer.c \
 	module_inet.c \
 	module_inet/class_http_server.c \
@@ -71,9 +73,7 @@ PUMBAA_SRC += \
 	module_drivers/class_adc.c \
 	module_drivers/class_can.c \
 	module_drivers/class_dac.c \
-	module_drivers/class_ds18b20.c \
 	module_drivers/class_exti.c \
-	module_drivers/class_owi.c \
 	module_drivers/class_spi.c \
 	module_drivers/class_sd.c \
 	boards/arduino_due/gccollect.c \
@@ -86,9 +86,7 @@ PUMBAA_SRC += \
 	module_drivers/class_adc.c \
 	module_drivers/class_can.c \
 	module_drivers/class_dac.c \
-	module_drivers/class_ds18b20.c \
 	module_drivers/class_exti.c \
-	module_drivers/class_owi.c \
 	module_drivers/class_spi.c \
 	module_drivers/class_sd.c
 endif
@@ -97,9 +95,7 @@ ifeq ($(BOARD),$(filter $(BOARD), esp12e esp01 nodemcu))
 PUMBAA_SRC += \
 	mcus/esp8266/gccollect.c \
 	mcus/esp8266/gchelper.S \
-	module_drivers/class_ds18b20.c \
 	module_drivers/class_exti.c \
-	module_drivers/class_owi.c \
 	module_drivers/class_spi.c \
 	module_drivers/class_esp_wifi.c
 endif
@@ -111,9 +107,7 @@ PUMBAA_SRC += \
 	module_drivers/class_can.c \
 	module_drivers/class_dac.c \
 	module_drivers/class_spi.c \
-	module_drivers/class_ds18b20.c \
 	module_drivers/class_esp_wifi.c \
-	module_drivers/class_owi.c \
 	module_drivers/class_ws2812.c
 endif
 
