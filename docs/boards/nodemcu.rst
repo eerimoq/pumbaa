@@ -40,9 +40,9 @@ Below is the memory usage of two applications:
 +--------------------------+-----------+-----------+
 | Application              | Flash     | RAM       |
 +==========================+===========+===========+
-| minimal-configuration    |    454721 |     63152 |
+| minimal-configuration    |    454717 |     63148 |
 +--------------------------+-----------+-----------+
-| default-configuration    |    530212 |     79268 |
+| default-configuration    |    530208 |     79256 |
 +--------------------------+-----------+-----------+
 
 Default configuration

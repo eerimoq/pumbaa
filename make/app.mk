@@ -31,6 +31,8 @@
 
 SIMBA_ROOT ?= $(PUMBAA_ROOT)/simba
 
+VERSION ?= $(shell cat $(PUMBAA_ROOT)/VERSION.txt)
+
 ifneq ($(TYPE), suite)
 MAIN_PY ?= main.py
 PYSRC += $(MAIN_PY)
