@@ -339,6 +339,34 @@
                             "name": "xtensa-esp32-elf-gcc"
                         }
                     ]
+                },
+                {
+                    "name": "Pumbaa",
+                    "architecture": "esp32",
+                    "version": "3.0.2",
+                    "category": "Pumbaa",
+                    "help": {
+                        "online": "https://pumbaa.readthedocs.org"
+                    },
+                    "url": "https://github.com/eerimoq/pumbaa-releases/raw/master/arduino/esp32/pumbaa-arduino-esp32-3.0.2.zip",
+                    "archiveFileName": "pumbaa-arduino-esp32-3.0.2.zip",
+                    "checksum": "SHA-256:d7f0045b160538666b6f802f8be69e601608416d25cdf93966f3efa5bffa21a7",
+                    "size": "14699416",
+                    "boards": [
+                        {
+                            "name": "Nano32"
+                        },
+                        {
+                            "name": "ESP32-DevKitC"
+                        }
+                    ],
+                    "toolsDependencies": [
+                        {
+                            "packager": "Pumbaa",
+                            "version": "1.22.0-59",
+                            "name": "xtensa-esp32-elf-gcc"
+                        }
+                    ]
                 }
             ],
             "tools": [
