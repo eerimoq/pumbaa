@@ -14,8 +14,8 @@ def main():
     command = sys.argv[3:]
     env = dict(os.environ, PYTHONPATH=sys.argv[2])
     with open(sys.argv[1], 'w') as f:
-        f.write(subprocess.check_output(command, env=env))
-    
+        f.write(subprocess.check_output(command, env=env).decode("utf-8"))
+
 
 if __name__ == '__main__':
     main()
