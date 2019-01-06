@@ -60,7 +60,7 @@ BOARDS = {
             "FAMILY_SAM", 
             "MCU_SAM3X8E", 
             "BOARD_ARDUINO_DUE", 
-            "VERSION=3.0.2", 
+            "VERSION=3.0.3", 
             "MBEDTLS_USER_CONFIG_FILE=\"\\\"mbedtls/user_config.h\\\"\"", 
             "MICROPY_EMIT_X86=0", 
             "MICROPY_NLR_SETJMP"
@@ -424,7 +424,7 @@ BOARDS = {
             "FAMILY_ESP32", 
             "MCU_ESP32", 
             "BOARD_NANO32", 
-            "VERSION=3.0.2", 
+            "VERSION=3.0.3", 
             "MBEDTLS_USER_CONFIG_FILE=\"\\\"mbedtls/user_config.h\\\"\"", 
             "MICROPY_EMIT_X86=0", 
             "MICROPY_NLR_SETJMP"
